@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/protea/hyperwallet-node.git"
+    "url": "https://github.com/hyperwallet/rest-v3-node-sdk.git"
   },
   "keywords": [
     "securenet",
@@ -21,7 +21,7 @@
   "author": "Richard Stanford <richard@protea.cc> (http://protea.cc/)",
   "license": "BSD-2-Clause",
   "bugs": {
-    "url": "https://github.com/protea/hyperwallet-node/issues"
+    "url": "https://github.com/hyperwallet/rest-v3-node-sdk"
   },
-  "homepage": "https://github.com/protea/hyperwallet-node"
+  "homepage": "https://github.com/hyperwallet/rest-v3-node-sdk"
 }
