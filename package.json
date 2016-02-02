@@ -1,0 +1,27 @@
+{
+  "name": "hyperwallet",
+  "version": "0.0.1",
+  "description": "A library to manage users and payments through the Hyperwallet API",
+  "main": "index.js",
+  "dependencies": {
+    "request": "~2.36.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/protea/hyperwallet-node.git"
+  },
+  "keywords": [
+    "securenet",
+    "creditcard",
+    "ach"
+  ],
+  "author": "Richard Stanford <richard@protea.cc> (http://protea.cc/)",
+  "license": "BSD-2-Clause",
+  "bugs": {
+    "url": "https://github.com/protea/hyperwallet-node/issues"
+  },
+  "homepage": "https://github.com/protea/hyperwallet-node"
+}
