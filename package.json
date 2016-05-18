@@ -2,7 +2,7 @@
   "name": "hyperwallet",
   "version": "0.0.1",
   "description": "A library to manage users, transfer methods and payments through the Hyperwallet API",
-  "main": "dist/Hyperwallet.js",
+  "main": "dist/index.js",
   "dependencies": {
     "superagent": "^2.0.0-alpha.3"
   },
