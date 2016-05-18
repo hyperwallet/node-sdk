@@ -1,5 +1,5 @@
 import request from "superagent";
-import packageJson from "../package.json";
+import packageJson from "../../package.json";
 
 /**
  * The callback interface for api calls

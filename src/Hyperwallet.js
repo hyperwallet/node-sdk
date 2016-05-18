@@ -1,4 +1,4 @@
-import ApiClient from "./ApiClient";
+import ApiClient from "./utils/ApiClient";
 
 /**
  * The Hyperwallet SDK Client
@@ -595,7 +595,7 @@ export default class Hyperwallet {
     }
 
     //--------------------------------------
-    // Internal Utils
+    // Internal utils
     //--------------------------------------
 
     /**

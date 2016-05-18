@@ -2,7 +2,7 @@
   "name": "hyperwallet",
   "version": "0.0.1",
   "description": "A library to manage users, transfer methods and payments through the Hyperwallet API",
-  "main": "index.js",
+  "main": "dist/Hyperwallet.js",
   "dependencies": {
     "superagent": "^2.0.0-alpha.3"
   },
@@ -37,6 +37,7 @@
     "babel-preset-es2015": "^6.9.0",
     "babel-preset-stage-0": "^6.5.0",
     "esdoc": "^0.4.7",
+    "esdoc-importpath-plugin": "0.0.1",
     "eslint": "^2.10.2",
     "eslint-config-airbnb-base": "^3.0.1",
     "eslint-plugin-import": "^1.8.0"
