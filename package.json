@@ -10,6 +10,7 @@
     "lint": "eslint .",
     "prod": "babel src -d lib",
     "docs": "esdoc -c ./.esdoc.json",
+    "deploy-docs": "npm run docs && gh-pages -d docs",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -40,6 +41,7 @@
     "esdoc-importpath-plugin": "0.0.1",
     "eslint": "^2.10.2",
     "eslint-config-airbnb-base": "^3.0.1",
-    "eslint-plugin-import": "^1.8.0"
+    "eslint-plugin-import": "^1.8.0",
+    "gh-pages": "^0.11.0"
   }
 }
