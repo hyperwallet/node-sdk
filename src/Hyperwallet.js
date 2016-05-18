@@ -623,6 +623,8 @@ export default class Hyperwallet {
      *
      * @param {api-callback} callback - The api callback
      * @returns {api-callback} - A wrapper api callback
+     *
+     * @private
      */
     static handle204Response(callback) {
         return (err, data, res) => {
