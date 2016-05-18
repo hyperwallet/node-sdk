@@ -12,9 +12,9 @@ export default class Hyperwallet {
      * @param {string} config.username - The API username
      * @param {string} config.password - The API password
      * @param {string} [config.programToken] - The program token that is used for some API calls
-     * @param {string} [config.server=https://beta.paylution.com] - The API server to connect to
+     * @param {string} [config.server=https://sandbox.hyperwallet.com] - The API server to connect to
      */
-    constructor({ username, password, programToken, server = "https://beta.paylution.com" }) {
+    constructor({ username, password, programToken, server = "https://sandbox.hyperwallet.com" }) {
         if (!username || !password) {
             throw new Error("You need to specify your API username and password!");
         }
