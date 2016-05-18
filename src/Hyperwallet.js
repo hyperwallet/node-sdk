@@ -90,7 +90,7 @@ export default class Hyperwallet {
      * @param {api-callback} callback - The callback for this call
      */
     listUsers(options, callback) {
-        this.client.doGet("users", options, callback);
+        this.client.doGet("users", options, Hyperwallet.handle204Response(callback));
     }
 
     //--------------------------------------
@@ -164,7 +164,7 @@ export default class Hyperwallet {
         if (!userToken) {
             throw new Error("userToken is required");
         }
-        this.client.doGet(`users/${encodeURIComponent(userToken)}/prepaid-cards`, options, callback);
+        this.client.doGet(`users/${encodeURIComponent(userToken)}/prepaid-cards`, options, Hyperwallet.handle204Response(callback));
     }
 
     /**
@@ -358,7 +358,7 @@ export default class Hyperwallet {
         if (!prepaidCardToken) {
             throw new Error("prepaidCardToken is required");
         }
-        this.client.doGet(`users/${encodeURIComponent(userToken)}/prepaid-cards/${encodeURIComponent(prepaidCardToken)}/status-transitions`, options, callback);
+        this.client.doGet(`users/${encodeURIComponent(userToken)}/prepaid-cards/${encodeURIComponent(prepaidCardToken)}/status-transitions`, options, Hyperwallet.handle204Response(callback));
     }
 
     //--------------------------------------
@@ -432,7 +432,7 @@ export default class Hyperwallet {
         if (!userToken) {
             throw new Error("userToken is required");
         }
-        this.client.doGet(`users/${encodeURIComponent(userToken)}/bank-accounts`, options, callback);
+        this.client.doGet(`users/${encodeURIComponent(userToken)}/bank-accounts`, options, Hyperwallet.handle204Response(callback));
     }
 
     /**
@@ -495,7 +495,7 @@ export default class Hyperwallet {
         if (!bankAccountToken) {
             throw new Error("bankAccountToken is required");
         }
-        this.client.doGet(`users/${encodeURIComponent(userToken)}/bank-accounts/${encodeURIComponent(bankAccountToken)}/status-transitions`, options, callback);
+        this.client.doGet(`users/${encodeURIComponent(userToken)}/bank-accounts/${encodeURIComponent(bankAccountToken)}/status-transitions`, options, Hyperwallet.handle204Response(callback));
     }
 
     //--------------------------------------
@@ -535,7 +535,7 @@ export default class Hyperwallet {
      * @param {api-callback} callback - The callback for this call
      */
     listPayments(options, callback) {
-        this.client.doGet("payments", options, callback);
+        this.client.doGet("payments", options, Hyperwallet.handle204Response(callback));
     }
 
     //--------------------------------------
@@ -591,7 +591,7 @@ export default class Hyperwallet {
         if (!userToken) {
             throw new Error("userToken is required");
         }
-        this.client.doGet("transfer-method-configurations", { userToken }, callback);
+        this.client.doGet("transfer-method-configurations", { userToken }, Hyperwallet.handle204Response(callback));
     }
 
     //--------------------------------------
@@ -616,6 +616,25 @@ export default class Hyperwallet {
 
         data.programToken = this.programToken; // eslint-disable-line no-param-reassign
         return data;
+    }
+
+    /**
+     * Handle 204 response for list calls
+     *
+     * @param {api-callback} callback - The api callback
+     * @returns {api-callback} - A wrapper api callback
+     */
+    static handle204Response(callback) {
+        return (err, data, res) => {
+            if (!err && res.status === 204) {
+                callback(err, {
+                    count: 0,
+                    data: [],
+                }, res);
+                return;
+            }
+            callback(err, data, res);
+        };
     }
 
 }
