@@ -8,7 +8,7 @@
       "name": "esdoc-importpath-plugin",
       "option": {
         "replaces": [
-          {"from": "^src/", "to": "dist/"}
+          {"from": "^src/", "to": "lib/"}
         ]
       }
     }
