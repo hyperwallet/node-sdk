@@ -1,6 +1,7 @@
 {
   "source": "./src",
   "destination": "./docs",
+  "excludes": ["examples/"],
   "title": "Hyperwallet REST SDK",
   "plugins": [
     {
