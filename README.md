@@ -13,7 +13,9 @@ A library to manage users, transfer methods and payments through the Hyperwallet
 Installation
 ------------
 
-`npm install hyperwallet-sdk`
+```bash
+$ npm install hyperwallet-sdk
+```
 
 
 Documentation
