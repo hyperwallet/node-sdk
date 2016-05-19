@@ -3,6 +3,10 @@
   "destination": "./docs",
   "excludes": ["examples/"],
   "title": "Hyperwallet REST SDK",
+  "test": {
+    "type": "mocha",
+    "source": "./test"
+  },
   "plugins": [
     {
       "name": "esdoc-importpath-plugin",

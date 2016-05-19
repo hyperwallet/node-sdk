@@ -75,7 +75,7 @@ export default class ApiClient {
             .accept("json")
             .query(params)
             .send(data)
-            .end(ApiClient.wrapCallback(callback));
+            .end(this.wrapCallback(callback));
     }
 
     /**
@@ -95,7 +95,7 @@ export default class ApiClient {
             .accept("json")
             .query(params)
             .send(data)
-            .end(ApiClient.wrapCallback(callback));
+            .end(this.wrapCallback(callback));
     }
 
     /**
@@ -112,7 +112,7 @@ export default class ApiClient {
             .set("User-Agent", `Hyperwallet Node SDK v${this.version}`)
             .accept("json")
             .query(params)
-            .end(ApiClient.wrapCallback(callback));
+            .end(this.wrapCallback(callback));
     }
 
     /**
@@ -123,13 +123,13 @@ export default class ApiClient {
      *
      * @private
      */
-    static wrapCallback(callback = () => null) {
+    wrapCallback(callback = () => null) {
         return (err, res) => {
             if (!err) {
                 callback(undefined, res.body, res);
                 return;
             }
-
+            
             let errors = [
                 {
                     message: `Could not communicate with ${this.server}`,
@@ -139,7 +139,7 @@ export default class ApiClient {
             if (res && res.body && res.body.errors) {
                 errors = res.body.errors;
             }
-            callback(errors, res.body, res);
+            callback(errors, res ? res.body : undefined, res);
         };
     }
 

@@ -9,8 +9,11 @@ import packageJson from "../../package.json";
 chai.should();
 chai.use(dirtyChai);
 
+/** @test {ApiClient} */
 describe("utils/ApiClient", () => {
+    /** @test {ApiClient#constructor} */
     describe("constructor()", () => {
+        /** @test {ApiClient#constructor} */
         it("should set provided values as private members", () => {
             const client = new ApiClient("test-username", "test-password", "test-server");
 
@@ -19,12 +22,14 @@ describe("utils/ApiClient", () => {
             client.server.should.be.equal("test-server");
         });
 
+        /** @test {ApiClient#constructor} */
         it("should set the version to package.json version", () => {
             const client = new ApiClient("test-username", "test-password", "test-server");
             client.version.should.be.equal(packageJson.version);
         });
     });
 
+    /** @test {ApiClient#doPost} */
     describe("doPost()", () => {
         let client;
         let authHeader;
@@ -45,6 +50,7 @@ describe("utils/ApiClient", () => {
             nock.cleanAll();
         });
 
+        /** @test {ApiClient#doPost} */
         it("should return response if call was successful (with query parameters)", (cb) => {
             nock("https://test-server")
                 .matchHeader("Authorization", authHeader)
@@ -72,6 +78,7 @@ describe("utils/ApiClient", () => {
             });
         });
 
+        /** @test {ApiClient#doPost} */
         it("should return response if call was successful (without query parameters)", (cb) => {
             nock("https://test-server")
                 .matchHeader("Authorization", authHeader)
@@ -98,6 +105,7 @@ describe("utils/ApiClient", () => {
             });
         });
 
+        /** @test {ApiClient#doPost} */
         it("should return generic network error if no response was send by server", (cb) => {
             client.doPost("test", { test: "value" }, {}, (err, body, res) => {
                 err.should.be.deep.equal([{
@@ -112,6 +120,7 @@ describe("utils/ApiClient", () => {
             });
         });
 
+        /** @test {ApiClient#doPost} */
         it("should return error message if responses contains error", (cb) => {
             nock("https://test-server")
                 .matchHeader("Authorization", authHeader)
@@ -148,6 +157,7 @@ describe("utils/ApiClient", () => {
         });
     });
 
+    /** @test {ApiClient#doPut} */
     describe("doPut()", () => {
         let client;
         let authHeader;
@@ -168,6 +178,7 @@ describe("utils/ApiClient", () => {
             nock.cleanAll();
         });
 
+        /** @test {ApiClient#doPut} */
         it("should return response if call was successful (with query parameters)", (cb) => {
             nock("https://test-server")
                 .matchHeader("Authorization", authHeader)
@@ -195,6 +206,7 @@ describe("utils/ApiClient", () => {
             });
         });
 
+        /** @test {ApiClient#doPut} */
         it("should return response if call was successful (without query parameters)", (cb) => {
             nock("https://test-server")
                 .matchHeader("Authorization", authHeader)
@@ -221,6 +233,7 @@ describe("utils/ApiClient", () => {
             });
         });
 
+        /** @test {ApiClient#doPut} */
         it("should return generic network error if no response was send by server", (cb) => {
             client.doPut("test", { test: "value" }, {}, (err, body, res) => {
                 err.should.be.deep.equal([{
@@ -235,6 +248,7 @@ describe("utils/ApiClient", () => {
             });
         });
 
+        /** @test {ApiClient#doPut} */
         it("should return error message if responses contains error", (cb) => {
             nock("https://test-server")
                 .matchHeader("Authorization", authHeader)
@@ -271,6 +285,7 @@ describe("utils/ApiClient", () => {
         });
     });
 
+    /** @test {ApiClient#doGet} */
     describe("doGet()", () => {
         let client;
         let authHeader;
@@ -291,6 +306,7 @@ describe("utils/ApiClient", () => {
             nock.cleanAll();
         });
 
+        /** @test {ApiClient#doGet} */
         it("should return response if call was successful (with query parameters)", (cb) => {
             nock("https://test-server")
                 .matchHeader("Authorization", authHeader)
@@ -315,6 +331,7 @@ describe("utils/ApiClient", () => {
             });
         });
 
+        /** @test {ApiClient#doGet} */
         it("should return response if call was successful (without query parameters)", (cb) => {
             nock("https://test-server")
                 .matchHeader("Authorization", authHeader)
@@ -338,6 +355,7 @@ describe("utils/ApiClient", () => {
             });
         });
 
+        /** @test {ApiClient#doGet} */
         it("should return generic network error if no response was send by server", (cb) => {
             client.doGet("test", {}, (err, body, res) => {
                 err.should.be.deep.equal([{
@@ -352,6 +370,7 @@ describe("utils/ApiClient", () => {
             });
         });
 
+        /** @test {ApiClient#doGet} */
         it("should return error message if responses contains error", (cb) => {
             nock("https://test-server")
                 .matchHeader("Authorization", authHeader)
@@ -384,7 +403,7 @@ describe("utils/ApiClient", () => {
             });
         });
     });
-
+    
     describe("wrapCallback()", () => {
         it("should return a 'function' without a argument", () => {
             const client = new ApiClient("test-username", "test-password", "test-server");
@@ -403,7 +422,7 @@ describe("utils/ApiClient", () => {
             client.wrapCallback()(new Error());
         });
 
-        it("should call callback with 'body' and 'res' if no error happened", () => {
+        it("should call callback with 'body' and 'res' if no error happened", (cb) => {
             const client = new ApiClient("test-username", "test-password", "test-server");
 
             const rawRes = {
@@ -416,11 +435,13 @@ describe("utils/ApiClient", () => {
 
                 body.should.be.equal("test");
                 rawRes.should.be.deep.equal(res);
+
+                cb();
             });
             callback(undefined, rawRes);
         });
 
-        it("should call callback with 'errors', 'body' and 'res' if 'body' contains errors", () => {
+        it("should call callback with 'errors', 'body' and 'res' if 'body' contains errors", (cb) => {
             const client = new ApiClient("test-username", "test-password", "test-server");
 
             const rawRes = {
@@ -442,11 +463,13 @@ describe("utils/ApiClient", () => {
                     ],
                 });
                 rawRes.should.be.deep.equal(res);
+
+                cb();
             });
             callback(new Error(), rawRes);
         });
 
-        it("should call callback with static error message as 'errors', 'body' and 'res' if 'body' contains no errors", () => {
+        it("should call callback with static error message as 'errors', 'body' and 'res' if 'body' contains no errors", (cb) => {
             const client = new ApiClient("test-username", "test-password", "test-server");
 
             const rawRes = {
@@ -461,6 +484,8 @@ describe("utils/ApiClient", () => {
                 }]);
                 body.should.be.equal("test");
                 rawRes.should.be.deep.equal(res);
+
+                cb();
             });
             callback(new Error(), rawRes);
         });
