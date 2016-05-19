@@ -129,7 +129,7 @@ export default class ApiClient {
                 callback(undefined, res.body, res);
                 return;
             }
-            
+
             let errors = [
                 {
                     message: `Could not communicate with ${this.server}`,
