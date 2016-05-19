@@ -44,7 +44,7 @@ describe("utils/ApiClient", () => {
         beforeEach(() => {
             client = new ApiClient("test-username", "test-password", "https://test-server");
 
-            authHeader = `Basic ${Buffer.from("test-username:test-password", "ascii").toString('base64')}`;
+            authHeader = `Basic ${Buffer.from("test-username:test-password", "ascii").toString("base64")}`;
         });
         afterEach(() => {
             nock.cleanAll();
@@ -172,7 +172,7 @@ describe("utils/ApiClient", () => {
         beforeEach(() => {
             client = new ApiClient("test-username", "test-password", "https://test-server");
 
-            authHeader = `Basic ${Buffer.from("test-username:test-password", "ascii").toString('base64')}`;
+            authHeader = `Basic ${Buffer.from("test-username:test-password", "ascii").toString("base64")}`;
         });
         afterEach(() => {
             nock.cleanAll();
@@ -300,7 +300,7 @@ describe("utils/ApiClient", () => {
         beforeEach(() => {
             client = new ApiClient("test-username", "test-password", "https://test-server");
 
-            authHeader = `Basic ${Buffer.from("test-username:test-password", "ascii").toString('base64')}`;
+            authHeader = `Basic ${Buffer.from("test-username:test-password", "ascii").toString("base64")}`;
         });
         afterEach(() => {
             nock.cleanAll();
@@ -403,7 +403,7 @@ describe("utils/ApiClient", () => {
             });
         });
     });
-    
+
     describe("wrapCallback()", () => {
         it("should return a 'function' without a argument", () => {
             const client = new ApiClient("test-username", "test-password", "test-server");

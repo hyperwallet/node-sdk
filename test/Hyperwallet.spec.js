@@ -286,7 +286,7 @@ describe("Hyperwallet", () => {
             const client = new Hyperwallet({
                 username: "test-username",
                 password: "test-password",
-                programToken: "test-program-token"
+                programToken: "test-program-token",
             });
 
             client.addProgramToken({ test: "value", programToken: "my-program-token" }).should.be.deep.equal({ test: "value", programToken: "my-program-token" });
@@ -296,7 +296,7 @@ describe("Hyperwallet", () => {
             const client = new Hyperwallet({
                 username: "test-username",
                 password: "test-password",
-                programToken: "test-program-token"
+                programToken: "test-program-token",
             });
 
             client.addProgramToken({ test: "value" }).should.be.deep.equal({ test: "value", programToken: "test-program-token" });
@@ -307,7 +307,7 @@ describe("Hyperwallet", () => {
         it("should return a 'function' with a argument", () => {
             Hyperwallet.handle204Response(() => null).should.be.a("function");
         });
-        
+
         it("should do nothing for errors", (cb) => {
             const providedErr = new Error("Test");
             const providedData = {
