@@ -263,6 +263,139 @@ describe("Hyperwallet", () => {
         });
     });
 
+    /** @test {Hyperwallet#createPayment} */
+    describe("createPayment()", () => {
+        let client;
+        let apiClientSpy;
+
+        beforeEach(() => {
+            apiClientSpy = sinon.spy();
+            client = new Hyperwallet({
+                username: "test-username",
+                password: "test-password",
+            });
+            client.client = {
+                doPost: apiClientSpy,
+            };
+        });
+
+        /** @test {Hyperwallet#createPayment} */
+        it("should do post call to payments endpoint without programToken added", () => {
+            const callback = () => null;
+            client.createPayment({
+                test: "value",
+            }, callback);
+
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("payments", {
+                test: "value",
+            }, {}, callback);
+        });
+
+        /** @test {Hyperwallet#createPayment} */
+        it("should do post call to payments endpoint with programToken added", () => {
+            client.programToken = "test-program-token";
+
+            const callback = () => null;
+            client.createPayment({
+                test: "value",
+            }, callback);
+
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("payments", {
+                test: "value",
+                programToken: "test-program-token",
+            }, {}, callback);
+        });
+    });
+
+    /** @test {Hyperwallet#getPayment} */
+    describe("getPayment()", () => {
+        let client;
+        let apiClientSpy;
+
+        beforeEach(() => {
+            apiClientSpy = sinon.spy();
+            client = new Hyperwallet({
+                username: "test-username",
+                password: "test-password",
+            });
+            client.client = {
+                doGet: apiClientSpy,
+            };
+        });
+
+        /** @test {Hyperwallet#getPayment} */
+        it("should throw error if paymentToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.getPayment(undefined, callback)).to.throw("paymentToken is required");
+        });
+
+        /** @test {Hyperwallet#getPayment} */
+        it("should do get call if paymentToken is provided", () => {
+            const callback = () => null;
+            client.getPayment("test-payment-token", callback);
+
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("payments/test-payment-token", {}, callback);
+        });
+    });
+
+    /** @test {Hyperwallet#listPayments} */
+    describe("listPayments()", () => {
+        let client;
+        let apiClientSpy;
+
+        beforeEach(() => {
+            apiClientSpy = sinon.spy();
+            client = new Hyperwallet({
+                username: "test-username",
+                password: "test-password",
+            });
+            client.client = {
+                doGet: apiClientSpy,
+            };
+        });
+
+        /** @test {Hyperwallet#listPayments} */
+        it("should do get call with options", () => {
+            const callback = () => null;
+            client.listPayments({ test: "value" }, callback);
+
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("payments", { test: "value" });
+        });
+
+        /** @test {Hyperwallet#listPayments} */
+        it("should do get call without options", () => {
+            const callback = () => null;
+            client.listPayments({}, callback);
+
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("payments", {});
+        });
+
+        /** @test {Hyperwallet#listPayments} */
+        it("should handle 204 return", (cb) => {
+            const callback = (err, data) => {
+                data.should.be.deep.equal({
+                    count: 0,
+                    data: [],
+                });
+
+                cb();
+            };
+            client.listPayments({}, callback);
+
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("payments", {});
+
+            apiClientSpy.getCall(0).args[2](undefined, {}, {
+                status: 204,
+            });
+        });
+    });
+
     describe("addProgramToken()", () => {
         it("should do nothing if no data is provided", () => {
             const client = new Hyperwallet({
