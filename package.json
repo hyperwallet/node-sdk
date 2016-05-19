@@ -26,12 +26,12 @@
     "creditcard",
     "ach"
   ],
-  "author": "Richard Stanford <richard@protea.cc> (http://protea.cc/)",
+  "author": "Florian Krauthan <fkrauthan@hyperwallet.com>",
   "license": "BSD-2-Clause",
   "bugs": {
-    "url": "https://github.com/hyperwallet/rest-v3-node-sdk"
+    "url": "https://github.com/hyperwallet/rest-v3-node-sdk/issues"
   },
-  "homepage": "https://github.com/hyperwallet/rest-v3-node-sdk",
+  "homepage": "http://hyperwallet.github.io/rest-v3-node-sdk",
   "devDependencies": {
     "babel-cli": "^6.9.0",
     "babel-eslint": "^6.0.4",
