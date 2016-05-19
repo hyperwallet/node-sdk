@@ -2,7 +2,7 @@
 
 src/
 docs/
-lib/examples/
+examples/
 
 test/
 .DS_Store
