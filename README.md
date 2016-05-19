@@ -27,7 +27,48 @@ Documentation is available at http://hyperwallet.github.io/rest-v3-node-sdk.
 API Overview
 ------------
 
-TODO
+To write an app using the SDK
+
+* Register for a sandbox account and get your username, password and program token at the [Hyperwallet Program Portal](https://portal.hyperwallet.com).
+* Add dependency `hyperwallet-sdk` to your `package.json`.
+* Require `hyperwallet-sdk` in your file
+  ```js
+  var Hyperwallet = require("hyperwallet-sdk");
+  ```
+* Create a instance of the Hyperwallet Client (with username, password and program token)
+  ```js
+  var client = new Hyperwallet({
+    username: "restapiuser@4917301618",
+    password: "mySecurePassword!",
+    programToken: "prg-645fc30d-83ed-476c-a412-32c82738a20e",
+  });
+  ```
+* Start making API calls (e.g. create a user)
+  ```js
+  var userData = {
+     clientUserId: "test-client-id-1",
+     profileType: "INDIVIDUAL",
+     firstName: "Daffyd",
+     lastName: "y Goliath",
+     email: "testmail-1@hyperwallet.com",
+     addressLine1: "123 Main Street",
+     city: "Austin",
+     stateProvince: "TX",
+     country: "US",
+     postalCode: "78701",
+  };
+
+  client.createUser(userDate, function(errors, body, res) {
+     if (errors) {
+        console.log("Create User Failed");````
+        console.log(errors);
+     } else {
+        console.log("Create User Response");
+        console.log(body);
+     }
+  });
+  ```
+  The displayed callback format is valid for all SDK methods. For more information see the [Callback Documentation](http://hyperwallet.github.io/rest-v3-node-sdk/typedef/index.html#static-typedef-api-callback).
 
 
 Development
@@ -45,3 +86,9 @@ Reference
 ---------
 
 [REST API Reference](https://sandbox.hyperwallet.com/developer-portal/#/docs)
+
+
+License
+-------
+
+[MIT](https://raw.githubusercontent.com/hyperwallet/rest-v3-node-sdk/master/LICENSE)

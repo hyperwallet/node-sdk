@@ -27,7 +27,7 @@
     "ach"
   ],
   "author": "Florian Krauthan <fkrauthan@hyperwallet.com>",
-  "license": "BSD-2-Clause",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/hyperwallet/rest-v3-node-sdk/issues"
   },
