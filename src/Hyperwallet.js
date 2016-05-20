@@ -376,7 +376,7 @@ export default class Hyperwallet {
      */
     createBankAccount(userToken, data, callback) {
         if (!userToken) {
-            throw new Error("User token is required");
+            throw new Error("userToken is required");
         }
         this.client.doPost(`users/${encodeURIComponent(userToken)}/bank-accounts`, data, {}, callback);
     }
