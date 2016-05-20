@@ -35,6 +35,7 @@ To write an app using the SDK
   ```js
   var Hyperwallet = require("hyperwallet-sdk");
   ```
+  
 * Create a instance of the Hyperwallet Client (with username, password and program token)
   ```js
   var client = new Hyperwallet({
