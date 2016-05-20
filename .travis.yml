@@ -12,4 +12,4 @@ node_js:
 
 after_success:
   - if [ $TRAVIS_NODE_VERSION = 'stable' ] && [ $TRAVIS_BRANCH = 'master' ] && [ $TRAVIS_PULL_REQUEST = 'false' ]; then sh ./scripts/travisPublishDocs.sh; fi
-  - if [ $TRAVIS_NODE_VERSION = 'stable' ] && [ $TRAVIS_PULL_REQUEST = 'false' ]; then npm run coveralls; fi
+  - if [ $TRAVIS_NODE_VERSION = 'stable' ]; then npm run coveralls; fi
