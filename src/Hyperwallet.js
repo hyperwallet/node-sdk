@@ -499,6 +499,46 @@ export default class Hyperwallet {
     }
 
     //--------------------------------------
+    // Balances
+    //--------------------------------------
+
+    /**
+     * List balances for a user
+     *
+     * @param {string} userToken - The user token
+     * @param {Object} options - The query parameters to send
+     * @param {api-callback} callback - The callback for this call
+     *
+     * @throws Will throw an error if userToken is not provided
+     */
+    listBalancesForUser(userToken, options, callback) {
+        if (!userToken) {
+            throw new Error("userToken is required");
+        }
+        this.client.doGet(`users/${encodeURIComponent(userToken)}/balances`, options, Hyperwallet.handle204Response(callback));
+    }
+
+    /**
+     * List balances for a prepaid card
+     *
+     * @param {string} userToken - The user token
+     * @param {string} prepaidCardToken - The prepaid card token
+     * @param {Object} options - The query parameters to send
+     * @param {api-callback} callback - The callback for this call
+     *
+     * @throws Will throw an error if userToken or prepaidCardToken is not provided
+     */
+    listBalancesForPrepaidCard(userToken, prepaidCardToken, options, callback) {
+        if (!userToken) {
+            throw new Error("userToken is required");
+        }
+        if (!prepaidCardToken) {
+            throw new Error("prepaidCardToken is required");
+        }
+        this.client.doGet(`users/${encodeURIComponent(userToken)}/prepaid-cards/${encodeURIComponent(prepaidCardToken)}/balances`, options, Hyperwallet.handle204Response(callback));
+    }
+
+    //--------------------------------------
     // Payments
     //--------------------------------------
 
