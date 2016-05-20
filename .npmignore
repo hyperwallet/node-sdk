@@ -3,6 +3,7 @@
 src/
 docs/
 examples/
+scripts/
 
 test/
 .DS_Store
