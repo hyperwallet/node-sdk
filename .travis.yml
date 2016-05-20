@@ -1,17 +1,17 @@
-# .travis.yml
 language: node_js
-
 sudo: false
 
 node_js:
-  - "0.12"
-  - "4"
-  - "5"
-  - "stable"
-  - "iojs"
+- '0.12'
+- '4'
+- '5'
+- stable
+- iojs
 
 after_success:
-  - if [ $TRAVIS_NODE_VERSION = 'stable' ] && [ $TRAVIS_BRANCH = 'master' ] && [ $TRAVIS_PULL_REQUEST = 'false' ]; then sh ./scripts/travisPublishDocs.sh; fi
-  - if [ $TRAVIS_NODE_VERSION = 'stable' ]; then npm run coveralls; fi
+- if [ $TRAVIS_NODE_VERSION = 'stable' ] && [ $TRAVIS_BRANCH = 'master' ] && [ $TRAVIS_PULL_REQUEST = 'false' ]; then sh ./scripts/travisPublishDocs.sh; fi
+- if [ $TRAVIS_NODE_VERSION = 'stable' ]; then npm run coveralls; fi
 
-secure: "T22TR/IZCOV4YsKoZg/qMBBet+uGjsPYXzJRTbMYBNuvLNS8c2RXLVE0AXBPzfbNABXJbXRz/4N0GfyxPFm4i2b1M/oeLcBuMGATIGCuQ09lMiqEx1Y7LvRih0pYsjInFkBLHtYYUoX3GZoEO2aRWaLN9VJJ4PSqLneb9bOuPOviKVsg9UbANsmwrYOnB38+DjcFmVE4S+MOQJMUxotyHIlEAw6SGE8QgITrfMU784l1T4C9+WGOiFoh+eA3UX9lAvQKgHrtQX7pFAI3IOQGpUB6nRp2bON6+9VabmmOBUTTlxPXshtXyOj1MqQtmEUtUM7708zBFEnPW6WfnRBcmhDdBHgabR4MH11boKJjFcYb9IUqBQ8m/XAhw5XMnRpnUvVAD8Y0z8KO+eazypxRx1MOBBYnebeT/rwVXkwZ1fo8/DZoGCpi8JquXg4gIFoNJ2a/83SvgqglqfmPtOfkiv7Pf7A8eqns2AzsJy+5gjrs8LOMH8HAEUvkpoQHu9eF52+qoh9rXEktO4q1kQUnFpi2tpRuMOBMVK49CFTVZ17y5MnjYXamfGDbY0Ks2hR3jmwayS1mOO2JxbLqvBY4PbfGkDVFgaIx1vZHUdP59LZizUOZKBw1SzNmU5QH5dU8hB/oowkJmOGZx1fEJchSZtsx6XD7CxB716pXQ1Xmf2U="
+env:
+  global:
+    secure: hF67wTqrLfL3S98HeifIavk9gcx5WMeMXBSh5EwhhKY1y4C0AqLfC4yPSyd6nYZFg3uPAPQT/HSxWE0forkuXrdfrFNQxQfeT2CUBilyyYgrXkN+AUSNY6uzhdeNv73GB0mSQAE4//aphbV8HkcKkWeNjKa7LQ85rKjgVvZk7VorIVCMvKVqf7UYIDhoAF2S0ZT6vC48G5yoOlFFwa2qEgnIlkvv1CDCDzLDXhFvktJsSwUeG8zLFdMTSkheywDKG0G2YFowawHlIZDUnYGJev4O+tXtkCYNgCFIaK0GaMdlqqOoJHQ4pZFYo+sBwsUQxx5eA+XeNRu6W0URZi+F2gCVr+KEgP+mMOu37fQYbXvG6B0pxF3z8aSMfAmxgl5TFe0qVz8ngG2+9H08uU33t4T2Sxp5TX+3+gkKLrV0qt6b1R7WNoy1pEAzAIwHZi/ETB1gNcslLK78lOFwJAYa9HXdHDPk3o1NzWpvxmg+0lWPDG5NSk3mMRQFHz+aZjjPaZj0To+NPPhPURoTvvXtXk3BQG1jk6u9w61NgqlA2mjFVBqcpuz025iDHGANGwhJiytow3SbED23MC6SoqcvYI2tn9vWxkIDJ00t/nu8QeQVs92bl1zcGiIIKDoE1L4+nuUznPJbb/CjC3UG+q91rwr3/ou495E/hFp4/9d4rbs=

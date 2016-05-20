@@ -13,7 +13,7 @@ cd ../gh-pages
 
 # Add branch
 git init
-git remote add origin https://${GH_TOKEN}@github.com/paypal/PayPal-node-SDK.git > /dev/null
+git remote add origin https://${GH_TOKEN}@github.com/hyperwallet/node-sdk.git > /dev/null
 git checkout -B gh-pages
 
 # Push generated files
