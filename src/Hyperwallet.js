@@ -579,6 +579,49 @@ export default class Hyperwallet {
     }
 
     //--------------------------------------
+    // Programs
+    //--------------------------------------
+
+    /**
+     * Get a program
+     *
+     * @param {string} programToken - The program token
+     * @param {api-callback} callback - The callback for this call
+     *
+     * @throws Will throw an error if programToken is not provided
+     */
+    getProgram(programToken, callback) {
+        if (!programToken) {
+            throw new Error("programToken is required");
+        }
+        this.client.doGet(`programs/${encodeURIComponent(programToken)}`, {}, callback);
+    }
+
+    //--------------------------------------
+    // Program Accounts
+    //--------------------------------------
+
+    /**
+     * Get a program account
+     *
+     * @param {string} programToken - The program token
+     * @param {string} accountToken - The account token
+     * @param {api-callback} callback - The callback for this call
+     *
+     * @throws Will throw an error if programToken is not provided
+     */
+    getProgramAccount(programToken, accountToken, callback) {
+        if (!programToken) {
+            throw new Error("programToken is required");
+        }
+        if (!accountToken) {
+            throw new Error("accountToken is required");
+        }
+        this.client.doGet(`programs/${encodeURIComponent(programToken)}/accounts/${encodeURIComponent(accountToken)}`, {}, callback);
+    }
+
+
+    //--------------------------------------
     // Transfer Method Configurations
     //--------------------------------------
 

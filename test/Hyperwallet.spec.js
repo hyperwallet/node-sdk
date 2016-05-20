@@ -1269,6 +1269,84 @@ describe("Hyperwallet", () => {
     });
 
     //--------------------------------------
+    // Programs
+    //--------------------------------------
+
+    /** @test {Hyperwallet#getProgram} */
+    describe("getProgram()", () => {
+        let client;
+        let apiClientSpy;
+
+        beforeEach(() => {
+            apiClientSpy = sinon.spy();
+            client = new Hyperwallet({
+                username: "test-username",
+                password: "test-password",
+            });
+            client.client = {
+                doGet: apiClientSpy,
+            };
+        });
+
+        /** @test {Hyperwallet#getProgram} */
+        it("should throw error if programToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.getProgram(undefined, callback)).to.throw("programToken is required");
+        });
+
+        /** @test {Hyperwallet#getProgram} */
+        it("should do get call if programToken is provided", () => {
+            const callback = () => null;
+            client.getProgram("test-program-token", callback);
+
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("programs/test-program-token", {}, callback);
+        });
+    });
+
+    //--------------------------------------
+    // Program Accounts
+    //--------------------------------------
+
+    /** @test {Hyperwallet#getProgramAccount} */
+    describe("getProgramAccount()", () => {
+        let client;
+        let apiClientSpy;
+
+        beforeEach(() => {
+            apiClientSpy = sinon.spy();
+            client = new Hyperwallet({
+                username: "test-username",
+                password: "test-password",
+            });
+            client.client = {
+                doGet: apiClientSpy,
+            };
+        });
+
+        /** @test {Hyperwallet#getProgramAccount} */
+        it("should throw error if programToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.getProgramAccount(undefined, undefined, callback)).to.throw("programToken is required");
+        });
+
+        /** @test {Hyperwallet#getProgramAccount} */
+        it("should throw error if accountToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.getProgramAccount("test-program-token", undefined, callback)).to.throw("accountToken is required");
+        });
+
+        /** @test {Hyperwallet#getProgramAccount} */
+        it("should do get call if programToken is provided", () => {
+            const callback = () => null;
+            client.getProgramAccount("test-program-token", "test-account-token", callback);
+
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("programs/test-program-token/accounts/test-account-token", {}, callback);
+        });
+    });
+
+    //--------------------------------------
     // Transfer Method Configurations
     //--------------------------------------
 
