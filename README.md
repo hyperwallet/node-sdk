@@ -60,7 +60,7 @@ To write an app using the SDK
 
   client.createUser(userDate, function(errors, body, res) {
      if (errors) {
-        console.log("Create User Failed");````
+        console.log("Create User Failed");
         console.log(errors);
      } else {
         console.log("Create User Response");
