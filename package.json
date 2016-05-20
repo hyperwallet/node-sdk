@@ -4,6 +4,7 @@
   "description": "A library to manage users, transfer methods and payments through the Hyperwallet API",
   "main": "dist/index.js",
   "dependencies": {
+    "object-assign": "^4.1.0",
     "superagent": "^2.0.0-alpha.3"
   },
   "scripts": {
@@ -57,5 +58,9 @@
     "publish-please": "^2.1.1",
     "sinon": "^1.17.4",
     "sinon-chai": "^2.8.0"
+  },
+  "engines": {
+    "node": ">=0.12",
+    "iojs": ">=1.0"
   }
 }

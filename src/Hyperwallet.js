@@ -1,3 +1,4 @@
+import objectAssign from "object-assign";
 import ApiClient from "./utils/ApiClient";
 
 /**
@@ -675,7 +676,7 @@ export default class Hyperwallet {
         if (!userToken) {
             throw new Error("userToken is required");
         }
-        const params = options ? Object.assign({}, options, { userToken }) : { userToken };
+        const params = options ? objectAssign({}, options, { userToken }) : { userToken };
         this.client.doGet("transfer-method-configurations", params, Hyperwallet.handle204Response(callback));
     }
 
