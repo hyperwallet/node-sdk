@@ -4,8 +4,8 @@
 [![NPM version](https://badge.fury.io/js/hyperwallet-sdk.png)](http://badge.fury.io/js/hyperwallet-sdk)
 [![Dependency Status](https://david-dm.org/hyperwallet/rest-v3-node-sdk.png)](https://david-dm.org/hyperwallet/rest-v3-node-sdk)
 
-Hyperwallet REST SDK
-====================
+Hyperwallet REST SDK (Beta)
+===========================
 
 A library to manage users, transfer methods and payments through the Hyperwallet API
 
