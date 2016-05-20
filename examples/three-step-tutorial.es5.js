@@ -7,7 +7,7 @@ console.log("-------------------------------------------------------------------
 console.log();
 
 // Read config from env variables
-var server = process.env.HYPERWALLET_SERVER || "https://beta.paylution.com";
+var server = process.env.HYPERWALLET_SERVER || "https://sandbox.hyperwallet.com";
 var username = process.env.HYPERWALLET_USERNAME;
 var password = process.env.HYPERWALLET_PASSWORD;
 var programToken = process.env.HYPERWALLET_PROGRAM_TOKEN;
