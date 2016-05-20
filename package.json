@@ -15,6 +15,7 @@
     "test": "npm run lint && npm run test-unit",
     "test-unit": "mocha --compilers js:babel-register test/**/*.js test/*.js",
     "test-coverage": "babel-node ./node_modules/.bin/isparta cover _mocha -- test/**/*.js test/*.js",
+    "coveralls": "npm run test-coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
     "prepublish-prod": "npm test && npm run prod",
     "publish-please": "publish-please",
     "prepublish": "publish-please guard"
@@ -45,6 +46,7 @@
     "babel-preset-stage-0": "^6.5.0",
     "babel-register": "^6.9.0",
     "chai": "^3.5.0",
+    "coveralls": "^2.11.9",
     "dirty-chai": "^1.2.2",
     "esdoc": "^0.4.7",
     "esdoc-importpath-plugin": "0.0.1",

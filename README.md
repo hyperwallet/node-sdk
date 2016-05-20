@@ -1,5 +1,5 @@
 [![Build Status](https://travis-ci.org/hyperwallet/node-sdk.png?branch=master)](https://travis-ci.org/hyperwallet/node-sdk)
- [![Coverage Status](https://coveralls.io/repos/hyperwallet/node-sdk/badge.png?branch=master)](https://coveralls.io/r/hyperwallet/node-sdk?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/hyperwallet/node-sdk/badge.svg?branch=master)](https://coveralls.io/github/hyperwallet/node-sdk?branch=master)
 [![Document](http://hyperwallet.github.io/node-sdk/badge.svg?t=0)](http://hyperwallet.github.io/node-sdk)
 [![NPM version](https://badge.fury.io/js/hyperwallet-sdk.png)](http://badge.fury.io/js/hyperwallet-sdk)
 [![Dependency Status](https://david-dm.org/hyperwallet/node-sdk.png)](https://david-dm.org/hyperwallet/node-sdk)
