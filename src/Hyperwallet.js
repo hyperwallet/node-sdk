@@ -583,15 +583,17 @@ export default class Hyperwallet {
      * List all transfer method configurations
      *
      * @param {string} userToken - The user token
+     * @param {Object} options - The query parameters to send
      * @param {api-callback} callback - The callback for this call
      *
      * @throws Will throw an error if userToken is not provided
      */
-    listTransferMethodConfigurations(userToken, callback) {
+    listTransferMethodConfigurations(userToken, options, callback) {
         if (!userToken) {
             throw new Error("userToken is required");
         }
-        this.client.doGet("transfer-method-configurations", { userToken }, Hyperwallet.handle204Response(callback));
+        const params = options ? Object.assign({}, options, { userToken }) : { userToken };
+        this.client.doGet("transfer-method-configurations", params, Hyperwallet.handle204Response(callback));
     }
 
     //--------------------------------------

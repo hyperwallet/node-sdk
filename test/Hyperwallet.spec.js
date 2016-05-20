@@ -1137,6 +1137,140 @@ describe("Hyperwallet", () => {
     });
 
     //--------------------------------------
+    // Transfer Method Configurations
+    //--------------------------------------
+
+    /** @test {Hyperwallet#getTransferMethodConfiguration} */
+    describe("getTransferMethodConfiguration()", () => {
+        let client;
+        let apiClientSpy;
+
+        beforeEach(() => {
+            apiClientSpy = sinon.spy();
+            client = new Hyperwallet({
+                username: "test-username",
+                password: "test-password",
+            });
+            client.client = {
+                doGet: apiClientSpy,
+            };
+        });
+
+        /** @test {Hyperwallet#getTransferMethodConfiguration} */
+        it("should throw error if userToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.getTransferMethodConfiguration(undefined, undefined, undefined, undefined, undefined, callback)).to.throw("userToken is required");
+        });
+
+        /** @test {Hyperwallet#getTransferMethodConfiguration} */
+        it("should throw error if country is missing", () => {
+            const callback = () => null;
+            expect(() => client.getTransferMethodConfiguration("test-user-token", undefined, undefined, undefined, undefined, callback)).to.throw("country is required");
+        });
+
+        /** @test {Hyperwallet#getTransferMethodConfiguration} */
+        it("should throw error if currency is missing", () => {
+            const callback = () => null;
+            expect(() => client.getTransferMethodConfiguration("test-user-token", "test-country", undefined, undefined, undefined, callback)).to.throw("currency is required");
+        });
+
+        /** @test {Hyperwallet#getTransferMethodConfiguration} */
+        it("should throw error if type is missing", () => {
+            const callback = () => null;
+            expect(() => client.getTransferMethodConfiguration("test-user-token", "test-country", "test-currency", undefined, undefined, callback)).to.throw("type is required");
+        });
+
+        /** @test {Hyperwallet#getTransferMethodConfiguration} */
+        it("should throw error if profileType is missing", () => {
+            const callback = () => null;
+            expect(() => client.getTransferMethodConfiguration("test-user-token", "test-country", "test-currency", "test-type", undefined, callback)).to.throw("profileType is required");
+        });
+
+        /** @test {Hyperwallet#getTransferMethodConfiguration} */
+        it("should do get call if userToken, country, currency, type and profileType is provided", () => {
+            const callback = () => null;
+            client.getTransferMethodConfiguration("test-user-token", "test-country", "test-currency", "test-type", "test-profile-type", callback);
+
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("transfer-method-configurations", {
+                userToken: "test-user-token",
+                country: "test-country",
+                currency: "test-currency",
+                type: "test-type",
+                profileType: "test-profile-type",
+            }, callback);
+        });
+    });
+
+    /** @test {Hyperwallet#listTransferMethodConfigurations} */
+    describe("listTransferMethodConfigurations()", () => {
+        let client;
+        let apiClientSpy;
+
+        beforeEach(() => {
+            apiClientSpy = sinon.spy();
+            client = new Hyperwallet({
+                username: "test-username",
+                password: "test-password",
+            });
+            client.client = {
+                doGet: apiClientSpy,
+            };
+        });
+
+        /** @test {Hyperwallet#listTransferMethodConfigurations} */
+        it("should throw error if userToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.listTransferMethodConfigurations(undefined, {}, callback)).to.throw("userToken is required");
+        });
+
+        /** @test {Hyperwallet#listTransferMethodConfigurations} */
+        it("should do get call with options", () => {
+            const callback = () => null;
+            client.listTransferMethodConfigurations("test-user-token", { test: "value" }, callback);
+
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("transfer-method-configurations", {
+                test: "value",
+                userToken: "test-user-token",
+            });
+        });
+
+        /** @test {Hyperwallet#listTransferMethodConfigurations} */
+        it("should do get call without options", () => {
+            const callback = () => null;
+            client.listTransferMethodConfigurations("test-user-token", undefined, callback);
+
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("transfer-method-configurations", {
+                userToken: "test-user-token",
+            });
+        });
+
+        /** @test {Hyperwallet#listTransferMethodConfigurations} */
+        it("should handle 204 return", (cb) => {
+            const callback = (err, data) => {
+                data.should.be.deep.equal({
+                    count: 0,
+                    data: [],
+                });
+
+                cb();
+            };
+            client.listTransferMethodConfigurations("test-user-token", {}, callback);
+
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("transfer-method-configurations", {
+                userToken: "test-user-token",
+            });
+
+            apiClientSpy.getCall(0).args[2](undefined, {}, {
+                status: 204,
+            });
+        });
+    });
+
+    //--------------------------------------
     // Internal utils
     //--------------------------------------
 
