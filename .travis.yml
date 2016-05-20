@@ -13,3 +13,5 @@ node_js:
 after_success:
   - if [ $TRAVIS_NODE_VERSION = 'stable' ] && [ $TRAVIS_BRANCH = 'master' ] && [ $TRAVIS_PULL_REQUEST = 'false' ]; then sh ./scripts/travisPublishDocs.sh; fi
   - if [ $TRAVIS_NODE_VERSION = 'stable' ]; then npm run coveralls; fi
+
+secure: "T22TR/IZCOV4YsKoZg/qMBBet+uGjsPYXzJRTbMYBNuvLNS8c2RXLVE0AXBPzfbNABXJbXRz/4N0GfyxPFm4i2b1M/oeLcBuMGATIGCuQ09lMiqEx1Y7LvRih0pYsjInFkBLHtYYUoX3GZoEO2aRWaLN9VJJ4PSqLneb9bOuPOviKVsg9UbANsmwrYOnB38+DjcFmVE4S+MOQJMUxotyHIlEAw6SGE8QgITrfMU784l1T4C9+WGOiFoh+eA3UX9lAvQKgHrtQX7pFAI3IOQGpUB6nRp2bON6+9VabmmOBUTTlxPXshtXyOj1MqQtmEUtUM7708zBFEnPW6WfnRBcmhDdBHgabR4MH11boKJjFcYb9IUqBQ8m/XAhw5XMnRpnUvVAD8Y0z8KO+eazypxRx1MOBBYnebeT/rwVXkwZ1fo8/DZoGCpi8JquXg4gIFoNJ2a/83SvgqglqfmPtOfkiv7Pf7A8eqns2AzsJy+5gjrs8LOMH8HAEUvkpoQHu9eF52+qoh9rXEktO4q1kQUnFpi2tpRuMOBMVK49CFTVZ17y5MnjYXamfGDbY0Ks2hR3jmwayS1mOO2JxbLqvBY4PbfGkDVFgaIx1vZHUdP59LZizUOZKBw1SzNmU5QH5dU8hB/oowkJmOGZx1fEJchSZtsx6XD7CxB716pXQ1Xmf2U="
