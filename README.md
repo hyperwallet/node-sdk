@@ -21,7 +21,7 @@ $ npm install hyperwallet-sdk
 Documentation
 -------------
 
-Documentation is available at http://hyperwallet.github.io/rest-v3-node-sdk.
+Documentation is available at http://hyperwallet.github.io/node-sdk.
 
 
 API Overview
@@ -68,7 +68,7 @@ To write an app using the SDK
      }
   });
   ```
-  The displayed callback format is valid for all SDK methods. For more information see the [Callback Documentation](http://hyperwallet.github.io/rest-v3-node-sdk/typedef/index.html#static-typedef-api-callback).
+  The displayed callback format is valid for all SDK methods. For more information see the [Callback Documentation](http://hyperwallet.github.io/node-sdk/typedef/index.html#static-typedef-api-callback).
 
 
 Development
@@ -91,4 +91,4 @@ Reference
 License
 -------
 
-[MIT](https://raw.githubusercontent.com/hyperwallet/rest-v3-node-sdk/master/LICENSE)
+[MIT](https://raw.githubusercontent.com/hyperwallet/node-sdk/master/LICENSE)
