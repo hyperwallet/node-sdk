@@ -44,7 +44,7 @@ describe("utils/ApiClient", () => {
         beforeEach(() => {
             client = new ApiClient("test-username", "test-password", "https://test-server");
 
-            authHeader = `Basic ${Buffer.from("test-username:test-password", "ascii").toString("base64")}`;
+            authHeader = "Basic dGVzdC11c2VybmFtZTp0ZXN0LXBhc3N3b3Jk";
         });
         afterEach(() => {
             nock.cleanAll();
@@ -172,7 +172,7 @@ describe("utils/ApiClient", () => {
         beforeEach(() => {
             client = new ApiClient("test-username", "test-password", "https://test-server");
 
-            authHeader = `Basic ${Buffer.from("test-username:test-password", "ascii").toString("base64")}`;
+            authHeader = "Basic dGVzdC11c2VybmFtZTp0ZXN0LXBhc3N3b3Jk";
         });
         afterEach(() => {
             nock.cleanAll();
@@ -300,7 +300,7 @@ describe("utils/ApiClient", () => {
         beforeEach(() => {
             client = new ApiClient("test-username", "test-password", "https://test-server");
 
-            authHeader = `Basic ${Buffer.from("test-username:test-password", "ascii").toString("base64")}`;
+            authHeader = "Basic dGVzdC11c2VybmFtZTp0ZXN0LXBhc3N3b3Jk";
         });
         afterEach(() => {
             nock.cleanAll();
