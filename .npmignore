@@ -4,6 +4,7 @@ src/
 docs/
 examples/
 scripts/
+coverage/
 
 test/
 .DS_Store
