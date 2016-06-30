@@ -79,6 +79,23 @@ describe("Hyperwallet", () => {
     });
 
     //--------------------------------------
+    // TLS verification
+    //--------------------------------------
+
+    describe("listUsers()", () => {
+        it("should not have any TLS issues", (cb) => {
+            const client = new Hyperwallet({
+                username: "test-username",
+                password: "test-password",
+            });
+            client.listUsers({}, (err, body, res) => {
+                res.status.should.be.equal(401);
+                cb();
+            });
+        });
+    });
+
+    //--------------------------------------
     // Users
     //--------------------------------------
 

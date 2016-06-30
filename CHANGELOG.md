@@ -1,8 +1,10 @@
 Changelog
 =========
 
-
-0.0.1 (in progress)
+0.2.0 (in progress)
 -------------------
 
-- First release
+0.1.0 (2016-06-30)
+------------------
+
+- Initial release
