@@ -681,6 +681,66 @@ export default class Hyperwallet {
     }
 
     //--------------------------------------
+    // Receipts
+    //--------------------------------------
+
+    /**
+     * List all program account receipts
+     *
+     * @param {string} programToken - The program token
+     * @param {string} accountToken - The account token
+     * @param {Object} options - The query parameters to send
+     * @param {api-callback} callback - The callback for this call
+     *
+     * @throws Will throw an error if programToken or accountToken is not provided
+     */
+    listProgramAccountReceipts(programToken, accountToken, options, callback) {
+        if (!programToken) {
+            throw new Error("programToken is required");
+        }
+        if (!accountToken) {
+            throw new Error("accountToken is required");
+        }
+        this.client.doGet(`programs/${encodeURIComponent(programToken)}/accounts/${encodeURIComponent(accountToken)}/receipts`, options, Hyperwallet.handle204Response(callback));
+    }
+
+    /**
+     * List all user receipts
+     *
+     * @param {string} userToken - The user token
+     * @param {Object} options - The query parameters to send
+     * @param {api-callback} callback - The callback for this call
+     *
+     * @throws Will throw an error if userToken is not provided
+     */
+    listUserReceipts(userToken, options, callback) {
+        if (!userToken) {
+            throw new Error("userToken is required");
+        }
+        this.client.doGet(`users/${encodeURIComponent(userToken)}/receipts`, options, Hyperwallet.handle204Response(callback));
+    }
+
+    /**
+     * List all prepaid card receipts
+     *
+     * @param {string} userToken - The user token
+     * @param {string} prepaidCardToken - The prepaid card token
+     * @param {Object} options - The query parameters to send
+     * @param {api-callback} callback - The callback for this call
+     *
+     * @throws Will throw an error if userToken or prepaidCardToken is not provided
+     */
+    listPrepaidCardReceipts(userToken, prepaidCardToken, options, callback) {
+        if (!userToken) {
+            throw new Error("userToken is required");
+        }
+        if (!prepaidCardToken) {
+            throw new Error("prepaidCardToken is required");
+        }
+        this.client.doGet(`users/${encodeURIComponent(userToken)}/prepaid-cards/${encodeURIComponent(prepaidCardToken)}/receipts`, options, Hyperwallet.handle204Response(callback));
+    }
+
+    //--------------------------------------
     // Internal utils
     //--------------------------------------
 

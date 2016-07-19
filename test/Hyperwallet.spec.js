@@ -1498,6 +1498,77 @@ describe("Hyperwallet", () => {
     });
 
     //--------------------------------------
+    // Receipts
+    //--------------------------------------
+
+    /** @test {Hyperwallet#listProgramAccountReceipts} */
+    describe("listProgramAccountReceipts()", () => {
+        let client;
+        let apiClientSpy;
+
+        beforeEach(() => {
+            apiClientSpy = sinon.spy();
+            client = new Hyperwallet({
+                username: "test-username",
+                password: "test-password",
+            });
+            client.client = {
+                doGet: apiClientSpy,
+            };
+        });
+
+        /** @test {Hyperwallet#listProgramAccountReceipts} */
+        it("should throw error if programToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.listProgramAccountReceipts(undefined, undefined, {}, callback)).to.throw("programToken is required");
+        });
+
+        /** @test {Hyperwallet#listProgramAccountReceipts} */
+        it("should throw error if accountToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.listProgramAccountReceipts("test-program-token", undefined, {}, callback)).to.throw("accountToken is required");
+        });
+
+        /** @test {Hyperwallet#listProgramAccountReceipts} */
+        it("should do get call with options", () => {
+            const callback = () => null;
+            client.listProgramAccountReceipts("test-program-token", "test-account-token", { test: "value" }, callback);
+
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("programs/test-program-token/accounts/test-account-token/receipts", { test: "value" });
+        });
+
+        /** @test {Hyperwallet#listProgramAccountReceipts} */
+        it("should do get call without options", () => {
+            const callback = () => null;
+            client.listProgramAccountReceipts("test-program-token", "test-account-token", {}, callback);
+
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("programs/test-program-token/accounts/test-account-token/receipts", {});
+        });
+
+        /** @test {Hyperwallet#listProgramAccountReceipts} */
+        it("should handle 204 return", (cb) => {
+            const callback = (err, data) => {
+                data.should.be.deep.equal({
+                    count: 0,
+                    data: [],
+                });
+
+                cb();
+            };
+            client.listProgramAccountReceipts("test-program-token", "test-account-token", {}, callback);
+
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("programs/test-program-token/accounts/test-account-token/receipts", {});
+
+            apiClientSpy.getCall(0).args[2](undefined, {}, {
+                status: 204,
+            });
+        });
+    });
+
+    //--------------------------------------
     // Internal utils
     //--------------------------------------
 
