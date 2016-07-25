@@ -1501,8 +1501,8 @@ describe("Hyperwallet", () => {
     // Receipts
     //--------------------------------------
 
-    /** @test {Hyperwallet#listProgramAccountReceipts} */
-    describe("listProgramAccountReceipts()", () => {
+    /** @test {Hyperwallet#listReceiptsForProgramAccount} */
+    describe("listReceiptsForProgramAccount()", () => {
         let client;
         let apiClientSpy;
 
@@ -1517,37 +1517,37 @@ describe("Hyperwallet", () => {
             };
         });
 
-        /** @test {Hyperwallet#listProgramAccountReceipts} */
+        /** @test {Hyperwallet#listReceiptsForProgramAccount} */
         it("should throw error if programToken is missing", () => {
             const callback = () => null;
-            expect(() => client.listProgramAccountReceipts(undefined, undefined, {}, callback)).to.throw("programToken is required");
+            expect(() => client.listReceiptsForProgramAccount(undefined, undefined, {}, callback)).to.throw("programToken is required");
         });
 
-        /** @test {Hyperwallet#listProgramAccountReceipts} */
+        /** @test {Hyperwallet#listReceiptsForProgramAccount} */
         it("should throw error if accountToken is missing", () => {
             const callback = () => null;
-            expect(() => client.listProgramAccountReceipts("test-program-token", undefined, {}, callback)).to.throw("accountToken is required");
+            expect(() => client.listReceiptsForProgramAccount("test-program-token", undefined, {}, callback)).to.throw("accountToken is required");
         });
 
-        /** @test {Hyperwallet#listProgramAccountReceipts} */
+        /** @test {Hyperwallet#listReceiptsForProgramAccount} */
         it("should do get call with options", () => {
             const callback = () => null;
-            client.listProgramAccountReceipts("test-program-token", "test-account-token", { test: "value" }, callback);
+            client.listReceiptsForProgramAccount("test-program-token", "test-account-token", { test: "value" }, callback);
 
             apiClientSpy.should.have.been.calledOnce();
             apiClientSpy.should.have.been.calledWith("programs/test-program-token/accounts/test-account-token/receipts", { test: "value" });
         });
 
-        /** @test {Hyperwallet#listProgramAccountReceipts} */
+        /** @test {Hyperwallet#listReceiptsForProgramAccount} */
         it("should do get call without options", () => {
             const callback = () => null;
-            client.listProgramAccountReceipts("test-program-token", "test-account-token", {}, callback);
+            client.listReceiptsForProgramAccount("test-program-token", "test-account-token", {}, callback);
 
             apiClientSpy.should.have.been.calledOnce();
             apiClientSpy.should.have.been.calledWith("programs/test-program-token/accounts/test-account-token/receipts", {});
         });
 
-        /** @test {Hyperwallet#listProgramAccountReceipts} */
+        /** @test {Hyperwallet#listReceiptsForProgramAccount} */
         it("should handle 204 return", (cb) => {
             const callback = (err, data) => {
                 data.should.be.deep.equal({
@@ -1557,7 +1557,7 @@ describe("Hyperwallet", () => {
 
                 cb();
             };
-            client.listProgramAccountReceipts("test-program-token", "test-account-token", {}, callback);
+            client.listReceiptsForProgramAccount("test-program-token", "test-account-token", {}, callback);
 
             apiClientSpy.should.have.been.calledOnce();
             apiClientSpy.should.have.been.calledWith("programs/test-program-token/accounts/test-account-token/receipts", {});
@@ -1568,8 +1568,8 @@ describe("Hyperwallet", () => {
         });
     });
 
-    /** @test {Hyperwallet#listUserReceipts} */
-    describe("listUserReceipts()", () => {
+    /** @test {Hyperwallet#listReceiptsForUser} */
+    describe("listReceiptsForUser()", () => {
         let client;
         let apiClientSpy;
 
@@ -1584,31 +1584,31 @@ describe("Hyperwallet", () => {
             };
         });
 
-        /** @test {Hyperwallet#listUserReceipts} */
+        /** @test {Hyperwallet#listReceiptsForUser} */
         it("should throw error if userToken is missing", () => {
             const callback = () => null;
-            expect(() => client.listUserReceipts(undefined, {}, callback)).to.throw("userToken is required");
+            expect(() => client.listReceiptsForUser(undefined, {}, callback)).to.throw("userToken is required");
         });
 
-        /** @test {Hyperwallet#listUserReceipts} */
+        /** @test {Hyperwallet#listReceiptsForUser} */
         it("should do get call with options", () => {
             const callback = () => null;
-            client.listUserReceipts("test-user-token", { test: "value" }, callback);
+            client.listReceiptsForUser("test-user-token", { test: "value" }, callback);
 
             apiClientSpy.should.have.been.calledOnce();
             apiClientSpy.should.have.been.calledWith("users/test-user-token/receipts", { test: "value" });
         });
 
-        /** @test {Hyperwallet#listUserReceipts} */
+        /** @test {Hyperwallet#listReceiptsForUser} */
         it("should do get call without options", () => {
             const callback = () => null;
-            client.listUserReceipts("test-user-token", {}, callback);
+            client.listReceiptsForUser("test-user-token", {}, callback);
 
             apiClientSpy.should.have.been.calledOnce();
             apiClientSpy.should.have.been.calledWith("users/test-user-token/receipts", {});
         });
 
-        /** @test {Hyperwallet#listUserReceipts} */
+        /** @test {Hyperwallet#listReceiptsForUser} */
         it("should handle 204 return", (cb) => {
             const callback = (err, data) => {
                 data.should.be.deep.equal({
@@ -1618,7 +1618,7 @@ describe("Hyperwallet", () => {
 
                 cb();
             };
-            client.listUserReceipts("test-user-token", {}, callback);
+            client.listReceiptsForUser("test-user-token", {}, callback);
 
             apiClientSpy.should.have.been.calledOnce();
             apiClientSpy.should.have.been.calledWith("users/test-user-token/receipts", {});
@@ -1629,8 +1629,8 @@ describe("Hyperwallet", () => {
         });
     });
 
-    /** @test {Hyperwallet#listPrepaidCardReceipts} */
-    describe("listPrepaidCardReceipts()", () => {
+    /** @test {Hyperwallet#listReceiptsPrepaidCard} */
+    describe("listReceiptsPrepaidCard()", () => {
         let client;
         let apiClientSpy;
 
@@ -1645,37 +1645,37 @@ describe("Hyperwallet", () => {
             };
         });
 
-        /** @test {Hyperwallet#listPrepaidCardReceipts} */
+        /** @test {Hyperwallet#listReceiptsPrepaidCard} */
         it("should throw error if userToken is missing", () => {
             const callback = () => null;
-            expect(() => client.listPrepaidCardReceipts(undefined, undefined, {}, callback)).to.throw("userToken is required");
+            expect(() => client.listReceiptsPrepaidCard(undefined, undefined, {}, callback)).to.throw("userToken is required");
         });
 
-        /** @test {Hyperwallet#listPrepaidCardReceipts} */
+        /** @test {Hyperwallet#listReceiptsPrepaidCard} */
         it("should throw error if prepaidCardToken is missing", () => {
             const callback = () => null;
-            expect(() => client.listPrepaidCardReceipts("test-user-token", undefined, {}, callback)).to.throw("prepaidCardToken is required");
+            expect(() => client.listReceiptsPrepaidCard("test-user-token", undefined, {}, callback)).to.throw("prepaidCardToken is required");
         });
 
-        /** @test {Hyperwallet#listPrepaidCardReceipts} */
+        /** @test {Hyperwallet#listReceiptsPrepaidCard} */
         it("should do get call with options", () => {
             const callback = () => null;
-            client.listPrepaidCardReceipts("test-user-token", "test-prepaid-card-token", { test: "value" }, callback);
+            client.listReceiptsPrepaidCard("test-user-token", "test-prepaid-card-token", { test: "value" }, callback);
 
             apiClientSpy.should.have.been.calledOnce();
             apiClientSpy.should.have.been.calledWith("users/test-user-token/prepaid-cards/test-prepaid-card-token/receipts", { test: "value" });
         });
 
-        /** @test {Hyperwallet#listPrepaidCardReceipts} */
+        /** @test {Hyperwallet#listReceiptsPrepaidCard} */
         it("should do get call without options", () => {
             const callback = () => null;
-            client.listPrepaidCardReceipts("test-user-token", "test-prepaid-card-token", {}, callback);
+            client.listReceiptsPrepaidCard("test-user-token", "test-prepaid-card-token", {}, callback);
 
             apiClientSpy.should.have.been.calledOnce();
             apiClientSpy.should.have.been.calledWith("users/test-user-token/prepaid-cards/test-prepaid-card-token/receipts", {});
         });
 
-        /** @test {Hyperwallet#listPrepaidCardReceipts} */
+        /** @test {Hyperwallet#listReceiptsPrepaidCard} */
         it("should handle 204 return", (cb) => {
             const callback = (err, data) => {
                 data.should.be.deep.equal({
@@ -1685,7 +1685,7 @@ describe("Hyperwallet", () => {
 
                 cb();
             };
-            client.listPrepaidCardReceipts("test-user-token", "test-prepaid-card-token", {}, callback);
+            client.listReceiptsPrepaidCard("test-user-token", "test-prepaid-card-token", {}, callback);
 
             apiClientSpy.should.have.been.calledOnce();
             apiClientSpy.should.have.been.calledWith("users/test-user-token/prepaid-cards/test-prepaid-card-token/receipts", {});

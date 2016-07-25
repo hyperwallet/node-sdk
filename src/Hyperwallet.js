@@ -694,7 +694,7 @@ export default class Hyperwallet {
      *
      * @throws Will throw an error if programToken or accountToken is not provided
      */
-    listProgramAccountReceipts(programToken, accountToken, options, callback) {
+    listReceiptsForProgramAccount(programToken, accountToken, options, callback) {
         if (!programToken) {
             throw new Error("programToken is required");
         }
@@ -713,7 +713,7 @@ export default class Hyperwallet {
      *
      * @throws Will throw an error if userToken is not provided
      */
-    listUserReceipts(userToken, options, callback) {
+    listReceiptsForUser(userToken, options, callback) {
         if (!userToken) {
             throw new Error("userToken is required");
         }
@@ -730,7 +730,7 @@ export default class Hyperwallet {
      *
      * @throws Will throw an error if userToken or prepaidCardToken is not provided
      */
-    listPrepaidCardReceipts(userToken, prepaidCardToken, options, callback) {
+    listReceiptsPrepaidCard(userToken, prepaidCardToken, options, callback) {
         if (!userToken) {
             throw new Error("userToken is required");
         }
