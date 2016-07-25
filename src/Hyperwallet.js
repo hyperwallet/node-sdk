@@ -730,7 +730,7 @@ export default class Hyperwallet {
      *
      * @throws Will throw an error if userToken or prepaidCardToken is not provided
      */
-    listReceiptsPrepaidCard(userToken, prepaidCardToken, options, callback) {
+    listReceiptsForPrepaidCard(userToken, prepaidCardToken, options, callback) {
         if (!userToken) {
             throw new Error("userToken is required");
         }
