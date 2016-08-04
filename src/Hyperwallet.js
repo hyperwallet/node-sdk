@@ -539,6 +539,26 @@ export default class Hyperwallet {
         this.client.doGet(`users/${encodeURIComponent(userToken)}/prepaid-cards/${encodeURIComponent(prepaidCardToken)}/balances`, options, Hyperwallet.handle204Response(callback));
     }
 
+    /**
+     * List balances for a program accounts
+     *
+     * @param {string} programToken - The program token
+     * @param {string} accountToken - The account token
+     * @param {Object} options - The query parameters to send
+     * @param {api-callback} callback - The callback for this call
+     *
+     * @throws Will throw an error if programToken or accountToken is not provided
+     */
+    listBalancesForAccount(programToken, accountToken, options, callback) {
+        if (!programToken) {
+            throw new Error("programToken is required");
+        }
+        if (!accountToken) {
+            throw new Error("accountToken is required");
+        }
+        this.client.doGet(`programs/${encodeURIComponent(programToken)}/accounts/${encodeURIComponent(accountToken)}/balances`, options, Hyperwallet.handle204Response(callback));
+    }
+
     //--------------------------------------
     // Payments
     //--------------------------------------

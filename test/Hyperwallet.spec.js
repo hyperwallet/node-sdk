@@ -1148,6 +1148,73 @@ describe("Hyperwallet", () => {
         });
     });
 
+    /** @test {Hyperwallet#listBalancesForAccount} */
+    describe("listBalancesForAccount()", () => {
+        let client;
+        let apiClientSpy;
+
+        beforeEach(() => {
+            apiClientSpy = sinon.spy();
+            client = new Hyperwallet({
+                username: "test-username",
+                password: "test-password",
+            });
+            client.client = {
+                doGet: apiClientSpy,
+            };
+        });
+
+        /** @test {Hyperwallet#listBalancesForAccount} */
+        it("should throw error if programToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.listBalancesForAccount(undefined, undefined, {}, callback)).to.throw("programToken is required");
+        });
+
+        /** @test {Hyperwallet#listBalancesForAccount} */
+        it("should throw error if accountToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.listBalancesForAccount("test-program-token", undefined, {}, callback)).to.throw("accountToken is required");
+        });
+
+        /** @test {Hyperwallet#listBalancesForAccount} */
+        it("should do get call with options", () => {
+            const callback = () => null;
+            client.listBalancesForAccount("test-program-token", "test-account-token", { test: "value" }, callback);
+
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("programs/test-program-token/accounts/test-account-token/balances", { test: "value" });
+        });
+
+        /** @test {Hyperwallet#listBalancesForAccount} */
+        it("should do get call without options", () => {
+            const callback = () => null;
+            client.listBalancesForAccount("test-program-token", "test-account-token", {}, callback);
+
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("programs/test-program-token/accounts/test-account-token/balances", {});
+        });
+
+        /** @test {Hyperwallet#listBalancesForAccount} */
+        it("should handle 204 return", (cb) => {
+            const callback = (err, data) => {
+                data.should.be.deep.equal({
+                    count: 0,
+                    data: [],
+                });
+
+                cb();
+            };
+            client.listBalancesForAccount("test-program-token", "test-account-token", {}, callback);
+
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("programs/test-program-token/accounts/test-account-token/balances", {});
+
+            apiClientSpy.getCall(0).args[2](undefined, {}, {
+                status: 204,
+            });
+        });
+    });
+
     //--------------------------------------
     // Payments
     //--------------------------------------
