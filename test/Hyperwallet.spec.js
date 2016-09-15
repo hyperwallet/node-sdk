@@ -22,7 +22,7 @@ describe("Hyperwallet", () => {
 
             client.client.username.should.be.equal("test-username");
             client.client.password.should.be.equal("test-password");
-            client.client.server.should.be.equal("https://sandbox.hyperwallet.com");
+            client.client.server.should.be.equal("https://api.sandbox.hyperwallet.com");
         });
 
         /** @test {Hyperwallet#constructor} */
