@@ -1564,6 +1564,51 @@ describe("Hyperwallet", () => {
         });
     });
 
+    describe("createTransferMethod()", () => {
+        let client;
+        let apiClientSpy;
+
+        beforeEach(() => {
+            apiClientSpy = sinon.spy();
+            client = new Hyperwallet({
+                username: "test-username",
+                password: "test-password",
+            });
+            client.client = {
+                doPost: apiClientSpy,
+            };
+        });
+
+        /** @test {Hyperwallet#createTransferMethod} */
+        it("should throw error if userToken is missing", () => {
+            const callback = () => null;
+            const userToken = null;
+            const cacheToken = null;
+
+            expect(() => client.createTransferMethod(userToken, cacheToken, callback)).to.throw("userToken is required");
+        });
+
+        /** @test {Hyperwallet#createTransferMethod} */
+        it("should throw error if cacheToken is missing", () => {
+            const callback = () => null;
+            const userToken = "test-user-token";
+            const cacheToken = null;
+
+            expect(() => client.createTransferMethod(userToken, cacheToken, callback)).to.throw("jsonCacheToken is required");
+        });
+
+        /** @test {Hyperwallet#createTransferMethod} */
+        it("should do post call with userToken and cacheToken", () => {
+            const callback = () => null;
+            const userToken = "test-user-token";
+            const cacheToken = "test-cache-token";
+            client.createTransferMethod(userToken, cacheToken, { test: "value" }, callback);
+
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("users/test-user-token/transfer-methods", { test: "value" }, { "Json-Cache-Token": "test-cache-token" });
+        });
+    });
+
     //--------------------------------------
     // Receipts
     //--------------------------------------

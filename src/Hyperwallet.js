@@ -700,6 +700,30 @@ export default class Hyperwallet {
         this.client.doGet("transfer-method-configurations", params, Hyperwallet.handle204Response(callback));
     }
 
+    /**
+     * Create a transfer method
+     *
+     * @param {string} userToken The user token
+     * @param {string} jsonCacheToken The json cache token supplied by the widget
+     * @param {Object} data - Transfer method data
+     * @param {api-callback} callback - The callback for this call
+     *
+     * @throws Will throw an error if userToken is not provided
+     * @throws Will throw an error if jsonCacheToken is not provided
+     */
+    createTransferMethod(userToken, jsonCacheToken, data, callback) {
+        if (!userToken) {
+            throw new Error("userToken is required");
+        }
+
+        if (!jsonCacheToken) {
+            throw new Error("jsonCacheToken is required");
+        }
+
+        const headers = { "Json-Cache-Token": jsonCacheToken };
+        this.client.doPost(`users/${encodeURIComponent(userToken)}/transfer-methods`, data, headers, callback);
+    }
+
     //--------------------------------------
     // Receipts
     //--------------------------------------
