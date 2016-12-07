@@ -1764,6 +1764,128 @@ describe("Hyperwallet", () => {
     });
 
     //--------------------------------------
+    // Webhooks
+    //--------------------------------------
+
+    describe("getWebhookConfigurations()", () => {
+        let client;
+        let apiClientSpy;
+
+        beforeEach(() => {
+            apiClientSpy = sinon.spy();
+            client = new Hyperwallet({
+                username: "test-username",
+                password: "test-password",
+            });
+            client.client = {
+                doGet: apiClientSpy,
+            };
+        });
+
+        /** @test {Hyperwallet#getWebhookConfigurations} */
+        it("should throw error if programToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.getWebhookConfigurations(undefined, {}, callback)).to.throw("programToken is required");
+        });
+
+        /** @test {Hyperwallet#getWebhookConfigurations} */
+        it("should do get call with options", () => {
+            const callback = () => null;
+            client.getWebhookConfigurations("test-program-token", { test: "value" }, callback);
+
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("webhook-configurations/test-program-token", { test: "value" });
+        });
+    });
+
+    describe("createWebhookConfiguration", () => {
+        let client;
+        let apiClientSpy;
+
+        beforeEach(() => {
+            apiClientSpy = sinon.spy();
+            client = new Hyperwallet({
+                username: "test-username",
+                password: "test-password",
+            });
+            client.client = {
+                doPost: apiClientSpy,
+            };
+        });
+
+        /** @test {Hyperwallet#createWebhookConfiguration} */
+        it("should throw error if programToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.createWebhookConfiguration(undefined, {}, callback)).to.throw("programToken is required");
+        });
+
+        /** @test {Hyperwallet#createWebhookConfiguration} */
+        it("should do post call with options", () => {
+            const callback = () => null;
+            client.createWebhookConfiguration("test-program-token", { test: "value" }, callback);
+
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("webhook-configurations/test-program-token", { test: "value" });
+        });
+    });
+
+    describe("updateWebhookConfiguration", () => {
+        let client;
+        let apiClientSpy;
+
+        beforeEach(() => {
+            apiClientSpy = sinon.spy();
+            client = new Hyperwallet({
+                username: "test-username",
+                password: "test-password",
+            });
+            client.client = {
+                doPut: apiClientSpy,
+            };
+        });
+
+        /** @test {Hyperwallet#updateWebhookConfiguration} */
+        it("should throw error if programToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.updateWebhookConfiguration(undefined, {}, callback)).to.throw("programToken is required");
+        });
+
+        /** @test {Hyperwallet#updateWebhookConfiguration} */
+        it("should do put call with options", () => {
+            const callback = () => null;
+            client.updateWebhookConfiguration("test-program-token", { test: "value" }, callback);
+
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("webhook-configurations/test-program-token", { test: "value" });
+        });
+    });
+
+    describe("getWebhookEventConfigurationTypes", () => {
+        let client;
+        let apiClientSpy;
+
+        beforeEach(() => {
+            apiClientSpy = sinon.spy();
+            client = new Hyperwallet({
+                username: "test-username",
+                password: "test-password",
+            });
+            client.client = {
+                doGet: apiClientSpy,
+            };
+        });
+
+        /** @test {Hyperwallet#getWebhookEventConfigurationTypes} */
+        it("should do get call with options", () => {
+            const callback = () => null;
+            client.getWebhookEventConfigurationTypes({ test: "value" }, callback);
+
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("webhook-event-types", { test: "value" });
+        });
+    });
+
+    //--------------------------------------
     // Internal utils
     //--------------------------------------
 

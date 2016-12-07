@@ -761,6 +761,70 @@ export default class Hyperwallet {
     }
 
     //--------------------------------------
+    // Webhooks: Configurations
+    //-------------------------------------
+
+    /**
+     * List webhook configurations
+     *
+     * @param {string} programToken - Program token
+     * @param {Object} options - The query parameters to send
+     * @param {api-callback} callback - The callback for this call
+     *
+     * @throws Will throw an error if programToken is not provided
+     */
+    getWebhookConfigurations(programToken, options, callback) {
+        if (!programToken) {
+            throw new Error("programToken is required");
+        }
+
+        this.client.doGet(`webhook-configurations/${encodeURIComponent(programToken)}`, options, Hyperwallet.handle204Response(callback));
+    }
+
+    /**
+     * Create a webhook configuration
+     *
+     * @param {string} programToken - Program token
+     * @param {Object} data - Webhook configuration data
+     * @param {api-callback} callback - The callback for this call
+     *
+     * @throws Will throw an error if programToken is not provided
+     */
+    createWebhookConfiguration(programToken, data, callback) {
+        if (!programToken) {
+            throw new Error("programToken is required");
+        }
+        this.client.doPost(`webhook-configurations/${encodeURIComponent(programToken)}`, data, {}, callback);
+    }
+
+    /**
+     * Update an existing webhook configuration
+     *
+     * @param {string} programToken - Program token
+     * @param {Object} data - Webhook configuration data
+     * @param {api-callback} callback - The callback for this call
+     *
+     * @throws Will throw an error if programToken is not provided
+     */
+    updateWebhookConfiguration(programToken, data, callback) {
+        if (!programToken) {
+            throw new Error("programToken is required");
+        }
+        this.client.doPut(`webhook-configurations/${encodeURIComponent(programToken)}`, data, {}, callback);
+    }
+
+    /**
+     * List webhook event configuration types
+     *
+     * @param {Object} options - The query parameters to send
+     * @param {api-callback} callback - The callback for this call
+     *
+     */
+    getWebhookEventConfigurationTypes(options, callback) {
+        this.client.doGet("webhook-event-types", options, Hyperwallet.handle204Response(callback));
+    }
+
+    //--------------------------------------
     // Internal utils
     //--------------------------------------
 
