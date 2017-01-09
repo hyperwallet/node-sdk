@@ -1767,7 +1767,7 @@ describe("Hyperwallet", () => {
     // Webhooks
     //--------------------------------------
 
-    describe("getWebhookNotifications()", () => {
+    describe("listWebhookNotifications()", () => {
         let client;
         let apiClientSpy;
 
@@ -1782,25 +1782,25 @@ describe("Hyperwallet", () => {
             };
         });
 
-        /** @test {Hyperwallet#getWebhookNotifications} */
+        /** @test {Hyperwallet#listWebhookNotifications} */
         it("should do get call with options", () => {
             const callback = () => null;
-            client.getWebhookNotifications({ test: "value" }, callback);
+            client.listWebhookNotifications({ test: "value" }, callback);
 
             apiClientSpy.should.have.been.calledOnce();
             apiClientSpy.should.have.been.calledWith("webhook-notifications", { test: "value" });
         });
 
-        /** @test {Hyperwallet#getWebhookNotifications} */
+        /** @test {Hyperwallet#listWebhookNotifications} */
         it("should do get call without options", () => {
             const callback = () => null;
-            client.getWebhookNotifications({}, callback);
+            client.listWebhookNotifications({}, callback);
 
             apiClientSpy.should.have.been.calledOnce();
             apiClientSpy.should.have.been.calledWith("webhook-notifications", {});
         });
 
-        /** @test {Hyperwallet#getWebhookNotifications} */
+        /** @test {Hyperwallet#listWebhookNotifications} */
         it("should handle 204 return", (cb) => {
             const callback = (err, data) => {
                 data.should.be.deep.equal({
@@ -1810,7 +1810,7 @@ describe("Hyperwallet", () => {
 
                 cb();
             };
-            client.getWebhookNotifications({}, callback);
+            client.listWebhookNotifications({}, callback);
 
             apiClientSpy.should.have.been.calledOnce();
             apiClientSpy.should.have.been.calledWith("webhook-notifications", {});

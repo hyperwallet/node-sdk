@@ -770,7 +770,7 @@ export default class Hyperwallet {
      * @param {Object} options - The query parameters to send
      * @param {api-callback} callback - The callback for this call
      */
-    getWebhookNotifications(options, callback) {
+    listWebhookNotifications(options, callback) {
         this.client.doGet("webhook-notifications", options, Hyperwallet.handle204Response(callback));
     }
 
