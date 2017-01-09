@@ -1767,7 +1767,7 @@ describe("Hyperwallet", () => {
     // Webhooks
     //--------------------------------------
 
-    describe("getWebhookConfigurations()", () => {
+    describe("getWebhookNotifications()", () => {
         let client;
         let apiClientSpy;
 
@@ -1782,23 +1782,46 @@ describe("Hyperwallet", () => {
             };
         });
 
-        /** @test {Hyperwallet#getWebhookConfigurations} */
-        it("should throw error if programToken is missing", () => {
-            const callback = () => null;
-            expect(() => client.getWebhookConfigurations(undefined, {}, callback)).to.throw("programToken is required");
-        });
-
-        /** @test {Hyperwallet#getWebhookConfigurations} */
+        /** @test {Hyperwallet#getWebhookNotifications} */
         it("should do get call with options", () => {
             const callback = () => null;
-            client.getWebhookConfigurations("test-program-token", { test: "value" }, callback);
+            client.getWebhookNotifications({ test: "value" }, callback);
 
             apiClientSpy.should.have.been.calledOnce();
-            apiClientSpy.should.have.been.calledWith("webhook-configurations/test-program-token", { test: "value" });
+            apiClientSpy.should.have.been.calledWith("webhook-notifications", { test: "value" });
+        });
+
+        /** @test {Hyperwallet#getWebhookNotifications} */
+        it("should do get call without options", () => {
+            const callback = () => null;
+            client.getWebhookNotifications({}, callback);
+
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("webhook-notifications", {});
+        });
+
+        /** @test {Hyperwallet#getWebhookNotifications} */
+        it("should handle 204 return", (cb) => {
+            const callback = (err, data) => {
+                data.should.be.deep.equal({
+                    count: 0,
+                    data: [],
+                });
+
+                cb();
+            };
+            client.getWebhookNotifications({}, callback);
+
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("webhook-notifications", {});
+
+            apiClientSpy.getCall(0).args[2](undefined, {}, {
+                status: 204,
+            });
         });
     });
 
-    describe("createWebhookConfiguration", () => {
+    describe("getWebhookNotification", () => {
         let client;
         let apiClientSpy;
 
@@ -1809,54 +1832,23 @@ describe("Hyperwallet", () => {
                 password: "test-password",
             });
             client.client = {
-                doPost: apiClientSpy,
+                doGet: apiClientSpy,
             };
         });
 
-        /** @test {Hyperwallet#createWebhookConfiguration} */
-        it("should throw error if programToken is missing", () => {
+        /** @test {Hyperwallet#getWebhookNotification} */
+        it("should throw error if webhookToken is missing", () => {
             const callback = () => null;
-            expect(() => client.createWebhookConfiguration(undefined, {}, callback)).to.throw("programToken is required");
+            expect(() => client.getWebhookNotification(undefined, {}, callback)).to.throw("webhookToken is required");
         });
 
-        /** @test {Hyperwallet#createWebhookConfiguration} */
-        it("should do post call with options", () => {
+        /** @test {Hyperwallet#getWebhookNotification} */
+        it("should do get call if webhookToken is provided", () => {
             const callback = () => null;
-            client.createWebhookConfiguration("test-program-token", { test: "value" }, callback);
+            client.getWebhookNotification("webhook-token", callback);
 
             apiClientSpy.should.have.been.calledOnce();
-            apiClientSpy.should.have.been.calledWith("webhook-configurations/test-program-token", { test: "value" });
-        });
-    });
-
-    describe("updateWebhookConfiguration", () => {
-        let client;
-        let apiClientSpy;
-
-        beforeEach(() => {
-            apiClientSpy = sinon.spy();
-            client = new Hyperwallet({
-                username: "test-username",
-                password: "test-password",
-            });
-            client.client = {
-                doPut: apiClientSpy,
-            };
-        });
-
-        /** @test {Hyperwallet#updateWebhookConfiguration} */
-        it("should throw error if programToken is missing", () => {
-            const callback = () => null;
-            expect(() => client.updateWebhookConfiguration(undefined, {}, callback)).to.throw("programToken is required");
-        });
-
-        /** @test {Hyperwallet#updateWebhookConfiguration} */
-        it("should do put call with options", () => {
-            const callback = () => null;
-            client.updateWebhookConfiguration("test-program-token", { test: "value" }, callback);
-
-            apiClientSpy.should.have.been.calledOnce();
-            apiClientSpy.should.have.been.calledWith("webhook-configurations/test-program-token", { test: "value" });
+            apiClientSpy.should.have.been.calledWith("webhook-notifications/webhook-token", {}, callback);
         });
     });
 

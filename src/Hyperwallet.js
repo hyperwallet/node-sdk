@@ -761,56 +761,33 @@ export default class Hyperwallet {
     }
 
     //--------------------------------------
-    // Webhooks: Configurations
+    // Webhooks: Notifications
     //-------------------------------------
 
     /**
-     * List webhook configurations
+     * List webhook notifications
      *
-     * @param {string} programToken - Program token
+     * @param {Object} options - The query parameters to send
+     * @param {api-callback} callback - The callback for this call
+     */
+    getWebhookNotifications(options, callback) {
+        this.client.doGet("webhook-notifications", options, Hyperwallet.handle204Response(callback));
+    }
+
+    /**
+     * Get a single webhook notification
+     *
+     * @param {string} webhookToken - Webhook token
      * @param {Object} options - The query parameters to send
      * @param {api-callback} callback - The callback for this call
      *
-     * @throws Will throw an error if programToken is not provided
+     * @throws Will throw an error if webhookToken is not provided
      */
-    getWebhookConfigurations(programToken, options, callback) {
-        if (!programToken) {
-            throw new Error("programToken is required");
+    getWebhookNotification(webhookToken, callback) {
+        if (!webhookToken) {
+            throw new Error("webhookToken is required");
         }
-
-        this.client.doGet(`webhook-configurations/${encodeURIComponent(programToken)}`, options, Hyperwallet.handle204Response(callback));
-    }
-
-    /**
-     * Create a webhook configuration
-     *
-     * @param {string} programToken - Program token
-     * @param {Object} data - Webhook configuration data
-     * @param {api-callback} callback - The callback for this call
-     *
-     * @throws Will throw an error if programToken is not provided
-     */
-    createWebhookConfiguration(programToken, data, callback) {
-        if (!programToken) {
-            throw new Error("programToken is required");
-        }
-        this.client.doPost(`webhook-configurations/${encodeURIComponent(programToken)}`, data, {}, callback);
-    }
-
-    /**
-     * Update an existing webhook configuration
-     *
-     * @param {string} programToken - Program token
-     * @param {Object} data - Webhook configuration data
-     * @param {api-callback} callback - The callback for this call
-     *
-     * @throws Will throw an error if programToken is not provided
-     */
-    updateWebhookConfiguration(programToken, data, callback) {
-        if (!programToken) {
-            throw new Error("programToken is required");
-        }
-        this.client.doPut(`webhook-configurations/${encodeURIComponent(programToken)}`, data, {}, callback);
+        this.client.doGet(`webhook-notifications/${encodeURIComponent(webhookToken)}`, {}, callback);
     }
 
     /**
