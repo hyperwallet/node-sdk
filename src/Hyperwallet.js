@@ -785,6 +785,35 @@ export default class Hyperwallet {
     }
 
     //--------------------------------------
+    // Webhooks: Notifications
+    //-------------------------------------
+
+    /**
+     * List webhook notifications
+     *
+     * @param {Object} options - The query parameters to send
+     * @param {api-callback} callback - The callback for this call
+     */
+    listWebhookNotifications(options, callback) {
+        this.client.doGet("webhook-notifications", options, Hyperwallet.handle204Response(callback));
+    }
+
+    /**
+     * Get a single webhook notification
+     *
+     * @param {string} webhookToken - Webhook token
+     * @param {api-callback} callback - The callback for this call
+     *
+     * @throws Will throw an error if webhookToken is not provided
+     */
+    getWebhookNotification(webhookToken, callback) {
+        if (!webhookToken) {
+            throw new Error("webhookToken is required");
+        }
+        this.client.doGet(`webhook-notifications/${encodeURIComponent(webhookToken)}`, {}, callback);
+    }
+
+    //--------------------------------------
     // Internal utils
     //--------------------------------------
 

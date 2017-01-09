@@ -1809,6 +1809,95 @@ describe("Hyperwallet", () => {
     });
 
     //--------------------------------------
+    // Webhooks
+    //--------------------------------------
+
+    describe("listWebhookNotifications()", () => {
+        let client;
+        let apiClientSpy;
+
+        beforeEach(() => {
+            apiClientSpy = sinon.spy();
+            client = new Hyperwallet({
+                username: "test-username",
+                password: "test-password",
+            });
+            client.client = {
+                doGet: apiClientSpy,
+            };
+        });
+
+        /** @test {Hyperwallet#listWebhookNotifications} */
+        it("should do get call with options", () => {
+            const callback = () => null;
+            client.listWebhookNotifications({ test: "value" }, callback);
+
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("webhook-notifications", { test: "value" });
+        });
+
+        /** @test {Hyperwallet#listWebhookNotifications} */
+        it("should do get call without options", () => {
+            const callback = () => null;
+            client.listWebhookNotifications({}, callback);
+
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("webhook-notifications", {});
+        });
+
+        /** @test {Hyperwallet#listWebhookNotifications} */
+        it("should handle 204 return", (cb) => {
+            const callback = (err, data) => {
+                data.should.be.deep.equal({
+                    count: 0,
+                    data: [],
+                });
+
+                cb();
+            };
+            client.listWebhookNotifications({}, callback);
+
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("webhook-notifications", {});
+
+            apiClientSpy.getCall(0).args[2](undefined, {}, {
+                status: 204,
+            });
+        });
+    });
+
+    describe("getWebhookNotification", () => {
+        let client;
+        let apiClientSpy;
+
+        beforeEach(() => {
+            apiClientSpy = sinon.spy();
+            client = new Hyperwallet({
+                username: "test-username",
+                password: "test-password",
+            });
+            client.client = {
+                doGet: apiClientSpy,
+            };
+        });
+
+        /** @test {Hyperwallet#getWebhookNotification} */
+        it("should throw error if webhookToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.getWebhookNotification(undefined, {}, callback)).to.throw("webhookToken is required");
+        });
+
+        /** @test {Hyperwallet#getWebhookNotification} */
+        it("should do get call if webhookToken is provided", () => {
+            const callback = () => null;
+            client.getWebhookNotification("webhook-token", callback);
+
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("webhook-notifications/webhook-token", {}, callback);
+        });
+    });
+
+    //--------------------------------------
     // Internal utils
     //--------------------------------------
 
