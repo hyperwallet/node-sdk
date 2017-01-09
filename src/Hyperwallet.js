@@ -778,7 +778,6 @@ export default class Hyperwallet {
      * Get a single webhook notification
      *
      * @param {string} webhookToken - Webhook token
-     * @param {Object} options - The query parameters to send
      * @param {api-callback} callback - The callback for this call
      *
      * @throws Will throw an error if webhookToken is not provided
