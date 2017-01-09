@@ -1852,31 +1852,6 @@ describe("Hyperwallet", () => {
         });
     });
 
-    describe("getWebhookEventConfigurationTypes", () => {
-        let client;
-        let apiClientSpy;
-
-        beforeEach(() => {
-            apiClientSpy = sinon.spy();
-            client = new Hyperwallet({
-                username: "test-username",
-                password: "test-password",
-            });
-            client.client = {
-                doGet: apiClientSpy,
-            };
-        });
-
-        /** @test {Hyperwallet#getWebhookEventConfigurationTypes} */
-        it("should do get call with options", () => {
-            const callback = () => null;
-            client.getWebhookEventConfigurationTypes({ test: "value" }, callback);
-
-            apiClientSpy.should.have.been.calledOnce();
-            apiClientSpy.should.have.been.calledWith("webhook-event-types", { test: "value" });
-        });
-    });
-
     //--------------------------------------
     // Internal utils
     //--------------------------------------

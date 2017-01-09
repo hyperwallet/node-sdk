@@ -789,17 +789,6 @@ export default class Hyperwallet {
         this.client.doGet(`webhook-notifications/${encodeURIComponent(webhookToken)}`, {}, callback);
     }
 
-    /**
-     * List webhook event configuration types
-     *
-     * @param {Object} options - The query parameters to send
-     * @param {api-callback} callback - The callback for this call
-     *
-     */
-    getWebhookEventConfigurationTypes(options, callback) {
-        this.client.doGet("webhook-event-types", options, Hyperwallet.handle204Response(callback));
-    }
-
     //--------------------------------------
     // Internal utils
     //--------------------------------------
