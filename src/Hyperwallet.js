@@ -363,6 +363,164 @@ export default class Hyperwallet {
     }
 
     //--------------------------------------
+    // Bank Cards
+    //--------------------------------------
+
+    /**
+     * Create a Bank card
+     *
+     * @param {string} userToken - The user token
+     * @param {Object} data - The bank card data
+     * @param {api-callback} callback - The callback for this call
+     *
+     * @throws Will throw an error if userToken is not provided
+     */
+    createBankCard(userToken, data, callback) {
+        if (!userToken) {
+            throw new Error("userToken is required");
+        }
+        this.client.doPost(`users/${encodeURIComponent(userToken)}/bank-cards`, data, {}, callback);
+    }
+
+    /**
+     * Get a bank card
+     *
+     * @param {string} userToken - The user token
+     * @param {string} bankCardToken - The bank card token
+     * @param {api-callback} callback - The callback for this call
+     *
+     * @throws Will throw an error if userToken or bankCardToken is not provided
+     */
+    getBankCard(userToken, bankCardToken, callback) {
+        if (!userToken) {
+            throw new Error("userToken is required");
+        }
+        if (!bankCardToken) {
+            throw new Error("bankCardToken is required");
+        }
+        this.client.doGet(`users/${encodeURIComponent(userToken)}/bank-cards/${encodeURIComponent(bankCardToken)}`, {}, callback);
+    }
+
+    /**
+     * Update a bank card
+     *
+     * @param {string} userToken - The user token
+     * @param {string} bankCardToken - The bank card token
+     * @param {Object} data - The bank card data to update
+     * @param {api-callback} callback - The callback for this call
+     *
+     * @throws Will throw an error if userToken or bankCardToken is not provided
+     */
+    updateBankCard(userToken, bankCardToken, data, callback) {
+        if (!userToken) {
+            throw new Error("userToken is required");
+        }
+        if (!bankCardToken) {
+            throw new Error("bankCardToken is required");
+        }
+        this.client.doPut(`users/${encodeURIComponent(userToken)}/bank-cards/${encodeURIComponent(bankCardToken)}`, data, {}, callback);
+    }
+
+    /**
+     * List all bank cards
+     *
+     * @param {string} userToken - The user token
+     * @param {Object} options - The query parameters to send
+     * @param {api-callback} callback - The callback for this call
+     * @throws Will throw an error if userToken is not provided
+     */
+    listBankCards(userToken, options, callback) {
+        if (!userToken) {
+            throw new Error("userToken is required");
+        }
+        this.client.doGet(`users/${encodeURIComponent(userToken)}/bank-cards`, options, Hyperwallet.handle204Response(callback));
+    }
+
+    /**
+     * Deactivate a bank card
+     *
+     * @param {string} userToken - The user token
+     * @param {string} bankCardToken - The bank card token
+     * @param {api-callback} callback - The callback for this call
+     * @throws Will throw an error if userToken or bankCardToken is not provided
+     */
+    deactivateBankCard(userToken, bankCardToken, callback) {
+        if (!userToken) {
+            throw new Error("userToken is required");
+        }
+        if (!bankCardToken) {
+            throw new Error("bankCardToken is required");
+        }
+
+        const transition = {
+            transition: "DE_ACTIVATED",
+        };
+        this.client.doPost(`users/${encodeURIComponent(userToken)}/bank-cards/${encodeURIComponent(bankCardToken)}/status-transitions`, transition, {}, callback);
+    }
+
+    /**
+     * Create a bank card status transition
+     *
+     * @param {string} userToken - The user token
+     * @param {string} bankCardToken - The bank card token
+     * @param {Object} data - The bank card status transition data
+     * @param {api-callback} callback - The callback for this call
+     * @throws Will throw an error if userToken or bankCardToken is not provided
+     */
+    createBankCardStatusTransition(userToken, bankCardToken, data, callback) {
+        if (!userToken) {
+            throw new Error("userToken is required");
+        }
+        if (!bankCardToken) {
+            throw new Error("bankCardToken is required");
+        }
+
+        this.client.doPost(`users/${encodeURIComponent(userToken)}/bank-cards/${encodeURIComponent(bankCardToken)}/status-transitions`, data, {}, callback);
+    }
+
+    /**
+     * Get a bank card status transition
+     *
+     * @param {string} userToken - The user token
+     * @param {string} bankCardToken - The bank card token
+     * @param {string} statusTransitionToken - The bank card status transition token
+     * @param {api-callback} callback - The callback for this call
+     * @throws Will throw an error if userToken, bankCardToken or statusTransitionToken is not provided
+     */
+    getBankCardStatusTransition(userToken, bankCardToken, statusTransitionToken, callback) {
+        if (!userToken) {
+            throw new Error("userToken is required");
+        }
+        if (!bankCardToken) {
+            throw new Error("bankCardToken is required");
+        }
+        if (!statusTransitionToken) {
+            throw new Error("statusTransitionToken is required");
+        }
+
+        this.client.doGet(`users/${encodeURIComponent(userToken)}/bank-cards/${encodeURIComponent(bankCardToken)}/status-transitions/${encodeURIComponent(statusTransitionToken)}`, {}, callback);
+    }
+
+    /**
+     * List all bank card status transitions
+     *
+     * @param {string} userToken - The user token
+     * @param {string} bankCardToken - The bank card token
+     * @param {Object} options - The query parameters to send
+     * @param {api-callback} callback - The callback for this call
+     * @throws Will throw an error if userToken or bankCardToken is not provided
+     */
+    listBankCardStatusTransitions(userToken, bankCardToken, options, callback) {
+        if (!userToken) {
+            throw new Error("userToken is required");
+        }
+        if (!bankCardToken) {
+            throw new Error("bankCardToken is required");
+        }
+        this.client.doGet(`users/${encodeURIComponent(userToken)}/bank-cards/${encodeURIComponent(bankCardToken)}/status-transitions`, options, Hyperwallet.handle204Response(callback));
+    }
+
+    //--------------------------------------
     // Bank Accounts
     //--------------------------------------
 

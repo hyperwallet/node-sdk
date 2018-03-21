@@ -4,6 +4,7 @@ Changelog
 0.2.0 (in progress)
 -------------------
 
+- Added bank card endpoint
 - Added list program account receipt endpoint
 - Added list user receipt endpoint
 - Added list prepaid card receipt endpoint
