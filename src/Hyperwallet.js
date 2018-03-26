@@ -521,6 +521,164 @@ export default class Hyperwallet {
     }
 
     //--------------------------------------
+    // Paper Checks
+    //--------------------------------------
+
+    /**
+     * Create a paper check
+     *
+     * @param {string} userToken - The user token
+     * @param {Object} data - The paper check data
+     * @param {api-callback} callback - The callback for this call
+     *
+     * @throws Will throw an error if userToken is not provided
+     */
+    createPaperCheck(userToken, data, callback) {
+        if (!userToken) {
+            throw new Error("userToken is required");
+        }
+        this.client.doPost(`users/${encodeURIComponent(userToken)}/paper-checks`, data, {}, callback);
+    }
+
+    /**
+     * Get a paper check
+     *
+     * @param {string} userToken - The user token
+     * @param {string} paperCheckToken - The paper check token
+     * @param {api-callback} callback - The callback for this call
+     *
+     * @throws Will throw an error if userToken or paperCheckToken is not provided
+     */
+    getPaperCheck(userToken, paperCheckToken, callback) {
+        if (!userToken) {
+            throw new Error("userToken is required");
+        }
+        if (!paperCheckToken) {
+            throw new Error("paperCheckToken is required");
+        }
+        this.client.doGet(`users/${encodeURIComponent(userToken)}/paper-checks/${encodeURIComponent(paperCheckToken)}`, {}, callback);
+    }
+
+    /**
+     * Update a paper check
+     *
+     * @param {string} userToken - The user token
+     * @param {string} paperCheckToken - The paper check token
+     * @param {Object} data - The paper check data to update
+     * @param {api-callback} callback - The callback for this call
+     *
+     * @throws Will throw an error if userToken or paperCheckToken is not provided
+     */
+    updatePaperCheck(userToken, paperCheckToken, data, callback) {
+        if (!userToken) {
+            throw new Error("userToken is required");
+        }
+        if (!paperCheckToken) {
+            throw new Error("paperCheckToken is required");
+        }
+        this.client.doPut(`users/${encodeURIComponent(userToken)}/paper-checks/${encodeURIComponent(paperCheckToken)}`, data, {}, callback);
+    }
+
+    /**
+     * List all paper checks
+     *
+     * @param {string} userToken - The user token
+     * @param {Object} options - The query parameters to send
+     * @param {api-callback} callback - The callback for this call
+     * @throws Will throw an error if userToken is not provided
+     */
+    listPaperChecks(userToken, options, callback) {
+        if (!userToken) {
+            throw new Error("userToken is required");
+        }
+        this.client.doGet(`users/${encodeURIComponent(userToken)}/paper-checks`, options, Hyperwallet.handle204Response(callback));
+    }
+
+    /**
+     * Deactivate a paper check
+     *
+     * @param {string} userToken - The user token
+     * @param {string} paperCheckToken - The paper check token
+     * @param {api-callback} callback - The callback for this call
+     * @throws Will throw an error if userToken or paperCheckToken is not provided
+     */
+    deactivatePaperCheck(userToken, paperCheckToken, callback) {
+        if (!userToken) {
+            throw new Error("userToken is required");
+        }
+        if (!paperCheckToken) {
+            throw new Error("paperCheckToken is required");
+        }
+
+        const transition = {
+            transition: "DE_ACTIVATED",
+        };
+        this.client.doPost(`users/${encodeURIComponent(userToken)}/paper-checks/${encodeURIComponent(paperCheckToken)}/status-transitions`, transition, {}, callback);
+    }
+
+    /**
+     * Create a paper check status transition
+     *
+     * @param {string} userToken - The user token
+     * @param {string} paperCheckToken - The paper check token
+     * @param {Object} data - The paper check status transition data
+     * @param {api-callback} callback - The callback for this call
+     * @throws Will throw an error if userToken or paperCheckToken is not provided
+     */
+    createPaperCheckStatusTransition(userToken, paperCheckToken, data, callback) {
+        if (!userToken) {
+            throw new Error("userToken is required");
+        }
+        if (!paperCheckToken) {
+            throw new Error("paperCheckToken is required");
+        }
+
+        this.client.doPost(`users/${encodeURIComponent(userToken)}/paper-checks/${encodeURIComponent(paperCheckToken)}/status-transitions`, data, {}, callback);
+    }
+
+    /**
+     * Get a paper check status transition
+     *
+     * @param {string} userToken - The user token
+     * @param {string} paperCheckToken - The paper check token
+     * @param {string} statusTransitionToken - The paper check status transition token
+     * @param {api-callback} callback - The callback for this call
+     * @throws Will throw an error if userToken, paperCheckToken or statusTransitionToken is not provided
+     */
+    getPaperCheckStatusTransition(userToken, paperCheckToken, statusTransitionToken, callback) {
+        if (!userToken) {
+            throw new Error("userToken is required");
+        }
+        if (!paperCheckToken) {
+            throw new Error("paperCheckToken is required");
+        }
+        if (!statusTransitionToken) {
+            throw new Error("statusTransitionToken is required");
+        }
+
+        this.client.doGet(`users/${encodeURIComponent(userToken)}/paper-checks/${encodeURIComponent(paperCheckToken)}/status-transitions/${encodeURIComponent(statusTransitionToken)}`, {}, callback);
+    }
+
+    /**
+     * List all paper check status transitions
+     *
+     * @param {string} userToken - The user token
+     * @param {string} paperCheckToken - The paper check token
+     * @param {Object} options - The query parameters to send
+     * @param {api-callback} callback - The callback for this call
+     * @throws Will throw an error if userToken or paperCheckToken is not provided
+     */
+    listPaperCheckStatusTransitions(userToken, paperCheckToken, options, callback) {
+        if (!userToken) {
+            throw new Error("userToken is required");
+        }
+        if (!paperCheckToken) {
+            throw new Error("paperCheckToken is required");
+        }
+        this.client.doGet(`users/${encodeURIComponent(userToken)}/paper-checks/${encodeURIComponent(paperCheckToken)}/status-transitions`, options, Hyperwallet.handle204Response(callback));
+    }
+
+    //--------------------------------------
     // Bank Accounts
     //--------------------------------------
 

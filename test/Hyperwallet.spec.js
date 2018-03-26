@@ -283,6 +283,7 @@ describe("Hyperwallet", () => {
             });
         });
     });
+
     //--------------------------------------
     // Bank Cards
     //--------------------------------------
@@ -654,6 +655,384 @@ describe("Hyperwallet", () => {
 
             apiClientSpy.should.have.been.calledOnce();
             apiClientSpy.should.have.been.calledWith("users/test-user-token/bank-cards/test-bank-card-token/status-transitions", {});
+
+            apiClientSpy.getCall(0).args[2](undefined, {}, {
+                status: 204,
+            });
+        });
+    });
+
+    //--------------------------------------
+    // Paper Checks
+    //--------------------------------------
+
+    /** @test {Hyperwallet#createPaperCheck} */
+    describe("createPaperCheck()", () => {
+        let client;
+        let apiClientSpy;
+
+        beforeEach(() => {
+            apiClientSpy = sinon.spy();
+            client = new Hyperwallet({
+                username: "test-username",
+                password: "test-password",
+            });
+            client.client = {
+                doPost: apiClientSpy,
+            };
+        });
+
+        /** @test {Hyperwallet#createPaperCheck} */
+        it("should throw error if userToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.createPaperCheck(undefined, { test: "value" }, callback)).to.throw("userToken is required");
+        });
+
+        /** @test {Hyperwallet#createPaperCheck} */
+        it("should do post call to paper checks endpoint", () => {
+            const callback = () => null;
+            client.createPaperCheck("test-user-token", {
+                test: "value",
+            }, callback);
+
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("users/test-user-token/paper-checks", {
+                test: "value",
+            }, {}, callback);
+        });
+    });
+
+    /** @test {Hyperwallet#getPaperCheck} */
+    describe("getPaperCheck()", () => {
+        let client;
+        let apiClientSpy;
+
+        beforeEach(() => {
+            apiClientSpy = sinon.spy();
+            client = new Hyperwallet({
+                username: "test-username",
+                password: "test-password",
+            });
+            client.client = {
+                doGet: apiClientSpy,
+            };
+        });
+
+        /** @test {Hyperwallet#getPaperCheck} */
+        it("should throw error if userToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.getPaperCheck(undefined, undefined, callback)).to.throw("userToken is required");
+        });
+
+        /** @test {Hyperwallet#getPaperCheck} */
+        it("should throw error if paperCheckToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.getPaperCheck("test-user-token", undefined, callback)).to.throw("paperCheckToken is required");
+        });
+
+        /** @test {Hyperwallet#getPaperCheck} */
+        it("should do get call if userToken and paperCheckToken is provided", () => {
+            const callback = () => null;
+            client.getPaperCheck("test-user-token", "test-paper-check-token", callback);
+
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("users/test-user-token/paper-checks/test-paper-check-token", {}, callback);
+        });
+    });
+
+    /** @test {Hyperwallet#updatePaperCheck} */
+    describe("updatePaperCheck()", () => {
+        let client;
+        let apiClientSpy;
+
+        beforeEach(() => {
+            apiClientSpy = sinon.spy();
+            client = new Hyperwallet({
+                username: "test-username",
+                password: "test-password",
+            });
+            client.client = {
+                doPut: apiClientSpy,
+            };
+        });
+
+        /** @test {Hyperwallet#updatePaperCheck} */
+        it("should throw error if userToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.updatePaperCheck(undefined, undefined, { test: "value" }, callback)).to.throw("userToken is required");
+        });
+
+        /** @test {Hyperwallet#updatePaperCheck} */
+        it("should throw error if paperCheckToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.updatePaperCheck("test-user-token", undefined, { test: "value" }, callback)).to.throw("paperCheckToken is required");
+        });
+
+        /** @test {Hyperwallet#updatePaperCheck} */
+        it("should do put call to paper checks endpoint", () => {
+            const callback = () => null;
+            client.updatePaperCheck("test-user-token", "test-paper-check-token", {
+                test: "value",
+            }, callback);
+
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("users/test-user-token/paper-checks/test-paper-check-token", {
+                test: "value",
+            }, {}, callback);
+        });
+    });
+
+    /** @test {Hyperwallet#listPaperChecks} */
+    describe("listPaperChecks()", () => {
+        let client;
+        let apiClientSpy;
+
+        beforeEach(() => {
+            apiClientSpy = sinon.spy();
+            client = new Hyperwallet({
+                username: "test-username",
+                password: "test-password",
+            });
+            client.client = {
+                doGet: apiClientSpy,
+            };
+        });
+
+        /** @test {Hyperwallet#listPaperChecks} */
+        it("should throw error if userToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.listPaperChecks(undefined, {}, callback)).to.throw("userToken is required");
+        });
+
+        /** @test {Hyperwallet#listPaperChecks} */
+        it("should do get call with options", () => {
+            const callback = () => null;
+            client.listPaperChecks("test-user-token", { test: "value" }, callback);
+
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("users/test-user-token/paper-checks", { test: "value" });
+        });
+
+        /** @test {Hyperwallet#listPaperChecks} */
+        it("should do get call without options", () => {
+            const callback = () => null;
+            client.listPaperChecks("test-user-token", {}, callback);
+
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("users/test-user-token/paper-checks", {});
+        });
+
+        /** @test {Hyperwallet#listPaperChecks} */
+        it("should handle 204 return", (cb) => {
+            const callback = (err, data) => {
+                data.should.be.deep.equal({
+                    count: 0,
+                    data: [],
+                });
+
+                cb();
+            };
+            client.listPaperChecks("test-user-token", {}, callback);
+
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("users/test-user-token/paper-checks", {});
+
+            apiClientSpy.getCall(0).args[2](undefined, {}, {
+                status: 204,
+            });
+        });
+    });
+
+    /** @test {Hyperwallet#deactivatePaperCheck} */
+    describe("deactivate()", () => {
+        let client;
+        let apiClientSpy;
+
+        beforeEach(() => {
+            apiClientSpy = sinon.spy();
+            client = new Hyperwallet({
+                username: "test-username",
+                password: "test-password",
+            });
+            client.client = {
+                doPost: apiClientSpy,
+            };
+        });
+
+        /**
+         * @test {Hyperwallet#deactivatePaperCheck}
+         */
+        it("should throw error if userToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.deactivatePaperCheck(undefined, undefined, callback)).to.throw("userToken is required");
+        });
+
+        /**
+         * @test {Hyperwallet#deactivatePaperCheck}
+         */
+        it("should throw error if paperCheckToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.deactivatePaperCheck("test-user-token", undefined, callback)).to.throw("paperCheckToken is required");
+        });
+
+        /**
+         * @test {Hyperwallet#deactivatePaperCheck}
+         */
+        it("should send transition to 'DE_ACTIVATED'", () => {
+            const callback = () => null;
+            client.deactivatePaperCheck("test-user-token", "test-paper-check-token", callback);
+
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("users/test-user-token/paper-checks/test-paper-check-token/status-transitions", {
+                transition: "DE_ACTIVATED",
+            }, {}, callback);
+        });
+    });
+
+    /** @test {Hyperwallet#createPaperCheckStatusTransition} */
+    describe("createPaperCheckStatusTransition()", () => {
+        let client;
+        let apiClientSpy;
+
+        beforeEach(() => {
+            apiClientSpy = sinon.spy();
+            client = new Hyperwallet({
+                username: "test-username",
+                password: "test-password",
+            });
+            client.client = {
+                doPost: apiClientSpy,
+            };
+        });
+
+        /** @test {Hyperwallet#createPaperCheckStatusTransition} */
+        it("should throw error if userToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.createPaperCheckStatusTransition(undefined, undefined, { test: "value" }, callback)).to.throw("userToken is required");
+        });
+
+        /** @test {Hyperwallet#createPaperCheckStatusTransition} */
+        it("should throw error if paperCheckToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.createPaperCheckStatusTransition("test-user-token", undefined, { test: "value" }, callback)).to.throw("paperCheckToken is required");
+        });
+
+        /** @test {Hyperwallet#createPaperCheckStatusTransition} */
+        it("should send post call to paper check status transition endpoint", () => {
+            const callback = () => null;
+            client.createPaperCheckStatusTransition("test-user-token", "test-paper-check-token", { test: "value" }, callback);
+
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("users/test-user-token/paper-checks/test-paper-check-token/status-transitions", {
+                test: "value",
+            }, {}, callback);
+        });
+    });
+
+    /** @test {Hyperwallet#getPaperCheckStatusTransition} */
+    describe("getPaperCheckStatusTransition()", () => {
+        let client;
+        let apiClientSpy;
+
+        beforeEach(() => {
+            apiClientSpy = sinon.spy();
+            client = new Hyperwallet({
+                username: "test-username",
+                password: "test-password",
+            });
+            client.client = {
+                doGet: apiClientSpy,
+            };
+        });
+
+        /** @test {Hyperwallet#getPaperCheckStatusTransition} */
+        it("should throw error if userToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.getPaperCheckStatusTransition(undefined, undefined, undefined, callback)).to.throw("userToken is required");
+        });
+
+        /** @test {Hyperwallet#getPaperCheckStatusTransition} */
+        it("should throw error if paperCheckToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.getPaperCheckStatusTransition("test-user-token", undefined, undefined, callback)).to.throw("paperCheckToken is required");
+        });
+
+        /** @test {Hyperwallet#getPaperCheckStatusTransition} */
+        it("should throw error if statusTransitionToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.getPaperCheckStatusTransition("test-user-token", "test-paper-check-token", undefined, callback)).to.throw("statusTransitionToken is required");
+        });
+
+        /** @test {Hyperwallet#getPaperCheckStatusTransition} */
+        it("should do get call if userToken, paperCheckToken and statusTransitionToken is provided", () => {
+            const callback = () => null;
+            client.getPaperCheckStatusTransition("test-user-token", "test-paper-check-token", "status-transition-token", callback);
+
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("users/test-user-token/paper-checks/test-paper-check-token/status-transitions/status-transition-token", {}, callback);
+        });
+    });
+
+    /** @test {Hyperwallet#listPaperCheckStatusTransitions} */
+    describe("listPaperCheckStatusTransitions()", () => {
+        let client;
+        let apiClientSpy;
+
+        beforeEach(() => {
+            apiClientSpy = sinon.spy();
+            client = new Hyperwallet({
+                username: "test-username",
+                password: "test-password",
+            });
+            client.client = {
+                doGet: apiClientSpy,
+            };
+        });
+
+        /** @test {Hyperwallet#listPaperCheckStatusTransitions} */
+        it("should throw error if userToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.listPaperCheckStatusTransitions(undefined, undefined, {}, callback)).to.throw("userToken is required");
+        });
+
+        /** @test {Hyperwallet#listPaperCheckStatusTransitions} */
+        it("should throw error if paperCheckToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.listPaperCheckStatusTransitions("test-user-token", undefined, {}, callback)).to.throw("paperCheckToken is required");
+        });
+
+        /** @test {Hyperwallet#listPaperCheckStatusTransitions} */
+        it("should do get call with options", () => {
+            const callback = () => null;
+            client.listPaperCheckStatusTransitions("test-user-token", "test-paper-check-token", { test: "value" }, callback);
+
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("users/test-user-token/paper-checks/test-paper-check-token/status-transitions", { test: "value" });
+        });
+
+        /** @test {Hyperwallet#listPaperCheckStatusTransitions} */
+        it("should do get call without options", () => {
+            const callback = () => null;
+            client.listPaperCheckStatusTransitions("test-user-token", "test-paper-check-token", {}, callback);
+
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("users/test-user-token/paper-checks/test-paper-check-token/status-transitions", {});
+        });
+
+        /** @test {Hyperwallet#listPaperCheckStatusTransitions} */
+        it("should handle 204 return", (cb) => {
+            const callback = (err, data) => {
+                data.should.be.deep.equal({
+                    count: 0,
+                    data: [],
+                });
+
+                cb();
+            };
+            client.listPaperCheckStatusTransitions("test-user-token", "test-paper-check-token", {}, callback);
+
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("users/test-user-token/paper-checks/test-paper-check-token/status-transitions", {});
 
             apiClientSpy.getCall(0).args[2](undefined, {}, {
                 status: 204,
