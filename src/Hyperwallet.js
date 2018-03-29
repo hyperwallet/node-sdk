@@ -796,6 +796,32 @@ export default class Hyperwallet {
     }
 
     /**
+     * Get bank account status transition
+     *
+     * @param {string} userToken - The user token
+     * @param {string} bankAccountToken - The bank account token
+     * @param {string} bankAccountToken - The bank account token
+     * @param {string} statusTransitionToken - The bank account status transition token
+     * @param {api-callback} callback - The callback for this call
+     *
+     * @throws Will throw an error if userToken or bankAccountToken is not provided
+     */
+    getBankAccountStatusTransition(userToken, bankAccountToken, statusTransitionToken, callback) {
+        if (!userToken) {
+            throw new Error("userToken is required");
+        }
+        if (!bankAccountToken) {
+            throw new Error("bankAccountToken is required");
+        }
+        if (!statusTransitionToken) {
+            throw new Error("statusTransitionToken is required");
+        }
+        this.client.doGet(`users/${encodeURIComponent(userToken)}/bank-accounts/${encodeURIComponent(bankAccountToken)}/status-transitions/${encodeURIComponent(statusTransitionToken)}`,
+            {},
+            callback);
+    }
+
+    /**
      * List all bank account status transitions
      *
      * @param {string} userToken - The user token
@@ -913,6 +939,60 @@ export default class Hyperwallet {
      */
     listPayments(options, callback) {
         this.client.doGet("payments", options, Hyperwallet.handle204Response(callback));
+    }
+
+    /**
+     * Create a payment status transition
+     *
+     * @param {string} paymentToken - The payment token
+     * @param {Object} data - The payment status transition data
+     * @param {api-callback} callback - The callback for this call
+     * @throws Will throw an error if paymentToken is not provided
+     */
+    createPaymentStatusTransition(paymentToken, data, callback) {
+        if (!paymentToken) {
+            throw new Error("paymentToken is required");
+        }
+
+        this.client.doPost(`payments/${encodeURIComponent(paymentToken)}/status-transitions`, data, {}, callback);
+    }
+
+    /**
+     * Get payment status transition
+     *
+     * @param {string} paymentToken - The payment token
+     * @param {string} paymentToken - The payment token
+     * @param {string} statusTransitionToken - The payment status transition token
+     * @param {api-callback} callback - The callback for this call
+     *
+     * @throws Will throw an error if paymentToken is not provided
+     */
+    getPaymentStatusTransition(paymentToken, statusTransitionToken, callback) {
+        if (!paymentToken) {
+            throw new Error("paymentToken is required");
+        }
+        if (!statusTransitionToken) {
+            throw new Error("statusTransitionToken is required");
+        }
+        this.client.doGet(`payments/${encodeURIComponent(paymentToken)}/status-transitions/${encodeURIComponent(statusTransitionToken)}`,
+            {},
+            callback);
+    }
+
+    /**
+     * List all payment status transitions
+     *
+     * @param {string} paymentToken - The payment token
+     * @param {Object} options - The query parameters to send
+     * @param {api-callback} callback - The callback for this call
+     *
+     * @throws Will throw an error if paymentToken is not provided
+     */
+    listPaymentStatusTransitions(paymentToken, options, callback) {
+        if (!paymentToken) {
+            throw new Error("paymentToken is required");
+        }
+        this.client.doGet(`payments/${encodeURIComponent(paymentToken)}/status-transitions`, options, Hyperwallet.handle204Response(callback));
     }
 
     //--------------------------------------

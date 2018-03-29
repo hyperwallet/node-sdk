@@ -1705,6 +1705,50 @@ describe("Hyperwallet", () => {
         });
     });
 
+    /** @test {Hyperwallet#getBankAccountStatusTransition} */
+    describe("getBankAccountStatusTransition()", () => {
+        let client;
+        let apiClientSpy;
+
+        beforeEach(() => {
+            apiClientSpy = sinon.spy();
+            client = new Hyperwallet({
+                username: "test-username",
+                password: "test-password",
+            });
+            client.client = {
+                doGet: apiClientSpy,
+            };
+        });
+
+        /** @test {Hyperwallet#getBankAccountStatusTransition} */
+        it("should throw error if userToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.getBankAccountStatusTransition(undefined, undefined, undefined, callback)).to.throw("userToken is required");
+        });
+
+        /** @test {Hyperwallet#getBankAccountStatusTransition} */
+        it("should throw error if bankAccountToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.getBankAccountStatusTransition("test-user-token", undefined, undefined, callback)).to.throw("bankAccountToken is required");
+        });
+
+        /** @test {Hyperwallet#getBankAccountStatusTransition} */
+        it("should throw error if statusTransitionToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.getBankAccountStatusTransition("test-user-token", "test-bank-account-token", undefined, callback)).to.throw("statusTransitionToken is required");
+        });
+
+        /** @test {Hyperwallet#getBankAccountStatusTransition} */
+        it("should do get call if userToken, bankAccountToken and statusTransitionToken is provided", () => {
+            const callback = () => null;
+            client.getBankAccountStatusTransition("test-user-token", "test-bank-account-token", "status-transition-token", callback);
+
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("users/test-user-token/bank-accounts/test-bank-account-token/status-transitions/status-transition-token", {}, callback);
+        });
+    });
+
     /** @test {Hyperwallet#listBankAccountStatusTransitions} */
     describe("listBankAccountStatusTransitions()", () => {
         let client;
@@ -2101,6 +2145,139 @@ describe("Hyperwallet", () => {
 
             apiClientSpy.should.have.been.calledOnce();
             apiClientSpy.should.have.been.calledWith("payments", {});
+
+            apiClientSpy.getCall(0).args[2](undefined, {}, {
+                status: 204,
+            });
+        });
+    });
+
+    /** @test {Hyperwallet#createPaymentStatusTransition} */
+    describe("createPaymentStatusTransition()", () => {
+        let client;
+        let apiClientSpy;
+
+        beforeEach(() => {
+            apiClientSpy = sinon.spy();
+            client = new Hyperwallet({
+                username: "test-username",
+                password: "test-password",
+            });
+            client.client = {
+                doPost: apiClientSpy,
+            };
+        });
+
+        /** @test {Hyperwallet#createPaymentStatusTransition} */
+        it("should throw error if paymentToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.createPaymentStatusTransition(undefined, { test: "value" }, callback)).to.throw("paymentToken is required");
+        });
+
+        /** @test {Hyperwallet#createPaymentStatusTransition} */
+        it("should send post call to payment status transition endpoint", () => {
+            const callback = () => null;
+            client.createPaymentStatusTransition("test-payment-token", { test: "value" }, callback);
+
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("payments/test-payment-token/status-transitions", {
+                test: "value",
+            }, {}, callback);
+        });
+    });
+
+    /** @test {Hyperwallet#getPaymentStatusTransition} */
+    describe("getPaymentStatusTransition()", () => {
+        let client;
+        let apiClientSpy;
+
+        beforeEach(() => {
+            apiClientSpy = sinon.spy();
+            client = new Hyperwallet({
+                username: "test-username",
+                password: "test-password",
+            });
+            client.client = {
+                doGet: apiClientSpy,
+            };
+        });
+
+        /** @test {Hyperwallet#getPaymentStatusTransition} */
+        it("should throw error if paymentToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.getPaymentStatusTransition(undefined, undefined, callback)).to.throw("paymentToken is required");
+        });
+
+        /** @test {Hyperwallet#getPaymentStatusTransition} */
+        it("should throw error if statusTransitionToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.getPaymentStatusTransition("test-payment-token", undefined, callback)).to.throw("statusTransitionToken is required");
+        });
+
+        /** @test {Hyperwallet#getPaymentStatusTransition} */
+        it("should do get call if paymentToken and statusTransitionToken is provided", () => {
+            const callback = () => null;
+            client.getPaymentStatusTransition("test-payment-token", "status-transition-token", callback);
+
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("payments/test-payment-token/status-transitions/status-transition-token", {}, callback);
+        });
+    });
+
+    /** @test {Hyperwallet#listPaymentStatusTransitions} */
+    describe("listPaymentStatusTransitions()", () => {
+        let client;
+        let apiClientSpy;
+
+        beforeEach(() => {
+            apiClientSpy = sinon.spy();
+            client = new Hyperwallet({
+                username: "test-username",
+                password: "test-password",
+            });
+            client.client = {
+                doGet: apiClientSpy,
+            };
+        });
+
+        /** @test {Hyperwallet#listPaymentStatusTransitions} */
+        it("should throw error if paymentToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.listPaymentStatusTransitions(undefined, {}, callback)).to.throw("paymentToken is required");
+        });
+
+        /** @test {Hyperwallet#listPaymentStatusTransitions} */
+        it("should do get call with options", () => {
+            const callback = () => null;
+            client.listPaymentStatusTransitions("test-payment-token", { test: "value" }, callback);
+
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("payments/test-payment-token/status-transitions", { test: "value" });
+        });
+
+        /** @test {Hyperwallet#listPaymentStatusTransitions} */
+        it("should do get call without options", () => {
+            const callback = () => null;
+            client.listPaymentStatusTransitions("test-payment-token", {}, callback);
+
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("payments/test-payment-token/status-transitions", {});
+        });
+
+        /** @test {Hyperwallet#listPaymentStatusTransitions} */
+        it("should handle 204 return", (cb) => {
+            const callback = (err, data) => {
+                data.should.be.deep.equal({
+                    count: 0,
+                    data: [],
+                });
+
+                cb();
+            };
+            client.listPaymentStatusTransitions("test-payment-token", {}, callback);
+
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("payments/test-payment-token/status-transitions", {});
 
             apiClientSpy.getCall(0).args[2](undefined, {}, {
                 status: 204,
