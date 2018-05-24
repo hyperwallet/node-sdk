@@ -94,6 +94,43 @@ export default class Hyperwallet {
         this.client.doGet("users", options, Hyperwallet.handle204Response(callback));
     }
 
+    /**
+     * Get user status transition
+     *
+     * @param {string} userToken - The user token
+     * @param {string} statusTransitionToken - The user status transition token
+     * @param {api-callback} callback - The callback for this call
+     *
+     * @throws Will throw an error if userToken is not provided
+     */
+    getUserStatusTransition(userToken, statusTransitionToken, callback) {
+        if (!userToken) {
+            throw new Error("userToken is required");
+        }
+        if (!statusTransitionToken) {
+            throw new Error("statusTransitionToken is required");
+        }
+        this.client.doGet(`users/${encodeURIComponent(userToken)}/status-transitions/${encodeURIComponent(statusTransitionToken)}`,
+            {},
+            callback);
+    }
+
+    /**
+     * List all user status transitions
+     *
+     * @param {string} userToken - The user token
+     * @param {Object} options - The query parameters to send
+     * @param {api-callback} callback - The callback for this call
+     *
+     * @throws Will throw an error if userToken is not provided
+     */
+    listUserStatusTransitions(userToken, options, callback) {
+        if (!userToken) {
+            throw new Error("userToken is required");
+        }
+        this.client.doGet(`users/${encodeURIComponent(userToken)}/status-transitions`, options, Hyperwallet.handle204Response(callback));
+    }
+
     //--------------------------------------
     // Prepaid Cards
     //--------------------------------------
@@ -363,6 +400,322 @@ export default class Hyperwallet {
     }
 
     //--------------------------------------
+    // Bank Cards
+    //--------------------------------------
+
+    /**
+     * Create a Bank card
+     *
+     * @param {string} userToken - The user token
+     * @param {Object} data - The bank card data
+     * @param {api-callback} callback - The callback for this call
+     *
+     * @throws Will throw an error if userToken is not provided
+     */
+    createBankCard(userToken, data, callback) {
+        if (!userToken) {
+            throw new Error("userToken is required");
+        }
+        this.client.doPost(`users/${encodeURIComponent(userToken)}/bank-cards`, data, {}, callback);
+    }
+
+    /**
+     * Get a bank card
+     *
+     * @param {string} userToken - The user token
+     * @param {string} bankCardToken - The bank card token
+     * @param {api-callback} callback - The callback for this call
+     *
+     * @throws Will throw an error if userToken or bankCardToken is not provided
+     */
+    getBankCard(userToken, bankCardToken, callback) {
+        if (!userToken) {
+            throw new Error("userToken is required");
+        }
+        if (!bankCardToken) {
+            throw new Error("bankCardToken is required");
+        }
+        this.client.doGet(`users/${encodeURIComponent(userToken)}/bank-cards/${encodeURIComponent(bankCardToken)}`, {}, callback);
+    }
+
+    /**
+     * Update a bank card
+     *
+     * @param {string} userToken - The user token
+     * @param {string} bankCardToken - The bank card token
+     * @param {Object} data - The bank card data to update
+     * @param {api-callback} callback - The callback for this call
+     *
+     * @throws Will throw an error if userToken or bankCardToken is not provided
+     */
+    updateBankCard(userToken, bankCardToken, data, callback) {
+        if (!userToken) {
+            throw new Error("userToken is required");
+        }
+        if (!bankCardToken) {
+            throw new Error("bankCardToken is required");
+        }
+        this.client.doPut(`users/${encodeURIComponent(userToken)}/bank-cards/${encodeURIComponent(bankCardToken)}`, data, {}, callback);
+    }
+
+    /**
+     * List all bank cards
+     *
+     * @param {string} userToken - The user token
+     * @param {Object} options - The query parameters to send
+     * @param {api-callback} callback - The callback for this call
+     * @throws Will throw an error if userToken is not provided
+     */
+    listBankCards(userToken, options, callback) {
+        if (!userToken) {
+            throw new Error("userToken is required");
+        }
+        this.client.doGet(`users/${encodeURIComponent(userToken)}/bank-cards`, options, Hyperwallet.handle204Response(callback));
+    }
+
+    /**
+     * Deactivate a bank card
+     *
+     * @param {string} userToken - The user token
+     * @param {string} bankCardToken - The bank card token
+     * @param {api-callback} callback - The callback for this call
+     * @throws Will throw an error if userToken or bankCardToken is not provided
+     */
+    deactivateBankCard(userToken, bankCardToken, callback) {
+        if (!userToken) {
+            throw new Error("userToken is required");
+        }
+        if (!bankCardToken) {
+            throw new Error("bankCardToken is required");
+        }
+
+        const transition = {
+            transition: "DE_ACTIVATED",
+        };
+        this.client.doPost(`users/${encodeURIComponent(userToken)}/bank-cards/${encodeURIComponent(bankCardToken)}/status-transitions`, transition, {}, callback);
+    }
+
+    /**
+     * Create a bank card status transition
+     *
+     * @param {string} userToken - The user token
+     * @param {string} bankCardToken - The bank card token
+     * @param {Object} data - The bank card status transition data
+     * @param {api-callback} callback - The callback for this call
+     * @throws Will throw an error if userToken or bankCardToken is not provided
+     */
+    createBankCardStatusTransition(userToken, bankCardToken, data, callback) {
+        if (!userToken) {
+            throw new Error("userToken is required");
+        }
+        if (!bankCardToken) {
+            throw new Error("bankCardToken is required");
+        }
+
+        this.client.doPost(`users/${encodeURIComponent(userToken)}/bank-cards/${encodeURIComponent(bankCardToken)}/status-transitions`, data, {}, callback);
+    }
+
+    /**
+     * Get a bank card status transition
+     *
+     * @param {string} userToken - The user token
+     * @param {string} bankCardToken - The bank card token
+     * @param {string} statusTransitionToken - The bank card status transition token
+     * @param {api-callback} callback - The callback for this call
+     * @throws Will throw an error if userToken, bankCardToken or statusTransitionToken is not provided
+     */
+    getBankCardStatusTransition(userToken, bankCardToken, statusTransitionToken, callback) {
+        if (!userToken) {
+            throw new Error("userToken is required");
+        }
+        if (!bankCardToken) {
+            throw new Error("bankCardToken is required");
+        }
+        if (!statusTransitionToken) {
+            throw new Error("statusTransitionToken is required");
+        }
+
+        this.client.doGet(`users/${encodeURIComponent(userToken)}/bank-cards/${encodeURIComponent(bankCardToken)}/status-transitions/${encodeURIComponent(statusTransitionToken)}`, {}, callback);
+    }
+
+    /**
+     * List all bank card status transitions
+     *
+     * @param {string} userToken - The user token
+     * @param {string} bankCardToken - The bank card token
+     * @param {Object} options - The query parameters to send
+     * @param {api-callback} callback - The callback for this call
+     * @throws Will throw an error if userToken or bankCardToken is not provided
+     */
+    listBankCardStatusTransitions(userToken, bankCardToken, options, callback) {
+        if (!userToken) {
+            throw new Error("userToken is required");
+        }
+        if (!bankCardToken) {
+            throw new Error("bankCardToken is required");
+        }
+        this.client.doGet(`users/${encodeURIComponent(userToken)}/bank-cards/${encodeURIComponent(bankCardToken)}/status-transitions`, options, Hyperwallet.handle204Response(callback));
+    }
+
+    //--------------------------------------
+    // Paper Checks
+    //--------------------------------------
+
+    /**
+     * Create a paper check
+     *
+     * @param {string} userToken - The user token
+     * @param {Object} data - The paper check data
+     * @param {api-callback} callback - The callback for this call
+     *
+     * @throws Will throw an error if userToken is not provided
+     */
+    createPaperCheck(userToken, data, callback) {
+        if (!userToken) {
+            throw new Error("userToken is required");
+        }
+        this.client.doPost(`users/${encodeURIComponent(userToken)}/paper-checks`, data, {}, callback);
+    }
+
+    /**
+     * Get a paper check
+     *
+     * @param {string} userToken - The user token
+     * @param {string} paperCheckToken - The paper check token
+     * @param {api-callback} callback - The callback for this call
+     *
+     * @throws Will throw an error if userToken or paperCheckToken is not provided
+     */
+    getPaperCheck(userToken, paperCheckToken, callback) {
+        if (!userToken) {
+            throw new Error("userToken is required");
+        }
+        if (!paperCheckToken) {
+            throw new Error("paperCheckToken is required");
+        }
+        this.client.doGet(`users/${encodeURIComponent(userToken)}/paper-checks/${encodeURIComponent(paperCheckToken)}`, {}, callback);
+    }
+
+    /**
+     * Update a paper check
+     *
+     * @param {string} userToken - The user token
+     * @param {string} paperCheckToken - The paper check token
+     * @param {Object} data - The paper check data to update
+     * @param {api-callback} callback - The callback for this call
+     *
+     * @throws Will throw an error if userToken or paperCheckToken is not provided
+     */
+    updatePaperCheck(userToken, paperCheckToken, data, callback) {
+        if (!userToken) {
+            throw new Error("userToken is required");
+        }
+        if (!paperCheckToken) {
+            throw new Error("paperCheckToken is required");
+        }
+        this.client.doPut(`users/${encodeURIComponent(userToken)}/paper-checks/${encodeURIComponent(paperCheckToken)}`, data, {}, callback);
+    }
+
+    /**
+     * List all paper checks
+     *
+     * @param {string} userToken - The user token
+     * @param {Object} options - The query parameters to send
+     * @param {api-callback} callback - The callback for this call
+     * @throws Will throw an error if userToken is not provided
+     */
+    listPaperChecks(userToken, options, callback) {
+        if (!userToken) {
+            throw new Error("userToken is required");
+        }
+        this.client.doGet(`users/${encodeURIComponent(userToken)}/paper-checks`, options, Hyperwallet.handle204Response(callback));
+    }
+
+    /**
+     * Deactivate a paper check
+     *
+     * @param {string} userToken - The user token
+     * @param {string} paperCheckToken - The paper check token
+     * @param {api-callback} callback - The callback for this call
+     * @throws Will throw an error if userToken or paperCheckToken is not provided
+     */
+    deactivatePaperCheck(userToken, paperCheckToken, callback) {
+        if (!userToken) {
+            throw new Error("userToken is required");
+        }
+        if (!paperCheckToken) {
+            throw new Error("paperCheckToken is required");
+        }
+
+        const transition = {
+            transition: "DE_ACTIVATED",
+        };
+        this.client.doPost(`users/${encodeURIComponent(userToken)}/paper-checks/${encodeURIComponent(paperCheckToken)}/status-transitions`, transition, {}, callback);
+    }
+
+    /**
+     * Create a paper check status transition
+     *
+     * @param {string} userToken - The user token
+     * @param {string} paperCheckToken - The paper check token
+     * @param {Object} data - The paper check status transition data
+     * @param {api-callback} callback - The callback for this call
+     * @throws Will throw an error if userToken or paperCheckToken is not provided
+     */
+    createPaperCheckStatusTransition(userToken, paperCheckToken, data, callback) {
+        if (!userToken) {
+            throw new Error("userToken is required");
+        }
+        if (!paperCheckToken) {
+            throw new Error("paperCheckToken is required");
+        }
+
+        this.client.doPost(`users/${encodeURIComponent(userToken)}/paper-checks/${encodeURIComponent(paperCheckToken)}/status-transitions`, data, {}, callback);
+    }
+
+    /**
+     * Get a paper check status transition
+     *
+     * @param {string} userToken - The user token
+     * @param {string} paperCheckToken - The paper check token
+     * @param {string} statusTransitionToken - The paper check status transition token
+     * @param {api-callback} callback - The callback for this call
+     * @throws Will throw an error if userToken, paperCheckToken or statusTransitionToken is not provided
+     */
+    getPaperCheckStatusTransition(userToken, paperCheckToken, statusTransitionToken, callback) {
+        if (!userToken) {
+            throw new Error("userToken is required");
+        }
+        if (!paperCheckToken) {
+            throw new Error("paperCheckToken is required");
+        }
+        if (!statusTransitionToken) {
+            throw new Error("statusTransitionToken is required");
+        }
+
+        this.client.doGet(`users/${encodeURIComponent(userToken)}/paper-checks/${encodeURIComponent(paperCheckToken)}/status-transitions/${encodeURIComponent(statusTransitionToken)}`, {}, callback);
+    }
+
+    /**
+     * List all paper check status transitions
+     *
+     * @param {string} userToken - The user token
+     * @param {string} paperCheckToken - The paper check token
+     * @param {Object} options - The query parameters to send
+     * @param {api-callback} callback - The callback for this call
+     * @throws Will throw an error if userToken or paperCheckToken is not provided
+     */
+    listPaperCheckStatusTransitions(userToken, paperCheckToken, options, callback) {
+        if (!userToken) {
+            throw new Error("userToken is required");
+        }
+        if (!paperCheckToken) {
+            throw new Error("paperCheckToken is required");
+        }
+        this.client.doGet(`users/${encodeURIComponent(userToken)}/paper-checks/${encodeURIComponent(paperCheckToken)}/status-transitions`, options, Hyperwallet.handle204Response(callback));
+    }
+
+    //--------------------------------------
     // Bank Accounts
     //--------------------------------------
 
@@ -477,6 +830,32 @@ export default class Hyperwallet {
         }
 
         this.client.doPost(`users/${encodeURIComponent(userToken)}/bank-accounts/${encodeURIComponent(bankAccountToken)}/status-transitions`, data, {}, callback);
+    }
+
+    /**
+     * Get bank account status transition
+     *
+     * @param {string} userToken - The user token
+     * @param {string} bankAccountToken - The bank account token
+     * @param {string} bankAccountToken - The bank account token
+     * @param {string} statusTransitionToken - The bank account status transition token
+     * @param {api-callback} callback - The callback for this call
+     *
+     * @throws Will throw an error if userToken or bankAccountToken is not provided
+     */
+    getBankAccountStatusTransition(userToken, bankAccountToken, statusTransitionToken, callback) {
+        if (!userToken) {
+            throw new Error("userToken is required");
+        }
+        if (!bankAccountToken) {
+            throw new Error("bankAccountToken is required");
+        }
+        if (!statusTransitionToken) {
+            throw new Error("statusTransitionToken is required");
+        }
+        this.client.doGet(`users/${encodeURIComponent(userToken)}/bank-accounts/${encodeURIComponent(bankAccountToken)}/status-transitions/${encodeURIComponent(statusTransitionToken)}`,
+            {},
+            callback);
     }
 
     /**
@@ -597,6 +976,59 @@ export default class Hyperwallet {
      */
     listPayments(options, callback) {
         this.client.doGet("payments", options, Hyperwallet.handle204Response(callback));
+    }
+
+    /**
+     * Create a payment status transition
+     *
+     * @param {string} paymentToken - The payment token
+     * @param {Object} data - The payment status transition data
+     * @param {api-callback} callback - The callback for this call
+     * @throws Will throw an error if paymentToken is not provided
+     */
+    createPaymentStatusTransition(paymentToken, data, callback) {
+        if (!paymentToken) {
+            throw new Error("paymentToken is required");
+        }
+
+        this.client.doPost(`payments/${encodeURIComponent(paymentToken)}/status-transitions`, data, {}, callback);
+    }
+
+    /**
+     * Get payment status transition
+     *
+     * @param {string} paymentToken - The payment token
+     * @param {string} statusTransitionToken - The payment status transition token
+     * @param {api-callback} callback - The callback for this call
+     *
+     * @throws Will throw an error if paymentToken is not provided
+     */
+    getPaymentStatusTransition(paymentToken, statusTransitionToken, callback) {
+        if (!paymentToken) {
+            throw new Error("paymentToken is required");
+        }
+        if (!statusTransitionToken) {
+            throw new Error("statusTransitionToken is required");
+        }
+        this.client.doGet(`payments/${encodeURIComponent(paymentToken)}/status-transitions/${encodeURIComponent(statusTransitionToken)}`,
+            {},
+            callback);
+    }
+
+    /**
+     * List all payment status transitions
+     *
+     * @param {string} paymentToken - The payment token
+     * @param {Object} options - The query parameters to send
+     * @param {api-callback} callback - The callback for this call
+     *
+     * @throws Will throw an error if paymentToken is not provided
+     */
+    listPaymentStatusTransitions(paymentToken, options, callback) {
+        if (!paymentToken) {
+            throw new Error("paymentToken is required");
+        }
+        this.client.doGet(`payments/${encodeURIComponent(paymentToken)}/status-transitions`, options, Hyperwallet.handle204Response(callback));
     }
 
     //--------------------------------------
