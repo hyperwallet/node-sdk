@@ -780,6 +780,69 @@ export default class Hyperwallet {
     }
 
     //--------------------------------------
+    // PayPal Accounts
+    //--------------------------------------
+
+    /**
+     * Create a PayPal account
+     *
+     * @param {string} userToken - The user token
+     * @param {Object} data - The PayPal account data
+     * @param {api-callback} callback - The callback for this call
+     *
+     * @throws Will throw an error if userToken is not provided
+     */
+    createPayPalAccount(userToken, data, callback) {
+        if (!userToken) {
+            throw new Error("userToken is required");
+        }
+        if (!data.transferMethodCountry) {
+            throw new Error("transferMethodCountry is required");
+        }
+        if (!data.transferMethodCurrency) {
+            throw new Error("transferMethodCurrency is required");
+        }
+        if (!data.email) {
+            throw new Error("email is required");
+        }
+        this.client.doPost(`users/${encodeURIComponent(userToken)}/paypal-accounts`, data, {}, callback);
+    }
+
+    /**
+     * Get a PayPal account
+     *
+     * @param {string} userToken - The user token
+     * @param {string} payPalAccountToken - The PayPal account token
+     * @param {api-callback} callback - The callback for this call
+     *
+     * @throws Will throw an error if userToken or payPalAccountToken is not provided
+     */
+    getPayPalAccount(userToken, payPalAccountToken, callback) {
+        if (!userToken) {
+            throw new Error("userToken is required");
+        }
+        if (!payPalAccountToken) {
+            throw new Error("payPalAccountToken is required");
+        }
+        this.client.doGet(`users/${encodeURIComponent(userToken)}/paypal-accounts/${encodeURIComponent(payPalAccountToken)}`, {}, callback);
+    }
+
+    /**
+     * List all PayPal accounts
+     *
+     * @param {string} userToken - The user token
+     * @param {Object} options - The query parameters to send
+     * @param {api-callback} callback - The callback for this call
+     * @throws Will throw an error if userToken is not provided
+     */
+    listPayPalAccounts(userToken, options, callback) {
+        if (!userToken) {
+            throw new Error("userToken is required");
+        }
+        this.client.doGet(`users/${encodeURIComponent(userToken)}/paypal-accounts`, options, Hyperwallet.handle204Response(callback));
+    }
+
+    //--------------------------------------
     // Bank Accounts
     //--------------------------------------
 

@@ -1324,6 +1324,172 @@ describe("Hyperwallet", () => {
     });
 
     //--------------------------------------
+    // PayPal accounts
+    //--------------------------------------
+
+    /** @test {Hyperwallet#createPayPalAccount} */
+    describe("createPayPalAccount()", () => {
+        let client;
+        let apiClientSpy;
+
+        beforeEach(() => {
+            apiClientSpy = sinon.spy();
+            client = new Hyperwallet({
+                username: "test-username",
+                password: "test-password",
+            });
+            client.client = {
+                doPost: apiClientSpy,
+            };
+        });
+
+        /** @test {Hyperwallet#createPayPalAccount} */
+        it("should throw error if userToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.createPayPalAccount(undefined, { test: "value" }, callback)).to.throw("userToken is required");
+        });
+
+        /** @test {Hyperwallet#createPayPalAccount} */
+        it("should throw error if transferMethodCountry is missing", () => {
+            const callback = () => null;
+            expect(() => client.createPayPalAccount("test-user-token", { test: "value" }, callback)).to.throw("transferMethodCountry is required");
+        });
+
+        /** @test {Hyperwallet#createPayPalAccount} */
+        it("should throw error if transferMethodCurrency is missing", () => {
+            const callback = () => null;
+            expect(() => client.createPayPalAccount("test-user-token", {
+                transferMethodCountry: "test-transferMethodCountry",
+            }, callback)).to.throw("transferMethodCurrency is required");
+        });
+
+        /** @test {Hyperwallet#createPayPalAccount} */
+        it("should throw error if email is missing", () => {
+            const callback = () => null;
+            expect(() => client.createPayPalAccount("test-user-token", {
+                transferMethodCountry: "test-transferMethodCountry",
+                transferMethodCurrency: "test-transferMethodCurrency",
+            }, callback)).to.throw("email is required");
+        });
+
+        /** @test {Hyperwallet#createPayPalAccount} */
+        it("should do post call to PayPal account endpoint", () => {
+            const callback = () => null;
+            client.createPayPalAccount("test-user-token", {
+                transferMethodCountry: "test-transferMethodCountry",
+                transferMethodCurrency: "test-transferMethodCurrency",
+                email: "email",
+            }, callback);
+
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("users/test-user-token/paypal-accounts", {
+                transferMethodCountry: "test-transferMethodCountry",
+                transferMethodCurrency: "test-transferMethodCurrency",
+                email: "email",
+            }, {}, callback);
+        });
+    });
+
+    /** @test {Hyperwallet#getPayPalAccount} */
+    describe("getPayPalAccount()", () => {
+        let client;
+        let apiClientSpy;
+
+        beforeEach(() => {
+            apiClientSpy = sinon.spy();
+            client = new Hyperwallet({
+                username: "test-username",
+                password: "test-password",
+            });
+            client.client = {
+                doGet: apiClientSpy,
+            };
+        });
+
+        /** @test {Hyperwallet#getPayPalAccount} */
+        it("should throw error if userToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.getPayPalAccount(undefined, undefined, callback)).to.throw("userToken is required");
+        });
+
+        /** @test {Hyperwallet#getPayPalAccount} */
+        it("should throw error if payPalAccountToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.getPayPalAccount("test-user-token", undefined, callback)).to.throw("payPalAccountToken is required");
+        });
+
+        /** @test {Hyperwallet#getPayPalAccount} */
+        it("should do get call if userToken and payPalAccountToken is provided", () => {
+            const callback = () => null;
+            client.getPayPalAccount("test-user-token", "test-paypal-account-token", callback);
+
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("users/test-user-token/paypal-accounts/test-paypal-account-token", {}, callback);
+        });
+    });
+
+    /** @test {Hyperwallet#listPayPalAccounts} */
+    describe("listPayPalAccounts()", () => {
+        let client;
+        let apiClientSpy;
+
+        beforeEach(() => {
+            apiClientSpy = sinon.spy();
+            client = new Hyperwallet({
+                username: "test-username",
+                password: "test-password",
+            });
+            client.client = {
+                doGet: apiClientSpy,
+            };
+        });
+
+        /** @test {Hyperwallet#listPayPalAccounts} */
+        it("should throw error if userToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.listPayPalAccounts(undefined, {}, callback)).to.throw("userToken is required");
+        });
+
+        /** @test {Hyperwallet#listPayPalAccounts} */
+        it("should do get call with options", () => {
+            const callback = () => null;
+            client.listPayPalAccounts("test-user-token", { test: "value" }, callback);
+
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("users/test-user-token/paypal-accounts", { test: "value" });
+        });
+
+        /** @test {Hyperwallet#listPayPalAccounts} */
+        it("should do get call without options", () => {
+            const callback = () => null;
+            client.listPayPalAccounts("test-user-token", {}, callback);
+
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("users/test-user-token/paypal-accounts", {});
+        });
+
+        /** @test {Hyperwallet#listPayPalAccounts} */
+        it("should handle 204 return", (cb) => {
+            const callback = (err, data) => {
+                data.should.be.deep.equal({
+                    count: 0,
+                    data: [],
+                });
+
+                cb();
+            };
+            client.listPayPalAccounts("test-user-token", {}, callback);
+
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("users/test-user-token/paypal-accounts", {});
+
+            apiClientSpy.getCall(0).args[2](undefined, {}, {
+                status: 204,
+            });
+        });
+    });
+
+    //--------------------------------------
     // Prepaid Cards
     //--------------------------------------
 
