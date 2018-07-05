@@ -1140,6 +1140,190 @@ describe("Hyperwallet", () => {
     });
 
     //--------------------------------------
+    // Transfers
+    //--------------------------------------
+
+    /** @test {Hyperwallet#createTransfer} */
+    describe("createTransfer()", () => {
+        let client;
+        let apiClientSpy;
+
+        beforeEach(() => {
+            apiClientSpy = sinon.spy();
+            client = new Hyperwallet({
+                username: "test-username",
+                password: "test-password",
+            });
+            client.client = {
+                doPost: apiClientSpy,
+            };
+        });
+
+        /** @test {Hyperwallet#createTransfer} */
+        it("should throw error if sourceToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.createTransfer({
+                test: "value",
+            }, callback)).to.throw("sourceToken is required");
+        });
+
+        /** @test {Hyperwallet#createTransfer} */
+        it("should throw error if destinationToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.createTransfer({
+                sourceToken: "sourceToken",
+            }, callback)).to.throw("destinationToken is required");
+        });
+
+        /** @test {Hyperwallet#createTransfer} */
+        it("should throw error if clientTransferId is missing", () => {
+            const callback = () => null;
+            expect(() => client.createTransfer({
+                sourceToken: "sourceToken",
+                destinationToken: "destinationToken",
+            }, callback)).to.throw("clientTransferId is required");
+        });
+
+        /** @test {Hyperwallet#createTransfer} */
+        it("should do post call to transfers endpoint", () => {
+            const callback = () => null;
+            client.createTransfer({
+                sourceToken: "sourceToken",
+                destinationToken: "destinationToken",
+                clientTransferId: "clientTransferId",
+            }, callback);
+
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("transfers", {
+                sourceToken: "sourceToken",
+                destinationToken: "destinationToken",
+                clientTransferId: "clientTransferId",
+            }, {}, callback);
+        });
+    });
+
+    /** @test {Hyperwallet#getTransfer} */
+    describe("getTransfer()", () => {
+        let client;
+        let apiClientSpy;
+
+        beforeEach(() => {
+            apiClientSpy = sinon.spy();
+            client = new Hyperwallet({
+                username: "test-username",
+                password: "test-password",
+            });
+            client.client = {
+                doGet: apiClientSpy,
+            };
+        });
+
+        /** @test {Hyperwallet#getTransfer} */
+        it("should throw error if transferToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.getTransfer(undefined, callback)).to.throw("transferToken is required");
+        });
+
+        /** @test {Hyperwallet#getTransfer} */
+        it("should do get call if transferToken is provided", () => {
+            const callback = () => null;
+            client.getTransfer("test-transfer-token", callback);
+
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("transfers/test-transfer-token", {}, callback);
+        });
+    });
+
+    /** @test {Hyperwallet#listTransfers} */
+    describe("listTransfers()", () => {
+        let client;
+        let apiClientSpy;
+
+        beforeEach(() => {
+            apiClientSpy = sinon.spy();
+            client = new Hyperwallet({
+                username: "test-username",
+                password: "test-password",
+            });
+            client.client = {
+                doGet: apiClientSpy,
+            };
+        });
+
+        /** @test {Hyperwallet#listTransfers} */
+        it("should do get call with options", () => {
+            const callback = () => null;
+            client.listTransfers({ test: "value" }, callback);
+
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("transfers", { test: "value" });
+        });
+
+        /** @test {Hyperwallet#listTransfers} */
+        it("should do get call without options", () => {
+            const callback = () => null;
+            client.listTransfers({}, callback);
+
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("transfers", {});
+        });
+
+        /** @test {Hyperwallet#listTransfers} */
+        it("should handle 204 return", (cb) => {
+            const callback = (err, data) => {
+                data.should.be.deep.equal({
+                    count: 0,
+                    data: [],
+                });
+
+                cb();
+            };
+            client.listTransfers({}, callback);
+
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("transfers", {});
+
+            apiClientSpy.getCall(0).args[2](undefined, {}, {
+                status: 204,
+            });
+        });
+    });
+
+    /** @test {Hyperwallet#createTransferStatusTransition} */
+    describe("createTransferStatusTransition()", () => {
+        let client;
+        let apiClientSpy;
+
+        beforeEach(() => {
+            apiClientSpy = sinon.spy();
+            client = new Hyperwallet({
+                username: "test-username",
+                password: "test-password",
+            });
+            client.client = {
+                doPost: apiClientSpy,
+            };
+        });
+
+        /** @test {Hyperwallet#createTransferStatusTransition} */
+        it("should throw error if transferToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.createTransferStatusTransition(undefined, { test: "value" }, callback)).to.throw("transferToken is required");
+        });
+
+        /** @test {Hyperwallet#createTransferStatusTransition} */
+        it("should send post call to transfer status transition endpoint", () => {
+            const callback = () => null;
+            client.createTransferStatusTransition("test-transfer-token", { test: "value" }, callback);
+
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("transfers/test-transfer-token/status-transitions", {
+                test: "value",
+            }, {}, callback);
+        });
+    });
+
+    //--------------------------------------
     // Prepaid Cards
     //--------------------------------------
 
