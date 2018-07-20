@@ -58,6 +58,18 @@ describe("Hyperwallet", () => {
         });
 
         /** @test {Hyperwallet#constructor} */
+        it("should initialize ApiClient with provided superagent request", () => {
+            const fakeRequest = { fake: true };
+            const client = new Hyperwallet({
+                username: "test-username",
+                password: "test-password",
+                superagentRequest: fakeRequest,
+            });
+
+            client.client.request.should.be.equal(fakeRequest);
+        });
+
+        /** @test {Hyperwallet#constructor} */
         it("should throw error if username is missing", () => {
             expect(() => new Hyperwallet({
                 password: "test-password",

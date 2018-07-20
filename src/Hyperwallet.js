@@ -14,8 +14,9 @@ export default class Hyperwallet {
      * @param {string} config.password - The API password
      * @param {string} [config.programToken] - The program token that is used for some API calls
      * @param {string} [config.server=https://api.sandbox.hyperwallet.com] - The API server to connect to
+     * @param {Object} [config.superagentRequest]
      */
-    constructor({ username, password, programToken, server = "https://api.sandbox.hyperwallet.com" }) {
+    constructor({ username, password, programToken, server = "https://api.sandbox.hyperwallet.com", superagentRequest = null }) {
         if (!username || !password) {
             throw new Error("You need to specify your API username and password!");
         }
@@ -26,7 +27,7 @@ export default class Hyperwallet {
          * @type {ApiClient}
          * @protected
          */
-        this.client = new ApiClient(username, password, server);
+        this.client = new ApiClient(username, password, server, superagentRequest);
 
         /**
          * The program token that is used for some API calls

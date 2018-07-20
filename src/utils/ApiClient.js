@@ -24,8 +24,9 @@ export default class ApiClient {
      * @param {string} username - The API username
      * @param {string} password - The API password
      * @param {string} server - The API server to connect to
+     * @param {Object} superagentRequest - A custom superagent request object
      */
-    constructor(username, password, server) {
+    constructor(username, password, server, superagentRequest) {
         /**
          * The API username
          *
@@ -56,6 +57,11 @@ export default class ApiClient {
          * @protected
          */
         this.version = packageJson.version;
+
+        /**
+         * The superAgent request object used to make the API calls
+         */
+        this.request = superagentRequest || request;
     }
 
     /**
@@ -67,7 +73,7 @@ export default class ApiClient {
      * @param {api-callback} callback - The callback for this call
      */
     doPost(partialUrl, data, params, callback) {
-        request
+        this.request
             .post(`${this.server}/rest/v3/${partialUrl}`)
             .auth(this.username, this.password)
             .set("User-Agent", `Hyperwallet Node SDK v${this.version}`)
@@ -87,7 +93,7 @@ export default class ApiClient {
      * @param {api-callback} callback - The callback for this call
      */
     doPut(partialUrl, data, params, callback) {
-        request
+        this.request
             .put(`${this.server}/rest/v3/${partialUrl}`)
             .auth(this.username, this.password)
             .set("User-Agent", `Hyperwallet Node SDK v${this.version}`)
@@ -106,7 +112,7 @@ export default class ApiClient {
      * @param {api-callback} callback - The callback for this call
      */
     doGet(partialUrl, params, callback) {
-        request
+        this.request
             .get(`${this.server}/rest/v3/${partialUrl}`)
             .auth(this.username, this.password)
             .set("User-Agent", `Hyperwallet Node SDK v${this.version}`)

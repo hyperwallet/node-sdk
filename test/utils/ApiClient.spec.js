@@ -27,6 +27,13 @@ describe("utils/ApiClient", () => {
             const client = new ApiClient("test-username", "test-password", "test-server");
             client.version.should.be.equal(packageJson.version);
         });
+
+        /** @test {ApiClient#constructor} */
+        it("should be able to set the request with a custom one", () => {
+            const fakeRequest = { fake: true };
+            const client = new ApiClient("test-username", "test-password", "test-server", fakeRequest);
+            client.request.should.be.equal(fakeRequest);
+        });
     });
 
     /** @test {ApiClient#doPost} */
