@@ -1,5 +1,6 @@
 import request from "superagent";
 import packageJson from "../../package.json";
+import Encryption from "./Encryption";
 
 /**
  * The callback interface for api calls
@@ -24,8 +25,9 @@ export default class ApiClient {
      * @param {string} username - The API username
      * @param {string} password - The API password
      * @param {string} server - The API server to connect to
+     * @param {string} encryptionData - The API encryption data
      */
-    constructor(username, password, server) {
+    constructor(username, password, server, encryptionData) {
         /**
          * The API username
          *
@@ -56,6 +58,21 @@ export default class ApiClient {
          * @protected
          */
         this.version = packageJson.version;
+
+        /**
+         * The flag shows if encryption is enabled
+         *
+         * @type {boolean}
+         * @protected
+         */
+        this.isEncrypted = false;
+
+        if (encryptionData && encryptionData.clientPrivateKeySetPath && encryptionData.hyperwalletKeySetPath) {
+            this.isEncrypted = true;
+            this.clientPrivateKeySetPath = encryptionData.clientPrivateKeySetPath;
+            this.hyperwalletKeySetPath = encryptionData.hyperwalletKeySetPath;
+            this.encryption = new Encryption(this.clientPrivateKeySetPath, this.hyperwalletKeySetPath);
+        }
     }
 
     /**
@@ -67,15 +84,25 @@ export default class ApiClient {
      * @param {api-callback} callback - The callback for this call
      */
     doPost(partialUrl, data, params, callback) {
-        request
-            .post(`${this.server}/rest/v3/${partialUrl}`)
-            .auth(this.username, this.password)
-            .set("User-Agent", `Hyperwallet Node SDK v${this.version}`)
-            .type("json")
-            .accept("json")
-            .query(params)
-            .send(data)
-            .end(this.wrapCallback(callback));
+        let contentType = "json";
+        let processResponse = this.wrapCallback(callback);
+        let requestDataPromise = new Promise((resolve) => resolve(data));
+        if (this.isEncrypted) {
+            contentType = "application/jose+json";
+            processResponse = this.processEncryptedResponse("POST", callback);
+            requestDataPromise = this.encryption.encrypt(data);
+        }
+        requestDataPromise.then((requestData) => {
+            request
+                .post(`${this.server}/rest/v3/${partialUrl}`)
+                .auth(this.username, this.password)
+                .set("User-Agent", `Hyperwallet Node SDK v${this.version}`)
+                .type(contentType)
+                .accept("json")
+                .query(params)
+                .send(requestData)
+                .end(processResponse);
+        }).catch(() => new Error("Failed to encrypt body for POST request"));
     }
 
     /**
@@ -87,15 +114,25 @@ export default class ApiClient {
      * @param {api-callback} callback - The callback for this call
      */
     doPut(partialUrl, data, params, callback) {
-        request
-            .put(`${this.server}/rest/v3/${partialUrl}`)
-            .auth(this.username, this.password)
-            .set("User-Agent", `Hyperwallet Node SDK v${this.version}`)
-            .type("json")
-            .accept("json")
-            .query(params)
-            .send(data)
-            .end(this.wrapCallback(callback));
+        let contentType = "json";
+        let processResponse = this.wrapCallback(callback);
+        let requestDataPromise = new Promise((resolve) => resolve(data));
+        if (this.isEncrypted) {
+            contentType = "application/jose+json";
+            processResponse = this.processEncryptedResponse("PUT", callback);
+            requestDataPromise = this.encryption.encrypt(data);
+        }
+        requestDataPromise.then((requestData) => {
+            request
+                .put(`${this.server}/rest/v3/${partialUrl}`)
+                .auth(this.username, this.password)
+                .set("User-Agent", `Hyperwallet Node SDK v${this.version}`)
+                .type(contentType)
+                .accept("json")
+                .query(params)
+                .send(requestData)
+                .end(processResponse);
+        }).catch(() => new Error("Failed to encrypt body for PUT request"));
     }
 
     /**
@@ -106,13 +143,18 @@ export default class ApiClient {
      * @param {api-callback} callback - The callback for this call
      */
     doGet(partialUrl, params, callback) {
+        let contentType = "json";
+        if (this.isEncrypted) {
+            contentType = "application/jose+json";
+        }
         request
             .get(`${this.server}/rest/v3/${partialUrl}`)
             .auth(this.username, this.password)
             .set("User-Agent", `Hyperwallet Node SDK v${this.version}`)
+            .type(contentType)
             .accept("json")
             .query(params)
-            .end(this.wrapCallback(callback));
+            .end(this.isEncrypted ? this.processEncryptedResponse("GET", callback) : this.wrapCallback(callback));
     }
 
     /**
@@ -143,4 +185,25 @@ export default class ApiClient {
         };
     }
 
+    /**
+     * Makes decryption for encrypted response bodies
+     *
+     * @param {string} httpMethod - The http method that is currently processing
+     * @param {api-callback} callback - The callback method to be invoked after decryption
+     *
+     * @private
+     */
+    processEncryptedResponse(httpMethod, callback) {
+        return (response) => {
+            if (response) {
+                this.encryption.decrypt(response.rawResponse)
+                    .then((decryptedData) => {
+                        callback(undefined, JSON.parse(decryptedData.payload.toString()), decryptedData);
+                    })
+                    .catch(() => new Error(`Failed to decrypt response for ${httpMethod} request`));
+            } else {
+                this.wrapCallback(callback);
+            }
+        };
+    }
 }
