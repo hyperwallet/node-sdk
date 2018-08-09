@@ -5,7 +5,8 @@
   "main": "lib/index.js",
   "dependencies": {
     "object-assign": "^4.1.0",
-    "superagent": "^2.0.0-alpha.3"
+    "superagent": "^2.0.0-alpha.3",
+    "node-jose": "^1.0.0"
   },
   "scripts": {
     "lint": "eslint ./src && eslint ./test && eslint ./examples",
