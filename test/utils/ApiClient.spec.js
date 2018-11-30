@@ -131,23 +131,29 @@ describe("utils/ApiClient", () => {
                     test: "value",
                 })
                 .reply(404, {
-                    errors: [
-                        "test1",
-                        "test2",
-                    ],
+                    errors: [{
+                        message: "message",
+                        code: "FORBIDDEN",
+                        relatedResources: ["trm-f3d38df1-adb7-4127-9858-e72ebe682a79",
+                            "trm-601b1401-4464-4f3f-97b3-09079ee7723b"],
+                    }],
                 });
 
             client.doPost("test", { test: "value" }, {}, (err, body, res) => {
-                err.should.be.deep.equal([
-                    "test1",
-                    "test2",
-                ]);
+                err.should.be.deep.equal([{
+                    message: "message",
+                    code: "FORBIDDEN",
+                    relatedResources: ["trm-f3d38df1-adb7-4127-9858-e72ebe682a79",
+                        "trm-601b1401-4464-4f3f-97b3-09079ee7723b"],
+                }]);
 
                 body.should.be.deep.equal({
-                    errors: [
-                        "test1",
-                        "test2",
-                    ],
+                    errors: [{
+                        message: "message",
+                        code: "FORBIDDEN",
+                        relatedResources: ["trm-f3d38df1-adb7-4127-9858-e72ebe682a79",
+                            "trm-601b1401-4464-4f3f-97b3-09079ee7723b"],
+                    }],
                 });
 
                 res.status.should.be.equal(404);
@@ -259,23 +265,29 @@ describe("utils/ApiClient", () => {
                     test: "value",
                 })
                 .reply(404, {
-                    errors: [
-                        "test1",
-                        "test2",
-                    ],
+                    errors: [{
+                        message: "message",
+                        code: "FORBIDDEN",
+                        relatedResources: ["trm-f3d38df1-adb7-4127-9858-e72ebe682a79",
+                            "trm-601b1401-4464-4f3f-97b3-09079ee7723b"],
+                    }],
                 });
 
             client.doPut("test", { test: "value" }, {}, (err, body, res) => {
-                err.should.be.deep.equal([
-                    "test1",
-                    "test2",
-                ]);
+                err.should.be.deep.equal([{
+                    message: "message",
+                    code: "FORBIDDEN",
+                    relatedResources: ["trm-f3d38df1-adb7-4127-9858-e72ebe682a79",
+                        "trm-601b1401-4464-4f3f-97b3-09079ee7723b"],
+                }]);
 
                 body.should.be.deep.equal({
-                    errors: [
-                        "test1",
-                        "test2",
-                    ],
+                    errors: [{
+                        message: "message",
+                        code: "FORBIDDEN",
+                        relatedResources: ["trm-f3d38df1-adb7-4127-9858-e72ebe682a79",
+                            "trm-601b1401-4464-4f3f-97b3-09079ee7723b"],
+                    }],
                 });
 
                 res.status.should.be.equal(404);
@@ -378,23 +390,29 @@ describe("utils/ApiClient", () => {
                 .matchHeader("Accept", "application/json")
                 .get("/rest/v3/test")
                 .reply(404, {
-                    errors: [
-                        "test1",
-                        "test2",
-                    ],
+                    errors: [{
+                        message: "message",
+                        code: "FORBIDDEN",
+                        relatedResources: ["trm-f3d38df1-adb7-4127-9858-e72ebe682a79",
+                            "trm-601b1401-4464-4f3f-97b3-09079ee7723b"],
+                    }],
                 });
 
             client.doGet("test", {}, (err, body, res) => {
-                err.should.be.deep.equal([
-                    "test1",
-                    "test2",
-                ]);
+                err.should.be.deep.equal([{
+                    message: "message",
+                    code: "FORBIDDEN",
+                    relatedResources: ["trm-f3d38df1-adb7-4127-9858-e72ebe682a79",
+                        "trm-601b1401-4464-4f3f-97b3-09079ee7723b"],
+                }]);
 
                 body.should.be.deep.equal({
-                    errors: [
-                        "test1",
-                        "test2",
-                    ],
+                    errors: [{
+                        message: "message",
+                        code: "FORBIDDEN",
+                        relatedResources: ["trm-f3d38df1-adb7-4127-9858-e72ebe682a79",
+                            "trm-601b1401-4464-4f3f-97b3-09079ee7723b"],
+                    }],
                 });
 
                 res.status.should.be.equal(404);
@@ -446,21 +464,30 @@ describe("utils/ApiClient", () => {
 
             const rawRes = {
                 body: {
-                    errors: [
-                        "test1",
-                        "test2",
-                    ],
+                    errors: [{
+                        message: "message",
+                        code: "FORBIDDEN",
+                        relatedResources: ["trm-f3d38df1-adb7-4127-9858-e72ebe682a79",
+                            "trm-601b1401-4464-4f3f-97b3-09079ee7723b"],
+                    }],
                 },
                 status: 404,
             };
 
             const callback = client.wrapCallback((err, body, res) => {
-                err.should.be.deep.equal(["test1", "test2"]);
+                err.should.be.deep.equal([{
+                    message: "message",
+                    code: "FORBIDDEN",
+                    relatedResources: ["trm-f3d38df1-adb7-4127-9858-e72ebe682a79",
+                        "trm-601b1401-4464-4f3f-97b3-09079ee7723b"],
+                }]);
                 body.should.be.deep.equal({
-                    errors: [
-                        "test1",
-                        "test2",
-                    ],
+                    errors: [{
+                        message: "message",
+                        code: "FORBIDDEN",
+                        relatedResources: ["trm-f3d38df1-adb7-4127-9858-e72ebe682a79",
+                            "trm-601b1401-4464-4f3f-97b3-09079ee7723b"],
+                    }],
                 });
                 rawRes.should.be.deep.equal(res);
 
