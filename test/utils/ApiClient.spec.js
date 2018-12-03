@@ -428,6 +428,7 @@ describe("utils/ApiClient", () => {
             const rawRes = {
                 body: "test",
                 status: 200,
+                type: "application/json",
             };
 
             const callback = client.wrapCallback((err, body, res) => {
@@ -452,6 +453,7 @@ describe("utils/ApiClient", () => {
                     ],
                 },
                 status: 404,
+                type: "application/json",
             };
 
             const callback = client.wrapCallback((err, body, res) => {
@@ -475,12 +477,54 @@ describe("utils/ApiClient", () => {
             const rawRes = {
                 body: "test",
                 status: 404,
+                type: "application/json",
             };
 
             const callback = client.wrapCallback((err, body, res) => {
                 err.should.be.deep.equal([{
                     message: "Could not communicate with test-server",
                     code: "COMMUNICATION_ERROR",
+                }]);
+                body.should.be.equal("test");
+                rawRes.should.be.deep.equal(res);
+
+                cb();
+            });
+            callback(new Error(), rawRes);
+        });
+
+        it("should call callback with 'body' and 'res' and application/jose+json Content-Type", (cb) => {
+            const client = new ApiClient("test-username", "test-password", "test-server");
+
+            const rawRes = {
+                body: "test",
+                status: 200,
+                type: "application/jose+json",
+            };
+
+            const callback = client.wrapCallback((err, body, res) => {
+                expect(err).to.be.undefined();
+
+                body.should.be.equal("test");
+                rawRes.should.be.deep.equal(res);
+
+                cb();
+            });
+            callback(undefined, rawRes);
+        });
+
+        it("should call callback with static error message as 'errors', when Content-Type is wrong", (cb) => {
+            const client = new ApiClient("test-username", "test-password", "test-server");
+
+            const rawRes = {
+                body: "test",
+                status: 200,
+                type: "wrongContentType",
+            };
+
+            const callback = client.wrapCallback((err, body, res) => {
+                err.should.be.deep.equal([{
+                    message: "Invalid Content-Type specified in Response Header",
                 }]);
                 body.should.be.equal("test");
                 rawRes.should.be.deep.equal(res);

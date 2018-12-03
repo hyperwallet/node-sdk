@@ -125,6 +125,12 @@ export default class ApiClient {
      */
     wrapCallback(callback = () => null) {
         return (err, res) => {
+            if (res !== undefined && !(res.type === "application/json" || res.type === "application/jose+json")) {
+                callback([{
+                    message: "Invalid Content-Type specified in Response Header",
+                }], res ? res.body : undefined, res);
+                return;
+            }
             if (!err) {
                 callback(undefined, res.body, res);
                 return;
