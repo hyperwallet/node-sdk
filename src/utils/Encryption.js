@@ -1,7 +1,6 @@
 import jose from "node-jose";
 import fs from "fs";
 import request from "superagent";
-import https from "https";
 
 /**
  * The Hyperwallet Encryption processor
@@ -286,14 +285,12 @@ export default class Encryption {
             } else {
                 this.checkUrlIsValid(keySetPath, (isValid) => {
                     if (isValid) {
-                        const req = https.get(keySetPath, (res) => {
-                            let keySetData = "";
-                            res.on("data", (chunk) => {
-                                keySetData += chunk;
-                            });
-                            res.on("end", () => resolve(keySetData));
+                        request(keySetPath, (error, response) => {
+                            if (!error) {
+                                const responseBody = response.body && Object.keys(response.body).length !== 0 ? response.body : response.text;
+                                resolve(responseBody);
+                            }
                         });
-                        req.end();
                     } else {
                         reject(new Error(`Wrong JWK set location path = ${keySetPath}`));
                     }

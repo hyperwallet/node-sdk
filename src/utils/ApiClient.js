@@ -102,7 +102,7 @@ export default class ApiClient {
                 .query(params)
                 .send(requestData)
                 .end(processResponse);
-        }).catch(() => new Error("Failed to encrypt body for POST request"));
+        }).catch(() => callback("Failed to encrypt body for POST request", undefined, undefined));
     }
 
     /**
@@ -132,7 +132,7 @@ export default class ApiClient {
                 .query(params)
                 .send(requestData)
                 .end(processResponse);
-        }).catch(() => new Error("Failed to encrypt body for PUT request"));
+        }).catch(() => callback("Failed to encrypt body for PUT request", undefined, undefined));
     }
 
     /**
@@ -167,22 +167,35 @@ export default class ApiClient {
      */
     wrapCallback(callback = () => null) {
         return (err, res) => {
-            if (!err) {
-                callback(undefined, res.body, res);
-                return;
-            }
-
-            let errors = [
-                {
-                    message: `Could not communicate with ${this.server}`,
-                    code: "COMMUNICATION_ERROR",
-                },
-            ];
-            if (res && res.body && res.body.errors) {
-                errors = res.body.errors;
-            }
-            callback(errors, res ? res.body : undefined, res);
+            this.processResponse(err, res, callback);
         };
+    }
+
+    /**
+     * Process response from server
+     *
+     * @param {Object} err - Error object
+     * @param {Object} res - Response object
+     * @param {api-callback} callback - The final callback
+     *
+     * @private
+     */
+    processResponse(err, res, callback) {
+        if (!err) {
+            callback(undefined, res.body, res);
+            return;
+        }
+
+        let errors = [
+            {
+                message: `Could not communicate with ${this.server}`,
+                code: "COMMUNICATION_ERROR",
+            },
+        ];
+        if (res && res.body && res.body.errors) {
+            errors = res.body.errors;
+        }
+        callback(errors, res ? res.body : undefined, res);
     }
 
     /**
@@ -194,15 +207,16 @@ export default class ApiClient {
      * @private
      */
     processEncryptedResponse(httpMethod, callback) {
-        return (response) => {
-            if (response) {
-                this.encryption.decrypt(response.rawResponse)
+        return (error, response) => {
+            if (!error) {
+                const responseBody = response.rawResponse ? response.rawResponse : response.text;
+                this.encryption.decrypt(responseBody)
                     .then((decryptedData) => {
                         callback(undefined, JSON.parse(decryptedData.payload.toString()), decryptedData);
                     })
-                    .catch(() => new Error(`Failed to decrypt response for ${httpMethod} request`));
+                    .catch(() => callback(`Failed to decrypt response for ${httpMethod} request`, responseBody, responseBody));
             } else {
-                this.wrapCallback(callback);
+                this.processResponse(error, response, callback);
             }
         };
     }
