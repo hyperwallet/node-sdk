@@ -4,6 +4,7 @@ Changelog
 0.2.0 (in progress)
 -------------------
 
+- Added Layer 7 encryption
 - Added payment status transition endpoint
 - Added paper check endpoint
 - Added bank card endpoint
