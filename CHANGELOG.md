@@ -5,6 +5,7 @@ Changelog
 -------------------
 
 - Added client token endpoint
+- Added Layer 7 encryption
 - Added payment status transition endpoint
 - Added paper check endpoint
 - Added bank card endpoint
