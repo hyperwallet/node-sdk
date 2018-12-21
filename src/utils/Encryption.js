@@ -310,4 +310,33 @@ export default class Encryption {
             callback(!error && response.statusCode === 200);
         });
     }
+
+    /**
+     * Convert encrypted string to array of Buffer
+     *
+     * @param {string} encryptedBody - Encrypted body to be decoded
+     */
+    base64Decode(encryptedBody) {
+        const parts = encryptedBody.split(".");
+        const decodedParts = [];
+        parts.forEach(elem => {
+            decodedParts.push(jose.util.base64url.decode(elem));
+        });
+        const decodedBody = {};
+        decodedBody.parts = decodedParts;
+        return decodedBody;
+    }
+
+    /**
+     * Convert array of Buffer to encrypted string
+     *
+     * @param {string} decodedBody - Array of Buffer to be decoded to encrypted string
+     */
+    base64Encode(decodedBody) {
+        const encodedParts = [];
+        decodedBody.parts.forEach(part => {
+            encodedParts.push(jose.util.base64url.encode(Buffer.from(JSON.parse(JSON.stringify(part)).data)));
+        });
+        return encodedParts.join(".");
+    }
 }

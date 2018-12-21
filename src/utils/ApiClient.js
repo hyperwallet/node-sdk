@@ -84,12 +84,12 @@ export default class ApiClient {
      * @param {api-callback} callback - The callback for this call
      */
     doPost(partialUrl, data, params, callback) {
-        let contentType = "json";
-        let processResponse = this.wrapCallback(callback);
+        let contentType = "application/json";
+        let accept = "application/json";
         let requestDataPromise = new Promise((resolve) => resolve(data));
         if (this.isEncrypted) {
             contentType = "application/jose+json";
-            processResponse = this.processEncryptedResponse("POST", callback);
+            accept = "application/jose+json";
             requestDataPromise = this.encryption.encrypt(data);
         }
         requestDataPromise.then((requestData) => {
@@ -98,10 +98,10 @@ export default class ApiClient {
                 .auth(this.username, this.password)
                 .set("User-Agent", `Hyperwallet Node SDK v${this.version}`)
                 .type(contentType)
-                .accept("json")
+                .accept(accept)
                 .query(params)
                 .send(requestData)
-                .end(processResponse);
+                .end(this.wrapCallback("POST", callback));
         }).catch(() => callback("Failed to encrypt body for POST request", undefined, undefined));
     }
 
@@ -114,12 +114,12 @@ export default class ApiClient {
      * @param {api-callback} callback - The callback for this call
      */
     doPut(partialUrl, data, params, callback) {
-        let contentType = "json";
-        let processResponse = this.wrapCallback(callback);
+        let contentType = "application/json";
+        let accept = "application/json";
         let requestDataPromise = new Promise((resolve) => resolve(data));
         if (this.isEncrypted) {
             contentType = "application/jose+json";
-            processResponse = this.processEncryptedResponse("PUT", callback);
+            accept = "application/jose+json";
             requestDataPromise = this.encryption.encrypt(data);
         }
         requestDataPromise.then((requestData) => {
@@ -128,10 +128,10 @@ export default class ApiClient {
                 .auth(this.username, this.password)
                 .set("User-Agent", `Hyperwallet Node SDK v${this.version}`)
                 .type(contentType)
-                .accept("json")
+                .accept(accept)
                 .query(params)
                 .send(requestData)
-                .end(processResponse);
+                .end(this.wrapCallback("PUT", callback));
         }).catch(() => callback("Failed to encrypt body for PUT request", undefined, undefined));
     }
 
@@ -143,36 +143,49 @@ export default class ApiClient {
      * @param {api-callback} callback - The callback for this call
      */
     doGet(partialUrl, params, callback) {
-        let contentType = "json";
+        let contentType = "application/json";
+        let accept = "application/json";
         if (this.isEncrypted) {
             contentType = "application/jose+json";
+            accept = "application/jose+json";
         }
         request
             .get(`${this.server}/rest/v3/${partialUrl}`)
             .auth(this.username, this.password)
             .set("User-Agent", `Hyperwallet Node SDK v${this.version}`)
             .type(contentType)
-            .accept("json")
+            .accept(accept)
             .query(params)
-            .end(this.isEncrypted ? this.processEncryptedResponse("GET", callback) : this.wrapCallback(callback));
+            .end(this.wrapCallback("GET", callback));
     }
 
     /**
      * Wrap a callback to process possible API and network errors
      *
+     * @param {string} httpMethod - The http method that is currently processing
      * @param {api-callback} callback - The final callback
      * @returns {function(err: Object, res: Object)} - The super agent callback
      *
      * @private
      */
-    wrapCallback(callback = () => null) {
+    wrapCallback(httpMethod, callback = () => null) {
         return (err, res) => {
-            this.processResponse(err, res, callback);
+            if (res && ((!this.isEncrypted && res.type !== "application/json") || (this.isEncrypted && res.type !== "application/jose+json"))) {
+                callback([{
+                    message: "Invalid Content-Type specified in Response Header",
+                }], res ? res.body : undefined, res);
+                return;
+            }
+            if (this.isEncrypted) {
+                this.processEncryptedResponse(httpMethod, err, res, callback);
+            } else {
+                this.processNonEncryptedResponse(err, res, callback);
+            }
         };
     }
 
     /**
-     * Process response from server
+     * Process non encrypted response from server
      *
      * @param {Object} err - Error object
      * @param {Object} res - Response object
@@ -180,13 +193,7 @@ export default class ApiClient {
      *
      * @private
      */
-    processResponse(err, res, callback) {
-        if (res !== undefined && !(res.type === "application/json" || res.type === "application/jose+json")) {
-            callback([{
-                message: "Invalid Content-Type specified in Response Header",
-            }], res ? res.body : undefined, res);
-            return;
-        }
+    processNonEncryptedResponse(err, res, callback) {
         if (!err) {
             callback(undefined, res.body, res);
             return;
@@ -205,25 +212,30 @@ export default class ApiClient {
     }
 
     /**
-     * Makes decryption for encrypted response bodies
+     * Process encrypted response from server
      *
      * @param {string} httpMethod - The http method that is currently processing
-     * @param {api-callback} callback - The callback method to be invoked after decryption
+     * @param {Object} err - Error object
+     * @param {Object} res - Response object
+     * @param {api-callback} callback - The final callback
      *
      * @private
      */
-    processEncryptedResponse(httpMethod, callback) {
-        return (error, response) => {
-            if (!error) {
-                const responseBody = response.rawResponse ? response.rawResponse : response.text;
-                this.encryption.decrypt(responseBody)
-                    .then((decryptedData) => {
-                        callback(undefined, JSON.parse(decryptedData.payload.toString()), decryptedData);
-                    })
-                    .catch(() => callback(`Failed to decrypt response for ${httpMethod} request`, responseBody, responseBody));
-            } else {
-                this.processResponse(error, response, callback);
+    processEncryptedResponse(httpMethod, err, res, callback) {
+        if (!err) {
+            let responseBody = res.rawResponse ? res.rawResponse : res.text;
+            try {
+                responseBody = this.encryption.base64Encode(JSON.parse(res.text));
+            } catch (e) {
+                // nothing to do
             }
-        };
+            this.encryption.decrypt(responseBody)
+                .then((decryptedData) => {
+                    callback(undefined, JSON.parse(decryptedData.payload.toString()), decryptedData);
+                })
+                .catch(() => callback(`Failed to decrypt response for ${httpMethod} request`, responseBody, responseBody));
+        } else {
+            this.processNonEncryptedResponse(err, res, callback);
+        }
     }
 }
