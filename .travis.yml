@@ -2,7 +2,6 @@ language: node_js
 sudo: false
 
 node_js:
-- '4.9.1'       #argon
 - '6.15.1'      #boron
 - '8.14.0'      #carbon
 - '10.14.2'     #dubnium
