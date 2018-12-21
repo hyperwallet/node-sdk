@@ -4,9 +4,9 @@
   "description": "A library to manage users, transfer methods and payments through the Hyperwallet API",
   "main": "lib/index.js",
   "dependencies": {
+    "node-jose": "^1.0.0",
     "object-assign": "^4.1.0",
-    "superagent": "^2.0.0-alpha.3",
-    "node-jose": "^1.0.0"
+    "superagent": "^4.0.0"
   },
   "scripts": {
     "lint": "eslint ./src && eslint ./test && eslint ./examples",
@@ -47,18 +47,18 @@
     "babel-preset-stage-0": "^6.5.0",
     "babel-register": "^6.9.0",
     "chai": "^3.5.0",
-    "coveralls": "^2.11.9",
+    "coveralls": "^3.0.2",
     "dirty-chai": "^1.2.2",
-    "esdoc": "^0.4.7",
+    "esdoc": "^1.1.0",
     "esdoc-importpath-plugin": "0.0.1",
     "eslint": "^2.10.2",
     "eslint-config-airbnb-base": "^3.0.1",
     "eslint-plugin-import": "^1.8.0",
     "gh-pages": "^0.11.0",
-    "isparta": "^4.0.0",
-    "mocha": "^2.4.5",
-    "nock": "^8.0.0",
-    "publish-please": "^2.1.1",
+    "isparta": "^4.1.1",
+    "mocha": "^5.2.0",
+    "nock": "^10.0.4",
+    "publish-please": "^5.4.3",
     "sinon": "^1.17.4",
     "sinon-chai": "^2.8.0"
   },
