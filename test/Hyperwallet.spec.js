@@ -762,6 +762,42 @@ describe("Hyperwallet", () => {
     });
 
     //--------------------------------------
+    // Client Token
+    //--------------------------------------
+
+    /** @test {Hyperwallet#getClientToken} */
+    describe("getClientToken()", () => {
+        let client;
+        let apiClientSpy;
+
+        beforeEach(() => {
+            apiClientSpy = sinon.spy();
+            client = new Hyperwallet({
+                username: "test-username",
+                password: "test-password",
+            });
+            client.client = {
+                doPost: apiClientSpy,
+            };
+        });
+
+        /** @test {Hyperwallet#getClientToken} */
+        it("should throw error if userToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.getClientToken(undefined, callback)).to.throw("userToken is required");
+        });
+
+        /** @test {Hyperwallet#getClientToken} */
+        it("should do post call to client token endpoint", () => {
+            const callback = () => null;
+            client.getClientToken("test-user-token", callback);
+
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("users/test-user-token/client-token", {}, {}, callback);
+        });
+    });
+
+    //--------------------------------------
     // Paper Checks
     //--------------------------------------
 
