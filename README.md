@@ -59,7 +59,7 @@ To write an app using the SDK
      postalCode: "78701",
   };
 
-  client.createUser(userDate, function(errors, body, res) {
+  client.createUser(userData, function(errors, body, res) {
      if (errors) {
         console.log("Create User Failed");
         console.log(errors);
