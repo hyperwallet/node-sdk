@@ -4,6 +4,8 @@ Changelog
 0.2.0 (in progress)
 -------------------
 
+- Added PayPal account endpoint
+- Added transfer endpoint
 - Added Layer 7 encryption
 - Added payment status transition endpoint
 - Added paper check endpoint
