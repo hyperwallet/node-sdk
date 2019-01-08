@@ -60,6 +60,16 @@ describe("utils/Encryption", () => {
         });
 
         /** @test {Encryption#encrypt} */
+        it("should successfully decode and encode encrypted text message", (cb) => {
+            encryption.encrypt(testMessage).then((encryptedBody) => {
+                const decodedMessage = encryption.base64Decode(encryptedBody);
+                const encodedMessage = encryption.base64Encode(decodedMessage);
+                encodedMessage.should.be.deep.equal(encryptedBody);
+                cb();
+            });
+        });
+
+        /** @test {Encryption#encrypt} */
         it("should throw exception when wrong jwk key set location is given", (cb) => {
             encryption = new Encryption("wrong_keyset_path", hwPath);
             encryption.encrypt(testMessage)
