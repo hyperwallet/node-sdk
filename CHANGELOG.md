@@ -1,9 +1,14 @@
 Changelog
 =========
-
-0.2.0 (in progress)
+1.0.1 (current)
 -------------------
 
+
+1.0.0  (2018-12-21)
+-------------------
+- Added PayPal account endpoint
+- Added transfer endpoint
+- Added client token endpoint
 - Added Layer 7 encryption
 - Added payment status transition endpoint
 - Added paper check endpoint

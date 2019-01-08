@@ -8,3 +8,7 @@ coverage/
 
 test/
 .DS_Store
+
+.eslintrc
+.idea/*
+.travis.yml

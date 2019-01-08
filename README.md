@@ -9,6 +9,10 @@ Hyperwallet REST SDK (Beta)
 
 A library to manage users, transfer methods and payments through the Hyperwallet API
 
+Prerequisites
+------------
+
+Hyperwallet's NodeJS server SDK requires at minimum NodeJS 6.15.1 and above.
 
 Installation
 ------------
