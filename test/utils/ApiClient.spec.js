@@ -63,9 +63,7 @@ describe("utils/ApiClient", () => {
                     test: "value",
                 })
                 .query({ sort: "test" })
-                .reply(201, {
-                    response: "value",
-                });
+                .reply(201, { response: "value" }, { "Content-Type": "application/json" });
 
             client.doPost("test", { test: "value" }, { sort: "test" }, (err, body, res) => {
                 expect(err).to.be.undefined();
@@ -109,6 +107,34 @@ describe("utils/ApiClient", () => {
         });
 
         /** @test {ApiClient#doPost} */
+        it("should return response if call was successful (with query parameters) when content type contains charset ahead", (cb) => {
+            nock("https://test-server")
+                .matchHeader("Authorization", authHeader)
+                .matchHeader("User-Agent", `Hyperwallet Node SDK v${packageJson.version}`)
+                .matchHeader("Accept", "application/json")
+                .matchHeader("Content-Type", "application/json")
+                .post("/rest/v3/test", {
+                    test: "value",
+                })
+                .query({ sort: "test" })
+                .reply(201, { response: "value" }, {
+                    "Content-Type": "charset=utf-8;application/json",
+                });
+
+            client.doPost("test", { test: "value" }, { sort: "test" }, (err, body, res) => {
+                expect(err).to.be.undefined();
+
+                JSON.parse(body.toString("utf8")).should.be.deep.equal({
+                    response: "value",
+                });
+
+                res.status.should.be.equal(201);
+
+                cb();
+            });
+        });
+
+        /** @test {ApiClient#doPost} */
         it("should return response if call was successful (without query parameters)", (cb) => {
             nock("https://test-server")
                 .matchHeader("Authorization", authHeader)
@@ -118,9 +144,7 @@ describe("utils/ApiClient", () => {
                 .post("/rest/v3/test", {
                     test: "value",
                 })
-                .reply(201, {
-                    response: "value",
-                });
+                .reply(201, { response: "value" }, { "Content-Type": "application/json" });
 
             client.doPost("test", { test: "value" }, {}, (err, body, res) => {
                 expect(err).to.be.undefined();
@@ -167,7 +191,7 @@ describe("utils/ApiClient", () => {
                         relatedResources: ["trm-f3d38df1-adb7-4127-9858-e72ebe682a79",
                             "trm-601b1401-4464-4f3f-97b3-09079ee7723b"],
                     }],
-                });
+                }, { "Content-Type": "application/json" });
 
             client.doPost("test", { test: "value" }, {}, (err, body, res) => {
                 err.should.be.deep.equal([{
@@ -375,9 +399,7 @@ describe("utils/ApiClient", () => {
                     test: "value",
                 })
                 .query({ sort: "test" })
-                .reply(200, {
-                    response: "value",
-                });
+                .reply(200, { response: "value" }, { "Content-Type": "application/json" });
 
             client.doPut("test", { test: "value" }, { sort: "test" }, (err, body, res) => {
                 expect(err).to.be.undefined();
@@ -421,6 +443,34 @@ describe("utils/ApiClient", () => {
         });
 
         /** @test {ApiClient#doPut} */
+        it("should return response if call was successful (with query parameters) when content type contains charset ahead", (cb) => {
+            nock("https://test-server")
+                .matchHeader("Authorization", authHeader)
+                .matchHeader("User-Agent", `Hyperwallet Node SDK v${packageJson.version}`)
+                .matchHeader("Accept", "application/json")
+                .matchHeader("Content-Type", "application/json")
+                .put("/rest/v3/test", {
+                    test: "value",
+                })
+                .query({ sort: "test" })
+                .reply(200, { response: "value" }, {
+                    "Content-Type": "charset=utf-8;application/json",
+                });
+
+            client.doPut("test", { test: "value" }, { sort: "test" }, (err, body, res) => {
+                expect(err).to.be.undefined();
+
+                JSON.parse(body.toString("utf8")).should.be.deep.equal({
+                    response: "value",
+                });
+
+                res.status.should.be.equal(200);
+
+                cb();
+            });
+        });
+
+        /** @test {ApiClient#doPut} */
         it("should return response if call was successful (without query parameters)", (cb) => {
             nock("https://test-server")
                 .matchHeader("Authorization", authHeader)
@@ -430,9 +480,7 @@ describe("utils/ApiClient", () => {
                 .put("/rest/v3/test", {
                     test: "value",
                 })
-                .reply(200, {
-                    response: "value",
-                });
+                .reply(200, { response: "value" }, { "Content-Type": "application/json" });
 
             client.doPut("test", { test: "value" }, {}, (err, body, res) => {
                 expect(err).to.be.undefined();
@@ -479,7 +527,7 @@ describe("utils/ApiClient", () => {
                         relatedResources: ["trm-f3d38df1-adb7-4127-9858-e72ebe682a79",
                             "trm-601b1401-4464-4f3f-97b3-09079ee7723b"],
                     }],
-                });
+                }, { "Content-Type": "application/json" });
 
             client.doPut("test", { test: "value" }, {}, (err, body, res) => {
                 err.should.be.deep.equal([{
@@ -733,9 +781,7 @@ describe("utils/ApiClient", () => {
                 .matchHeader("Accept", "application/json")
                 .get("/rest/v3/test")
                 .query({ sort: "test" })
-                .reply(200, {
-                    response: "value",
-                });
+                .reply(200, { response: "value" }, { "Content-Type": "application/json" });
 
             client.doGet("test", { sort: "test" }, (err, body, res) => {
                 expect(err).to.be.undefined();
@@ -776,15 +822,38 @@ describe("utils/ApiClient", () => {
         });
 
         /** @test {ApiClient#doGet} */
+        it("should return response if call was successful (with query parameters) when content type contains charset ahead", (cb) => {
+            nock("https://test-server")
+                .matchHeader("Authorization", authHeader)
+                .matchHeader("User-Agent", `Hyperwallet Node SDK v${packageJson.version}`)
+                .matchHeader("Accept", "application/json")
+                .get("/rest/v3/test")
+                .query({ sort: "test" })
+                .reply(200, { response: "value" }, {
+                    "Content-Type": "charset=utf-8;application/json",
+                });
+
+            client.doGet("test", { sort: "test" }, (err, body, res) => {
+                expect(err).to.be.undefined();
+
+                JSON.parse(body.toString("utf8")).should.be.deep.equal({
+                    response: "value",
+                });
+
+                res.status.should.be.equal(200);
+
+                cb();
+            });
+        });
+
+        /** @test {ApiClient#doGet} */
         it("should return response if call was successful (without query parameters)", (cb) => {
             nock("https://test-server")
                 .matchHeader("Authorization", authHeader)
                 .matchHeader("User-Agent", `Hyperwallet Node SDK v${packageJson.version}`)
                 .matchHeader("Accept", "application/json")
                 .get("/rest/v3/test")
-                .reply(200, {
-                    response: "value",
-                });
+                .reply(200, { response: "value" }, { "Content-Type": "application/json" });
 
             client.doGet("test", {}, (err, body, res) => {
                 expect(err).to.be.undefined();
@@ -828,7 +897,7 @@ describe("utils/ApiClient", () => {
                         relatedResources: ["trm-f3d38df1-adb7-4127-9858-e72ebe682a79",
                             "trm-601b1401-4464-4f3f-97b3-09079ee7723b"],
                     }],
-                });
+                }, { "Content-Type": "application/json" });
 
             client.doGet("test", {}, (err, body, res) => {
                 err.should.be.deep.equal([{
