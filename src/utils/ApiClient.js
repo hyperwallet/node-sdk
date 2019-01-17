@@ -90,6 +90,7 @@ export default class ApiClient {
         if (this.isEncrypted) {
             contentType = "application/jose+json";
             accept = "application/jose+json";
+            this.createJoseJsonParser();
             requestDataPromise = this.encryption.encrypt(data);
         }
         requestDataPromise.then((requestData) => {
@@ -120,6 +121,7 @@ export default class ApiClient {
         if (this.isEncrypted) {
             contentType = "application/jose+json";
             accept = "application/jose+json";
+            this.createJoseJsonParser();
             requestDataPromise = this.encryption.encrypt(data);
         }
         requestDataPromise.then((requestData) => {
@@ -148,6 +150,7 @@ export default class ApiClient {
         if (this.isEncrypted) {
             contentType = "application/jose+json";
             accept = "application/jose+json";
+            this.createJoseJsonParser();
         }
         request
             .get(`${this.server}/rest/v3/${partialUrl}`)
@@ -170,14 +173,15 @@ export default class ApiClient {
      */
     wrapCallback(httpMethod, callback = () => null) {
         return (err, res) => {
-            if (res && ((!this.isEncrypted && res.type !== "application/json") || (this.isEncrypted && res.type !== "application/jose+json"))) {
+            if (res && res.header && ((!this.isEncrypted && res.header["content-type"].indexOf("application/json") === -1) ||
+                (this.isEncrypted && res.header["content-type"].indexOf("application/jose+json") === -1))) {
                 callback([{
                     message: "Invalid Content-Type specified in Response Header",
                 }], res ? res.body : undefined, res);
                 return;
             }
             if (this.isEncrypted) {
-                this.processEncryptedResponse(httpMethod, err, res, callback);
+                this.processEncryptedResponse(httpMethod, err, res.body, callback);
             } else {
                 this.processNonEncryptedResponse(err, res, callback);
             }
@@ -222,20 +226,37 @@ export default class ApiClient {
      * @private
      */
     processEncryptedResponse(httpMethod, err, res, callback) {
-        if (!err) {
-            let responseBody = res.rawResponse ? res.rawResponse : res.text;
-            try {
-                responseBody = this.encryption.base64Encode(JSON.parse(res.text));
-            } catch (e) {
-                // nothing to do
-            }
-            this.encryption.decrypt(responseBody)
-                .then((decryptedData) => {
-                    callback(undefined, JSON.parse(decryptedData.payload.toString()), decryptedData);
-                })
-                .catch(() => callback(`Failed to decrypt response for ${httpMethod} request`, responseBody, responseBody));
-        } else {
-            this.processNonEncryptedResponse(err, res, callback);
+        if (!res) {
+            callback("Try to decrypt empty response body", undefined, undefined);
         }
+        this.encryption.decrypt(res)
+            .then((decryptedData) => {
+                const responseBody = JSON.parse(decryptedData.payload.toString());
+                if (responseBody.errors) {
+                    const responseWithErrors = {};
+                    responseWithErrors.body = responseBody;
+                    this.processNonEncryptedResponse(responseBody, responseWithErrors, callback);
+                } else {
+                    callback(undefined, responseBody, decryptedData);
+                }
+            })
+            .catch(() => callback(`Failed to decrypt response for ${httpMethod} request`, res, res));
+    }
+
+    /**
+     * Creates response body parser for application/jose+json content-type
+     *
+     * @private
+     */
+    createJoseJsonParser() {
+        request.parse["application/jose+json"] = (res, callback) => {
+            let data = "";
+            res.on("data", (chunk) => {
+                data += chunk;
+            });
+            res.on("end", () => {
+                callback(null, data);
+            });
+        };
     }
 }

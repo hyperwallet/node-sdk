@@ -1,8 +1,11 @@
 Changelog
 =========
-1.0.1 (current)
+1.1.0 (current)
 -------------------
 
+1.0.1 (2019-01-17)
+-------------------
+- FIX: Resolved issue with restricted "Accept" & "Content-Type" headers to support only "application/json" or "application/jose+json"
 
 1.0.0  (2018-12-21)
 -------------------
