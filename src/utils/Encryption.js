@@ -6,7 +6,6 @@ import request from "superagent";
  * The Hyperwallet Encryption processor
  */
 export default class Encryption {
-
     /**
      * Create a instance of the Encryption service
      *
@@ -255,15 +254,15 @@ export default class Encryption {
     createKeyStoreFromJwkSet(jwkSetPath, jwkSet) {
         return new Promise((resolve, reject) => {
             jose.JWK.asKeyStore(jwkSet).
-            then((result) => {
-                if (jwkSetPath === this.clientPrivateKeySetLocation) {
-                    this.clientKeyStore = result;
-                } else {
-                    this.hwKeyStore = result;
-                }
-                resolve(result);
-            })
-            .catch(() => reject(new Error("Failed to create keyStore from given jwkSet")));
+                then((result) => {
+                    if (jwkSetPath === this.clientPrivateKeySetLocation) {
+                        this.clientKeyStore = result;
+                    } else {
+                        this.hwKeyStore = result;
+                    }
+                    resolve(result);
+                })
+                .catch(() => reject(new Error("Failed to create keyStore from given jwkSet")));
         });
     }
 

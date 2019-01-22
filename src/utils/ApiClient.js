@@ -18,7 +18,6 @@ import Encryption from "./Encryption";
  * The Hyperwallet API Client
  */
 export default class ApiClient {
-
     /**
      * Create a instance of the API client
      *
