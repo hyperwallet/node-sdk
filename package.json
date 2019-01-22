@@ -19,7 +19,7 @@
     "coveralls": "npm run test-coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
     "prepublish-prod": "npm test && npm run prod",
     "publish-please": "publish-please",
-    "prepublish": "publish-please guard",
+    "prepublish": "publish-please guard"
   },
   "repository": {
     "type": "git",
