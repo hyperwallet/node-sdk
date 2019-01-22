@@ -7,7 +7,7 @@
     "branch": "master",
     "gitTag": true
   },
-  checkBranch: 0,
+  "checkBranch": 0,
   "confirm": true,
   "publishTag": "latest",
   "prePublishScript": "npm run prepublish-prod"
