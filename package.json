@@ -1,6 +1,6 @@
 {
   "name": "hyperwallet-sdk",
-  "version": "1.0.2",
+  "version": "1.0.1",
   "description": "A library to manage users, transfer methods and payments through the Hyperwallet API",
   "main": "lib/index.js",
   "dependencies": {
@@ -20,7 +20,6 @@
     "prepublish-prod": "npm test && npm run prod",
     "publish-please": "publish-please",
     "prepublish": "publish-please guard",
-    "release": "npm-github-release"
   },
   "repository": {
     "type": "git",
@@ -59,7 +58,6 @@
     "isparta": "^4.1.1",
     "mocha": "^5.2.0",
     "nock": "^10.0.4",
-    "npm-github-release": "^0.9.0",
     "publish-please": "^5.4.3",
     "sinon": "^1.17.4",
     "sinon-chai": "^2.8.0"
