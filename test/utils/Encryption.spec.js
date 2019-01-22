@@ -73,63 +73,63 @@ describe("utils/Encryption", () => {
         it("should throw exception when wrong jwk key set location is given", (cb) => {
             encryption = new Encryption("wrong_keyset_path", hwPath);
             encryption.encrypt(testMessage)
-            .catch((error) => {
-                error.message.should.be.equal("Wrong JWK set location path = wrong_keyset_path");
-                cb();
-            });
+                .catch((error) => {
+                    error.message.should.be.equal("Wrong JWK set location path = wrong_keyset_path");
+                    cb();
+                });
         });
 
         /** @test {Encryption#encrypt} */
         it("should throw exception when wrong jwk key is set for encryption", (cb) => {
             encryption = new Encryption(clientPath, hwPath, "RS256");
             encryption.encrypt(testMessage)
-            .catch((error) => {
-                error.message.should.be.equal("Failed to encrypt payload with key id = 2018_sig_rsa_RS256_2048");
-                cb();
-            });
+                .catch((error) => {
+                    error.message.should.be.equal("Failed to encrypt payload with key id = 2018_sig_rsa_RS256_2048");
+                    cb();
+                });
         });
 
         /** @test {Encryption#encrypt} */
         it("should throw exception when signing body with key algorithm that doesn't present in jwkset", (cb) => {
             encryption = new Encryption(clientPath, hwPath, "RSA-OAEP-256", "RS256-not-present");
             encryption.encrypt(testMessage)
-            .catch((error) => {
-                error.message.should.be.equal("JWK set doesn't contain key with algorithm = RS256-not-present");
-                cb();
-            });
+                .catch((error) => {
+                    error.message.should.be.equal("JWK set doesn't contain key with algorithm = RS256-not-present");
+                    cb();
+                });
         });
 
         /** @test {Encryption#encrypt} */
         it("should throw exception when signing body with wrong jwk key", (cb) => {
             encryption = new Encryption(clientPath, hwPath, "RSA-OAEP-256", "RSA-OAEP-256");
             encryption.encrypt(testMessage)
-            .catch((error) => {
-                error.message.should.be.equal("Failed to sign with key id = 2018_enc_rsa_RSA-OAEP-256");
-                cb();
-            });
+                .catch((error) => {
+                    error.message.should.be.equal("Failed to sign with key id = 2018_enc_rsa_RSA-OAEP-256");
+                    cb();
+                });
         });
 
         /** @test {Encryption#encrypt} */
         it("should throw exception when jwk keyset file is invalid", (cb) => {
             encryption = new Encryption(path.join(__dirname, "..", "resources", "jwkset-invalid"), hwPath);
             encryption.encrypt(testMessage)
-            .catch((error) => {
-                error.message.should.be.equal("Failed to create keyStore from given jwkSet");
-                cb();
-            });
+                .catch((error) => {
+                    error.message.should.be.equal("Failed to create keyStore from given jwkSet");
+                    cb();
+                });
         });
 
         /** @test {Encryption#encrypt} */
         it("should throw exception when jwk keyset file location is wrong", (cb) => {
             encryption = new Encryption(path.join(__dirname, "..", "resources"), hwPath);
             encryption.encrypt(testMessage)
-            .catch((error) => {
-                error.message.should.be.equal("Error: EISDIR: illegal operation on a directory, read");
-                cb();
-            });
+                .catch((error) => {
+                    error.message.should.be.equal("Error: EISDIR: illegal operation on a directory, read");
+                    cb();
+                });
         });
 
-		/** @test {Encryption#encrypt} */
+        /** @test {Encryption#encrypt} */
         it("should successfully encrypt and decrypt text message with url keyset path", (cb) => {
             fs.readFile(clientPath, { encoding: "utf-8" }, (err, keySetData) => {
                 nock("https://test-server")
@@ -152,10 +152,10 @@ describe("utils/Encryption", () => {
         it("should throw exception when not supported encryption algorithm is given", (cb) => {
             encryption = new Encryption(clientPath, hwPath, "unsupported_encryption_algorithm");
             encryption.encrypt(testMessage)
-            .catch((error) => {
-                error.message.should.be.equal("JWK set doesn't contain key with algorithm = unsupported_encryption_algorithm");
-                cb();
-            });
+                .catch((error) => {
+                    error.message.should.be.equal("JWK set doesn't contain key with algorithm = unsupported_encryption_algorithm");
+                    cb();
+                });
         });
     });
 
@@ -184,10 +184,10 @@ describe("utils/Encryption", () => {
             const encryption2 = new Encryption(clientPath2, hwPath2);
             encryption.encrypt(testMessage).then((encryptedBody) => {
                 encryption2.decrypt(encryptedBody)
-                .catch((error) => {
-                    error.message.should.be.equal("Failed to decrypt payload with key id = 2018_enc_rsa_RSA-OAEP-256");
-                    cb();
-                });
+                    .catch((error) => {
+                        error.message.should.be.equal("Failed to decrypt payload with key id = 2018_enc_rsa_RSA-OAEP-256");
+                        cb();
+                    });
             });
         });
 
@@ -196,10 +196,10 @@ describe("utils/Encryption", () => {
             const encryption2 = new Encryption(clientPath, hwPath, "RSA-OAEP-256", "RS256-OAEP-256");
             encryption.encrypt(testMessage).then((encryptedBody) => {
                 encryption2.decrypt(encryptedBody)
-                .catch((error) => {
-                    error.message.should.be.equal("JWK set doesn't contain key with algorithm = RS256-OAEP-256");
-                    cb();
-                });
+                    .catch((error) => {
+                        error.message.should.be.equal("JWK set doesn't contain key with algorithm = RS256-OAEP-256");
+                        cb();
+                    });
             });
         });
 
@@ -208,10 +208,10 @@ describe("utils/Encryption", () => {
             const encryption2 = new Encryption(clientPath, hwPath, "RSA-OAEP-256-absent");
             encryption.encrypt(testMessage).then((encryptedBody) => {
                 encryption2.decrypt(encryptedBody)
-                .catch((error) => {
-                    error.message.should.be.equal("JWK set doesn't contain key with algorithm = RSA-OAEP-256-absent");
-                    cb();
-                });
+                    .catch((error) => {
+                        error.message.should.be.equal("JWK set doesn't contain key with algorithm = RSA-OAEP-256-absent");
+                        cb();
+                    });
             });
         });
 
@@ -220,10 +220,10 @@ describe("utils/Encryption", () => {
             const encryption2 = new Encryption(clientPath, hwPath2);
             encryption.encrypt(testMessage).then((encryptedBody) => {
                 encryption2.decrypt(encryptedBody)
-                .catch((error) => {
-                    error.message.should.be.equal("Failed to verify signature with key id = 2018_sig_rsa_RS256_2048");
-                    cb();
-                });
+                    .catch((error) => {
+                        error.message.should.be.equal("Failed to verify signature with key id = 2018_sig_rsa_RS256_2048");
+                        cb();
+                    });
             });
         });
 
@@ -233,10 +233,10 @@ describe("utils/Encryption", () => {
             encryption2.encrypt(testMessage).then(() => {
                 encryption2.signBody(testMessage).then((signedBody) => {
                     encryption2.checkSignature(signedBody)
-                    .catch((error) => {
-                        error.message.should.be.equal("JWS signature has expired");
-                        cb();
-                    });
+                        .catch((error) => {
+                            error.message.should.be.equal("JWS signature has expired");
+                            cb();
+                        });
                 });
             });
         });
