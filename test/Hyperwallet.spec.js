@@ -762,11 +762,11 @@ describe("Hyperwallet", () => {
     });
 
     //--------------------------------------
-    // Client Token
+    // Authentication Token
     //--------------------------------------
 
-    /** @test {Hyperwallet#getClientToken} */
-    describe("getClientToken()", () => {
+    /** @test {Hyperwallet#getAuthenticationToken} */
+    describe("getAuthenticationToken()", () => {
         let client;
         let apiClientSpy;
 
@@ -781,19 +781,19 @@ describe("Hyperwallet", () => {
             };
         });
 
-        /** @test {Hyperwallet#getClientToken} */
+        /** @test {Hyperwallet#getAuthenticationToken} */
         it("should throw error if userToken is missing", () => {
             const callback = () => null;
-            expect(() => client.getClientToken(undefined, callback)).to.throw("userToken is required");
+            expect(() => client.getAuthenticationToken(undefined, callback)).to.throw("userToken is required");
         });
 
-        /** @test {Hyperwallet#getClientToken} */
-        it("should do post call to client token endpoint", () => {
+        /** @test {Hyperwallet#getAuthenticationToken} */
+        it("should do post call to authentication token endpoint", () => {
             const callback = () => null;
-            client.getClientToken("test-user-token", callback);
+            client.getAuthenticationToken("test-user-token", callback);
 
             apiClientSpy.should.have.been.calledOnce();
-            apiClientSpy.should.have.been.calledWith("users/test-user-token/client-token", {}, {}, callback);
+            apiClientSpy.should.have.been.calledWith("users/test-user-token/authentication-token", {}, {}, callback);
         });
     });
 

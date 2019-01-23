@@ -558,22 +558,22 @@ export default class Hyperwallet {
     }
 
     //--------------------------------------
-    // Client Token
+    // Authentication Token
     //--------------------------------------
 
     /**
-     * Get client token
+     * Get authentication token
      *
      * @param {string} userToken - The user token
      * @param {api-callback} callback - The callback for this call
      *
      * @throws Will throw an error if userToken is not provided
      */
-    getClientToken(userToken, callback) {
+    getAuthenticationToken(userToken, callback) {
         if (!userToken) {
             throw new Error("userToken is required");
         }
-        this.client.doPost(`users/${encodeURIComponent(userToken)}/client-token`, {}, {}, callback);
+        this.client.doPost(`users/${encodeURIComponent(userToken)}/authentication-token`, {}, {}, callback);
     }
 
     //--------------------------------------
