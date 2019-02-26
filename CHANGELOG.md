@@ -1,6 +1,8 @@
 Changelog
 =========
 
+Notification test
+
 1.3.0
 -------------------
 - Added field "VerificationStatus" to User
