@@ -172,8 +172,9 @@ export default class ApiClient {
      */
     wrapCallback(httpMethod, callback = () => null) {
         return (err, res) => {
-            if (res && res.header && ((!this.isEncrypted && res.header["content-type"].indexOf("application/json") === -1) ||
-                (this.isEncrypted && res.header["content-type"].indexOf("application/jose+json") === -1))) {
+            const expectedContentType = (this.isEncrypted) ? "application/jose+json" : "application/json";
+            const invalidContentType = res && res.header && res.status !== 204 && res.header["content-type"].indexOf(expectedContentType) === -1;
+            if (invalidContentType) {
                 callback([{
                     message: "Invalid Content-Type specified in Response Header",
                 }], res ? res.body : undefined, res);

@@ -1147,5 +1147,26 @@ describe("utils/ApiClient", () => {
             });
             callback(new Error(), rawRes);
         });
+
+        it("should call callback with no errors if Content-type is missing and response is noContent", (cb) => {
+            const client = new ApiClient("test-username", "test-password", "test-server");
+
+            const rawRes = {
+                body: "test",
+                status: 204,
+                header: {
+                },
+            };
+
+            const callback = client.wrapCallback("POST", (err, body, res) => {
+                expect(err).to.be.undefined();
+
+                body.should.be.equal("test");
+                rawRes.should.be.deep.equal(res);
+
+                cb();
+            });
+            callback(undefined, rawRes);
+        });
     });
 });
