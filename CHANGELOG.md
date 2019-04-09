@@ -1,6 +1,10 @@
 Changelog
 =========
 
+1.3.1
+-------------------
+- FIX: TypeError thrown when response status is 204 No Content
+
 1.3.0
 -------------------
 - Added field "VerificationStatus" to User
