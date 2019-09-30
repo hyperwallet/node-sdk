@@ -1168,5 +1168,30 @@ describe("utils/ApiClient", () => {
             });
             callback(undefined, rawRes);
         });
+
+        it("should call callback with COMMUNICATION_ERROR if status is 429", (cb) => {
+            const client = new ApiClient("test-username", "test-password", "test-server");
+
+            const rawRes = {
+                body: "test",
+                status: 429,
+                header: {},
+            };
+
+            const rawErr = {
+                status: 429,
+            };
+
+            const callback = client.wrapCallback("POST", (err, body, res) => {
+                body.should.be.equal("test");
+                rawRes.should.be.deep.equal(res);
+                err.should.be.deep.equal([{
+                    message: "Could not communicate with test-server",
+                    code: "COMMUNICATION_ERROR",
+                }]);
+                cb();
+            });
+            callback(rawErr, rawRes);
+        });
     });
 });
