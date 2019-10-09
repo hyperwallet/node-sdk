@@ -174,7 +174,7 @@ export default class ApiClient {
         return (err, res) => {
             const expectedContentType = (this.isEncrypted) ? "application/jose+json" : "application/json";
             const invalidContentType = res && res.header && res.header["content-type"] && res.header["content-type"].indexOf(expectedContentType) === -1;
-            if (invalidContentType) {
+            if (!err && invalidContentType) {
                 callback([{
                     message: "Invalid Content-Type specified in Response Header",
                 }], res ? res.body : undefined, res);
