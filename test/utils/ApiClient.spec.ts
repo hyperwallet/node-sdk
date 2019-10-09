@@ -2,10 +2,9 @@ import chai, { expect } from "chai";
 import dirtyChai from "dirty-chai";
 import nock from "nock";
 import path from "path";
-import Encryption from "../../src/utils/Encryption";
 
-import ApiClient from "../../src/utils/ApiClient";
-
+import { Encryption } from "../../src/utils/Encryption";
+import { ApiClient } from "../../src/utils/ApiClient";
 import packageJson from "../../package.json";
 
 chai.should();
@@ -68,7 +67,7 @@ describe("utils/ApiClient", () => {
             client.doPost("test", { test: "value" }, { sort: "test" }, (err, body, res) => {
                 expect(err).to.be.undefined();
 
-                body.should.be.deep.equal({
+                expect(body).to.be.deep.equal({
                     response: "value",
                 });
 
@@ -96,7 +95,7 @@ describe("utils/ApiClient", () => {
             client.doPost("test", { test: "value" }, { sort: "test" }, (err, body, res) => {
                 expect(err).to.be.undefined();
 
-                body.should.be.deep.equal({
+                expect(body).to.be.deep.equal({
                     response: "value",
                 });
 
@@ -149,7 +148,7 @@ describe("utils/ApiClient", () => {
             client.doPost("test", { test: "value" }, {}, (err, body, res) => {
                 expect(err).to.be.undefined();
 
-                body.should.be.deep.equal({
+                expect(body).to.be.deep.equal({
                     response: "value",
                 });
 
@@ -162,7 +161,7 @@ describe("utils/ApiClient", () => {
         /** @test {ApiClient#doPost} */
         it("should return generic network error if no response was send by server", (cb) => {
             client.doPost("test", { test: "value" }, {}, (err, body, res) => {
-                err.should.be.deep.equal([{
+                expect(err).to.be.deep.equal([{
                     message: "Could not communicate with https://test-server",
                     code: "COMMUNICATION_ERROR",
                 }]);
@@ -194,14 +193,14 @@ describe("utils/ApiClient", () => {
                 }, { "Content-Type": "application/json" });
 
             client.doPost("test", { test: "value" }, {}, (err, body, res) => {
-                err.should.be.deep.equal([{
+                expect(err).to.be.deep.equal([{
                     message: "message",
                     code: "FORBIDDEN",
                     relatedResources: ["trm-f3d38df1-adb7-4127-9858-e72ebe682a79",
                         "trm-601b1401-4464-4f3f-97b3-09079ee7723b"],
                 }]);
 
-                body.should.be.deep.equal({
+                expect(body).to.be.deep.equal({
                     errors: [{
                         message: "message",
                         code: "FORBIDDEN",
@@ -246,7 +245,7 @@ describe("utils/ApiClient", () => {
 
                     expect(res).to.not.be.undefined();
 
-                    body.should.be.deep.equal({
+                    expect(body).to.be.deep.equal({
                         message: "Test message",
                     });
 
@@ -285,7 +284,7 @@ describe("utils/ApiClient", () => {
 
                     expect(res).to.not.be.undefined();
 
-                    body.should.be.deep.equal({
+                    expect(body).to.be.deep.equal({
                         message: "Test message",
                     });
 
@@ -324,7 +323,7 @@ describe("utils/ApiClient", () => {
 
                     expect(res).to.be.undefined();
 
-                    err.should.be.deep.equal("Try to decrypt empty response body");
+                    expect(err).to.be.deep.equal("Try to decrypt empty response body");
 
                     cb();
                 });
@@ -359,7 +358,7 @@ describe("utils/ApiClient", () => {
 
                     expect(res).to.be.undefined();
 
-                    err.should.be.deep.equal("Failed to encrypt body for POST request");
+                    expect(err).to.be.deep.equal("Failed to encrypt body for POST request");
 
                     cb();
                 });
@@ -404,7 +403,7 @@ describe("utils/ApiClient", () => {
             client.doPut("test", { test: "value" }, { sort: "test" }, (err, body, res) => {
                 expect(err).to.be.undefined();
 
-                body.should.be.deep.equal({
+                expect(body).to.be.deep.equal({
                     response: "value",
                 });
 
@@ -432,7 +431,7 @@ describe("utils/ApiClient", () => {
             client.doPut("test", { test: "value" }, { sort: "test" }, (err, body, res) => {
                 expect(err).to.be.undefined();
 
-                body.should.be.deep.equal({
+                expect(body).to.be.deep.equal({
                     response: "value",
                 });
 
@@ -485,7 +484,7 @@ describe("utils/ApiClient", () => {
             client.doPut("test", { test: "value" }, {}, (err, body, res) => {
                 expect(err).to.be.undefined();
 
-                body.should.be.deep.equal({
+                expect(body).to.be.deep.equal({
                     response: "value",
                 });
 
@@ -498,7 +497,7 @@ describe("utils/ApiClient", () => {
         /** @test {ApiClient#doPut} */
         it("should return generic network error if no response was send by server", (cb) => {
             client.doPut("test", { test: "value" }, {}, (err, body, res) => {
-                err.should.be.deep.equal([{
+                expect(err).to.be.deep.equal([{
                     message: "Could not communicate with https://test-server",
                     code: "COMMUNICATION_ERROR",
                 }]);
@@ -530,14 +529,14 @@ describe("utils/ApiClient", () => {
                 }, { "Content-Type": "application/json" });
 
             client.doPut("test", { test: "value" }, {}, (err, body, res) => {
-                err.should.be.deep.equal([{
+                expect(err).to.be.deep.equal([{
                     message: "message",
                     code: "FORBIDDEN",
                     relatedResources: ["trm-f3d38df1-adb7-4127-9858-e72ebe682a79",
                         "trm-601b1401-4464-4f3f-97b3-09079ee7723b"],
                 }]);
 
-                body.should.be.deep.equal({
+                expect(body).to.be.deep.equal({
                     errors: [{
                         message: "message",
                         code: "FORBIDDEN",
@@ -580,7 +579,7 @@ describe("utils/ApiClient", () => {
 
                     expect(res).to.not.be.undefined();
 
-                    body.should.be.deep.equal({
+                    expect(body).to.be.deep.equal({
                         message: "Test message",
                     });
 
@@ -619,7 +618,7 @@ describe("utils/ApiClient", () => {
 
                     expect(res).to.not.be.undefined();
 
-                    body.should.be.deep.equal({
+                    expect(body).to.be.deep.equal({
                         message: "Test message",
                     });
 
@@ -656,7 +655,7 @@ describe("utils/ApiClient", () => {
 
                     expect(res).to.be.undefined();
 
-                    err.should.be.deep.equal("Failed to encrypt body for PUT request");
+                    expect(err).to.be.deep.equal("Failed to encrypt body for PUT request");
 
                     cb();
                 });
@@ -687,7 +686,7 @@ describe("utils/ApiClient", () => {
                     .reply(201, encryptedBody, { "Content-Type": "application/jose+json" });
 
                 clientWithEncryption.doPut("test", { message: "Test message" }, {}, (err, body, res) => {
-                    err.should.be.deep.equal("Failed to decrypt response for PUT request");
+                    expect(err).to.be.deep.equal("Failed to decrypt response for PUT request");
 
                     expect(body).to.not.be.undefined();
 
@@ -725,12 +724,12 @@ describe("utils/ApiClient", () => {
                     .reply(404, encryptedBody, { "Content-Type": "application/jose+json" });
 
                 clientWithEncryption.doPut("test", { message: "Test message" }, {}, (err, body, res) => {
-                    err.should.be.deep.equal([
+                    expect(err).to.be.deep.equal([
                         "test1",
                         "test2",
                     ]);
 
-                    body.should.be.deep.equal({
+                    expect(body).to.be.deep.equal({
                         errors: [
                             "test1",
                             "test2",
@@ -786,7 +785,7 @@ describe("utils/ApiClient", () => {
             client.doGet("test", { sort: "test" }, (err, body, res) => {
                 expect(err).to.be.undefined();
 
-                body.should.be.deep.equal({
+                expect(body).to.be.deep.equal({
                     response: "value",
                 });
 
@@ -811,7 +810,7 @@ describe("utils/ApiClient", () => {
             client.doGet("test", { sort: "test" }, (err, body, res) => {
                 expect(err).to.be.undefined();
 
-                body.should.be.deep.equal({
+                expect(body).to.be.deep.equal({
                     response: "value",
                 });
 
@@ -858,7 +857,7 @@ describe("utils/ApiClient", () => {
             client.doGet("test", {}, (err, body, res) => {
                 expect(err).to.be.undefined();
 
-                body.should.be.deep.equal({
+                expect(body).to.be.deep.equal({
                     response: "value",
                 });
 
@@ -871,7 +870,7 @@ describe("utils/ApiClient", () => {
         /** @test {ApiClient#doGet} */
         it("should return generic network error if no response was send by server", (cb) => {
             client.doGet("test", {}, (err, body, res) => {
-                err.should.be.deep.equal([{
+                expect(err).to.be.deep.equal([{
                     message: "Could not communicate with https://test-server",
                     code: "COMMUNICATION_ERROR",
                 }]);
@@ -900,14 +899,14 @@ describe("utils/ApiClient", () => {
                 }, { "Content-Type": "application/json" });
 
             client.doGet("test", {}, (err, body, res) => {
-                err.should.be.deep.equal([{
+                expect(err).to.be.deep.equal([{
                     message: "message",
                     code: "FORBIDDEN",
                     relatedResources: ["trm-f3d38df1-adb7-4127-9858-e72ebe682a79",
                         "trm-601b1401-4464-4f3f-97b3-09079ee7723b"],
                 }]);
 
-                body.should.be.deep.equal({
+                expect(body).to.be.deep.equal({
                     errors: [{
                         message: "message",
                         code: "FORBIDDEN",
@@ -949,7 +948,7 @@ describe("utils/ApiClient", () => {
 
                     expect(res).to.not.be.undefined();
 
-                    body.should.be.deep.equal({
+                    expect(body).to.be.deep.equal({
                         message: "Test message",
                     });
 
@@ -987,7 +986,7 @@ describe("utils/ApiClient", () => {
 
                     expect(res).to.not.be.undefined();
 
-                    body.should.be.deep.equal({
+                    expect(body).to.be.deep.equal({
                         message: "Test message",
                     });
 
@@ -1007,7 +1006,7 @@ describe("utils/ApiClient", () => {
         it("should return a 'function' with a argument", () => {
             const client = new ApiClient("test-username", "test-password", "test-server");
 
-            client.wrapCallback(() => null).should.be.a("function");
+            client.wrapCallback().should.be.a("function");
         });
 
         it("should be able to run without any arguments", () => {
@@ -1027,7 +1026,7 @@ describe("utils/ApiClient", () => {
             const callback = client.wrapCallback("POST", (err, body, res) => {
                 expect(err).to.be.undefined();
 
-                body.should.be.equal("test");
+                expect(body).to.be.equal("test");
                 rawRes.should.be.deep.equal(res);
 
                 cb();
@@ -1052,13 +1051,13 @@ describe("utils/ApiClient", () => {
             };
 
             const callback = client.wrapCallback("POST", (err, body, res) => {
-                err.should.be.deep.equal([{
+                expect(err).to.be.deep.equal([{
                     message: "message",
                     code: "FORBIDDEN",
                     relatedResources: ["trm-f3d38df1-adb7-4127-9858-e72ebe682a79",
                         "trm-601b1401-4464-4f3f-97b3-09079ee7723b"],
                 }]);
-                body.should.be.deep.equal({
+                expect(body).to.be.deep.equal({
                     errors: [{
                         message: "message",
                         code: "FORBIDDEN",
@@ -1083,11 +1082,11 @@ describe("utils/ApiClient", () => {
             };
 
             const callback = client.wrapCallback("POST", (err, body, res) => {
-                err.should.be.deep.equal([{
+                expect(err).to.be.deep.equal([{
                     message: "Could not communicate with test-server",
                     code: "COMMUNICATION_ERROR",
                 }]);
-                body.should.be.equal("test");
+                expect(body).to.be.equal("test");
                 rawRes.should.be.deep.equal(res);
 
                 cb();
@@ -1112,7 +1111,7 @@ describe("utils/ApiClient", () => {
                 const callback = clientWithEncryption.wrapCallback("POST", (err, body, res) => {
                     expect(err).to.be.undefined();
                     expect(res).not.to.be.undefined();
-                    body.should.be.deep.equal(testMessage);
+                    expect(body).to.be.deep.equal(testMessage);
 
                     cb();
                 });
@@ -1137,10 +1136,10 @@ describe("utils/ApiClient", () => {
             };
 
             const callback = client.wrapCallback("POST", (err, body, res) => {
-                err.should.be.deep.equal([{
+                expect(err).to.be.deep.equal([{
                     message: "Invalid Content-Type specified in Response Header",
                 }]);
-                body.should.be.equal("test");
+                expect(body).to.be.equal("test");
                 rawRes.should.be.deep.equal(res);
 
                 cb();
@@ -1161,7 +1160,7 @@ describe("utils/ApiClient", () => {
             const callback = client.wrapCallback("POST", (err, body, res) => {
                 expect(err).to.be.undefined();
 
-                body.should.be.equal("test");
+                expect(body).to.be.equal("test");
                 rawRes.should.be.deep.equal(res);
 
                 cb();

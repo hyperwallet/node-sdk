@@ -1,0 +1,31 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./",
+    "jsx": "preserve",
+    "noEmit": true,
+    "module": "commonjs",
+    "esModuleInterop": true,
+    "strictNullChecks": true,
+    "strictBindCallApply": true,
+    "strictFunctionTypes": false, // Ideally would be true, but this doesn't play well with our custom Express request types
+    // "strictPropertyInitialization": true,
+    "alwaysStrict": true,
+    "noImplicitThis": false, // Ideally would be true, but this doesn't play well with how we define Sequelize models
+    "resolveJsonModule": true,
+    "moduleResolution": "node",
+    "downlevelIteration": true,
+    "allowSyntheticDefaultImports": true,
+    "skipLibCheck": true,
+    "noUnusedLocals": true,
+    // "noUnusedParameters": true,
+    // "noImplicitAny": true,
+    // "noImplicitReturns": true,
+    "paths": {
+      "~/*": ["./src/*"]
+    },
+    "lib": ["es6", "es7", "esnext"],
+    "outDir": "./lib"
+  },
+  "include": ["src"],
+  "exclude": ["node_modules"]
+}
