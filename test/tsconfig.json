@@ -8,5 +8,10 @@
       "@truebill/hyperwallet-sdk/*": ["./src/*"]
     }
   },
-  "include": ["./**/*.ts"]
+  "include": ["./**/*.ts"],
+  "references": [
+    {
+      "path": "../src"
+    }
+  ]
 }

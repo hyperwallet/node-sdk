@@ -41,9 +41,6 @@ describe('utils/ApiClient', () => {
 
   /** @test {ApiClient#doPost} */
   describe('doPost()', () => {
-    let client: ApiClient;
-    let authHeader;
-
     before(() => {
       nock.disableNetConnect();
     });
@@ -51,22 +48,20 @@ describe('utils/ApiClient', () => {
       nock.enableNetConnect();
     });
 
-    beforeEach(() => {
-      client = new ApiClient(
+    const beforeEach = () => ({
+      client: new ApiClient(
         'test-username',
         'test-password',
         'https://test-server'
-      );
+      ),
 
-      authHeader = 'Basic dGVzdC11c2VybmFtZTp0ZXN0LXBhc3N3b3Jk';
-    });
-    afterEach(() => {
-      nock.cleanAll();
+      authHeader: 'Basic dGVzdC11c2VybmFtZTp0ZXN0LXBhc3N3b3Jk'
     });
 
     /** @test {ApiClient#doPost} */
     it('should return response if call was successful (with query parameters)', cb => {
-      nock('https://test-server')
+      const { client, authHeader } = beforeEach();
+      const nockScope = nock('https://test-server')
         .matchHeader('Authorization', authHeader)
         .matchHeader(
           'User-Agent',
@@ -97,6 +92,7 @@ describe('utils/ApiClient', () => {
 
           res.status.should.be.equal(201);
 
+          nockScope.done();
           cb();
         }
       );
@@ -104,7 +100,8 @@ describe('utils/ApiClient', () => {
 
     /** @test {ApiClient#doPost} */
     it('should return response if call was successful (with query parameters) when content type contains charset', cb => {
-      nock('https://test-server')
+      const { client, authHeader } = beforeEach();
+      const nockScope = nock('https://test-server')
         .matchHeader('Authorization', authHeader)
         .matchHeader(
           'User-Agent',
@@ -137,6 +134,7 @@ describe('utils/ApiClient', () => {
 
           res.status.should.be.equal(201);
 
+          nockScope.done();
           cb();
         }
       );
@@ -144,7 +142,8 @@ describe('utils/ApiClient', () => {
 
     /** @test {ApiClient#doPost} */
     it('should return response if call was successful (with query parameters) when content type contains charset ahead', cb => {
-      nock('https://test-server')
+      const { client, authHeader } = beforeEach();
+      const nockScope = nock('https://test-server')
         .matchHeader('Authorization', authHeader)
         .matchHeader(
           'User-Agent',
@@ -177,6 +176,7 @@ describe('utils/ApiClient', () => {
 
           res.status.should.be.equal(201);
 
+          nockScope.done();
           cb();
         }
       );
@@ -184,7 +184,8 @@ describe('utils/ApiClient', () => {
 
     /** @test {ApiClient#doPost} */
     it('should return response if call was successful (without query parameters)', cb => {
-      nock('https://test-server')
+      const { client, authHeader } = beforeEach();
+      const nockScope = nock('https://test-server')
         .matchHeader('Authorization', authHeader)
         .matchHeader(
           'User-Agent',
@@ -210,12 +211,14 @@ describe('utils/ApiClient', () => {
 
         res.status.should.be.equal(201);
 
+        nockScope.done();
         cb();
       });
     });
 
     /** @test {ApiClient#doPost} */
     it('should return generic network error if no response was send by server', cb => {
+      const { client } = beforeEach();
       client.doPost('test', { test: 'value' }, {}, (err, body, res) => {
         expect(err).to.be.deep.equal([
           {
@@ -233,7 +236,8 @@ describe('utils/ApiClient', () => {
 
     /** @test {ApiClient#doPost} */
     it('should return error message if responses contains error', cb => {
-      nock('https://test-server')
+      const { client, authHeader } = beforeEach();
+      const nockScope = nock('https://test-server')
         .matchHeader('Authorization', authHeader)
         .matchHeader(
           'User-Agent',
@@ -288,12 +292,14 @@ describe('utils/ApiClient', () => {
 
         res.status.should.be.equal(404);
 
+        nockScope.done();
         cb();
       });
     });
 
     /** @test {ApiClient#doPost} */
     it('should return encrypted response if encrypted POST call was successful (without query parameters)', cb => {
+      const { authHeader } = beforeEach();
       const clientPath = path.join(
         __dirname,
         '..',
@@ -318,7 +324,7 @@ describe('utils/ApiClient', () => {
       encryption
         .encrypt(testMessage)
         .then(encryptedBody => {
-          nock('https://test-server')
+          const nockScope = nock('https://test-server')
             .filteringPath(() => '/')
             .matchHeader('Authorization', authHeader)
             .matchHeader(
@@ -345,6 +351,7 @@ describe('utils/ApiClient', () => {
                 message: 'Test message'
               });
 
+              nockScope.done();
               cb();
             }
           );
@@ -354,6 +361,7 @@ describe('utils/ApiClient', () => {
 
     /** @test {ApiClient#doPost} */
     it('should return encrypted response if encrypted POST call was successful when content type contains charset', cb => {
+      const { authHeader } = beforeEach();
       const clientPath = path.join(
         __dirname,
         '..',
@@ -378,7 +386,7 @@ describe('utils/ApiClient', () => {
       encryption
         .encrypt(testMessage)
         .then(encryptedBody => {
-          nock('https://test-server')
+          const nockScope = nock('https://test-server')
             .filteringPath(() => '/')
             .matchHeader('Authorization', authHeader)
             .matchHeader(
@@ -405,6 +413,7 @@ describe('utils/ApiClient', () => {
                 message: 'Test message'
               });
 
+              nockScope.done();
               cb();
             }
           );
@@ -414,6 +423,7 @@ describe('utils/ApiClient', () => {
 
     /** @test {ApiClient#doPost} */
     it('should return error when encrypted response body is empty', async () => {
+      const { authHeader } = beforeEach();
       const clientPath = path.join(
         __dirname,
         '..',
@@ -437,8 +447,8 @@ describe('utils/ApiClient', () => {
 
       return encryption
         .encrypt(testMessage)
-        .then(async () => {
-          nock('https://test-server')
+        .then(async msg => {
+          const nockScope = nock('https://test-server')
             .filteringPath(() => '/')
             .matchHeader('Authorization', authHeader)
             .matchHeader(
@@ -448,7 +458,7 @@ describe('utils/ApiClient', () => {
             .matchHeader('Accept', 'application/jose+json')
             .matchHeader('Content-Type', 'application/jose+json')
             .post('/', /.+/)
-            .reply(200, null, {
+            .reply(200, '', {
               'Content-Type': 'application/jose+json'
             });
 
@@ -471,6 +481,7 @@ describe('utils/ApiClient', () => {
                 } catch (e) {
                   reject(e);
                 }
+                nockScope.done();
               }
             );
           });
@@ -480,6 +491,7 @@ describe('utils/ApiClient', () => {
 
     /** @test {ApiClient#doPost} */
     it('should return error when fail to encrypt POST request body', cb => {
+      const { authHeader } = beforeEach();
       const clientPath = path.join(
         __dirname,
         '..',
@@ -501,44 +513,50 @@ describe('utils/ApiClient', () => {
         message: 'Test message'
       };
 
-      encryption.encrypt(testMessage).then(encryptedBody => {
-        nock('https://test-server')
-          .filteringPath(() => '/')
-          .matchHeader('Authorization', authHeader)
-          .matchHeader(
-            'User-Agent',
-            `Hyperwallet Node SDK v${packageJson.version}`
-          )
-          .matchHeader('Accept', 'application/json')
-          .matchHeader('Content-Type', 'application/jose+json')
-          .post('/', /.+/)
-          .reply(201, encryptedBody);
+      encryption
+        .encrypt(testMessage)
+        .then(encryptedBody => {
+          const nockScope = nock('https://test-server')
+            .filteringPath(() => '/')
+            .matchHeader('Authorization', authHeader)
+            .matchHeader(
+              'User-Agent',
+              `Hyperwallet Node SDK v${packageJson.version}`
+            )
+            .matchHeader('Accept', 'application/json')
+            .matchHeader('Content-Type', 'application/jose+json')
+            .post('/', /.+/)
+            .reply(201, encryptedBody);
 
-        clientWithEncryption.doPost(
-          'test',
-          { message: 'Test message' },
-          {},
-          (err, body, res) => {
-            expect(body).to.be.undefined();
+          clientWithEncryption.doPost(
+            'test',
+            { message: 'Test message' },
+            {},
+            (err, body, res) => {
+              try {
+                expect(body).to.be.undefined();
 
-            expect(res).to.be.undefined();
+                expect(res).to.be.undefined();
 
-            expect(err).to.be.deep.equal(
-              'Failed to encrypt body for POST request'
-            );
+                expect(err).to.be.deep.equal(
+                  'Failed to encrypt body for POST request'
+                );
 
-            cb();
-          }
-        );
-      });
+                cb();
+              } catch (e) {
+                cb(e);
+              }
+
+              nockScope.done();
+            }
+          );
+        })
+        .catch(fail);
     });
   });
 
   /** @test {ApiClient#doPut} */
   describe('doPut()', () => {
-    let client;
-    let authHeader;
-
     before(() => {
       nock.disableNetConnect();
     });
@@ -546,22 +564,24 @@ describe('utils/ApiClient', () => {
       nock.enableNetConnect();
     });
 
-    beforeEach(() => {
-      client = new ApiClient(
+    const beforeEach = () => ({
+      client: new ApiClient(
         'test-username',
         'test-password',
         'https://test-server'
-      );
+      ),
 
-      authHeader = 'Basic dGVzdC11c2VybmFtZTp0ZXN0LXBhc3N3b3Jk';
+      authHeader: 'Basic dGVzdC11c2VybmFtZTp0ZXN0LXBhc3N3b3Jk'
     });
+
     afterEach(() => {
       nock.cleanAll();
     });
 
     /** @test {ApiClient#doPut} */
     it('should return response if call was successful (with query parameters)', cb => {
-      nock('https://test-server')
+      const { client, authHeader } = beforeEach();
+      const nockScope = nock('https://test-server')
         .matchHeader('Authorization', authHeader)
         .matchHeader(
           'User-Agent',
@@ -592,6 +612,7 @@ describe('utils/ApiClient', () => {
 
           res.status.should.be.equal(200);
 
+          nockScope.done();
           cb();
         }
       );
@@ -599,7 +620,8 @@ describe('utils/ApiClient', () => {
 
     /** @test {ApiClient#doPut} */
     it('should return response if call was successful (with query parameters) when content type contains charset', cb => {
-      nock('https://test-server')
+      const { client, authHeader } = beforeEach();
+      const nockScope = nock('https://test-server')
         .matchHeader('Authorization', authHeader)
         .matchHeader(
           'User-Agent',
@@ -632,6 +654,7 @@ describe('utils/ApiClient', () => {
 
           res.status.should.be.equal(200);
 
+          nockScope.done();
           cb();
         }
       );
@@ -639,7 +662,8 @@ describe('utils/ApiClient', () => {
 
     /** @test {ApiClient#doPut} */
     it('should return response if call was successful (with query parameters) when content type contains charset ahead', cb => {
-      nock('https://test-server')
+      const { client, authHeader } = beforeEach();
+      const nockScope = nock('https://test-server')
         .matchHeader('Authorization', authHeader)
         .matchHeader(
           'User-Agent',
@@ -672,6 +696,7 @@ describe('utils/ApiClient', () => {
 
           res.status.should.be.equal(200);
 
+          nockScope.done();
           cb();
         }
       );
@@ -679,7 +704,8 @@ describe('utils/ApiClient', () => {
 
     /** @test {ApiClient#doPut} */
     it('should return response if call was successful (without query parameters)', cb => {
-      nock('https://test-server')
+      const { client, authHeader } = beforeEach();
+      const nockScope = nock('https://test-server')
         .matchHeader('Authorization', authHeader)
         .matchHeader(
           'User-Agent',
@@ -705,12 +731,14 @@ describe('utils/ApiClient', () => {
 
         res.status.should.be.equal(200);
 
+        nockScope.done();
         cb();
       });
     });
 
     /** @test {ApiClient#doPut} */
     it('should return generic network error if no response was send by server', cb => {
+      const { client } = beforeEach();
       client.doPut('test', { test: 'value' }, {}, (err, body, res) => {
         expect(err).to.be.deep.equal([
           {
@@ -728,7 +756,8 @@ describe('utils/ApiClient', () => {
 
     /** @test {ApiClient#doPut} */
     it('should return error message if responses contains error', cb => {
-      nock('https://test-server')
+      const { client, authHeader } = beforeEach();
+      const nockScope = nock('https://test-server')
         .matchHeader('Authorization', authHeader)
         .matchHeader(
           'User-Agent',
@@ -783,12 +812,14 @@ describe('utils/ApiClient', () => {
 
         res.status.should.be.equal(404);
 
+        nockScope.done();
         cb();
       });
     });
 
     /** @test {ApiClient#doPut} */
     it('should return encrypted response if encrypted PUT call was successful (without query parameters)', cb => {
+      const { authHeader } = beforeEach();
       const clientPath = path.join(
         __dirname,
         '..',
@@ -810,42 +841,47 @@ describe('utils/ApiClient', () => {
         message: 'Test message'
       };
 
-      encryption.encrypt(testMessage).then(encryptedBody => {
-        nock('https://test-server')
-          .filteringPath(() => '/')
-          .matchHeader('Authorization', authHeader)
-          .matchHeader(
-            'User-Agent',
-            `Hyperwallet Node SDK v${packageJson.version}`
-          )
-          .matchHeader('Accept', 'application/jose+json')
-          .matchHeader('Content-Type', 'application/jose+json')
-          .put('/', /.+/)
-          .reply(201, encryptedBody, {
-            'Content-Type': 'application/jose+json'
-          });
-
-        clientWithEncryption.doPut(
-          'test',
-          { message: 'Test message' },
-          {},
-          (err, body, res) => {
-            expect(err).to.be.undefined();
-
-            expect(res).to.not.be.undefined();
-
-            expect(body).to.be.deep.equal({
-              message: 'Test message'
+      encryption
+        .encrypt(testMessage)
+        .then(encryptedBody => {
+          const nockScope = nock('https://test-server')
+            .filteringPath(() => '/')
+            .matchHeader('Authorization', authHeader)
+            .matchHeader(
+              'User-Agent',
+              `Hyperwallet Node SDK v${packageJson.version}`
+            )
+            .matchHeader('Accept', 'application/jose+json')
+            .matchHeader('Content-Type', 'application/jose+json')
+            .put('/', /.+/)
+            .reply(201, encryptedBody, {
+              'Content-Type': 'application/jose+json'
             });
 
-            cb();
-          }
-        );
-      });
+          clientWithEncryption.doPut(
+            'test',
+            { message: 'Test message' },
+            {},
+            (err, body, res) => {
+              expect(err).to.be.undefined();
+
+              expect(res).to.not.be.undefined();
+
+              expect(body).to.be.deep.equal({
+                message: 'Test message'
+              });
+
+              nockScope.done();
+              cb();
+            }
+          );
+        })
+        .catch(fail);
     });
 
     /** @test {ApiClient#doPut} */
     it('should return encrypted response if encrypted PUT call was successful when content type contains charset', cb => {
+      const { authHeader } = beforeEach();
       const clientPath = path.join(
         __dirname,
         '..',
@@ -867,42 +903,47 @@ describe('utils/ApiClient', () => {
         message: 'Test message'
       };
 
-      encryption.encrypt(testMessage).then(encryptedBody => {
-        nock('https://test-server')
-          .filteringPath(() => '/')
-          .matchHeader('Authorization', authHeader)
-          .matchHeader(
-            'User-Agent',
-            `Hyperwallet Node SDK v${packageJson.version}`
-          )
-          .matchHeader('Accept', 'application/jose+json')
-          .matchHeader('Content-Type', 'application/jose+json')
-          .put('/', /.+/)
-          .reply(201, encryptedBody, {
-            'Content-Type': 'application/jose+json;charset=utf-8'
-          });
-
-        clientWithEncryption.doPut(
-          'test',
-          { message: 'Test message' },
-          {},
-          (err, body, res) => {
-            expect(err).to.be.undefined();
-
-            expect(res).to.not.be.undefined();
-
-            expect(body).to.be.deep.equal({
-              message: 'Test message'
+      encryption
+        .encrypt(testMessage)
+        .then(encryptedBody => {
+          const nockScope = nock('https://test-server')
+            .filteringPath(() => '/')
+            .matchHeader('Authorization', authHeader)
+            .matchHeader(
+              'User-Agent',
+              `Hyperwallet Node SDK v${packageJson.version}`
+            )
+            .matchHeader('Accept', 'application/jose+json')
+            .matchHeader('Content-Type', 'application/jose+json')
+            .put('/', /.+/)
+            .reply(201, encryptedBody, {
+              'Content-Type': 'application/jose+json;charset=utf-8'
             });
 
-            cb();
-          }
-        );
-      });
+          clientWithEncryption.doPut(
+            'test',
+            { message: 'Test message' },
+            {},
+            (err, body, res) => {
+              expect(err).to.be.undefined();
+
+              expect(res).to.not.be.undefined();
+
+              expect(body).to.be.deep.equal({
+                message: 'Test message'
+              });
+
+              nockScope.done();
+              cb();
+            }
+          );
+        })
+        .catch(fail);
     });
 
     /** @test {ApiClient#doPut} */
     it('should return error when fail to encrypt PUT request body', cb => {
+      const { authHeader } = beforeEach();
       const clientPath = path.join(
         __dirname,
         '..',
@@ -924,40 +965,50 @@ describe('utils/ApiClient', () => {
         message: 'Test message'
       };
 
-      encryption.encrypt(testMessage).then(encryptedBody => {
-        nock('https://test-server')
-          .filteringPath(() => '/')
-          .matchHeader('Authorization', authHeader)
-          .matchHeader(
-            'User-Agent',
-            `Hyperwallet Node SDK v${packageJson.version}`
-          )
-          .matchHeader('Accept', 'application/json')
-          .matchHeader('Content-Type', 'application/jose+json')
-          .put('/', /.+/)
-          .reply(201, encryptedBody);
+      encryption
+        .encrypt(testMessage)
+        .then(encryptedBody => {
+          const nockScope = nock('https://test-server')
+            .filteringPath(() => '/')
+            .matchHeader('Authorization', authHeader)
+            .matchHeader(
+              'User-Agent',
+              `Hyperwallet Node SDK v${packageJson.version}`
+            )
+            .matchHeader('Accept', 'application/json')
+            .matchHeader('Content-Type', 'application/jose+json')
+            .put('/', /.+/)
+            .reply(201, encryptedBody);
 
-        clientWithEncryption.doPut(
-          'test',
-          { message: 'Test message' },
-          {},
-          (err, body, res) => {
-            expect(body).to.be.undefined();
+          clientWithEncryption.doPut(
+            'test',
+            { message: 'Test message' },
+            {},
+            (err, body, res) => {
+              try {
+                expect(body).to.be.undefined();
 
-            expect(res).to.be.undefined();
+                expect(res).to.be.undefined();
 
-            expect(err).to.be.deep.equal(
-              'Failed to encrypt body for PUT request'
-            );
+                expect(err).to.be.deep.equal(
+                  'Failed to encrypt body for PUT request'
+                );
 
-            cb();
-          }
-        );
-      });
+                cb();
+              } catch (e) {
+                cb(e);
+              }
+
+              nockScope.done();
+            }
+          );
+        })
+        .catch(fail);
     });
 
     /** @test {ApiClient#doPut} */
-    it('should return error when fail to decrypt PUT response body', async () => {
+    it('should return error when fail to decrypt PUT response body', cb => {
+      const { authHeader } = beforeEach();
       const clientPath = path.join(
         __dirname,
         '..',
@@ -979,40 +1030,51 @@ describe('utils/ApiClient', () => {
         message: 'Test message'
       };
 
-      return encryption.encrypt(testMessage).then(encryptedBody => {
-        nock('https://test-server')
-          .filteringPath(() => '/')
-          .matchHeader('Authorization', authHeader)
-          .matchHeader(
-            'User-Agent',
-            `Hyperwallet Node SDK v${packageJson.version}`
-          )
-          .matchHeader('Accept', 'application/jose+json')
-          .matchHeader('Content-Type', 'application/jose+json')
-          .put('/', /.+/)
-          .reply(201, encryptedBody, {
-            'Content-Type': 'application/jose+json'
-          });
+      encryption
+        .encrypt(testMessage)
+        .then(encryptedBody => {
+          const nockScope = nock('https://test-server')
+            .filteringPath(() => '/')
+            .matchHeader('Authorization', authHeader)
+            .matchHeader(
+              'User-Agent',
+              `Hyperwallet Node SDK v${packageJson.version}`
+            )
+            .matchHeader('Accept', 'application/jose+json')
+            .matchHeader('Content-Type', 'application/jose+json')
+            .put('/', /.+/)
+            .reply(201, encryptedBody, {
+              'Content-Type': 'application/jose+json'
+            });
 
-        return clientWithEncryption.doPut(
-          'test',
-          { message: 'Test message' },
-          {},
-          (err, body, res) => {
-            expect(err).to.be.deep.equal([
-              { message: 'Tried to decrypt empty response body' }
-            ]);
+          clientWithEncryption.doPut(
+            'test',
+            { message: 'Test message' },
+            {},
+            (err, body, res) => {
+              try {
+                expect(err).to.be.deep.equal([
+                  { message: 'Failed to decrypt response for PUT request' }
+                ]);
 
-            expect(body).to.not.be.undefined();
+                expect(body).to.not.be.undefined();
 
-            expect(res).to.not.be.undefined();
-          }
-        );
-      });
+                expect(res).to.not.be.undefined();
+
+                cb();
+              } catch (e) {
+                cb(e);
+              }
+              nockScope.done();
+            }
+          );
+        })
+        .catch(fail);
     });
 
     /** @test {ApiClient#doPut} */
     it('should return error when server responses with error on encrypted PUT request', async () => {
+      const { authHeader } = beforeEach();
       const clientPath = path.join(
         __dirname,
         '..',
@@ -1036,8 +1098,8 @@ describe('utils/ApiClient', () => {
 
       return encryption
         .encrypt(errorMessage)
-        .then(encryptedBody => {
-          nock('https://test-server')
+        .then(async encryptedBody => {
+          const nockScope = nock('https://test-server')
             .filteringPath(() => '/')
             .matchHeader('Authorization', authHeader)
             .matchHeader(
@@ -1051,7 +1113,7 @@ describe('utils/ApiClient', () => {
               'Content-Type': 'application/jose+json'
             });
 
-          return new Promise(function(resolve, reject) {
+          return new Promise(resolve => {
             clientWithEncryption.doPut(
               'test',
               { message: 'Test message' },
@@ -1074,16 +1136,18 @@ describe('utils/ApiClient', () => {
                 } catch (e) {
                   fail(e);
                 }
+
+                nockScope.done();
               }
             );
           });
         })
-        .catch(e => fail(e));
+        .catch(fail);
     });
   });
 
   /** @test {ApiClient#doGet} */
-  describe.only('doGet()', () => {
+  describe('doGet()', () => {
     before(() => {
       nock.disableNetConnect();
     });
@@ -1263,7 +1327,7 @@ describe('utils/ApiClient', () => {
     it('should return error message if responses contains error', cb => {
       const { client, authHeader } = beforeEach();
 
-      nock('https://test-server')
+      const nockScope = nock('https://test-server')
         .matchHeader('Authorization', authHeader)
         .matchHeader(
           'User-Agent',
@@ -1314,7 +1378,7 @@ describe('utils/ApiClient', () => {
         });
 
         res.status.should.be.equal(404);
-
+        nockScope.done();
         cb();
       });
     });
@@ -1344,32 +1408,36 @@ describe('utils/ApiClient', () => {
         message: 'Test message'
       };
 
-      encryption.encrypt(testMessage).then(encryptedBody => {
-        nock('https://test-server')
-          .filteringPath(() => '/')
-          .matchHeader('Authorization', authHeader)
-          .matchHeader(
-            'User-Agent',
-            `Hyperwallet Node SDK v${packageJson.version}`
-          )
-          .matchHeader('Accept', 'application/jose+json')
-          .get('/')
-          .reply(200, encryptedBody, {
-            'Content-Type': 'application/jose+json'
+      encryption
+        .encrypt(testMessage)
+        .then(encryptedBody => {
+          const nockScope = nock('https://test-server')
+            .filteringPath(() => '/')
+            .matchHeader('Authorization', authHeader)
+            .matchHeader(
+              'User-Agent',
+              `Hyperwallet Node SDK v${packageJson.version}`
+            )
+            .matchHeader('Accept', 'application/jose+json')
+            .get('/')
+            .reply(200, encryptedBody, {
+              'Content-Type': 'application/jose+json'
+            });
+
+          clientWithEncryption.doGet('test', {}, (err, body, res) => {
+            expect(err).to.be.undefined();
+
+            expect(res).to.not.be.undefined();
+
+            expect(body).to.be.deep.equal({
+              message: 'Test message'
+            });
+
+            nockScope.done();
+            cb();
           });
-
-        clientWithEncryption.doGet('test', {}, (err, body, res) => {
-          expect(err).to.be.undefined();
-
-          expect(res).to.not.be.undefined();
-
-          expect(body).to.be.deep.equal({
-            message: 'Test message'
-          });
-
-          cb();
-        });
-      });
+        })
+        .catch(fail);
     });
 
     /** @test {ApiClient#doGet} */
@@ -1397,32 +1465,36 @@ describe('utils/ApiClient', () => {
         message: 'Test message'
       };
 
-      encryption.encrypt(testMessage).then(encryptedBody => {
-        nock('https://test-server')
-          .filteringPath(() => '/')
-          .matchHeader('Authorization', authHeader)
-          .matchHeader(
-            'User-Agent',
-            `Hyperwallet Node SDK v${packageJson.version}`
-          )
-          .matchHeader('Accept', 'application/jose+json')
-          .get('/')
-          .reply(200, encryptedBody, {
-            'Content-Type': 'application/jose+json;charset=utf-8'
+      encryption
+        .encrypt(testMessage)
+        .then(encryptedBody => {
+          const nockScope = nock('https://test-server')
+            .filteringPath(() => '/')
+            .matchHeader('Authorization', authHeader)
+            .matchHeader(
+              'User-Agent',
+              `Hyperwallet Node SDK v${packageJson.version}`
+            )
+            .matchHeader('Accept', 'application/jose+json')
+            .get('/')
+            .reply(200, encryptedBody, {
+              'Content-Type': 'application/jose+json;charset=utf-8'
+            });
+
+          clientWithEncryption.doGet('test', {}, (err, body, res) => {
+            expect(err).to.be.undefined();
+
+            expect(res).to.not.be.undefined();
+
+            expect(body).to.be.deep.equal({
+              message: 'Test message'
+            });
+
+            nockScope.done();
+            cb();
           });
-
-        clientWithEncryption.doGet('test', {}, (err, body, res) => {
-          expect(err).to.be.undefined();
-
-          expect(res).to.not.be.undefined();
-
-          expect(body).to.be.deep.equal({
-            message: 'Test message'
-          });
-
-          cb();
-        });
-      });
+        })
+        .catch(fail);
     });
   });
 
@@ -1434,7 +1506,7 @@ describe('utils/ApiClient', () => {
         'test-server'
       );
 
-      client.wrapCallback(undefined as any).should.be.a('function');
+      client.wrapCallback(<any>undefined).should.be.a('function');
     });
 
     it("should return a 'function' with a argument", () => {
@@ -1444,7 +1516,7 @@ describe('utils/ApiClient', () => {
         'test-server'
       );
 
-      client.wrapCallback(undefined as any).should.be.a('function');
+      client.wrapCallback(<any>undefined).should.be.a('function');
     });
 
     it('should be able to run without any arguments', () => {
@@ -1453,7 +1525,7 @@ describe('utils/ApiClient', () => {
         'test-password',
         'test-server'
       );
-      client.wrapCallback(undefined as any)(new Error());
+      client.wrapCallback(<any>undefined)(new Error());
     });
 
     it("should call callback with 'body' and 'res' if no error happened", cb => {
@@ -1585,24 +1657,27 @@ describe('utils/ApiClient', () => {
         message: 'Test message'
       };
 
-      encryption.encrypt(testMessage).then(encryptedBody => {
-        const callback = clientWithEncryption.wrapCallback(
-          'POST',
-          (err, body, res) => {
-            expect(err).to.be.undefined();
-            expect(res).not.to.be.undefined();
-            expect(body).to.be.deep.equal(testMessage);
+      encryption
+        .encrypt(testMessage)
+        .then(encryptedBody => {
+          const callback = clientWithEncryption.wrapCallback(
+            'POST',
+            (err, body, res) => {
+              expect(err).to.be.undefined();
+              expect(res).not.to.be.undefined();
+              expect(body).to.be.deep.equal(testMessage);
 
-            cb();
-          }
-        );
-        const rawRes = {
-          body: encryptedBody,
-          status: 200,
-          type: 'application/jose+json'
-        };
-        callback(undefined, rawRes);
-      });
+              cb();
+            }
+          );
+          const rawRes = {
+            body: encryptedBody,
+            status: 200,
+            type: 'application/jose+json'
+          };
+          callback(undefined, rawRes);
+        })
+        .catch(fail);
     });
 
     it("should call callback with static error message as 'errors', when Content-Type is wrong", cb => {

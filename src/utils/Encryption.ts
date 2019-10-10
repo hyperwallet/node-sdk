@@ -101,10 +101,11 @@ export class Encryption {
       ? Promise.resolve(this.hwKeyStore)
       : this.createKeyStore();
 
-    await keyStorePromise;
-    const decryptedBody = await this.decryptBody(body);
-
-    return this.checkSignature(decryptedBody.plaintext.toString());
+    return keyStorePromise
+      .then(() => this.decryptBody(body))
+      .then(decryptedBody =>
+        this.checkSignature(decryptedBody.plaintext.toString())
+      );
   }
 
   /**

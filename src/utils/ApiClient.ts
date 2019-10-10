@@ -220,11 +220,13 @@ export class ApiClient {
       const expectedContentType = this.isEncrypted
         ? 'application/jose+json'
         : 'application/json';
+
       const invalidContentType =
         res &&
         res.header &&
         res.status !== 204 &&
         res.header['content-type'].indexOf(expectedContentType) === -1;
+
       if (invalidContentType) {
         callback(
           [
@@ -238,11 +240,12 @@ export class ApiClient {
 
         return;
       }
+
       if (this.isEncrypted) {
         this.processEncryptedResponse(
           httpMethod,
           err,
-          res ? res.body : undefined,
+          res && res.body != null ? res.body : undefined,
           callback
         );
       } else {
@@ -305,6 +308,7 @@ export class ApiClient {
         if (responseBody.errors) {
           const responseWithErrors: Record<string, any> = {};
           responseWithErrors.body = responseBody;
+
           this.processNonEncryptedResponse(
             responseBody,
             responseWithErrors,
@@ -317,8 +321,8 @@ export class ApiClient {
       .catch(() => {
         callback(
           [{ message: `Failed to decrypt response for ${httpMethod} request` }],
-          res,
-          res
+          res || undefined,
+          res || undefined
         );
 
         return;
