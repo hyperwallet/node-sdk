@@ -1,6 +1,7 @@
-interface HwBaseUserData {
+interface IBaseUserData {
   /**
-   * A client-defined identifier for the user. This is the unique ID assigned to the user on your system. Max 75 characters. Allows letters, numbers, and + , - . / _ ~ |
+   * A client-defined identifier for the user. This is the unique ID assigned to the user on your system.
+   * Max 75 characters. Allows letters, numbers, and + , - . / _ ~ |
    */
   clientUserId: string;
 
@@ -58,7 +59,7 @@ interface HwBaseUserData {
   programToken: string;
 }
 
-export interface HwIndividualUser extends HwBaseUserData {
+export interface IIndividualUser extends IBaseUserData {
   /**
    * The user's profile type
    */
@@ -78,7 +79,7 @@ export interface HwIndividualUser extends HwBaseUserData {
   // @todo: add missing optional types
 }
 
-export interface HwBusinessUser extends HwBaseUserData {
+export interface IBusinessUser extends IBaseUserData {
   /**
    * The user's profile type
    */
@@ -92,4 +93,4 @@ export interface HwBusinessUser extends HwBaseUserData {
   // @todo: Add missing business fields
 }
 
-export type HwUserData = HwIndividualUser | HwBusinessUser;
+export type UserData = IIndividualUser | IBusinessUser;

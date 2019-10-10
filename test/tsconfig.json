@@ -1,0 +1,12 @@
+{
+  "extends": "../tsconfig.base.json",
+  "compilerOptions": {
+    "baseUrl": "../",
+    "rootDir": ".",
+    "paths": {
+      "@truebill/hyperwallet-sdk": ["./src/index"],
+      "@truebill/hyperwallet-sdk/*": ["./src/*"]
+    }
+  },
+  "include": ["./**/*.ts"]
+}

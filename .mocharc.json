@@ -1,0 +1,6 @@
+{
+  "extension": ["js"],
+  "spec": "test/**/*.spec.js",
+  "require": ["source-map-support/register"],
+  "watch-files": ["lib/**/*.js", "test/**/*.js"]
+}

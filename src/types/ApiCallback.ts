@@ -1,4 +1,4 @@
-import { ApiError } from "./ApiError";
+import { IApiError } from './ApiError';
 
 /**
  * The callback interface for api calls
@@ -8,7 +8,7 @@ import { ApiError } from "./ApiError";
  * @param res The raw superagent response object
  */
 export type ApiCallback = (
-  errors?: ApiError[],
+  errors?: IApiError[],
   data?: Record<string, any>,
   res?: any
 ) => void;

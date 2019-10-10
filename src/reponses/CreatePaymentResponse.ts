@@ -1,10 +1,10 @@
-import { PaymentPurposeCode } from "../types/enums";
-import { ResourceLink } from "./ResourceLink";
-import { ISODateString } from "../types/ISODateString";
+import { PaymentPurposeCode } from '../types/enums';
+import { IResourceLink } from './ResourceLink';
+import { ISODateString } from '../types/ISODateString';
 
-export interface CreatePaymentResponse {
+export interface ICreatePaymentResponse {
   token: string;
-  status: "COMPLETED";
+  status: 'COMPLETED';
   purpose: PaymentPurposeCode;
   createdOn: string;
   amount: string;
@@ -13,5 +13,5 @@ export interface CreatePaymentResponse {
   expiresOn: ISODateString;
   destinationToken: string;
   programToken: string;
-  links: ResourceLink[];
+  links: IResourceLink[];
 }

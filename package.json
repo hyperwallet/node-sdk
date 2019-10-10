@@ -6,7 +6,8 @@
   "dependencies": {
     "node-jose": "^1.0.0",
     "object-assign": "^4.1.0",
-    "superagent": "^4.0.0"
+    "superagent": "^4.0.0",
+    "tslint": "^5.20.0"
   },
   "scripts": {
     "lint": "eslint ./src && eslint ./test && eslint ./examples",
@@ -14,7 +15,7 @@
     "docs": "esdoc -c ./.esdoc.json",
     "deploy-docs": "npm run docs && gh-pages -d docs",
     "test": "npm run lint && npm run test-unit",
-    "test-unit": "mocha --require ts-node/register --require tsconfig-paths/register test/**/*.spec.ts --extension ts",
+    "test-unit": "tsc -p test && mocha test/**/*.spec.js",
     "test-coverage": "babel-node ./node_modules/.bin/isparta cover _mocha -- test/**/*.js test/*.js",
     "coveralls": "npm run test-coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
     "prepublish-prod": "npm test && npm run prod",
@@ -43,9 +44,9 @@
   "devDependencies": {
     "@types/chai": "^4.2.3",
     "@types/dirty-chai": "^2.0.2",
-    "@types/eslint": "^6.1.2",
     "@types/gh-pages": "^2.0.1",
     "@types/mocha": "^5.2.7",
+    "@types/nock": "^11.1.0",
     "@types/node-jose": "^1.1.0",
     "@types/object-assign": "^4.0.30",
     "@types/sinon": "^7.5.0",
@@ -56,18 +57,17 @@
     "dirty-chai": "^1.2.2",
     "esdoc": "^1.1.0",
     "esdoc-importpath-plugin": "0.0.1",
-    "eslint": "^4.19.1",
-    "eslint-config-airbnb-base": "^3.0.1",
-    "eslint-plugin-import": "^1.8.0",
     "gh-pages": "^0.11.0",
     "isparta": "^4.1.1",
-    "mocha": "^5.2.0",
-    "nock": "^10.0.4",
+    "mocha": "^6.2.1",
+    "nock": "^11.4.0",
     "publish-please": "^5.4.3",
     "sinon": "^1.17.4",
     "sinon-chai": "^2.8.0",
+    "source-map-support": "^0.5.13",
     "ts-node": "^8.4.1",
     "tsconfig-paths": "^3.9.0",
+    "tslint-microsoft-contrib": "^6.2.0",
     "typescript": "^3.6.3"
   },
   "engines": {

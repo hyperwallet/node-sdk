@@ -1,9 +1,0 @@
-{
-  "parser": "babel-eslint",
-  "extends": "eslint-config-airbnb-base",
-  "rules": {
-    "quotes": [2, "double"],
-    "indent": [2, 4],
-    "max-len": [2, 200]
-  }
-}

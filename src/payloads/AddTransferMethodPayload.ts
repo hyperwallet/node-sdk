@@ -1,6 +1,6 @@
-import { TransferMethod } from "../types/enums";
+import { TransferMethod } from '../types/enums';
 
-export interface AddTransferMethodPayload {
+export interface IAddTransferMethodPayload {
   /**
    * Two-letter code
    */

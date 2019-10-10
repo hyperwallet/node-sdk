@@ -1,4 +1,4 @@
-export interface ApiError {
+export interface IApiError {
   /**
    * The field name (if error is caused by a particular field)
    */

@@ -32,3 +32,6 @@ lib/
 
 # Docs folder
 docs/
+
+# Compiled tests
+test/**/*.spec.js

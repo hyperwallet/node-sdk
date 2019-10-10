@@ -1,26 +1,26 @@
-import { ResourceLink } from "./ResourceLink";
+import { IResourceLink } from './ResourceLink';
 
-export interface CreateUserResponse {
+export interface ICreateUserResponse {
   token: string;
   status:
-    | "CREATED"
-    | "ACTIVATED"
-    | "LOCKED"
-    | "FROZEN"
-    | "PRE_ACTIVATED"
-    | "DE_ACTIVATED";
+    | 'CREATED'
+    | 'ACTIVATED'
+    | 'LOCKED'
+    | 'FROZEN'
+    | 'PRE_ACTIVATED'
+    | 'DE_ACTIVATED';
   verificationStatus:
-    | "NOT_REQUIRED"
-    | "REQUIRED"
-    | "FAILED"
-    | "UNDER_REVIEW"
-    | "VERIFIED";
+    | 'NOT_REQUIRED'
+    | 'REQUIRED'
+    | 'FAILED'
+    | 'UNDER_REVIEW'
+    | 'VERIFIED';
   createdOn: string;
   clientUserId: string;
-  gender?: "MALE" | "FEMALE";
+  gender?: 'MALE' | 'FEMALE';
   governmentId: string;
-  governmentIdType?: "PASSPORT" | "NATIONAL_ID_CARD";
-  profileType: "INDIVIDUAL" | "BUSINESS";
+  governmentIdType?: 'PASSPORT' | 'NATIONAL_ID_CARD';
+  profileType: 'INDIVIDUAL' | 'BUSINESS';
   firstName: string;
   lastName: string;
   dateOfBirth: string;
@@ -33,5 +33,5 @@ export interface CreateUserResponse {
   language: string;
   timeZone: string;
   programToken: string;
-  links: ResourceLink[];
+  links: IResourceLink[];
 }

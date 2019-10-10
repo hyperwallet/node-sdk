@@ -1,6 +1,6 @@
-import objectAssign from "object-assign";
-import ApiClient from "./utils/ApiClient";
-
+// tslint:disable: informative-docs
+import objectAssign from 'object-assign';
+import ApiClient from './utils/ApiClient';
 export interface IHyperwalletOptions {
   /**
    * The API username
@@ -20,7 +20,10 @@ export interface IHyperwalletOptions {
   /**
    * The JSON object of encryption data
    */
-  encryptionData?: string;
+  encryptionData?: {
+    clientPrivateKeySetPath: string;
+    hyperwalletKeySetPath: string;
+  };
 
   /**
    * The API server to connect to
@@ -34,39 +37,33 @@ export interface IHyperwalletOptions {
 export class Hyperwallet {
   /**
    * The instance of the ApiClient
-   *
-   * @type {ApiClient}
-   * @protected
    */
   public client: ApiClient;
 
   /**
    * The program token that is used for some API calls
-   *
-   * @type {string}
-   * @protected
    */
   public programToken: string | undefined;
 
   /**
    * Create a instance of the SDK Client
    *
-   * @param {Object} config - The API config
-   * @param {string} config.username - The API username
-   * @param {string} config.password - The API password
-   * @param {string} [config.programToken] -
-   * @param {Object} [config.encryptionData] -
-   * @param {string} [config.server=https://api.sandbox.hyperwallet.com] -
+   * @param config - The API config
+   * @param config.username - The API username
+   * @param config.password - The API password
+   * @param [config.programToken] -
+   * @param [config.encryptionData] -
+   * @param [config.server=https://api.sandbox.hyperwallet.com] -
    */
   constructor({
     username,
     password,
     programToken,
     encryptionData,
-    server = "https://api.sandbox.hyperwallet.com"
+    server = 'https://api.sandbox.hyperwallet.com'
   }: IHyperwalletOptions) {
     if (!username || !password) {
-      throw new Error("You need to specify your API username and password!");
+      throw new Error('You need to specify your API username and password!');
     }
 
     this.client = new ApiClient(username, password, server, encryptionData);
@@ -74,32 +71,56 @@ export class Hyperwallet {
     this.programToken = programToken;
   }
 
-  //--------------------------------------
+  /**
+   * Handle 204 response for list calls
+   *
+   * @param callback - The api callback
+   * @param - A wrapper api callback
+   */
+  public static handle204Response(callback) {
+    return (err, data, res) => {
+      if (!err && res.status === 204) {
+        callback(
+          err,
+          {
+            count: 0,
+            data: []
+          },
+          res
+        );
+
+        return;
+      }
+      callback(err, data, res);
+    };
+  }
+
+  // --------------------------------------
   // Users
-  //--------------------------------------
+  // --------------------------------------
 
   /**
    * Create a user
    *
-   * @param {Object} data - The user data
-   * @param {api-callback} callback - The callback for this call
+   * @param data - The user data
+   * @param callback - The callback for this call
    */
   public createUser(data, callback) {
     this.addProgramToken(data);
-    this.client.doPost("users", data, {}, callback);
+    this.client.doPost('users', data, {}, callback);
   }
 
   /**
    * Load a user
    *
-   * @param {string} userToken - The user token
-   * @param {api-callback} callback - The callback for this call
+   * @param userToken - The user token
+   * @param callback - The callback for this call
    *
    * @throws Will throw an error if userToken is not provided
    */
   public getUser(userToken, callback) {
     if (!userToken) {
-      throw new Error("userToken is required");
+      throw new Error('userToken is required');
     }
     this.client.doGet(`users/${encodeURIComponent(userToken)}`, {}, callback);
   }
@@ -107,15 +128,15 @@ export class Hyperwallet {
   /**
    * Update a user
    *
-   * @param {string} userToken - The user token
-   * @param {Object} data - The user data that should be updated
-   * @param {api-callback} callback - The callback for this call
+   * @param userToken - The user token
+   * @param data - The user data that should be updated
+   * @param callback - The callback for this call
    *
    * @throws Will throw an error if userToken is not provided
    */
-  updateUser(userToken, data, callback) {
+  public updateUser(userToken, data, callback) {
     if (!userToken) {
-      throw new Error("userToken is required");
+      throw new Error('userToken is required');
     }
     this.addProgramToken(data);
     this.client.doPut(
@@ -129,12 +150,12 @@ export class Hyperwallet {
   /**
    * List all users
    *
-   * @param {Object} options - The query parameters to send
-   * @param {api-callback} callback - The callback for this call
+   * @param options - The query parameters to send
+   * @param callback - The callback for this call
    */
-  listUsers(options, callback) {
+  public listUsers(options, callback) {
     this.client.doGet(
-      "users",
+      'users',
       options,
       Hyperwallet.handle204Response(callback)
     );
@@ -143,18 +164,18 @@ export class Hyperwallet {
   /**
    * Get user status transition
    *
-   * @param {string} userToken - The user token
-   * @param {string} statusTransitionToken - The user status transition token
-   * @param {api-callback} callback - The callback for this call
+   * @param userToken - The user token
+   * @param statusTransitionToken - The user status transition token
+   * @param callback - The callback for this call
    *
    * @throws Will throw an error if userToken is not provided
    */
-  getUserStatusTransition(userToken, statusTransitionToken, callback) {
+  public getUserStatusTransition(userToken, statusTransitionToken, callback) {
     if (!userToken) {
-      throw new Error("userToken is required");
+      throw new Error('userToken is required');
     }
     if (!statusTransitionToken) {
-      throw new Error("statusTransitionToken is required");
+      throw new Error('statusTransitionToken is required');
     }
     this.client.doGet(
       `users/${encodeURIComponent(
@@ -168,15 +189,15 @@ export class Hyperwallet {
   /**
    * List all user status transitions
    *
-   * @param {string} userToken - The user token
-   * @param {Object} options - The query parameters to send
-   * @param {api-callback} callback - The callback for this call
+   * @param userToken - The user token
+   * @param options - The query parameters to send
+   * @param callback - The callback for this call
    *
    * @throws Will throw an error if userToken is not provided
    */
-  listUserStatusTransitions(userToken, options, callback) {
+  public listUserStatusTransitions(userToken, options, callback) {
     if (!userToken) {
-      throw new Error("userToken is required");
+      throw new Error('userToken is required');
     }
     this.client.doGet(
       `users/${encodeURIComponent(userToken)}/status-transitions`,
@@ -185,22 +206,22 @@ export class Hyperwallet {
     );
   }
 
-  //--------------------------------------
+  // --------------------------------------
   // Prepaid Cards
-  //--------------------------------------
+  // --------------------------------------
 
   /**
    * Create a prepaid card
    *
-   * @param {string} userToken - The user token
-   * @param {Object} data - The prepaid card data
-   * @param {api-callback} callback - The callback for this call
+   * @param userToken - The user token
+   * @param data - The prepaid card data
+   * @param callback - The callback for this call
    *
    * @throws Will throw an error if userToken is not provided
    */
-  createPrepaidCard(userToken, data, callback) {
+  public createPrepaidCard(userToken, data, callback) {
     if (!userToken) {
-      throw new Error("userToken is required");
+      throw new Error('userToken is required');
     }
     this.client.doPost(
       `users/${encodeURIComponent(userToken)}/prepaid-cards`,
@@ -213,18 +234,18 @@ export class Hyperwallet {
   /**
    * Get a prepaid card
    *
-   * @param {string} userToken - The user token
-   * @param {string} prepaidCardToken - The prepaid card token
-   * @param {api-callback} callback - The callback for this call
+   * @param userToken - The user token
+   * @param prepaidCardToken - The prepaid card token
+   * @param callback - The callback for this call
    *
    * @throws Will throw an error if userToken or prepaidCardToken is not provided
    */
-  getPrepaidCard(userToken, prepaidCardToken, callback) {
+  public getPrepaidCard(userToken, prepaidCardToken, callback) {
     if (!userToken) {
-      throw new Error("userToken is required");
+      throw new Error('userToken is required');
     }
     if (!prepaidCardToken) {
-      throw new Error("prepaidCardToken is required");
+      throw new Error('prepaidCardToken is required');
     }
     this.client.doGet(
       `users/${encodeURIComponent(
@@ -238,19 +259,19 @@ export class Hyperwallet {
   /**
    * Update a prepaid card
    *
-   * @param {string} userToken - The user token
-   * @param {string} prepaidCardToken - The prepaid card token
-   * @param {Object} data - The prepaid card data to update
-   * @param {api-callback} callback - The callback for this call
+   * @param userToken - The user token
+   * @param prepaidCardToken - The prepaid card token
+   * @param data - The prepaid card data to update
+   * @param callback - The callback for this call
    *
    * @throws Will throw an error if userToken or prepaidCardToken is not provided
    */
-  updatePrepaidCard(userToken, prepaidCardToken, data, callback) {
+  public updatePrepaidCard(userToken, prepaidCardToken, data, callback) {
     if (!userToken) {
-      throw new Error("userToken is required");
+      throw new Error('userToken is required');
     }
     if (!prepaidCardToken) {
-      throw new Error("prepaidCardToken is required");
+      throw new Error('prepaidCardToken is required');
     }
     this.client.doPut(
       `users/${encodeURIComponent(
@@ -265,14 +286,14 @@ export class Hyperwallet {
   /**
    * List all prepaid cards
    *
-   * @param {string} userToken - The user token
-   * @param {Object} options - The query parameters to send
-   * @param {api-callback} callback - The callback for this call
+   * @param userToken - The user token
+   * @param options - The query parameters to send
+   * @param callback - The callback for this call
    * @throws Will throw an error if userToken is not provided
    */
-  listPrepaidCards(userToken, options, callback) {
+  public listPrepaidCards(userToken, options, callback) {
     if (!userToken) {
-      throw new Error("userToken is required");
+      throw new Error('userToken is required');
     }
     this.client.doGet(
       `users/${encodeURIComponent(userToken)}/prepaid-cards`,
@@ -284,21 +305,21 @@ export class Hyperwallet {
   /**
    * Suspend a prepaid card
    *
-   * @param {string} userToken - The user token
-   * @param {string} prepaidCardToken - The prepaid card token
-   * @param {api-callback} callback - The callback for this call
+   * @param userToken - The user token
+   * @param prepaidCardToken - The prepaid card token
+   * @param callback - The callback for this call
    * @throws Will throw an error if userToken or prepaidCardToken is not provided
    */
-  suspendPrepaidCard(userToken, prepaidCardToken, callback) {
+  public suspendPrepaidCard(userToken, prepaidCardToken, callback) {
     if (!userToken) {
-      throw new Error("userToken is required");
+      throw new Error('userToken is required');
     }
     if (!prepaidCardToken) {
-      throw new Error("prepaidCardToken is required");
+      throw new Error('prepaidCardToken is required');
     }
 
     const transition = {
-      transition: "SUSPENDED"
+      transition: 'SUSPENDED'
     };
     this.client.doPost(
       `users/${encodeURIComponent(
@@ -315,21 +336,21 @@ export class Hyperwallet {
   /**
    * Unsuspend a prepaid card
    *
-   * @param {string} userToken - The user token
-   * @param {string} prepaidCardToken - The prepaid card token
-   * @param {api-callback} callback - The callback for this call
+   * @param userToken - The user token
+   * @param prepaidCardToken - The prepaid card token
+   * @param callback - The callback for this call
    * @throws Will throw an error if userToken or prepaidCardToken is not provided
    */
-  unsuspendPrepaidCard(userToken, prepaidCardToken, callback) {
+  public unsuspendPrepaidCard(userToken, prepaidCardToken, callback) {
     if (!userToken) {
-      throw new Error("userToken is required");
+      throw new Error('userToken is required');
     }
     if (!prepaidCardToken) {
-      throw new Error("prepaidCardToken is required");
+      throw new Error('prepaidCardToken is required');
     }
 
     const transition = {
-      transition: "UNSUSPENDED"
+      transition: 'UNSUSPENDED'
     };
     this.client.doPost(
       `users/${encodeURIComponent(
@@ -346,21 +367,21 @@ export class Hyperwallet {
   /**
    * Mark a prepaid card as lost or stolen
    *
-   * @param {string} userToken - The user token
-   * @param {string} prepaidCardToken - The prepaid card token
-   * @param {api-callback} callback - The callback for this call
+   * @param userToken - The user token
+   * @param prepaidCardToken - The prepaid card token
+   * @param callback - The callback for this call
    * @throws Will throw an error if userToken or prepaidCardToken is not provided
    */
-  lostOrStolenPrepaidCard(userToken, prepaidCardToken, callback) {
+  public lostOrStolenPrepaidCard(userToken, prepaidCardToken, callback) {
     if (!userToken) {
-      throw new Error("userToken is required");
+      throw new Error('userToken is required');
     }
     if (!prepaidCardToken) {
-      throw new Error("prepaidCardToken is required");
+      throw new Error('prepaidCardToken is required');
     }
 
     const transition = {
-      transition: "LOST_OR_STOLEN"
+      transition: 'LOST_OR_STOLEN'
     };
     this.client.doPost(
       `users/${encodeURIComponent(
@@ -377,21 +398,21 @@ export class Hyperwallet {
   /**
    * Deactivate a prepaid card
    *
-   * @param {string} userToken - The user token
-   * @param {string} prepaidCardToken - The prepaid card token
-   * @param {api-callback} callback - The callback for this call
+   * @param userToken - The user token
+   * @param prepaidCardToken - The prepaid card token
+   * @param callback - The callback for this call
    * @throws Will throw an error if userToken or prepaidCardToken is not provided
    */
-  deactivatePrepaidCard(userToken, prepaidCardToken, callback) {
+  public deactivatePrepaidCard(userToken, prepaidCardToken, callback) {
     if (!userToken) {
-      throw new Error("userToken is required");
+      throw new Error('userToken is required');
     }
     if (!prepaidCardToken) {
-      throw new Error("prepaidCardToken is required");
+      throw new Error('prepaidCardToken is required');
     }
 
     const transition = {
-      transition: "DE_ACTIVATED"
+      transition: 'DE_ACTIVATED'
     };
     this.client.doPost(
       `users/${encodeURIComponent(
@@ -408,21 +429,21 @@ export class Hyperwallet {
   /**
    * Lock a prepaid card
    *
-   * @param {string} userToken - The user token
-   * @param {string} prepaidCardToken - The prepaid card token
-   * @param {api-callback} callback - The callback for this call
+   * @param userToken - The user token
+   * @param prepaidCardToken - The prepaid card token
+   * @param callback - The callback for this call
    * @throws Will throw an error if userToken or prepaidCardToken is not provided
    */
-  lockPrepaidCard(userToken, prepaidCardToken, callback) {
+  public lockPrepaidCard(userToken, prepaidCardToken, callback) {
     if (!userToken) {
-      throw new Error("userToken is required");
+      throw new Error('userToken is required');
     }
     if (!prepaidCardToken) {
-      throw new Error("prepaidCardToken is required");
+      throw new Error('prepaidCardToken is required');
     }
 
     const transition = {
-      transition: "LOCKED"
+      transition: 'LOCKED'
     };
     this.client.doPost(
       `users/${encodeURIComponent(
@@ -439,21 +460,21 @@ export class Hyperwallet {
   /**
    * Unlock a prepaid card
    *
-   * @param {string} userToken - The user token
-   * @param {string} prepaidCardToken - The prepaid card token
-   * @param {api-callback} callback - The callback for this call
+   * @param userToken - The user token
+   * @param prepaidCardToken - The prepaid card token
+   * @param callback - The callback for this call
    * @throws Will throw an error if userToken or prepaidCardToken is not provided
    */
-  unlockPrepaidCard(userToken, prepaidCardToken, callback) {
+  public unlockPrepaidCard(userToken, prepaidCardToken, callback) {
     if (!userToken) {
-      throw new Error("userToken is required");
+      throw new Error('userToken is required');
     }
     if (!prepaidCardToken) {
-      throw new Error("prepaidCardToken is required");
+      throw new Error('prepaidCardToken is required');
     }
 
     const transition = {
-      transition: "UNLOCKED"
+      transition: 'UNLOCKED'
     };
     this.client.doPost(
       `users/${encodeURIComponent(
@@ -470,23 +491,23 @@ export class Hyperwallet {
   /**
    * Create a prepaid card status transition
    *
-   * @param {string} userToken - The user token
-   * @param {string} prepaidCardToken - The prepaid card token
-   * @param {Object} data - The prepaid card status transition data
-   * @param {api-callback} callback - The callback for this call
+   * @param userToken - The user token
+   * @param prepaidCardToken - The prepaid card token
+   * @param data - The prepaid card status transition data
+   * @param callback - The callback for this call
    * @throws Will throw an error if userToken or prepaidCardToken is not provided
    */
-  createPrepaidCardStatusTransition(
+  public createPrepaidCardStatusTransition(
     userToken,
     prepaidCardToken,
     data,
     callback
   ) {
     if (!userToken) {
-      throw new Error("userToken is required");
+      throw new Error('userToken is required');
     }
     if (!prepaidCardToken) {
-      throw new Error("prepaidCardToken is required");
+      throw new Error('prepaidCardToken is required');
     }
 
     this.client.doPost(
@@ -504,26 +525,26 @@ export class Hyperwallet {
   /**
    * Get a prepaid card status transition
    *
-   * @param {string} userToken - The user token
-   * @param {string} prepaidCardToken - The prepaid card token
-   * @param {string} statusTransitionToken - The prepaid card status transition token
-   * @param {api-callback} callback - The callback for this call
+   * @param userToken - The user token
+   * @param prepaidCardToken - The prepaid card token
+   * @param statusTransitionToken - The prepaid card status transition token
+   * @param callback - The callback for this call
    * @throws Will throw an error if userToken, prepaidCardToken or statusTransitionToken is not provided
    */
-  getPrepaidCardStatusTransition(
+  public getPrepaidCardStatusTransition(
     userToken,
     prepaidCardToken,
     statusTransitionToken,
     callback
   ) {
     if (!userToken) {
-      throw new Error("userToken is required");
+      throw new Error('userToken is required');
     }
     if (!prepaidCardToken) {
-      throw new Error("prepaidCardToken is required");
+      throw new Error('prepaidCardToken is required');
     }
     if (!statusTransitionToken) {
-      throw new Error("statusTransitionToken is required");
+      throw new Error('statusTransitionToken is required');
     }
 
     this.client.doGet(
@@ -540,23 +561,23 @@ export class Hyperwallet {
   /**
    * List all prepaid card status transitions
    *
-   * @param {string} userToken - The user token
-   * @param {string} prepaidCardToken - The prepaid card token
-   * @param {Object} options - The query parameters to send
-   * @param {api-callback} callback - The callback for this call
+   * @param userToken - The user token
+   * @param prepaidCardToken - The prepaid card token
+   * @param options - The query parameters to send
+   * @param callback - The callback for this call
    * @throws Will throw an error if userToken or prepaidCardToken is not provided
    */
-  listPrepaidCardStatusTransitions(
+  public listPrepaidCardStatusTransitions(
     userToken,
     prepaidCardToken,
     options,
     callback
   ) {
     if (!userToken) {
-      throw new Error("userToken is required");
+      throw new Error('userToken is required');
     }
     if (!prepaidCardToken) {
-      throw new Error("prepaidCardToken is required");
+      throw new Error('prepaidCardToken is required');
     }
     this.client.doGet(
       `users/${encodeURIComponent(
@@ -569,22 +590,22 @@ export class Hyperwallet {
     );
   }
 
-  //--------------------------------------
+  // --------------------------------------
   // Bank Cards
-  //--------------------------------------
+  // --------------------------------------
 
   /**
    * Create a Bank card
    *
-   * @param {string} userToken - The user token
-   * @param {Object} data - The bank card data
-   * @param {api-callback} callback - The callback for this call
+   * @param userToken - The user token
+   * @param data - The bank card data
+   * @param callback - The callback for this call
    *
    * @throws Will throw an error if userToken is not provided
    */
-  createBankCard(userToken, data, callback) {
+  public createBankCard(userToken, data, callback) {
     if (!userToken) {
-      throw new Error("userToken is required");
+      throw new Error('userToken is required');
     }
     this.client.doPost(
       `users/${encodeURIComponent(userToken)}/bank-cards`,
@@ -597,18 +618,18 @@ export class Hyperwallet {
   /**
    * Get a bank card
    *
-   * @param {string} userToken - The user token
-   * @param {string} bankCardToken - The bank card token
-   * @param {api-callback} callback - The callback for this call
+   * @param userToken - The user token
+   * @param bankCardToken - The bank card token
+   * @param callback - The callback for this call
    *
    * @throws Will throw an error if userToken or bankCardToken is not provided
    */
-  getBankCard(userToken, bankCardToken, callback) {
+  public getBankCard(userToken, bankCardToken, callback) {
     if (!userToken) {
-      throw new Error("userToken is required");
+      throw new Error('userToken is required');
     }
     if (!bankCardToken) {
-      throw new Error("bankCardToken is required");
+      throw new Error('bankCardToken is required');
     }
     this.client.doGet(
       `users/${encodeURIComponent(userToken)}/bank-cards/${encodeURIComponent(
@@ -622,19 +643,19 @@ export class Hyperwallet {
   /**
    * Update a bank card
    *
-   * @param {string} userToken - The user token
-   * @param {string} bankCardToken - The bank card token
-   * @param {Object} data - The bank card data to update
-   * @param {api-callback} callback - The callback for this call
+   * @param userToken - The user token
+   * @param bankCardToken - The bank card token
+   * @param data - The bank card data to update
+   * @param callback - The callback for this call
    *
    * @throws Will throw an error if userToken or bankCardToken is not provided
    */
-  updateBankCard(userToken, bankCardToken, data, callback) {
+  public updateBankCard(userToken, bankCardToken, data, callback) {
     if (!userToken) {
-      throw new Error("userToken is required");
+      throw new Error('userToken is required');
     }
     if (!bankCardToken) {
-      throw new Error("bankCardToken is required");
+      throw new Error('bankCardToken is required');
     }
     this.client.doPut(
       `users/${encodeURIComponent(userToken)}/bank-cards/${encodeURIComponent(
@@ -649,14 +670,14 @@ export class Hyperwallet {
   /**
    * List all bank cards
    *
-   * @param {string} userToken - The user token
-   * @param {Object} options - The query parameters to send
-   * @param {api-callback} callback - The callback for this call
+   * @param userToken - The user token
+   * @param options - The query parameters to send
+   * @param callback - The callback for this call
    * @throws Will throw an error if userToken is not provided
    */
-  listBankCards(userToken, options, callback) {
+  public listBankCards(userToken, options, callback) {
     if (!userToken) {
-      throw new Error("userToken is required");
+      throw new Error('userToken is required');
     }
     this.client.doGet(
       `users/${encodeURIComponent(userToken)}/bank-cards`,
@@ -668,21 +689,21 @@ export class Hyperwallet {
   /**
    * Deactivate a bank card
    *
-   * @param {string} userToken - The user token
-   * @param {string} bankCardToken - The bank card token
-   * @param {api-callback} callback - The callback for this call
+   * @param userToken - The user token
+   * @param bankCardToken - The bank card token
+   * @param callback - The callback for this call
    * @throws Will throw an error if userToken or bankCardToken is not provided
    */
-  deactivateBankCard(userToken, bankCardToken, callback) {
+  public deactivateBankCard(userToken, bankCardToken, callback) {
     if (!userToken) {
-      throw new Error("userToken is required");
+      throw new Error('userToken is required');
     }
     if (!bankCardToken) {
-      throw new Error("bankCardToken is required");
+      throw new Error('bankCardToken is required');
     }
 
     const transition = {
-      transition: "DE_ACTIVATED"
+      transition: 'DE_ACTIVATED'
     };
     this.client.doPost(
       `users/${encodeURIComponent(userToken)}/bank-cards/${encodeURIComponent(
@@ -697,18 +718,23 @@ export class Hyperwallet {
   /**
    * Create a bank card status transition
    *
-   * @param {string} userToken - The user token
-   * @param {string} bankCardToken - The bank card token
-   * @param {Object} data - The bank card status transition data
-   * @param {api-callback} callback - The callback for this call
+   * @param userToken - The user token
+   * @param bankCardToken - The bank card token
+   * @param data - The bank card status transition data
+   * @param callback - The callback for this call
    * @throws Will throw an error if userToken or bankCardToken is not provided
    */
-  createBankCardStatusTransition(userToken, bankCardToken, data, callback) {
+  public createBankCardStatusTransition(
+    userToken,
+    bankCardToken,
+    data,
+    callback
+  ) {
     if (!userToken) {
-      throw new Error("userToken is required");
+      throw new Error('userToken is required');
     }
     if (!bankCardToken) {
-      throw new Error("bankCardToken is required");
+      throw new Error('bankCardToken is required');
     }
 
     this.client.doPost(
@@ -724,26 +750,26 @@ export class Hyperwallet {
   /**
    * Get a bank card status transition
    *
-   * @param {string} userToken - The user token
-   * @param {string} bankCardToken - The bank card token
-   * @param {string} statusTransitionToken - The bank card status transition token
-   * @param {api-callback} callback - The callback for this call
+   * @param userToken - The user token
+   * @param bankCardToken - The bank card token
+   * @param statusTransitionToken - The bank card status transition token
+   * @param callback - The callback for this call
    * @throws Will throw an error if userToken, bankCardToken or statusTransitionToken is not provided
    */
-  getBankCardStatusTransition(
+  public getBankCardStatusTransition(
     userToken,
     bankCardToken,
     statusTransitionToken,
     callback
   ) {
     if (!userToken) {
-      throw new Error("userToken is required");
+      throw new Error('userToken is required');
     }
     if (!bankCardToken) {
-      throw new Error("bankCardToken is required");
+      throw new Error('bankCardToken is required');
     }
     if (!statusTransitionToken) {
-      throw new Error("statusTransitionToken is required");
+      throw new Error('statusTransitionToken is required');
     }
 
     this.client.doGet(
@@ -758,18 +784,23 @@ export class Hyperwallet {
   /**
    * List all bank card status transitions
    *
-   * @param {string} userToken - The user token
-   * @param {string} bankCardToken - The bank card token
-   * @param {Object} options - The query parameters to send
-   * @param {api-callback} callback - The callback for this call
+   * @param userToken - The user token
+   * @param bankCardToken - The bank card token
+   * @param options - The query parameters to send
+   * @param callback - The callback for this call
    * @throws Will throw an error if userToken or bankCardToken is not provided
    */
-  listBankCardStatusTransitions(userToken, bankCardToken, options, callback) {
+  public listBankCardStatusTransitions(
+    userToken,
+    bankCardToken,
+    options,
+    callback
+  ) {
     if (!userToken) {
-      throw new Error("userToken is required");
+      throw new Error('userToken is required');
     }
     if (!bankCardToken) {
-      throw new Error("bankCardToken is required");
+      throw new Error('bankCardToken is required');
     }
     this.client.doGet(
       `users/${encodeURIComponent(userToken)}/bank-cards/${encodeURIComponent(
@@ -780,21 +811,21 @@ export class Hyperwallet {
     );
   }
 
-  //--------------------------------------
+  // --------------------------------------
   // Authentication Token
-  //--------------------------------------
+  // --------------------------------------
 
   /**
    * Get authentication token
    *
-   * @param {string} userToken - The user token
-   * @param {api-callback} callback - The callback for this call
+   * @param userToken - The user token
+   * @param callback - The callback for this call
    *
    * @throws Will throw an error if userToken is not provided
    */
-  getAuthenticationToken(userToken, callback) {
+  public getAuthenticationToken(userToken, callback) {
     if (!userToken) {
-      throw new Error("userToken is required");
+      throw new Error('userToken is required');
     }
     this.client.doPost(
       `users/${encodeURIComponent(userToken)}/authentication-token`,
@@ -804,22 +835,22 @@ export class Hyperwallet {
     );
   }
 
-  //--------------------------------------
+  // --------------------------------------
   // Paper Checks
-  //--------------------------------------
+  // --------------------------------------
 
   /**
    * Create a paper check
    *
-   * @param {string} userToken - The user token
-   * @param {Object} data - The paper check data
-   * @param {api-callback} callback - The callback for this call
+   * @param userToken - The user token
+   * @param data - The paper check data
+   * @param callback - The callback for this call
    *
    * @throws Will throw an error if userToken is not provided
    */
-  createPaperCheck(userToken, data, callback) {
+  public createPaperCheck(userToken, data, callback) {
     if (!userToken) {
-      throw new Error("userToken is required");
+      throw new Error('userToken is required');
     }
     this.client.doPost(
       `users/${encodeURIComponent(userToken)}/paper-checks`,
@@ -832,18 +863,18 @@ export class Hyperwallet {
   /**
    * Get a paper check
    *
-   * @param {string} userToken - The user token
-   * @param {string} paperCheckToken - The paper check token
-   * @param {api-callback} callback - The callback for this call
+   * @param userToken - The user token
+   * @param paperCheckToken - The paper check token
+   * @param callback - The callback for this call
    *
    * @throws Will throw an error if userToken or paperCheckToken is not provided
    */
-  getPaperCheck(userToken, paperCheckToken, callback) {
+  public getPaperCheck(userToken, paperCheckToken, callback) {
     if (!userToken) {
-      throw new Error("userToken is required");
+      throw new Error('userToken is required');
     }
     if (!paperCheckToken) {
-      throw new Error("paperCheckToken is required");
+      throw new Error('paperCheckToken is required');
     }
     this.client.doGet(
       `users/${encodeURIComponent(userToken)}/paper-checks/${encodeURIComponent(
@@ -857,19 +888,19 @@ export class Hyperwallet {
   /**
    * Update a paper check
    *
-   * @param {string} userToken - The user token
-   * @param {string} paperCheckToken - The paper check token
-   * @param {Object} data - The paper check data to update
-   * @param {api-callback} callback - The callback for this call
+   * @param userToken - The user token
+   * @param paperCheckToken - The paper check token
+   * @param data - The paper check data to update
+   * @param callback - The callback for this call
    *
    * @throws Will throw an error if userToken or paperCheckToken is not provided
    */
-  updatePaperCheck(userToken, paperCheckToken, data, callback) {
+  public updatePaperCheck(userToken, paperCheckToken, data, callback) {
     if (!userToken) {
-      throw new Error("userToken is required");
+      throw new Error('userToken is required');
     }
     if (!paperCheckToken) {
-      throw new Error("paperCheckToken is required");
+      throw new Error('paperCheckToken is required');
     }
     this.client.doPut(
       `users/${encodeURIComponent(userToken)}/paper-checks/${encodeURIComponent(
@@ -884,14 +915,14 @@ export class Hyperwallet {
   /**
    * List all paper checks
    *
-   * @param {string} userToken - The user token
-   * @param {Object} options - The query parameters to send
-   * @param {api-callback} callback - The callback for this call
+   * @param userToken - The user token
+   * @param options - The query parameters to send
+   * @param callback - The callback for this call
    * @throws Will throw an error if userToken is not provided
    */
-  listPaperChecks(userToken, options, callback) {
+  public listPaperChecks(userToken, options, callback) {
     if (!userToken) {
-      throw new Error("userToken is required");
+      throw new Error('userToken is required');
     }
     this.client.doGet(
       `users/${encodeURIComponent(userToken)}/paper-checks`,
@@ -903,21 +934,21 @@ export class Hyperwallet {
   /**
    * Deactivate a paper check
    *
-   * @param {string} userToken - The user token
-   * @param {string} paperCheckToken - The paper check token
-   * @param {api-callback} callback - The callback for this call
+   * @param userToken - The user token
+   * @param paperCheckToken - The paper check token
+   * @param callback - The callback for this call
    * @throws Will throw an error if userToken or paperCheckToken is not provided
    */
-  deactivatePaperCheck(userToken, paperCheckToken, callback) {
+  public deactivatePaperCheck(userToken, paperCheckToken, callback) {
     if (!userToken) {
-      throw new Error("userToken is required");
+      throw new Error('userToken is required');
     }
     if (!paperCheckToken) {
-      throw new Error("paperCheckToken is required");
+      throw new Error('paperCheckToken is required');
     }
 
     const transition = {
-      transition: "DE_ACTIVATED"
+      transition: 'DE_ACTIVATED'
     };
     this.client.doPost(
       `users/${encodeURIComponent(userToken)}/paper-checks/${encodeURIComponent(
@@ -932,18 +963,23 @@ export class Hyperwallet {
   /**
    * Create a paper check status transition
    *
-   * @param {string} userToken - The user token
-   * @param {string} paperCheckToken - The paper check token
-   * @param {Object} data - The paper check status transition data
-   * @param {api-callback} callback - The callback for this call
+   * @param userToken - The user token
+   * @param paperCheckToken - The paper check token
+   * @param data - The paper check status transition data
+   * @param callback - The callback for this call
    * @throws Will throw an error if userToken or paperCheckToken is not provided
    */
-  createPaperCheckStatusTransition(userToken, paperCheckToken, data, callback) {
+  public createPaperCheckStatusTransition(
+    userToken,
+    paperCheckToken,
+    data,
+    callback
+  ) {
     if (!userToken) {
-      throw new Error("userToken is required");
+      throw new Error('userToken is required');
     }
     if (!paperCheckToken) {
-      throw new Error("paperCheckToken is required");
+      throw new Error('paperCheckToken is required');
     }
 
     this.client.doPost(
@@ -959,26 +995,26 @@ export class Hyperwallet {
   /**
    * Get a paper check status transition
    *
-   * @param {string} userToken - The user token
-   * @param {string} paperCheckToken - The paper check token
-   * @param {string} statusTransitionToken - The paper check status transition token
-   * @param {api-callback} callback - The callback for this call
+   * @param userToken - The user token
+   * @param paperCheckToken - The paper check token
+   * @param statusTransitionToken - The paper check status transition token
+   * @param callback - The callback for this call
    * @throws Will throw an error if userToken, paperCheckToken or statusTransitionToken is not provided
    */
-  getPaperCheckStatusTransition(
+  public getPaperCheckStatusTransition(
     userToken,
     paperCheckToken,
     statusTransitionToken,
     callback
   ) {
     if (!userToken) {
-      throw new Error("userToken is required");
+      throw new Error('userToken is required');
     }
     if (!paperCheckToken) {
-      throw new Error("paperCheckToken is required");
+      throw new Error('paperCheckToken is required');
     }
     if (!statusTransitionToken) {
-      throw new Error("statusTransitionToken is required");
+      throw new Error('statusTransitionToken is required');
     }
 
     this.client.doGet(
@@ -993,23 +1029,23 @@ export class Hyperwallet {
   /**
    * List all paper check status transitions
    *
-   * @param {string} userToken - The user token
-   * @param {string} paperCheckToken - The paper check token
-   * @param {Object} options - The query parameters to send
-   * @param {api-callback} callback - The callback for this call
+   * @param userToken - The user token
+   * @param paperCheckToken - The paper check token
+   * @param options - The query parameters to send
+   * @param callback - The callback for this call
    * @throws Will throw an error if userToken or paperCheckToken is not provided
    */
-  listPaperCheckStatusTransitions(
+  public listPaperCheckStatusTransitions(
     userToken,
     paperCheckToken,
     options,
     callback
   ) {
     if (!userToken) {
-      throw new Error("userToken is required");
+      throw new Error('userToken is required');
     }
     if (!paperCheckToken) {
-      throw new Error("paperCheckToken is required");
+      throw new Error('paperCheckToken is required');
     }
     this.client.doGet(
       `users/${encodeURIComponent(userToken)}/paper-checks/${encodeURIComponent(
@@ -1020,40 +1056,40 @@ export class Hyperwallet {
     );
   }
 
-  //--------------------------------------
+  // --------------------------------------
   // Transfers
-  //--------------------------------------
+  // --------------------------------------
 
   /**
    * Create a transfer
    *
-   * @param {Object} data - The transfer data
-   * @param {api-callback} callback - The callback for this call
+   * @param data - The transfer data
+   * @param callback - The callback for this call
    */
-  createTransfer(data, callback) {
+  public createTransfer(data, callback) {
     if (!data.sourceToken) {
-      throw new Error("sourceToken is required");
+      throw new Error('sourceToken is required');
     }
     if (!data.destinationToken) {
-      throw new Error("destinationToken is required");
+      throw new Error('destinationToken is required');
     }
     if (!data.clientTransferId) {
-      throw new Error("clientTransferId is required");
+      throw new Error('clientTransferId is required');
     }
-    this.client.doPost("transfers", data, {}, callback);
+    this.client.doPost('transfers', data, {}, callback);
   }
 
   /**
    * Get a transfer
    *
-   * @param {string} transferToken - The transfer token
-   * @param {api-callback} callback - The callback for this call
+   * @param transferToken - The transfer token
+   * @param callback - The callback for this call
    *
    * @throws Will throw an error if transferToken is not provided
    */
-  getTransfer(transferToken, callback) {
+  public getTransfer(transferToken, callback) {
     if (!transferToken) {
-      throw new Error("transferToken is required");
+      throw new Error('transferToken is required');
     }
     this.client.doGet(
       `transfers/${encodeURIComponent(transferToken)}`,
@@ -1065,12 +1101,12 @@ export class Hyperwallet {
   /**
    * List all transfers
    *
-   * @param {Object} options - The query parameters to send
-   * @param {api-callback} callback - The callback for this call
+   * @param options - The query parameters to send
+   * @param callback - The callback for this call
    */
-  listTransfers(options, callback) {
+  public listTransfers(options, callback) {
     this.client.doGet(
-      "transfers",
+      'transfers',
       options,
       Hyperwallet.handle204Response(callback)
     );
@@ -1079,14 +1115,14 @@ export class Hyperwallet {
   /**
    * Create a transfer status transition
    *
-   * @param {string} transferToken - The transfer token
-   * @param {Object} data - The transfer status transition data
-   * @param {api-callback} callback - The callback for this call
+   * @param transferToken - The transfer token
+   * @param data - The transfer status transition data
+   * @param callback - The callback for this call
    * @throws Will throw an error if transferToken is not provided
    */
-  createTransferStatusTransition(transferToken, data, callback) {
+  public createTransferStatusTransition(transferToken, data, callback) {
     if (!transferToken) {
-      throw new Error("transferToken is required");
+      throw new Error('transferToken is required');
     }
 
     this.client.doPost(
@@ -1097,31 +1133,31 @@ export class Hyperwallet {
     );
   }
 
-  //--------------------------------------
+  // --------------------------------------
   // PayPal Accounts
-  //--------------------------------------
+  // --------------------------------------
 
   /**
    * Create a PayPal account
    *
-   * @param {string} userToken - The user token
-   * @param {Object} data - The PayPal account data
-   * @param {api-callback} callback - The callback for this call
+   * @param userToken - The user token
+   * @param data - The PayPal account data
+   * @param callback - The callback for this call
    *
    * @throws Will throw an error if userToken is not provided
    */
-  createPayPalAccount(userToken, data, callback) {
+  public createPayPalAccount(userToken, data, callback) {
     if (!userToken) {
-      throw new Error("userToken is required");
+      throw new Error('userToken is required');
     }
     if (!data.transferMethodCountry) {
-      throw new Error("transferMethodCountry is required");
+      throw new Error('transferMethodCountry is required');
     }
     if (!data.transferMethodCurrency) {
-      throw new Error("transferMethodCurrency is required");
+      throw new Error('transferMethodCurrency is required');
     }
     if (!data.email) {
-      throw new Error("email is required");
+      throw new Error('email is required');
     }
     this.client.doPost(
       `users/${encodeURIComponent(userToken)}/paypal-accounts`,
@@ -1134,18 +1170,18 @@ export class Hyperwallet {
   /**
    * Get a PayPal account
    *
-   * @param {string} userToken - The user token
-   * @param {string} payPalAccountToken - The PayPal account token
-   * @param {api-callback} callback - The callback for this call
+   * @param userToken - The user token
+   * @param payPalAccountToken - The PayPal account token
+   * @param callback - The callback for this call
    *
    * @throws Will throw an error if userToken or payPalAccountToken is not provided
    */
-  getPayPalAccount(userToken, payPalAccountToken, callback) {
+  public getPayPalAccount(userToken, payPalAccountToken, callback) {
     if (!userToken) {
-      throw new Error("userToken is required");
+      throw new Error('userToken is required');
     }
     if (!payPalAccountToken) {
-      throw new Error("payPalAccountToken is required");
+      throw new Error('payPalAccountToken is required');
     }
     this.client.doGet(
       `users/${encodeURIComponent(
@@ -1159,14 +1195,14 @@ export class Hyperwallet {
   /**
    * List all PayPal accounts
    *
-   * @param {string} userToken - The user token
-   * @param {Object} options - The query parameters to send
-   * @param {api-callback} callback - The callback for this call
+   * @param userToken - The user token
+   * @param options - The query parameters to send
+   * @param callback - The callback for this call
    * @throws Will throw an error if userToken is not provided
    */
-  listPayPalAccounts(userToken, options, callback) {
+  public listPayPalAccounts(userToken, options, callback) {
     if (!userToken) {
-      throw new Error("userToken is required");
+      throw new Error('userToken is required');
     }
     this.client.doGet(
       `users/${encodeURIComponent(userToken)}/paypal-accounts`,
@@ -1175,22 +1211,22 @@ export class Hyperwallet {
     );
   }
 
-  //--------------------------------------
+  // --------------------------------------
   // Bank Accounts
-  //--------------------------------------
+  // --------------------------------------
 
   /**
    * Create a bank account
    *
-   * @param {string} userToken - The user token
-   * @param {Object} data - The bank account data
-   * @param {api-callback} callback - The callback for this call
+   * @param userToken - The user token
+   * @param data - The bank account data
+   * @param callback - The callback for this call
    *
    * @throws Will throw an error if userToken is not provided
    */
-  createBankAccount(userToken, data, callback) {
+  public createBankAccount(userToken, data, callback) {
     if (!userToken) {
-      throw new Error("userToken is required");
+      throw new Error('userToken is required');
     }
     this.client.doPost(
       `users/${encodeURIComponent(userToken)}/bank-accounts`,
@@ -1203,18 +1239,18 @@ export class Hyperwallet {
   /**
    * Get a bank account
    *
-   * @param {string} userToken - The user token
-   * @param {string} bankAccountToken - The bank account token
-   * @param {api-callback} callback - The callback for this call
+   * @param userToken - The user token
+   * @param bankAccountToken - The bank account token
+   * @param callback - The callback for this call
    *
    * @throws Will throw an error if userToken or bankAccountToken is not provided
    */
-  getBankAccount(userToken, bankAccountToken, callback) {
+  public getBankAccount(userToken, bankAccountToken, callback) {
     if (!userToken) {
-      throw new Error("userToken is required");
+      throw new Error('userToken is required');
     }
     if (!bankAccountToken) {
-      throw new Error("bankAccountToken is required");
+      throw new Error('bankAccountToken is required');
     }
     this.client.doGet(
       `users/${encodeURIComponent(
@@ -1228,19 +1264,19 @@ export class Hyperwallet {
   /**
    * Update a bank account
    *
-   * @param {string} userToken - The user token
-   * @param {string} bankAccountToken - The bank account token
-   * @param {Object} data - The bank account data to update
-   * @param {api-callback} callback - The callback for this call
+   * @param userToken - The user token
+   * @param bankAccountToken - The bank account token
+   * @param data - The bank account data to update
+   * @param callback - The callback for this call
    *
    * @throws Will throw an error if userToken or bankAccountToken is not provided
    */
-  updateBankAccount(userToken, bankAccountToken, data, callback) {
+  public updateBankAccount(userToken, bankAccountToken, data, callback) {
     if (!userToken) {
-      throw new Error("userToken is required");
+      throw new Error('userToken is required');
     }
     if (!bankAccountToken) {
-      throw new Error("bankAccountToken is required");
+      throw new Error('bankAccountToken is required');
     }
     this.client.doPut(
       `users/${encodeURIComponent(
@@ -1255,14 +1291,14 @@ export class Hyperwallet {
   /**
    * List all bank accounts
    *
-   * @param {string} userToken - The user token
-   * @param {Object} options - The query parameters to send
-   * @param {api-callback} callback - The callback for this call
+   * @param userToken - The user token
+   * @param options - The query parameters to send
+   * @param callback - The callback for this call
    * @throws Will throw an error if userToken is not provided
    */
-  listBankAccounts(userToken, options, callback) {
+  public listBankAccounts(userToken, options, callback) {
     if (!userToken) {
-      throw new Error("userToken is required");
+      throw new Error('userToken is required');
     }
     this.client.doGet(
       `users/${encodeURIComponent(userToken)}/bank-accounts`,
@@ -1274,22 +1310,22 @@ export class Hyperwallet {
   /**
    * Deactivate a bank account
    *
-   * @param {string} userToken - The user token
-   * @param {string} bankAccountToken - The bank account token
-   * @param {api-callback} callback - The callback for this call
+   * @param userToken - The user token
+   * @param bankAccountToken - The bank account token
+   * @param callback - The callback for this call
    *
    * @throws Will throw an error if userToken or bankAccountToken is not provided
    */
-  deactivateBankAccount(userToken, bankAccountToken, callback) {
+  public deactivateBankAccount(userToken, bankAccountToken, callback) {
     if (!userToken) {
-      throw new Error("userToken is required");
+      throw new Error('userToken is required');
     }
     if (!bankAccountToken) {
-      throw new Error("bankAccountToken is required");
+      throw new Error('bankAccountToken is required');
     }
 
     const transition = {
-      transition: "DE-ACTIVATED"
+      transition: 'DE-ACTIVATED'
     };
     this.client.doPost(
       `users/${encodeURIComponent(
@@ -1306,23 +1342,23 @@ export class Hyperwallet {
   /**
    * Create a bank account status transition
    *
-   * @param {string} userToken - The user token
-   * @param {string} bankAccountToken - The bank account token
-   * @param {Object} data - The bank account status transition data
-   * @param {api-callback} callback - The callback for this call
+   * @param userToken - The user token
+   * @param bankAccountToken - The bank account token
+   * @param data - The bank account status transition data
+   * @param callback - The callback for this call
    * @throws Will throw an error if userToken or bankAccountToken is not provided
    */
-  createBankAccountStatusTransition(
+  public createBankAccountStatusTransition(
     userToken,
     bankAccountToken,
     data,
     callback
   ) {
     if (!userToken) {
-      throw new Error("userToken is required");
+      throw new Error('userToken is required');
     }
     if (!bankAccountToken) {
-      throw new Error("bankAccountToken is required");
+      throw new Error('bankAccountToken is required');
     }
 
     this.client.doPost(
@@ -1340,28 +1376,28 @@ export class Hyperwallet {
   /**
    * Get bank account status transition
    *
-   * @param {string} userToken - The user token
-   * @param {string} bankAccountToken - The bank account token
-   * @param {string} bankAccountToken - The bank account token
-   * @param {string} statusTransitionToken - The bank account status transition token
-   * @param {api-callback} callback - The callback for this call
+   * @param userToken - The user token
+   * @param bankAccountToken - The bank account token
+   * @param bankAccountToken - The bank account token
+   * @param statusTransitionToken - The bank account status transition token
+   * @param callback - The callback for this call
    *
    * @throws Will throw an error if userToken or bankAccountToken is not provided
    */
-  getBankAccountStatusTransition(
+  public getBankAccountStatusTransition(
     userToken,
     bankAccountToken,
     statusTransitionToken,
     callback
   ) {
     if (!userToken) {
-      throw new Error("userToken is required");
+      throw new Error('userToken is required');
     }
     if (!bankAccountToken) {
-      throw new Error("bankAccountToken is required");
+      throw new Error('bankAccountToken is required');
     }
     if (!statusTransitionToken) {
-      throw new Error("statusTransitionToken is required");
+      throw new Error('statusTransitionToken is required');
     }
     this.client.doGet(
       `users/${encodeURIComponent(
@@ -1377,24 +1413,24 @@ export class Hyperwallet {
   /**
    * List all bank account status transitions
    *
-   * @param {string} userToken - The user token
-   * @param {string} bankAccountToken - The bank account token
-   * @param {Object} options - The query parameters to send
-   * @param {api-callback} callback - The callback for this call
+   * @param userToken - The user token
+   * @param bankAccountToken - The bank account token
+   * @param options - The query parameters to send
+   * @param callback - The callback for this call
    *
    * @throws Will throw an error if userToken or bankAccountToken is not provided
    */
-  listBankAccountStatusTransitions(
+  public listBankAccountStatusTransitions(
     userToken,
     bankAccountToken,
     options,
     callback
   ) {
     if (!userToken) {
-      throw new Error("userToken is required");
+      throw new Error('userToken is required');
     }
     if (!bankAccountToken) {
-      throw new Error("bankAccountToken is required");
+      throw new Error('bankAccountToken is required');
     }
     this.client.doGet(
       `users/${encodeURIComponent(
@@ -1407,22 +1443,22 @@ export class Hyperwallet {
     );
   }
 
-  //--------------------------------------
+  // --------------------------------------
   // Balances
-  //--------------------------------------
+  // --------------------------------------
 
   /**
    * List balances for a user
    *
-   * @param {string} userToken - The user token
-   * @param {Object} options - The query parameters to send
-   * @param {api-callback} callback - The callback for this call
+   * @param userToken - The user token
+   * @param options - The query parameters to send
+   * @param callback - The callback for this call
    *
    * @throws Will throw an error if userToken is not provided
    */
-  listBalancesForUser(userToken, options, callback) {
+  public listBalancesForUser(userToken, options, callback) {
     if (!userToken) {
-      throw new Error("userToken is required");
+      throw new Error('userToken is required');
     }
     this.client.doGet(
       `users/${encodeURIComponent(userToken)}/balances`,
@@ -1434,19 +1470,24 @@ export class Hyperwallet {
   /**
    * List balances for a prepaid card
    *
-   * @param {string} userToken - The user token
-   * @param {string} prepaidCardToken - The prepaid card token
-   * @param {Object} options - The query parameters to send
-   * @param {api-callback} callback - The callback for this call
+   * @param userToken - The user token
+   * @param prepaidCardToken - The prepaid card token
+   * @param options - The query parameters to send
+   * @param callback - The callback for this call
    *
    * @throws Will throw an error if userToken or prepaidCardToken is not provided
    */
-  listBalancesForPrepaidCard(userToken, prepaidCardToken, options, callback) {
+  public listBalancesForPrepaidCard(
+    userToken,
+    prepaidCardToken,
+    options,
+    callback
+  ) {
     if (!userToken) {
-      throw new Error("userToken is required");
+      throw new Error('userToken is required');
     }
     if (!prepaidCardToken) {
-      throw new Error("prepaidCardToken is required");
+      throw new Error('prepaidCardToken is required');
     }
     this.client.doGet(
       `users/${encodeURIComponent(
@@ -1460,19 +1501,19 @@ export class Hyperwallet {
   /**
    * List balances for a program accounts
    *
-   * @param {string} programToken - The program token
-   * @param {string} accountToken - The account token
-   * @param {Object} options - The query parameters to send
-   * @param {api-callback} callback - The callback for this call
+   * @param programToken - The program token
+   * @param accountToken - The account token
+   * @param options - The query parameters to send
+   * @param callback - The callback for this call
    *
    * @throws Will throw an error if programToken or accountToken is not provided
    */
-  listBalancesForAccount(programToken, accountToken, options, callback) {
+  public listBalancesForAccount(programToken, accountToken, options, callback) {
     if (!programToken) {
-      throw new Error("programToken is required");
+      throw new Error('programToken is required');
     }
     if (!accountToken) {
-      throw new Error("accountToken is required");
+      throw new Error('accountToken is required');
     }
     this.client.doGet(
       `programs/${encodeURIComponent(
@@ -1483,32 +1524,32 @@ export class Hyperwallet {
     );
   }
 
-  //--------------------------------------
+  // --------------------------------------
   // Payments
-  //--------------------------------------
+  // --------------------------------------
 
   /**
    * Create a payment
    *
-   * @param {Object} data - The payment data
-   * @param {api-callback} callback - The callback for this call
+   * @param data - The payment data
+   * @param callback - The callback for this call
    */
-  createPayment(data, callback) {
+  public createPayment(data, callback) {
     this.addProgramToken(data);
-    this.client.doPost("payments", data, {}, callback);
+    this.client.doPost('payments', data, {}, callback);
   }
 
   /**
    * Get a payment
    *
-   * @param {string} paymentToken - The payment token
-   * @param {api-callback} callback - The callback for this call
+   * @param paymentToken - The payment token
+   * @param callback - The callback for this call
    *
    * @throws Will throw an error if paymentToken is not provided
    */
-  getPayment(paymentToken, callback) {
+  public getPayment(paymentToken, callback) {
     if (!paymentToken) {
-      throw new Error("paymentToken is required");
+      throw new Error('paymentToken is required');
     }
     this.client.doGet(
       `payments/${encodeURIComponent(paymentToken)}`,
@@ -1520,12 +1561,12 @@ export class Hyperwallet {
   /**
    * List all payments
    *
-   * @param {Object} options - The query parameters to send
-   * @param {api-callback} callback - The callback for this call
+   * @param options - The query parameters to send
+   * @param callback - The callback for this call
    */
-  listPayments(options, callback) {
+  public listPayments(options, callback) {
     this.client.doGet(
-      "payments",
+      'payments',
       options,
       Hyperwallet.handle204Response(callback)
     );
@@ -1534,14 +1575,14 @@ export class Hyperwallet {
   /**
    * Create a payment status transition
    *
-   * @param {string} paymentToken - The payment token
-   * @param {Object} data - The payment status transition data
-   * @param {api-callback} callback - The callback for this call
+   * @param paymentToken - The payment token
+   * @param data - The payment status transition data
+   * @param callback - The callback for this call
    * @throws Will throw an error if paymentToken is not provided
    */
-  createPaymentStatusTransition(paymentToken, data, callback) {
+  public createPaymentStatusTransition(paymentToken, data, callback) {
     if (!paymentToken) {
-      throw new Error("paymentToken is required");
+      throw new Error('paymentToken is required');
     }
 
     this.client.doPost(
@@ -1555,18 +1596,22 @@ export class Hyperwallet {
   /**
    * Get payment status transition
    *
-   * @param {string} paymentToken - The payment token
-   * @param {string} statusTransitionToken - The payment status transition token
-   * @param {api-callback} callback - The callback for this call
+   * @param paymentToken - The payment token
+   * @param statusTransitionToken - The payment status transition token
+   * @param callback - The callback for this call
    *
    * @throws Will throw an error if paymentToken is not provided
    */
-  getPaymentStatusTransition(paymentToken, statusTransitionToken, callback) {
+  public getPaymentStatusTransition(
+    paymentToken,
+    statusTransitionToken,
+    callback
+  ) {
     if (!paymentToken) {
-      throw new Error("paymentToken is required");
+      throw new Error('paymentToken is required');
     }
     if (!statusTransitionToken) {
-      throw new Error("statusTransitionToken is required");
+      throw new Error('statusTransitionToken is required');
     }
     this.client.doGet(
       `payments/${encodeURIComponent(
@@ -1580,15 +1625,15 @@ export class Hyperwallet {
   /**
    * List all payment status transitions
    *
-   * @param {string} paymentToken - The payment token
-   * @param {Object} options - The query parameters to send
-   * @param {api-callback} callback - The callback for this call
+   * @param paymentToken - The payment token
+   * @param options - The query parameters to send
+   * @param callback - The callback for this call
    *
    * @throws Will throw an error if paymentToken is not provided
    */
-  listPaymentStatusTransitions(paymentToken, options, callback) {
+  public listPaymentStatusTransitions(paymentToken, options, callback) {
     if (!paymentToken) {
-      throw new Error("paymentToken is required");
+      throw new Error('paymentToken is required');
     }
     this.client.doGet(
       `payments/${encodeURIComponent(paymentToken)}/status-transitions`,
@@ -1597,21 +1642,21 @@ export class Hyperwallet {
     );
   }
 
-  //--------------------------------------
+  // --------------------------------------
   // Programs
-  //--------------------------------------
+  // --------------------------------------
 
   /**
    * Get a program
    *
-   * @param {string} programToken - The program token
-   * @param {api-callback} callback - The callback for this call
+   * @param programToken - The program token
+   * @param callback - The callback for this call
    *
    * @throws Will throw an error if programToken is not provided
    */
-  getProgram(programToken, callback) {
+  public getProgram(programToken, callback) {
     if (!programToken) {
-      throw new Error("programToken is required");
+      throw new Error('programToken is required');
     }
     this.client.doGet(
       `programs/${encodeURIComponent(programToken)}`,
@@ -1620,25 +1665,25 @@ export class Hyperwallet {
     );
   }
 
-  //--------------------------------------
+  // --------------------------------------
   // Program Accounts
-  //--------------------------------------
+  // --------------------------------------
 
   /**
    * Get a program account
    *
-   * @param {string} programToken - The program token
-   * @param {string} accountToken - The account token
-   * @param {api-callback} callback - The callback for this call
+   * @param programToken - The program token
+   * @param accountToken - The account token
+   * @param callback - The callback for this call
    *
    * @throws Will throw an error if programToken is not provided
    */
-  getProgramAccount(programToken, accountToken, callback) {
+  public getProgramAccount(programToken, accountToken, callback) {
     if (!programToken) {
-      throw new Error("programToken is required");
+      throw new Error('programToken is required');
     }
     if (!accountToken) {
-      throw new Error("accountToken is required");
+      throw new Error('accountToken is required');
     }
     this.client.doGet(
       `programs/${encodeURIComponent(
@@ -1649,23 +1694,23 @@ export class Hyperwallet {
     );
   }
 
-  //--------------------------------------
+  // --------------------------------------
   // Transfer Method Configurations
-  //--------------------------------------
+  // --------------------------------------
 
   /**
    * Get a transfer method configuration
    *
-   * @param {string} userToken - The user token
-   * @param {string} country - The transfer method country
-   * @param {string} currency - The transfer method currency
-   * @param {string} type - The transfer method type
-   * @param {string} profileType - The profile type
-   * @param {api-callback} callback - The callback for this call
+   * @param userToken - The user token
+   * @param country - The transfer method country
+   * @param currency - The transfer method currency
+   * @param type - The transfer method type
+   * @param profileType - The profile type
+   * @param callback - The callback for this call
    *
    * @throws Will throw an error if userToken, country, currency, type or profileType is not provided
    */
-  getTransferMethodConfiguration(
+  public getTransferMethodConfiguration(
     userToken,
     country,
     currency,
@@ -1674,22 +1719,22 @@ export class Hyperwallet {
     callback
   ) {
     if (!userToken) {
-      throw new Error("userToken is required");
+      throw new Error('userToken is required');
     }
     if (!country) {
-      throw new Error("country is required");
+      throw new Error('country is required');
     }
     if (!currency) {
-      throw new Error("currency is required");
+      throw new Error('currency is required');
     }
     if (!type) {
-      throw new Error("type is required");
+      throw new Error('type is required');
     }
     if (!profileType) {
-      throw new Error("profileType is required");
+      throw new Error('profileType is required');
     }
     this.client.doGet(
-      "transfer-method-configurations",
+      'transfer-method-configurations',
       {
         userToken,
         country,
@@ -1704,21 +1749,21 @@ export class Hyperwallet {
   /**
    * List all transfer method configurations
    *
-   * @param {string} userToken - The user token
-   * @param {Object} options - The query parameters to send
-   * @param {api-callback} callback - The callback for this call
+   * @param userToken - The user token
+   * @param options - The query parameters to send
+   * @param callback - The callback for this call
    *
    * @throws Will throw an error if userToken is not provided
    */
-  listTransferMethodConfigurations(userToken, options, callback) {
+  public listTransferMethodConfigurations(userToken, options, callback) {
     if (!userToken) {
-      throw new Error("userToken is required");
+      throw new Error('userToken is required');
     }
     const params = options
       ? objectAssign({}, options, { userToken })
       : { userToken };
     this.client.doGet(
-      "transfer-method-configurations",
+      'transfer-method-configurations',
       params,
       Hyperwallet.handle204Response(callback)
     );
@@ -1727,24 +1772,24 @@ export class Hyperwallet {
   /**
    * Create a transfer method
    *
-   * @param {string} userToken The user token
-   * @param {string} jsonCacheToken The json cache token supplied by the widget
-   * @param {Object} data - Transfer method data
-   * @param {api-callback} callback - The callback for this call
+   * @param userToken The user token
+   * @param jsonCacheToken The json cache token supplied by the widget
+   * @param data - Transfer method data
+   * @param callback - The callback for this call
    *
    * @throws Will throw an error if userToken is not provided
    * @throws Will throw an error if jsonCacheToken is not provided
    */
-  createTransferMethod(userToken, jsonCacheToken, data, callback) {
+  public createTransferMethod(userToken, jsonCacheToken, data, callback) {
     if (!userToken) {
-      throw new Error("userToken is required");
+      throw new Error('userToken is required');
     }
 
     if (!jsonCacheToken) {
-      throw new Error("jsonCacheToken is required");
+      throw new Error('jsonCacheToken is required');
     }
 
-    const headers = { "Json-Cache-Token": jsonCacheToken };
+    const headers = { 'Json-Cache-Token': jsonCacheToken };
     this.client.doPost(
       `users/${encodeURIComponent(userToken)}/transfer-methods`,
       data,
@@ -1753,26 +1798,31 @@ export class Hyperwallet {
     );
   }
 
-  //--------------------------------------
+  // --------------------------------------
   // Receipts
-  //--------------------------------------
+  // --------------------------------------
 
   /**
    * List all program account receipts
    *
-   * @param {string} programToken - The program token
-   * @param {string} accountToken - The account token
-   * @param {Object} options - The query parameters to send
-   * @param {api-callback} callback - The callback for this call
+   * @param programToken - The program token
+   * @param accountToken - The account token
+   * @param options - The query parameters to send
+   * @param callback - The callback for this call
    *
    * @throws Will throw an error if programToken or accountToken is not provided
    */
-  listReceiptsForProgramAccount(programToken, accountToken, options, callback) {
+  public listReceiptsForProgramAccount(
+    programToken,
+    accountToken,
+    options,
+    callback
+  ) {
     if (!programToken) {
-      throw new Error("programToken is required");
+      throw new Error('programToken is required');
     }
     if (!accountToken) {
-      throw new Error("accountToken is required");
+      throw new Error('accountToken is required');
     }
     this.client.doGet(
       `programs/${encodeURIComponent(
@@ -1786,15 +1836,15 @@ export class Hyperwallet {
   /**
    * List all user receipts
    *
-   * @param {string} userToken - The user token
-   * @param {Object} options - The query parameters to send
-   * @param {api-callback} callback - The callback for this call
+   * @param userToken - The user token
+   * @param options - The query parameters to send
+   * @param callback - The callback for this call
    *
    * @throws Will throw an error if userToken is not provided
    */
-  listReceiptsForUser(userToken, options, callback) {
+  public listReceiptsForUser(userToken, options, callback) {
     if (!userToken) {
-      throw new Error("userToken is required");
+      throw new Error('userToken is required');
     }
     this.client.doGet(
       `users/${encodeURIComponent(userToken)}/receipts`,
@@ -1806,19 +1856,24 @@ export class Hyperwallet {
   /**
    * List all prepaid card receipts
    *
-   * @param {string} userToken - The user token
-   * @param {string} prepaidCardToken - The prepaid card token
-   * @param {Object} options - The query parameters to send
-   * @param {api-callback} callback - The callback for this call
+   * @param userToken - The user token
+   * @param prepaidCardToken - The prepaid card token
+   * @param options - The query parameters to send
+   * @param callback - The callback for this call
    *
    * @throws Will throw an error if userToken or prepaidCardToken is not provided
    */
-  listReceiptsForPrepaidCard(userToken, prepaidCardToken, options, callback) {
+  public listReceiptsForPrepaidCard(
+    userToken,
+    prepaidCardToken,
+    options,
+    callback
+  ) {
     if (!userToken) {
-      throw new Error("userToken is required");
+      throw new Error('userToken is required');
     }
     if (!prepaidCardToken) {
-      throw new Error("prepaidCardToken is required");
+      throw new Error('prepaidCardToken is required');
     }
     this.client.doGet(
       `users/${encodeURIComponent(
@@ -1829,19 +1884,19 @@ export class Hyperwallet {
     );
   }
 
-  //--------------------------------------
+  // --------------------------------------
   // Webhooks: Notifications
-  //-------------------------------------
+  // -------------------------------------
 
   /**
    * List webhook notifications
    *
-   * @param {Object} options - The query parameters to send
-   * @param {api-callback} callback - The callback for this call
+   * @param options - The query parameters to send
+   * @param callback - The callback for this call
    */
-  listWebhookNotifications(options, callback) {
+  public listWebhookNotifications(options, callback) {
     this.client.doGet(
-      "webhook-notifications",
+      'webhook-notifications',
       options,
       Hyperwallet.handle204Response(callback)
     );
@@ -1850,14 +1905,14 @@ export class Hyperwallet {
   /**
    * Get a single webhook notification
    *
-   * @param {string} webhookToken - Webhook token
-   * @param {api-callback} callback - The callback for this call
+   * @param webhookToken - Webhook token
+   * @param callback - The callback for this call
    *
    * @throws Will throw an error if webhookToken is not provided
    */
-  getWebhookNotification(webhookToken, callback) {
+  public getWebhookNotification(webhookToken, callback) {
     if (!webhookToken) {
-      throw new Error("webhookToken is required");
+      throw new Error('webhookToken is required');
     }
     this.client.doGet(
       `webhook-notifications/${encodeURIComponent(webhookToken)}`,
@@ -1866,19 +1921,17 @@ export class Hyperwallet {
     );
   }
 
-  //--------------------------------------
+  // --------------------------------------
   // Internal utils
-  //--------------------------------------
+  // --------------------------------------
 
   /**
    * Add program token to data object if not already set
    *
-   * @param {Object} data - The data object
-   * @returns {Object} - The adjusted object
-   *
-   * @private
+   * @param data - The data object
+   * @param - The adjusted object
    */
-  addProgramToken(data) {
+  public addProgramToken(data) {
     if (!data || !this.programToken) {
       return data;
     }
@@ -1886,33 +1939,9 @@ export class Hyperwallet {
       return data;
     }
 
-    data.programToken = this.programToken; // eslint-disable-line no-param-reassign
-    return data;
-  }
+    data.programToken = this.programToken;
 
-  /**
-   * Handle 204 response for list calls
-   *
-   * @param {api-callback} callback - The api callback
-   * @returns {api-callback} - A wrapper api callback
-   *
-   * @private
-   */
-  static handle204Response(callback) {
-    return (err, data, res) => {
-      if (!err && res.status === 204) {
-        callback(
-          err,
-          {
-            count: 0,
-            data: []
-          },
-          res
-        );
-        return;
-      }
-      callback(err, data, res);
-    };
+    return data;
   }
 }
 

@@ -1,21 +1,21 @@
-import { ResourceLink } from "./ResourceLink";
+import { IResourceLink } from './ResourceLink';
 
-export interface ListBankCardsResponse {
+export interface IListBankCardsResponse {
   count: number;
   offset: number;
   limit: number;
-  data: ListBankCardsResponseCard[];
-  links: ResourceLink[];
+  data: IListBankCardsResponseCard[];
+  links: IResourceLink[];
 }
 
-export interface ListBankCardsResponseCard {
+export interface IListBankCardsResponseCard {
   token: string;
-  type: "BANK_CARD";
+  type: 'BANK_CARD';
   status: string;
   createdOn: string;
   transferMethodCountry: string;
   transferMethodCurrency: string;
-  cardType: "DEBIT";
+  cardType: 'DEBIT';
   cardNumber: string;
   cardBrand: string;
   /**
@@ -23,5 +23,5 @@ export interface ListBankCardsResponseCard {
    */
   dateOfExpiry: string;
   processingTime: string;
-  links: ResourceLink[];
+  links: IResourceLink[];
 }
