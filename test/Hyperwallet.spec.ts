@@ -4,7 +4,7 @@ import Sinon from 'sinon';
 import sinonChai from 'sinon-chai';
 
 // tslint:disable-next-line: no-implicit-dependencies
-import { Hyperwallet } from '@truebill/hyperwallet-sdk';
+import { Hyperwallet } from 'hyperwallet';
 
 chai.should();
 chai.use(dirtyChai);

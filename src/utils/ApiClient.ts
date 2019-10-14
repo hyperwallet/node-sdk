@@ -1,8 +1,8 @@
-import request from 'superagent';
+import https from 'https';
+
 import { Encryption } from './Encryption';
 import { ApiCallback } from '../types/ApiCallback';
-
-const packageJson = require('../../package.json');
+import { SuperAgentStatic } from 'superagent';
 
 /**
  * The callback interface for api calls
@@ -59,6 +59,8 @@ export class ApiClient {
    */
   public encryption: Encryption;
 
+  private readonly superagent: SuperAgentStatic;
+
   /**
    * Create a instance of the API client
    *
@@ -74,12 +76,13 @@ export class ApiClient {
     encryptionData?: {
       clientPrivateKeySetPath: string;
       hyperwalletKeySetPath: string;
-    }
+    },
+    httpsAgent?: https.Agent
   ) {
     this.username = username;
     this.password = password;
     this.server = server;
-    this.version = packageJson.version;
+    this.version = '3';
     this.isEncrypted = false;
 
     if (
@@ -94,6 +97,12 @@ export class ApiClient {
         this.clientPrivateKeySetPath,
         this.hyperwalletKeySetPath
       );
+    }
+
+    if (httpsAgent != null) {
+      this.superagent = require('superagent').agent(httpsAgent);
+    } else {
+      this.superagent = require('superagent');
     }
   }
 
@@ -122,7 +131,7 @@ export class ApiClient {
 
     requestDataPromise
       .then(requestData => {
-        request
+        this.superagent
           .post(`${this.server}/rest/v3/${partialUrl}`)
           .auth(this.username, this.password)
           .set('User-Agent', `Hyperwallet Node SDK v${this.version}`)
@@ -165,7 +174,7 @@ export class ApiClient {
     }
     requestDataPromise
       .then(requestData => {
-        request
+        this.superagent
           .put(`${this.server}/rest/v3/${partialUrl}`)
           .auth(this.username, this.password)
           .set('User-Agent', `Hyperwallet Node SDK v${this.version}`)
@@ -195,7 +204,8 @@ export class ApiClient {
       accept = 'application/jose+json';
       this.createJoseJsonParser();
     }
-    request
+
+    this.superagent
       .get(`${this.server}/rest/v3/${partialUrl}`)
       .auth(this.username, this.password)
       .set('User-Agent', `Hyperwallet Node SDK v${this.version}`)
@@ -333,7 +343,7 @@ export class ApiClient {
    * Creates response body parser for application/jose+json content-type
    */
   private createJoseJsonParser() {
-    request.parse['application/jose+json'] = (res, callback) => {
+    this.superagent.parse['application/jose+json'] = (res, callback) => {
       let data = '';
       res.on('data', chunk => {
         data += chunk;

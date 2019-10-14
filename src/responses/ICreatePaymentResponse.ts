@@ -1,5 +1,5 @@
 import { PaymentPurposeCode } from '../types/enums';
-import { IResourceLink } from './ResourceLink';
+import { IResourceLink } from './IResourceLink';
 import { ISODateString } from '../types/ISODateString';
 
 export interface ICreatePaymentResponse {

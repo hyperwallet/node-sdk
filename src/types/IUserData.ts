@@ -93,4 +93,4 @@ export interface IBusinessUser extends IBaseUserData {
   // @todo: Add missing business fields
 }
 
-export type UserData = IIndividualUser | IBusinessUser;
+export type IUserData = IIndividualUser | IBusinessUser;

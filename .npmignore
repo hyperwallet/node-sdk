@@ -5,10 +5,14 @@ docs/
 examples/
 scripts/
 coverage/
+.vscode/
 
 test/
 .DS_Store
 
 .eslintrc
 .idea/*
+.travis.yml
+tsconfig.json
+tslint.*
 .travis.yml

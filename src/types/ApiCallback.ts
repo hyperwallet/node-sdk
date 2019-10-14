@@ -1,4 +1,4 @@
-import { IApiError } from './ApiError';
+import { IApiError } from './IApiError';
 
 /**
  * The callback interface for api calls

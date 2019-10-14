@@ -3,10 +3,8 @@ import dirtyChai from 'dirty-chai';
 import nock from 'nock';
 import path from 'path';
 
-import { ApiClient, Encryption } from '@truebill/hyperwallet-sdk';
+import { ApiClient, Encryption } from 'hyperwallet';
 import { fail } from 'assert';
-
-const packageJson = require('../../package.json');
 
 chai.should();
 chai.use(dirtyChai);
@@ -26,16 +24,6 @@ describe('utils/ApiClient', () => {
       client.username.should.be.equal('test-username');
       client.password.should.be.equal('test-password');
       client.server.should.be.equal('test-server');
-    });
-
-    /** @test {ApiClient#constructor} */
-    it('should set the version to package.json version', () => {
-      const client = new ApiClient(
-        'test-username',
-        'test-password',
-        'test-server'
-      );
-      client.version.should.be.equal(packageJson.version);
     });
   });
 
@@ -63,10 +51,7 @@ describe('utils/ApiClient', () => {
       const { client, authHeader } = beforeEach();
       const nockScope = nock('https://test-server')
         .matchHeader('Authorization', authHeader)
-        .matchHeader(
-          'User-Agent',
-          `Hyperwallet Node SDK v${packageJson.version}`
-        )
+        .matchHeader('User-Agent', `Hyperwallet Node SDK v${client.version}`)
         .matchHeader('Accept', 'application/json')
         .matchHeader('Content-Type', 'application/json')
         .post('/rest/v3/test', {
@@ -103,10 +88,7 @@ describe('utils/ApiClient', () => {
       const { client, authHeader } = beforeEach();
       const nockScope = nock('https://test-server')
         .matchHeader('Authorization', authHeader)
-        .matchHeader(
-          'User-Agent',
-          `Hyperwallet Node SDK v${packageJson.version}`
-        )
+        .matchHeader('User-Agent', `Hyperwallet Node SDK v${client.version}`)
         .matchHeader('Accept', 'application/json')
         .matchHeader('Content-Type', 'application/json')
         .post('/rest/v3/test', {
@@ -145,10 +127,7 @@ describe('utils/ApiClient', () => {
       const { client, authHeader } = beforeEach();
       const nockScope = nock('https://test-server')
         .matchHeader('Authorization', authHeader)
-        .matchHeader(
-          'User-Agent',
-          `Hyperwallet Node SDK v${packageJson.version}`
-        )
+        .matchHeader('User-Agent', `Hyperwallet Node SDK v${client.version}`)
         .matchHeader('Accept', 'application/json')
         .matchHeader('Content-Type', 'application/json')
         .post('/rest/v3/test', {
@@ -187,10 +166,7 @@ describe('utils/ApiClient', () => {
       const { client, authHeader } = beforeEach();
       const nockScope = nock('https://test-server')
         .matchHeader('Authorization', authHeader)
-        .matchHeader(
-          'User-Agent',
-          `Hyperwallet Node SDK v${packageJson.version}`
-        )
+        .matchHeader('User-Agent', `Hyperwallet Node SDK v${client.version}`)
         .matchHeader('Accept', 'application/json')
         .matchHeader('Content-Type', 'application/json')
         .post('/rest/v3/test', {
@@ -239,10 +215,7 @@ describe('utils/ApiClient', () => {
       const { client, authHeader } = beforeEach();
       const nockScope = nock('https://test-server')
         .matchHeader('Authorization', authHeader)
-        .matchHeader(
-          'User-Agent',
-          `Hyperwallet Node SDK v${packageJson.version}`
-        )
+        .matchHeader('User-Agent', `Hyperwallet Node SDK v${client.version}`)
         .matchHeader('Accept', 'application/json')
         .matchHeader('Content-Type', 'application/json')
         .post('/rest/v3/test', {
@@ -329,7 +302,7 @@ describe('utils/ApiClient', () => {
             .matchHeader('Authorization', authHeader)
             .matchHeader(
               'User-Agent',
-              `Hyperwallet Node SDK v${packageJson.version}`
+              `Hyperwallet Node SDK v${clientWithEncryption.version}`
             )
             .matchHeader('Accept', 'application/jose+json')
             .matchHeader('Content-Type', 'application/jose+json')
@@ -391,7 +364,7 @@ describe('utils/ApiClient', () => {
             .matchHeader('Authorization', authHeader)
             .matchHeader(
               'User-Agent',
-              `Hyperwallet Node SDK v${packageJson.version}`
+              `Hyperwallet Node SDK v${clientWithEncryption.version}`
             )
             .matchHeader('Accept', 'application/jose+json')
             .matchHeader('Content-Type', 'application/jose+json')
@@ -453,7 +426,7 @@ describe('utils/ApiClient', () => {
             .matchHeader('Authorization', authHeader)
             .matchHeader(
               'User-Agent',
-              `Hyperwallet Node SDK v${packageJson.version}`
+              `Hyperwallet Node SDK v${clientWithEncryption.version}`
             )
             .matchHeader('Accept', 'application/jose+json')
             .matchHeader('Content-Type', 'application/jose+json')
@@ -521,7 +494,7 @@ describe('utils/ApiClient', () => {
             .matchHeader('Authorization', authHeader)
             .matchHeader(
               'User-Agent',
-              `Hyperwallet Node SDK v${packageJson.version}`
+              `Hyperwallet Node SDK v${clientWithEncryption.version}`
             )
             .matchHeader('Accept', 'application/json')
             .matchHeader('Content-Type', 'application/jose+json')
@@ -583,10 +556,7 @@ describe('utils/ApiClient', () => {
       const { client, authHeader } = beforeEach();
       const nockScope = nock('https://test-server')
         .matchHeader('Authorization', authHeader)
-        .matchHeader(
-          'User-Agent',
-          `Hyperwallet Node SDK v${packageJson.version}`
-        )
+        .matchHeader('User-Agent', `Hyperwallet Node SDK v${client.version}`)
         .matchHeader('Accept', 'application/json')
         .matchHeader('Content-Type', 'application/json')
         .put('/rest/v3/test', {
@@ -623,10 +593,7 @@ describe('utils/ApiClient', () => {
       const { client, authHeader } = beforeEach();
       const nockScope = nock('https://test-server')
         .matchHeader('Authorization', authHeader)
-        .matchHeader(
-          'User-Agent',
-          `Hyperwallet Node SDK v${packageJson.version}`
-        )
+        .matchHeader('User-Agent', `Hyperwallet Node SDK v${client.version}`)
         .matchHeader('Accept', 'application/json')
         .matchHeader('Content-Type', 'application/json')
         .put('/rest/v3/test', {
@@ -665,10 +632,7 @@ describe('utils/ApiClient', () => {
       const { client, authHeader } = beforeEach();
       const nockScope = nock('https://test-server')
         .matchHeader('Authorization', authHeader)
-        .matchHeader(
-          'User-Agent',
-          `Hyperwallet Node SDK v${packageJson.version}`
-        )
+        .matchHeader('User-Agent', `Hyperwallet Node SDK v${client.version}`)
         .matchHeader('Accept', 'application/json')
         .matchHeader('Content-Type', 'application/json')
         .put('/rest/v3/test', {
@@ -707,10 +671,7 @@ describe('utils/ApiClient', () => {
       const { client, authHeader } = beforeEach();
       const nockScope = nock('https://test-server')
         .matchHeader('Authorization', authHeader)
-        .matchHeader(
-          'User-Agent',
-          `Hyperwallet Node SDK v${packageJson.version}`
-        )
+        .matchHeader('User-Agent', `Hyperwallet Node SDK v${client.version}`)
         .matchHeader('Accept', 'application/json')
         .matchHeader('Content-Type', 'application/json')
         .put('/rest/v3/test', {
@@ -759,10 +720,7 @@ describe('utils/ApiClient', () => {
       const { client, authHeader } = beforeEach();
       const nockScope = nock('https://test-server')
         .matchHeader('Authorization', authHeader)
-        .matchHeader(
-          'User-Agent',
-          `Hyperwallet Node SDK v${packageJson.version}`
-        )
+        .matchHeader('User-Agent', `Hyperwallet Node SDK v${client.version}`)
         .matchHeader('Accept', 'application/json')
         .matchHeader('Content-Type', 'application/json')
         .put('/rest/v3/test', {
@@ -849,7 +807,7 @@ describe('utils/ApiClient', () => {
             .matchHeader('Authorization', authHeader)
             .matchHeader(
               'User-Agent',
-              `Hyperwallet Node SDK v${packageJson.version}`
+              `Hyperwallet Node SDK v${clientWithEncryption.version}`
             )
             .matchHeader('Accept', 'application/jose+json')
             .matchHeader('Content-Type', 'application/jose+json')
@@ -911,7 +869,7 @@ describe('utils/ApiClient', () => {
             .matchHeader('Authorization', authHeader)
             .matchHeader(
               'User-Agent',
-              `Hyperwallet Node SDK v${packageJson.version}`
+              `Hyperwallet Node SDK v${clientWithEncryption.version}`
             )
             .matchHeader('Accept', 'application/jose+json')
             .matchHeader('Content-Type', 'application/jose+json')
@@ -973,7 +931,7 @@ describe('utils/ApiClient', () => {
             .matchHeader('Authorization', authHeader)
             .matchHeader(
               'User-Agent',
-              `Hyperwallet Node SDK v${packageJson.version}`
+              `Hyperwallet Node SDK v${clientWithEncryption.version}`
             )
             .matchHeader('Accept', 'application/json')
             .matchHeader('Content-Type', 'application/jose+json')
@@ -1038,7 +996,7 @@ describe('utils/ApiClient', () => {
             .matchHeader('Authorization', authHeader)
             .matchHeader(
               'User-Agent',
-              `Hyperwallet Node SDK v${packageJson.version}`
+              `Hyperwallet Node SDK v${clientWithEncryption.version}`
             )
             .matchHeader('Accept', 'application/jose+json')
             .matchHeader('Content-Type', 'application/jose+json')
@@ -1104,7 +1062,7 @@ describe('utils/ApiClient', () => {
             .matchHeader('Authorization', authHeader)
             .matchHeader(
               'User-Agent',
-              `Hyperwallet Node SDK v${packageJson.version}`
+              `Hyperwallet Node SDK v${clientWithEncryption.version}`
             )
             .matchHeader('Accept', 'application/jose+json')
             .matchHeader('Content-Type', 'application/jose+json')
@@ -1175,10 +1133,7 @@ describe('utils/ApiClient', () => {
 
       const scope = nock('https://test-server')
         .matchHeader('Authorization', authHeader)
-        .matchHeader(
-          'User-Agent',
-          `Hyperwallet Node SDK v${packageJson.version}`
-        )
+        .matchHeader('User-Agent', `Hyperwallet Node SDK v${client.version}`)
         .matchHeader('Accept', 'application/json')
         .get('/rest/v3/test')
         .query({ sort: 'test' })
@@ -1208,10 +1163,7 @@ describe('utils/ApiClient', () => {
 
       const scope = nock('https://test-server')
         .matchHeader('Authorization', authHeader)
-        .matchHeader(
-          'User-Agent',
-          `Hyperwallet Node SDK v${packageJson.version}`
-        )
+        .matchHeader('User-Agent', `Hyperwallet Node SDK v${client.version}`)
         .matchHeader('Accept', 'application/json')
         .get('/rest/v3/test')
         .query({ sort: 'test' })
@@ -1243,10 +1195,7 @@ describe('utils/ApiClient', () => {
 
       const scope = nock('https://test-server')
         .matchHeader('Authorization', authHeader)
-        .matchHeader(
-          'User-Agent',
-          `Hyperwallet Node SDK v${packageJson.version}`
-        )
+        .matchHeader('User-Agent', `Hyperwallet Node SDK v${client.version}`)
         .matchHeader('Accept', 'application/json')
         .get('/rest/v3/test')
         .query({ sort: 'test' })
@@ -1278,10 +1227,7 @@ describe('utils/ApiClient', () => {
 
       const scope = nock('https://test-server')
         .matchHeader('Authorization', authHeader)
-        .matchHeader(
-          'User-Agent',
-          `Hyperwallet Node SDK v${packageJson.version}`
-        )
+        .matchHeader('User-Agent', `Hyperwallet Node SDK v${client.version}`)
         .matchHeader('Accept', 'application/json')
         .get('/rest/v3/test')
         .reply(
@@ -1329,10 +1275,7 @@ describe('utils/ApiClient', () => {
 
       const nockScope = nock('https://test-server')
         .matchHeader('Authorization', authHeader)
-        .matchHeader(
-          'User-Agent',
-          `Hyperwallet Node SDK v${packageJson.version}`
-        )
+        .matchHeader('User-Agent', `Hyperwallet Node SDK v${client.version}`)
         .matchHeader('Accept', 'application/json')
         .get('/rest/v3/test')
         .reply(
@@ -1416,7 +1359,7 @@ describe('utils/ApiClient', () => {
             .matchHeader('Authorization', authHeader)
             .matchHeader(
               'User-Agent',
-              `Hyperwallet Node SDK v${packageJson.version}`
+              `Hyperwallet Node SDK v${clientWithEncryption.version}`
             )
             .matchHeader('Accept', 'application/jose+json')
             .get('/')
@@ -1473,7 +1416,7 @@ describe('utils/ApiClient', () => {
             .matchHeader('Authorization', authHeader)
             .matchHeader(
               'User-Agent',
-              `Hyperwallet Node SDK v${packageJson.version}`
+              `Hyperwallet Node SDK v${clientWithEncryption.version}`
             )
             .matchHeader('Accept', 'application/jose+json')
             .get('/')

@@ -5,6 +5,8 @@
     "allowSyntheticDefaultImports": true,
     "target": "es6",
     "noImplicitAny": false,
+    "declaration": true,
+    "declarationMap": true,
     // "strictNullChecks": true,
     // "strictBindCallApply": true,
     // "strictFunctionTypes": false, // Ideally would be true, but this doesn't play well with our custom Express request types

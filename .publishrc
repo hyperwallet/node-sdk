@@ -5,7 +5,8 @@
     "untrackedFiles": true,
     "sensitiveData": true,
     "branch": "master",
-    "gitTag": true
+    "gitTag": true,
+    "eslint": false
   },
   "checkBranch": 0,
   "confirm": true,

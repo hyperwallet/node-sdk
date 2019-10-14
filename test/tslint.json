@@ -1,9 +1,10 @@
 {
   "extends": "../tslint.json",
   "rules": {
+    "chai-vague-errors": false,
     "newline-per-chained-call": false,
+    "no-implicit-dependencies": false,
     "no-single-line-block-comment": false,
-    "no-implicit-dependencies": [true, "dev"],
-    "chai-vague-errors": false
+    "non-literal-fs-path": false
   }
 }

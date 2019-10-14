@@ -1,4 +1,4 @@
-import { IResourceLink } from './ResourceLink';
+import { IResourceLink } from './IResourceLink';
 
 export interface IListBankCardsResponse {
   count: number;

@@ -37,6 +37,10 @@ docs/
 src/**/*.js
 src/**/*.js.map
 src/**/*.d.ts
+src/**/*.d.ts.map
 
 # Compiled tests
 test/**/*.spec.js
+test/**/*.js.map
+test/**/*.d.ts
+test/**/*.d.ts.map

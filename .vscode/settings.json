@@ -3,5 +3,6 @@
     "test/**/*.js": true,
     "test/**/*.js.map": true
   },
-  "prettier.singleQuote": true
+  "prettier.singleQuote": true,
+  "tslint.configFile": "tslint.vscode.jsonc"
 }
