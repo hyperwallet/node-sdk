@@ -1,0 +1,17 @@
+{
+  "extends": "./tslint.json",
+  "rulesDirectory": ["node_modules/tslint-microsoft-contrib"],
+  "rules": {
+    // disable all rules that require type information
+    "no-cookies": false,
+    "await-promise": false,
+    "match-default-export-name": false,
+    "no-floating-promises": false,
+    "promise-function-async": false,
+    "restrict-plus-operands": false,
+    "completed-docs": false,
+    "no-unnecessary-qualifier": false,
+    "no-void-expression": false,
+    "no-for-in-array": false
+  }
+}

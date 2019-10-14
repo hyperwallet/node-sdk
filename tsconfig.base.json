@@ -1,0 +1,32 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "target": "es6",
+    "noImplicitAny": false,
+    "declaration": true,
+    "declarationMap": true,
+    // "strictNullChecks": true,
+    // "strictBindCallApply": true,
+    // "strictFunctionTypes": false, // Ideally would be true, but this doesn't play well with our custom Express request types
+    // "strictPropertyInitialization": true,
+    // "alwaysStrict": true,
+    "noImplicitThis": false, // Ideally would be true, but this doesn't play well with how we define Sequelize models
+    "resolveJsonModule": true,
+    "moduleResolution": "node",
+    // "downlevelIteration": true,
+    // "skipLibCheck": true,
+    "noUnusedLocals": true,
+    // "noUnusedParameters": true,
+    // "noImplicitAny": true,
+    // "noImplicitReturns": true,
+    "lib": ["es6", "es7", "esnext"],
+    "sourceMap": true,
+    "baseUrl": "./",
+    "paths": {
+      "*": ["node_modules/*"]
+    }
+  },
+  "include": ["src/**/*"]
+}
