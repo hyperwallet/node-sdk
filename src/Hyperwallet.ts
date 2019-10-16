@@ -31,7 +31,10 @@ export interface IHyperwalletOptions {
    */
   server?: string;
 
-  httpsAgent: Agent;
+  /**
+   * A custom HTTPS agent
+   */
+  httpsAgent?: Agent;
 }
 
 /**
