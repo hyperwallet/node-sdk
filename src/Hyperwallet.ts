@@ -1,4 +1,5 @@
 // tslint:disable: informative-docs
+import { Agent } from 'https';
 import objectAssign from 'object-assign';
 import ApiClient from './utils/ApiClient';
 export interface IHyperwalletOptions {
@@ -29,6 +30,8 @@ export interface IHyperwalletOptions {
    * The API server to connect to
    */
   server?: string;
+
+  httpsAgent: Agent;
 }
 
 /**
@@ -60,13 +63,20 @@ export class Hyperwallet {
     password,
     programToken,
     encryptionData,
-    server = 'https://api.sandbox.hyperwallet.com'
+    server = 'https://api.sandbox.hyperwallet.com',
+    httpsAgent
   }: IHyperwalletOptions) {
     if (!username || !password) {
       throw new Error('You need to specify your API username and password!');
     }
 
-    this.client = new ApiClient(username, password, server, encryptionData);
+    this.client = new ApiClient(
+      username,
+      password,
+      server,
+      encryptionData,
+      httpsAgent
+    );
 
     this.programToken = programToken;
   }
