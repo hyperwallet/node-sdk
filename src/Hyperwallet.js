@@ -861,6 +861,26 @@ export default class Hyperwallet {
         this.client.doGet(`users/${encodeURIComponent(userToken)}/paypal-accounts`, options, Hyperwallet.handle204Response(callback));
     }
 
+    /**
+     * Create PayPal account status transition
+     *
+     * @param {string} userToken - The user token
+     * @param {string} payPalAccountToken - PayPal account token
+     * @param {Object} data - PayPal account status transition data
+     * @param {api-callback} callback - The callback for this call
+     * @throws Will throw an error if userToken or payPalAccountToken is not provided
+     */
+    createPayPalAccountStatusTransition(userToken, payPalAccountToken, data, callback) {
+        if (!userToken) {
+            throw new Error("userToken is required");
+        }
+        if (!payPalAccountToken) {
+            throw new Error("payPalAccountToken is required");
+        }
+
+        this.client.doPost(`users/${encodeURIComponent(userToken)}/paypal-accounts/${encodeURIComponent(payPalAccountToken)}/status-transitions`, data, {}, callback);
+    }
+
     //--------------------------------------
     // Bank Accounts
     //--------------------------------------
