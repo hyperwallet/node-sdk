@@ -799,6 +799,60 @@ export default class Hyperwallet {
     }
 
     //--------------------------------------
+    // Transfer Refunds
+    //--------------------------------------
+
+    /**
+     * Create a transfer refund
+     *
+     * @param {string} transferToken - The transfer token
+     * @param {Object} data - The transfer refund data
+     * @param {api-callback} callback - The callback for this call
+     */
+    createTransferRefund(transferToken, data, callback) {
+        if (!transferToken) {
+            throw new Error("transferToken is required");
+        }
+        if (!data.clientTransferId) {
+            throw new Error("clientTransferId is required");
+        }
+        this.client.doPost(`transfers/${encodeURIComponent(transferToken)}/refunds`, data, {}, callback);
+    }
+
+    /**
+     * Get a transfer
+     *
+     * @param {string} transferToken - The transfer token
+     * @param {string} transferRefundToken - The transfer refund token
+     * @param {api-callback} callback - The callback for this call
+     *
+     * @throws Will throw an error if transferToken is not provided
+     */
+    getTransferRefund(transferToken, transferRefundToken, callback) {
+        if (!transferToken) {
+            throw new Error("transferToken is required");
+        }
+        if (!transferRefundToken) {
+            throw new Error("transferRefundToken is required");
+        }
+        this.client.doGet(`transfers/${encodeURIComponent(transferToken)}/refunds/${encodeURIComponent(transferRefundToken)}`, {}, callback);
+    }
+
+    /**
+     * List all transfers
+     *
+     * @param {string} transferToken - The transfer token
+     * @param {Object} options - The query parameters to send
+     * @param {api-callback} callback - The callback for this call
+     */
+    listTransferRefunds(transferToken, options, callback) {
+        if (!transferToken) {
+            throw new Error("transferToken is required");
+        }
+        this.client.doGet(`transfers/${encodeURIComponent(transferToken)}/refunds`, options, Hyperwallet.handle204Response(callback));
+    }
+
+    //--------------------------------------
     // PayPal Accounts
     //--------------------------------------
 
