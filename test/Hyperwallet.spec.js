@@ -1525,6 +1525,46 @@ describe("Hyperwallet", () => {
         });
     });
 
+    /** @test {Hyperwallet#createPayPalAccountStatusTransition} */
+    describe("createPayPalAccountStatusTransition()", () => {
+        let client;
+        let apiClientSpy;
+
+        beforeEach(() => {
+            apiClientSpy = sinon.spy();
+            client = new Hyperwallet({
+                username: "test-username",
+                password: "test-password",
+            });
+            client.client = {
+                doPost: apiClientSpy,
+            };
+        });
+
+        /** @test {Hyperwallet#createPayPalAccountStatusTransition} */
+        it("should throw error if userToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.createPayPalAccountStatusTransition(undefined, undefined, { test: "value" }, callback)).to.throw("userToken is required");
+        });
+
+        /** @test {Hyperwallet#createPayPalAccountStatusTransition} */
+        it("should throw error if payPalAccountToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.createPayPalAccountStatusTransition("test-user-token", undefined, { test: "value" }, callback)).to.throw("payPalAccountToken is required");
+        });
+
+        /** @test {Hyperwallet#createPayPalAccountStatusTransition} */
+        it("should send post call to paypal account status transition endpoint", () => {
+            const callback = () => null;
+            client.createPayPalAccountStatusTransition("test-user-token", "test-paypal-account-token", { test: "value" }, callback);
+
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("users/test-user-token/paypal-accounts/test-paypal-account-token/status-transitions", {
+                test: "value",
+            }, {}, callback);
+        });
+    });
+
     //--------------------------------------
     // Prepaid Cards
     //--------------------------------------
