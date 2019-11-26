@@ -2,7 +2,6 @@
 [![Coverage Status](https://coveralls.io/repos/github/hyperwallet/node-sdk/badge.svg?branch=master)](https://coveralls.io/github/hyperwallet/node-sdk?branch=master)
 [![Document](http://hyperwallet.github.io/node-sdk/badge.svg?t=0)](http://hyperwallet.github.io/node-sdk)
 [![NPM version](https://badge.fury.io/js/hyperwallet-sdk.png)](http://badge.fury.io/js/hyperwallet-sdk)
-[![Dependency Status](https://www.versioneye.com/user/projects/57647e810735400045bbfc94/badge.svg?style=flat)](https://www.versioneye.com/user/projects/57647e810735400045bbfc94)
 
 Hyperwallet REST SDK (Beta)
 ===========================
