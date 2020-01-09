@@ -1,16 +1,21 @@
 Changelog
 =========
 
-1.3.1
+1.4.0
+-------------------
+- Add PayPal account status transitions
+- Remove VersionEye from Node
+
+1.3.1 (2019-04-09)
 -------------------
 - FIX: TypeError thrown when response status is 204 No Content
 
-1.3.0
+1.3.0 (2019-01-25)
 -------------------
 - Added field "VerificationStatus" to User
 - Client-token endpoint renamed to authentication-token
 
-1.0.1
+1.0.1 (2019-01-22)
 -------------------
 - FIX: Resolved issue with restricted "Accept" & "Content-Type" headers to support only "application/json" or "application/jose+json"
 
