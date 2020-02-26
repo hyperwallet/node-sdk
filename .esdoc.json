@@ -2,18 +2,15 @@
   "source": "./src",
   "destination": "./docs",
   "excludes": ["examples/"],
-  "title": "Hyperwallet REST SDK",
-  "test": {
-    "type": "mocha",
-    "source": "./test"
-  },
   "plugins": [
     {
-      "name": "esdoc-importpath-plugin",
+      "name": "esdoc-standard-plugin",
       "option": {
-        "replaces": [
-          {"from": "^src/", "to": "lib/"}
-        ]
+        "brand": {
+          "title": "Hyperwallet REST SDK",
+          "repository": "https://github.com/hyperwallet/node-sdk",
+          "site": "http://www.hyperwallet.com"
+        }
       }
     }
   ]
