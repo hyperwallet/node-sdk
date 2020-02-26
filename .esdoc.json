@@ -10,6 +10,9 @@
           "title": "Hyperwallet REST SDK",
           "repository": "https://github.com/hyperwallet/node-sdk",
           "site": "http://www.hyperwallet.com"
+        },
+        "test": {
+          "source": "./test/"
         }
       }
     }
