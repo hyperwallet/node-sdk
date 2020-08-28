@@ -882,6 +882,108 @@ export default class Hyperwallet {
     }
 
     //--------------------------------------
+    // Venmo Accounts
+    //--------------------------------------
+
+    /**
+     * Create a Venmo account
+     *
+     * @param {string} userToken - The user token
+     * @param {Object} data - The Venmo account data
+     * @param {api-callback} callback - The callback for this call
+     *
+     * @throws Will throw an error if userToken is not provided
+     */
+    createVenmoAccount(userToken, data, callback) {
+        if (!userToken) {
+            throw new Error("userToken is required");
+        }
+        if (!data.transferMethodCountry) {
+            throw new Error("transferMethodCountry is required");
+        }
+        if (!data.transferMethodCurrency) {
+            throw new Error("transferMethodCurrency is required");
+        }
+        if (!data.accountId) {
+            throw new Error("Account is required");
+        }
+        this.client.doPost(`users/${encodeURIComponent(userToken)}/venmo-accounts`, data, {}, callback);
+    }
+    /**
+     * Get a Venmo account
+     *
+     * @param {string} userToken - The user token
+     * @param {string} venmoAccountToken - The venmo account token
+     * @param {api-callback} callback - The callback for this call
+     *
+     * @throws Will throw an error if userToken or venmoAccountToken is not provided
+     */
+    getVenmoAccount(userToken, venmoAccountToken, callback) {
+        if (!userToken) {
+            throw new Error("userToken is required");
+        }
+        if (!venmoAccountToken) {
+            throw new Error("venmoAccountToken is required");
+        }
+        this.client.doGet(`users/${encodeURIComponent(userToken)}/venmo-accounts/${encodeURIComponent(venmoAccountToken)}`, {}, callback);
+    }
+
+    /**
+     * List all Venmo accounts
+     *
+     * @param {string} userToken - The user token
+     * @param {Object} options - The query parameters to send
+     * @param {api-callback} callback - The callback for this call
+     * @throws Will throw an error if userToken is not provided
+     */
+    listVenmoAccounts(userToken, options, callback) {
+        if (!userToken) {
+            throw new Error("userToken is required");
+        }
+        this.client.doGet(`users/${encodeURIComponent(userToken)}/venmo-accounts`, options, Hyperwallet.handle204Response(callback));
+    }
+
+    /**
+     * Create Venmo account status transition
+     *
+     * @param {string} userToken - The user token
+     * @param {string} venmoAccountToken - venmo account token
+     * @param {Object} data - Venmo account status transition data
+     * @param {api-callback} callback - The callback for this call
+     * @throws Will throw an error if userToken or venmoAccountToken is not provided
+     */
+    createVenmoAccountStatusTransition(userToken, venmoAccountToken, data, callback) {
+        if (!userToken) {
+            throw new Error("userToken is required");
+        }
+        if (!venmoAccountToken) {
+            throw new Error("venmoAccountToken is required");
+        }
+
+        this.client.doPost(`users/${encodeURIComponent(userToken)}/venmo-accounts/${encodeURIComponent(venmoAccountToken)}/status-transitions`, data, {}, callback);
+    }
+
+    /**
+     * Update a venmo account
+     *
+     * @param {string} userToken - The user token
+     * @param {string} venmoAccountToken - The bank account token
+     * @param {Object} data - The venmo account data to update
+     * @param {api-callback} callback - The callback for this call
+     *
+     * @throws Will throw an error if userToken or venmoAccountToken is not provided
+     */
+    updateVenmoAccount(userToken, venmoAccountToken, data, callback) {
+        if (!userToken) {
+            throw new Error("userToken is required");
+        }
+        if (!venmoAccountToken) {
+            throw new Error("venmoAccountToken is required");
+        }
+        this.client.doPut(`users/${encodeURIComponent(userToken)}/venmo-accounts/${encodeURIComponent(venmoAccountToken)}`, data, {}, callback);
+    }
+
+    //--------------------------------------
     // Bank Accounts
     //--------------------------------------
 
