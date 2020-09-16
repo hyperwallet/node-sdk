@@ -32,3 +32,5 @@ lib/
 
 # Docs folder
 docs/
+
+.nyc_output/
