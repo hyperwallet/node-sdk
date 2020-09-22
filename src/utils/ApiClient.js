@@ -2,6 +2,10 @@ import request from "superagent";
 import packageJson from "../../package.json";
 import Encryption from "./Encryption";
 
+var http = require('http');
+var FormData = require('form-data');
+var fs = require('fs');
+
 /**
  * The callback interface for api calls
  *
@@ -103,6 +107,53 @@ export default class ApiClient {
                 .send(requestData)
                 .end(this.wrapCallback("POST", callback));
         }).catch(() => callback("Failed to encrypt body for POST request", undefined, undefined));
+    }
+
+    /**
+     * Do a POST call to the Hyperwallet API server for multipart form data
+     *
+     * @param {string} partialUrl - The api endpoint to call (gets prefixed by `server` and `/rest/v3/`)
+     * @param {Object} data - The data to send to the server
+     * @param {Object} params - Query parameters to send in this call
+     * @param {api-callback} callback - The callback for this call
+     */
+    doPutFormData(partialUrl, data, callback) {
+        let contentType = "multipart/form-data";
+        let accept = "multipart/form-data";
+        console.log("Hello api client");
+        // let requestDataPromise = new Promise((resolve) => resolve(data));
+        // if (this.isEncrypted) {
+        //     contentType = "application/jose+json";
+        //     accept = "application/jose+json";
+        //     this.createJoseJsonParser();
+        //     requestDataPromise = this.encryption.encrypt(data);
+        // }
+
+        var formData = {
+            my_field: 'my_value',
+            my_file: fs.createReadStream(data),
+        };
+
+        request.post({
+            url:`${this.server}/rest/v3/${partialUrl}`,
+            formData: formData},
+            function(err, httpResponse, body) {
+            if (err) {
+                return console.error('upload failed:', err);
+            }
+            console.log('Upload successful!  Server responded with:', body);
+        });
+        // requestDataPromise.then((requestData) => {
+        //     request
+        //         .put(`${this.server}/rest/v3/${partialUrl}`)
+        //         .auth(this.username, this.password)
+        //         .set("User-Agent", `Hyperwallet Node SDK v${this.version}`)
+        //         .type(contentType)
+        //         .accept(accept)
+        //         .query(params)
+        //         .send(requestData)
+        //         .end(this.wrapCallback("PUT", callback));
+        // }).catch(() => callback("Failed to encrypt body for PUT request", undefined, undefined));
     }
 
     /**
