@@ -1383,28 +1383,28 @@ describe("Hyperwallet", () => {
         it("should throw error if transferToken is missing", () => {
             const callback = () => null;
             expect(() => client.createTransferRefund(undefined, {
-                clientTransferId: "value",
+                clientRefundId: "value",
             }, callback)).to.throw("transferToken is required");
         });
 
         /** @test {Hyperwallet#createTransferRefund} */
-        it("should throw error if clientTransferId is missing", () => {
+        it("should throw error if clientRefundId is missing", () => {
             const callback = () => null;
             expect(() => client.createTransferRefund("test-transfer-token", {
                 test: "value",
-            }, callback)).to.throw("clientTransferId is required");
+            }, callback)).to.throw("clientRefundId is required");
         });
 
         /** @test {Hyperwallet#createTransferRefund} */
         it("should do post call to transfer refunds endpoint", () => {
             const callback = () => null;
             client.createTransferRefund("test-transfer-token", {
-                clientTransferId: "clientTransferId",
+                clientRefundId: "clientRefundId",
             }, callback);
 
             apiClientSpy.should.have.been.calledOnce();
             apiClientSpy.should.have.been.calledWith("transfers/test-transfer-token/refunds", {
-                clientTransferId: "clientTransferId",
+                clientRefundId: "clientRefundId",
             }, {}, callback);
         });
     });

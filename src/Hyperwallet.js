@@ -813,8 +813,8 @@ export default class Hyperwallet {
         if (!transferToken) {
             throw new Error("transferToken is required");
         }
-        if (!data.clientTransferId) {
-            throw new Error("clientTransferId is required");
+        if (!data.clientRefundId) {
+            throw new Error("clientRefundId is required");
         }
         this.client.doPost(`transfers/${encodeURIComponent(transferToken)}/refunds`, data, {}, callback);
     }
