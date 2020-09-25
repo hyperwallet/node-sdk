@@ -3464,4 +3464,404 @@ describe("Hyperwallet", () => {
             callback(undefined, providedData, providedRes);
         });
     });
+
+    //--------------------------------------
+    // Venmo accounts
+    //--------------------------------------
+
+    /** @test {Hyperwallet#createVenmoAccount} */
+    describe("createVenmoAccount()", () => {
+        let client;
+        let apiClientSpy;
+
+        beforeEach(() => {
+            apiClientSpy = sinon.spy();
+            client = new Hyperwallet({
+                username: "test-username",
+                password: "test-password",
+            });
+            client.client = {
+                doPost: apiClientSpy,
+            };
+        });
+
+        /** @test {Hyperwallet#createVenmoAccount} */
+        it("should throw error if userToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.createVenmoAccount(undefined, { test: "value" }, callback)).to.throw("userToken is required");
+        });
+
+        /** @test {Hyperwallet#createVenmoAccount} */
+        it("should throw error if transferMethodCountry is missing", () => {
+            const callback = () => null;
+            expect(() => client.createVenmoAccount("test-user-token", { test: "value" }, callback)).to.throw("transferMethodCountry is required");
+        });
+
+        /** @test {Hyperwallet#createVenmoAccount} */
+        it("should throw error if transferMethodCurrency is missing", () => {
+            const callback = () => null;
+            expect(() => client.createVenmoAccount("test-user-token", {
+                transferMethodCountry: "test-transferMethodCountry",
+            }, callback)).to.throw("transferMethodCurrency is required");
+        });
+
+        /** @test {Hyperwallet#createVenmoAccount} */
+        it("should throw error if accountId is missing", () => {
+            const callback = () => null;
+            expect(() => client.createVenmoAccount("test-user-token", {
+                transferMethodCountry: "test-transferMethodCountry",
+                transferMethodCurrency: "test-transferMethodCurrency",
+            }, callback)).to.throw("Account is required");
+        });
+
+        /** @test {Hyperwallet#createVenmoAccount} */
+        it("should do post call to venmo account endpoint", () => {
+            const callback = () => null;
+            client.createVenmoAccount("test-user-token", {
+                transferMethodCountry: "test-transferMethodCountry",
+                transferMethodCurrency: "test-transferMethodCurrency",
+                accountId: "accountId",
+            }, callback);
+
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("users/test-user-token/venmo-accounts", {
+                transferMethodCountry: "test-transferMethodCountry",
+                transferMethodCurrency: "test-transferMethodCurrency",
+                accountId: "accountId",
+            }, {}, callback);
+        });
+    });
+
+    /** @test {Hyperwallet#getVenmoAccount} */
+    describe("getVenmoAccount()", () => {
+        let client;
+        let apiClientSpy;
+
+        beforeEach(() => {
+            apiClientSpy = sinon.spy();
+            client = new Hyperwallet({
+                username: "test-username",
+                password: "test-password",
+            });
+            client.client = {
+                doGet: apiClientSpy,
+            };
+        });
+
+        /** @test {Hyperwallet#getVenmoAccount} */
+        it("should throw error if userToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.getVenmoAccount(undefined, undefined, callback)).to.throw("userToken is required");
+        });
+
+        /** @test {Hyperwallet#getVenmoAccount} */
+        it("should throw error if venmoAccountToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.getVenmoAccount("test-user-token", undefined, callback)).to.throw("venmoAccountToken is required");
+        });
+
+        /** @test {Hyperwallet#getVenmoAccount} */
+        it("should do get call if userToken and venmoAccountToken is provided", () => {
+            const callback = () => null;
+            client.getVenmoAccount("test-user-token", "test-venmo-account-token", callback);
+
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("users/test-user-token/venmo-accounts/test-venmo-account-token", {}, callback);
+        });
+    });
+
+    /** @test {Hyperwallet#listVenmoAccounts} */
+    describe("listVenmoAccounts()", () => {
+        let client;
+        let apiClientSpy;
+
+        beforeEach(() => {
+            apiClientSpy = sinon.spy();
+            client = new Hyperwallet({
+                username: "test-username",
+                password: "test-password",
+            });
+            client.client = {
+                doGet: apiClientSpy,
+            };
+        });
+
+        /** @test {Hyperwallet#listVenmoAccounts} */
+        it("should throw error if userToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.listVenmoAccounts(undefined, {}, callback)).to.throw("userToken is required");
+        });
+
+        /** @test {Hyperwallet#listVenmoAccounts} */
+        it("should do get call with options", () => {
+            const callback = () => null;
+            client.listVenmoAccounts("test-user-token", { test: "value" }, callback);
+
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("users/test-user-token/venmo-accounts", { test: "value" });
+        });
+
+        /** @test {Hyperwallet#listVenmoAccounts} */
+        it("should do get call without options", () => {
+            const callback = () => null;
+            client.listVenmoAccounts("test-user-token", {}, callback);
+
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("users/test-user-token/venmo-accounts", {});
+        });
+
+        /** @test {Hyperwallet#listVenmoAccounts} */
+        it("should handle 204 return", (cb) => {
+            const callback = (err, data) => {
+                data.should.be.deep.equal({
+                    count: 0,
+                    data: [],
+                });
+
+                cb();
+            };
+            client.listVenmoAccounts("test-user-token", {}, callback);
+
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("users/test-user-token/venmo-accounts", {});
+
+            apiClientSpy.getCall(0).args[2](undefined, {}, {
+                status: 204,
+            });
+        });
+    });
+
+    /** @test {Hyperwallet#updateVenmoAccount} */
+    describe("updateVenmoAccount()", () => {
+        let client;
+        let apiClientSpy;
+
+        beforeEach(() => {
+            apiClientSpy = sinon.spy();
+            client = new Hyperwallet({
+                username: "test-username",
+                password: "test-password",
+            });
+            client.client = {
+                doPut: apiClientSpy,
+            };
+        });
+
+        /** @test {Hyperwallet#updateVenmoAccount} */
+        it("should throw error if userToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.updateVenmoAccount(undefined, undefined, { test: "value" }, callback)).to.throw("userToken is required");
+        });
+
+        /** @test {Hyperwallet#updateVenmoAccount} */
+        it("should throw error if venmoAccountToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.updateVenmoAccount("test-user-token", undefined, { test: "value" }, callback)).to.throw("venmoAccountToken is required");
+        });
+
+        /** @test {Hyperwallet#updateVenmoAccount} */
+        it("should do put call to venmo accounts endpoint", () => {
+            const callback = () => null;
+            client.updateVenmoAccount("test-user-token", "test-venmo-account-token", {
+                test: "value",
+            }, callback);
+
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("users/test-user-token/venmo-accounts/test-venmo-account-token", {
+                test: "value",
+            }, {}, callback);
+        });
+    });
+
+    /** @test {Hyperwallet#deactivateVenmoAccount} */
+    describe("deactivateVenmoAccount()", () => {
+        let client;
+        let apiClientSpy;
+
+        beforeEach(() => {
+            apiClientSpy = sinon.spy();
+            client = new Hyperwallet({
+                username: "test-username",
+                password: "test-password",
+            });
+            client.client = {
+                doPost: apiClientSpy,
+            };
+        });
+
+        /** @test {Hyperwallet#deactivateVenmoAccount} */
+        it("should throw error if userToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.deactivateVenmoAccount(undefined, undefined, callback)).to.throw("userToken is required");
+        });
+
+        /** @test {Hyperwallet#deactivateVenmoAccount} */
+        it("should throw error if venmoAccountToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.deactivateVenmoAccount("test-user-token", undefined, callback)).to.throw("venmoAccountToken is required");
+        });
+
+        /** @test {Hyperwallet#deactivateVenmoAccount} */
+        it("should send transition to 'DE-ACTIVATED'", () => {
+            const callback = () => null;
+            client.deactivateVenmoAccount("test-user-token", "test-venmo-account-token", callback);
+
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("users/test-user-token/venmo-accounts/test-venmo-account-token/status-transitions", {
+                transition: "DE-ACTIVATED",
+            }, {}, callback);
+        });
+    });
+
+    /** @test {Hyperwallet#createVenmoAccountStatusTransition} */
+    describe("createVenmoAccountStatusTransition()", () => {
+        let client;
+        let apiClientSpy;
+
+        beforeEach(() => {
+            apiClientSpy = sinon.spy();
+            client = new Hyperwallet({
+                username: "test-username",
+                password: "test-password",
+            });
+            client.client = {
+                doPost: apiClientSpy,
+            };
+        });
+
+        /** @test {Hyperwallet#createVenmoAccountStatusTransition} */
+        it("should throw error if userToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.createVenmoAccountStatusTransition(undefined, undefined, { test: "value" }, callback)).to.throw("userToken is required");
+        });
+
+        /** @test {Hyperwallet#createVenmoAccountStatusTransition} */
+        it("should throw error if venmoAccountToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.createVenmoAccountStatusTransition("test-user-token", undefined, { test: "value" }, callback)).to.throw("venmoAccountToken is required");
+        });
+
+        /** @test {Hyperwallet#createVenmoAccountStatusTransition} */
+        it("should send post call to venmo account status transition endpoint", () => {
+            const callback = () => null;
+            client.createVenmoAccountStatusTransition("test-user-token", "test-venmo-account-token", { test: "value" }, callback);
+
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("users/test-user-token/venmo-accounts/test-venmo-account-token/status-transitions", {
+                test: "value",
+            }, {}, callback);
+        });
+    });
+
+
+    /** @test {Hyperwallet#getVenmoAccountStatusTransition} */
+    describe("getVenmoAccountStatusTransition()", () => {
+        let client;
+        let apiClientSpy;
+
+        beforeEach(() => {
+            apiClientSpy = sinon.spy();
+            client = new Hyperwallet({
+                username: "test-username",
+                password: "test-password",
+            });
+            client.client = {
+                doGet: apiClientSpy,
+            };
+        });
+
+        /** @test {Hyperwallet#getVenmoAccountStatusTransition} */
+        it("should throw error if userToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.getVenmoAccountStatusTransition(undefined, undefined, undefined, callback)).to.throw("userToken is required");
+        });
+
+        /** @test {Hyperwallet#getVenmoAccountStatusTransition} */
+        it("should throw error if venmoAccountToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.getVenmoAccountStatusTransition("test-user-token", undefined, undefined, callback)).to.throw("venmoAccountToken is required");
+        });
+
+        /** @test {Hyperwallet#getVenmoAccountStatusTransition} */
+        it("should throw error if statusTransitionToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.getVenmoAccountStatusTransition("test-user-token", "test-venmo-account-token", undefined, callback)).to.throw("statusTransitionToken is required");
+        });
+
+        /** @test {Hyperwallet#getVenmoAccountStatusTransition} */
+        it("should do get call if userToken, venmoAccountToken and statusTransitionToken is provided", () => {
+            const callback = () => null;
+            client.getVenmoAccountStatusTransition("test-user-token", "test-venmo-account-token", "status-transition-token", callback);
+
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("users/test-user-token/venmo-accounts/test-venmo-account-token/status-transitions/status-transition-token", {}, callback);
+        });
+    });
+
+    /** @test {Hyperwallet#listVenmoAccountStatusTransitions} */
+    describe("listVenmoAccountStatusTransitions()", () => {
+        let client;
+        let apiClientSpy;
+
+        beforeEach(() => {
+            apiClientSpy = sinon.spy();
+            client = new Hyperwallet({
+                username: "test-username",
+                password: "test-password",
+            });
+            client.client = {
+                doGet: apiClientSpy,
+            };
+        });
+
+        /** @test {Hyperwallet#listVenmoAccountStatusTransitions} */
+        it("should throw error if userToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.listVenmoAccountStatusTransitions(undefined, undefined, {}, callback)).to.throw("userToken is required");
+        });
+
+        /** @test {Hyperwallet#listVenmoAccountStatusTransitions} */
+        it("should throw error if venmoAccountToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.listVenmoAccountStatusTransitions("test-user-token", undefined, {}, callback)).to.throw("venmoAccountToken is required");
+        });
+
+        /** @test {Hyperwallet#listVenmoAccountStatusTransitions} */
+        it("should do get call with options", () => {
+            const callback = () => null;
+            client.listVenmoAccountStatusTransitions("test-user-token", "test-venmo-account-token", { test: "value" }, callback);
+
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("users/test-user-token/venmo-accounts/test-venmo-account-token/status-transitions", { test: "value" });
+        });
+
+        /** @test {Hyperwallet#listVenmoAccountStatusTransitions} */
+        it("should do get call without options", () => {
+            const callback = () => null;
+            client.listVenmoAccountStatusTransitions("test-user-token", "test-venmo-account-token", {}, callback);
+
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("users/test-user-token/venmo-accounts/test-venmo-account-token/status-transitions", {});
+        });
+
+        /** @test {Hyperwallet#listVenmoAccountStatusTransitions} */
+        it("should handle 204 return", (cb) => {
+            const callback = (err, data) => {
+                data.should.be.deep.equal({
+                    count: 0,
+                    data: [],
+                });
+
+                cb();
+            };
+            client.listVenmoAccountStatusTransitions("test-user-token", "test-venmo-account-token", {}, callback);
+
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("users/test-user-token/venmo-accounts/test-venmo-account-token/status-transitions", {});
+
+            apiClientSpy.getCall(0).args[2](undefined, {}, {
+                status: 204,
+            });
+        });
+    });
 });
