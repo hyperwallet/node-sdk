@@ -1360,6 +1360,159 @@ describe("Hyperwallet", () => {
     });
 
     //--------------------------------------
+    // Transfer Refunds
+    //--------------------------------------
+
+    /** @test {Hyperwallet#createTransferRefund} */
+    describe("createTransferRefund()", () => {
+        let client;
+        let apiClientSpy;
+
+        beforeEach(() => {
+            apiClientSpy = sinon.spy();
+            client = new Hyperwallet({
+                username: "test-username",
+                password: "test-password",
+            });
+            client.client = {
+                doPost: apiClientSpy,
+            };
+        });
+
+        /** @test {Hyperwallet#createTransferRefund} */
+        it("should throw error if transferToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.createTransferRefund(undefined, {
+                clientRefundId: "value",
+            }, callback)).to.throw("transferToken is required");
+        });
+
+        /** @test {Hyperwallet#createTransferRefund} */
+        it("should throw error if clientRefundId is missing", () => {
+            const callback = () => null;
+            expect(() => client.createTransferRefund("test-transfer-token", {
+                test: "value",
+            }, callback)).to.throw("clientRefundId is required");
+        });
+
+        /** @test {Hyperwallet#createTransferRefund} */
+        it("should do post call to transfer refunds endpoint", () => {
+            const callback = () => null;
+            client.createTransferRefund("test-transfer-token", {
+                clientRefundId: "clientRefundId",
+            }, callback);
+
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("transfers/test-transfer-token/refunds", {
+                clientRefundId: "clientRefundId",
+            }, {}, callback);
+        });
+    });
+
+    /** @test {Hyperwallet#getTransferRefund} */
+    describe("getTransferRefund()", () => {
+        let client;
+        let apiClientSpy;
+
+        beforeEach(() => {
+            apiClientSpy = sinon.spy();
+            client = new Hyperwallet({
+                username: "test-username",
+                password: "test-password",
+            });
+            client.client = {
+                doGet: apiClientSpy,
+            };
+        });
+
+        /** @test {Hyperwallet#getTransferRefund} */
+        it("should throw error if transferToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.getTransferRefund(undefined, "test-transfer-refund-token",
+                callback)).to.throw("transferToken is required");
+        });
+
+        /** @test {Hyperwallet#getTransferRefund} */
+        it("should throw error if transferRefundToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.getTransferRefund("test-transfer-token", undefined,
+                callback)).to.throw("transferRefundToken is required");
+        });
+
+        /** @test {Hyperwallet#getTransferRefund} */
+        it("should do get call if transferToken is provided", () => {
+            const callback = () => null;
+            client.getTransferRefund("test-transfer-token", "test-transfer-refund-token", callback);
+
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("transfers/test-transfer-token/refunds/test-transfer-refund-token", {}, callback);
+        });
+    });
+
+    /** @test {Hyperwallet#listTransferRefunds} */
+    describe("listTransferRefunds()", () => {
+        let client;
+        let apiClientSpy;
+
+        beforeEach(() => {
+            apiClientSpy = sinon.spy();
+            client = new Hyperwallet({
+                username: "test-username",
+                password: "test-password",
+            });
+            client.client = {
+                doGet: apiClientSpy,
+            };
+        });
+
+        /** @test {Hyperwallet#listTransferRefunds} */
+        it("should throw error if transferToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.listTransferRefunds(undefined, {
+                test: "value",
+            }, callback)).to.throw("transferToken is required");
+        });
+
+        /** @test {Hyperwallet#listTransferRefunds} */
+        it("should do get call with options", () => {
+            const callback = () => null;
+            client.listTransferRefunds("test-transfer-token", { test: "value" }, callback);
+
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("transfers/test-transfer-token/refunds", { test: "value" });
+        });
+
+        /** @test {Hyperwallet#listTransferRefunds} */
+        it("should do get call without options", () => {
+            const callback = () => null;
+            client.listTransferRefunds("test-transfer-token", {}, callback);
+
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("transfers/test-transfer-token/refunds", {});
+        });
+
+        /** @test {Hyperwallet#listTransferRefunds} */
+        it("should handle 204 return", (cb) => {
+            const callback = (err, data) => {
+                data.should.be.deep.equal({
+                    count: 0,
+                    data: [],
+                });
+
+                cb();
+            };
+            client.listTransferRefunds("test-transfer-token", {}, callback);
+
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("transfers/test-transfer-token/refunds", {});
+
+            apiClientSpy.getCall(0).args[2](undefined, {}, {
+                status: 204,
+            });
+        });
+    });
+
+    //--------------------------------------
     // PayPal accounts
     //--------------------------------------
 
