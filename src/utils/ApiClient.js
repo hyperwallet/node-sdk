@@ -2,10 +2,6 @@ import request from "superagent";
 import packageJson from "../../package.json";
 import Encryption from "./Encryption";
 
-var http = require('http');
-var FormData = require('form-data');
-var fs = require('fs');
-
 /**
  * The callback interface for api calls
  *
@@ -110,56 +106,44 @@ export default class ApiClient {
     }
 
     /**
-     * Do a POST call to the Hyperwallet API server for multipart form data
+     * Do a PUT call to the Hyperwallet API server to upload documents
      *
      * @param {string} partialUrl - The api endpoint to call (gets prefixed by `server` and `/rest/v3/`)
      * @param {Object} data - The data to send to the server
-     * @param {Object} params - Query parameters to send in this call
      * @param {api-callback} callback - The callback for this call
      */
-    doPutFormData(partialUrl, data, callback) {
+    doPutMultipart(partialUrl, data, callback) {
         let contentType = "multipart/form-data";
-        let accept = "multipart/form-data";
-        console.log("Hello api client");
-        // let requestDataPromise = new Promise((resolve) => resolve(data));
-        // if (this.isEncrypted) {
-        //     contentType = "application/jose+json";
-        //     accept = "application/jose+json";
-        //     this.createJoseJsonParser();
-        //     requestDataPromise = this.encryption.encrypt(data);
-        // }
-
-        var formData = {
-            my_field: 'my_value',
-            my_file: fs.createReadStream(data),
-        };
-
-        request.post({
-            url:`${this.server}/rest/v3/${partialUrl}`,
-            formData: formData},
-            function(err, httpResponse, body) {
-            if (err) {
-                return console.error('upload failed:', err);
-            }
-            console.log('Upload successful!  Server responded with:', body);
-        });
-        // requestDataPromise.then((requestData) => {
-        //     request
-        //         .put(`${this.server}/rest/v3/${partialUrl}`)
-        //         .auth(this.username, this.password)
-        //         .set("User-Agent", `Hyperwallet Node SDK v${this.version}`)
-        //         .type(contentType)
-        //         .accept(accept)
-        //         .query(params)
-        //         .send(requestData)
-        //         .end(this.wrapCallback("PUT", callback));
-        // }).catch(() => callback("Failed to encrypt body for PUT request", undefined, undefined));
+        let accept = "application/json";
+        /* eslint-disable no-unused-vars */
+        const keys = Object.keys(data); // eslint-disable-line @typescript-eslint/no-unused-vars
+        const values = Object.values(data);
+        /* eslint-enable no-unused-vars */
+        let requestDataPromise = new Promise((resolve) => resolve(data));
+        if (this.isEncrypted) {
+            contentType = "multipart/form-data";
+            accept = "application/jose+json";
+            this.createJoseJsonParser();
+            requestDataPromise = this.encryption.encrypt(data);
+        }
+        requestDataPromise.then(() => {
+            request
+                .put(`${this.server}/rest/v3/${partialUrl}`)
+                .auth(this.username, this.password)
+                .set("User-Agent", `Hyperwallet Node SDK v${this.version}`)
+                .type(contentType)
+                .accept(accept)
+                .field("data", JSON.stringify(values[0]))
+                .attach(JSON.stringify(keys[1]), values[1])
+                .attach(JSON.stringify(keys[2]), values[2])
+                .end(this.wrapCallback("PUT", callback));
+        }).catch((err) => callback(err, undefined, undefined));
     }
 
     /**
      * Do a PUT call to the Hyperwallet API server
      *
-     * @param {string} partialUrl - The api endpoint to call (gets prefixed by `server` and `/rest/v3/`)
+     * @param {string} partialUrl - The api endpoint to call (gets prefixed by server and /rest/v3/)
      * @param {Object} data - The data to send to the server
      * @param {Object} params - Query parameters to send in this call
      * @param {api-callback} callback - The callback for this call

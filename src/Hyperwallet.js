@@ -132,23 +132,23 @@ export default class Hyperwallet {
     }
 
     /**
-     * Upload multipartform data to User
+     * Upload Documents to User
      *
      * @param {string} userToken - The user token
-     * @param {MultipartForm} data - The multipart form data to be uploaded
+     * @param {Object} data - JSON object of the data and files to be uploaded
      * @param {api-callback} callback - The callback for this call
      *
      * @throws Will throw an error if userToken is not provided
      */
-    uploadDocumentUser(userToken, data, callback) {
+    uploadDocuments(userToken, data, callback) {
         if (!userToken) {
             throw new Error("userToken is required");
         }
-        // eslint-disable-next-line no-param-reassign
-
-        this.client.doPutFormData(`users/${encodeURIComponent(userToken)}`, data, Hyperwallet.handle204Response(callback));
+        if (!data) {
+            throw new Error("Files for upload are required");
+        }
+        this.client.doPutMultipart(`users/${encodeURIComponent(userToken)}`, data, Hyperwallet.handle204Response(callback));
     }
-
 
     //--------------------------------------
     // Prepaid Cards

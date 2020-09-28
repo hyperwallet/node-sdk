@@ -383,6 +383,45 @@ describe("Hyperwallet", () => {
         });
     });
 
+    describe("uploadDocuments()", () => {
+        let client;
+        let apiClientSpy;
+
+        beforeEach(() => {
+            apiClientSpy = sinon.spy();
+            client = new Hyperwallet({
+                username: "test-username",
+                password: "test-password",
+            });
+            client.client = {
+                doPutMultipart: apiClientSpy,
+            };
+        });
+
+        /** @test {Hyperwallet#uploadDocuments} */
+        it("should throw error if userToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.uploadDocuments(undefined, {}, callback)).to.throw("userToken is required");
+        });
+
+        /** @test {Hyperwallet#uploadDocuments} */
+        it("should throw error if data is missing", () => {
+            const callback = () => null;
+            expect(() => client.uploadDocuments("test-user-token", undefined, callback)).to.throw("Files for upload are required");
+        });
+
+        /** @test {Hyperwallet#uploadDocuments} */
+        it("should do put call to upload multipart", () => {
+            const callback = () => null;
+
+            client.uploadDocuments("users/test-user-token", {
+                test: "value",
+            }, callback);
+
+            apiClientSpy.should.have.been.calledOnce();
+        });
+    });
+
     //--------------------------------------
     // Bank Cards
     //--------------------------------------
