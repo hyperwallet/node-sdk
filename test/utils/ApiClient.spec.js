@@ -774,14 +774,14 @@ describe("utils/ApiClient", () => {
         });
 
         /** @test {ApiClient#doPutMultipart} */
-        it("should return response if call was successful", (cb) => {
+        it("should return error response for call", (cb) => {
             nock("https://test-server")
                 .matchHeader("Authorization", authHeader)
                 .matchHeader("User-Agent", `Hyperwallet Node SDK v${packageJson.version}`)
                 .matchHeader("Accept", "application/json")
                 .matchHeader("Content-Type", "multipart/form-data")
                 .put("/rest/v3/test", { test: "value" })
-                .reply(200, []
+                .reply(400, []
                     , { "Content-Type": "application/jose+json" });
 
             client.doPutMultipart("test", { test: "value" }, (err, body, res) => {
