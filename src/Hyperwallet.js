@@ -147,7 +147,7 @@ export default class Hyperwallet {
         if (!data) {
             throw new Error("Files for upload are required");
         }
-        this.client.doPutMultipart(`users/${encodeURIComponent(userToken)}`, data, Hyperwallet.handle204Response(callback));
+        this.client.doPutMultipart(`users/${encodeURIComponent(userToken)}`, data, callback);
     }
 
     //--------------------------------------
