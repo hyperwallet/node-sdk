@@ -117,7 +117,6 @@ export default class ApiClient {
         let accept = "application/json";
         /* eslint-disable no-unused-vars */
         const keys = Object.keys(data);
-        const values = Object.values(data);
         /* eslint-enable no-unused-vars */
 
         let requestDataPromise = new Promise((resolve) => resolve(data));
@@ -134,9 +133,9 @@ export default class ApiClient {
                 .set("User-Agent", `Hyperwallet Node SDK v${this.version}`)
                 .type(contentType)
                 .accept(accept)
-                .field(keys[0], JSON.stringify(values[0]))
-                .attach(keys[1], values[1])
-                .attach(keys[2], values[2])
+                .field(keys[0], JSON.stringify(data[keys[0]]))
+                .attach(keys[1], data[keys[1]])
+                .attach(keys[2], data[keys[2]])
                 .end(this.wrapCallback("PUT", callback));
         }).catch((err) => callback(err, undefined, undefined));
     }
