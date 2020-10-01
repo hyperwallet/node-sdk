@@ -127,16 +127,20 @@ export default class ApiClient {
             requestDataPromise = this.encryption.encrypt(data);
         }
         requestDataPromise.then(() => {
-            request
+            let req = request
                 .put(`${this.server}/rest/v3/${partialUrl}`)
                 .auth(this.username, this.password)
                 .set("User-Agent", `Hyperwallet Node SDK v${this.version}`)
                 .type(contentType)
-                .accept(accept)
-                .field(keys[0], JSON.stringify(data[keys[0]]))
-                .attach(keys[1], data[keys[1]])
-                .attach(keys[2], data[keys[2]])
-                .end(this.wrapCallback("PUT", callback));
+                .accept(accept);
+            keys.forEach(key => {
+                if (key === "data") {
+                    req.field(key, JSON.stringify(data[key]));
+                } else {
+                    req.attach(key, data[key]);
+                 }
+            });
+            req.end(this.wrapCallback("PUT", callback));
         }).catch((err) => callback(err, undefined, undefined));
     }
 
