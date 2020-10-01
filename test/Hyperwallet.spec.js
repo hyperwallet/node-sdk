@@ -405,6 +405,13 @@ describe("Hyperwallet", () => {
         });
 
         /** @test {Hyperwallet#uploadDocuments} */
+        it("should throw error if data is missing", () => {
+            const callback = () => null;
+            expect(() => client.uploadDocuments("test-user-token", null, callback)).to.throw("Files for upload are require");
+        });
+
+
+        /** @test {Hyperwallet#uploadDocuments} */
         it("should do put call to upload multipart", () => {
             const callback = () => null;
 
