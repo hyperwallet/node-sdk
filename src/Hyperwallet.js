@@ -131,6 +131,25 @@ export default class Hyperwallet {
         this.client.doGet(`users/${encodeURIComponent(userToken)}/status-transitions`, options, Hyperwallet.handle204Response(callback));
     }
 
+    /**
+     * Upload Documents to User
+     *
+     * @param {string} userToken - The user token
+     * @param {Object} data - JSON object of the data and files to be uploaded
+     * @param {api-callback} callback - The callback for this call
+     *
+     * @throws Will throw an error if userToken is not provided
+     */
+    uploadDocuments(userToken, data, callback) {
+        if (!userToken) {
+            throw new Error("userToken is required");
+        }
+        if (!data) {
+            throw new Error("Files for upload are required");
+        }
+        this.client.doPutMultipart(`users/${encodeURIComponent(userToken)}`, data, callback);
+    }
+
     //--------------------------------------
     // Prepaid Cards
     //--------------------------------------

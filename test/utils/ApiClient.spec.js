@@ -752,6 +752,112 @@ describe("utils/ApiClient", () => {
         });
     });
 
+    /** @test {ApiClient#doPutMultipart} */
+    describe("doPutMultipart()", () => {
+        let client;
+        let authHeader;
+
+        before(() => {
+            nock.disableNetConnect();
+        });
+        after(() => {
+            nock.enableNetConnect();
+        });
+
+        beforeEach(() => {
+            client = new ApiClient("test-username", "test-password", "https://test-server");
+
+            authHeader = "Basic dGVzdC11c2VybmFtZTp0ZXN0LXBhc3N3b3Jk";
+        });
+        afterEach(() => {
+            nock.cleanAll();
+        });
+        const testFile1 = path.join(__dirname, "..", "resources", "TestFile1.png");
+        const documents = {
+            documents: [{
+                type: "DRIVERS_LICENSE",
+                country: "US",
+                category: "IDENTIFICATION",
+            }],
+        };
+        const data = {
+            data: JSON.stringify(documents),
+            drivers_license_front: testFile1,
+        };
+
+        /** @test {ApiClient#doPutMultipart} */
+        it("should return error response for call", (cb) => {
+            nock("https://test-server")
+                .matchHeader("Authorization", authHeader)
+                .matchHeader("User-Agent", `Hyperwallet Node SDK v${packageJson.version}`)
+                .matchHeader("Accept", "application/json")
+                .matchHeader("Content-Type", "multipart/form-data")
+                .put("/rest/v3/test", { test: "value" })
+                .reply(400, []
+                    , { "Content-Type": "application/jose+json" });
+
+            client.doPutMultipart("test", data, (err, body, res) => {
+                err.should.be.deep.equal([{
+                    message: "Could not communicate with https://test-server",
+                    code: "COMMUNICATION_ERROR",
+                }]);
+                expect(body).to.be.undefined();
+                expect(res).to.be.undefined();
+
+                cb();
+            });
+        });
+
+        /** @test {ApiClient#doPutMultipart} */
+        it("should return generic network error if no response was send by server", (cb) => {
+            client.doPut("test", { test: "value" }, {}, (err, body, res) => {
+                err.should.be.deep.equal([{
+                    message: "Could not communicate with https://test-server",
+                    code: "COMMUNICATION_ERROR",
+                }]);
+
+                expect(body).to.be.undefined();
+                expect(res).to.be.undefined();
+
+                cb();
+            });
+        });
+
+        /** @test {ApiClient#doPutMultipart} */
+        it("should return error when fail to encrypt PUT request body", (cb) => {
+            const clientPath = path.join(__dirname, "..", "resources", "private-jwkset1");
+            const hwPath = path.join(__dirname, "..", "resources", "public-jwkset1");
+
+            const clientWithEncryption = new ApiClient("test-username", "test-password", "https://test-server", {
+                clientPrivateKeySetPath: "wrongPath",
+                hyperwalletKeySetPath: hwPath,
+            });
+            const encryption = new Encryption(clientPath, hwPath);
+            const testMessage = {
+                message: "Test message",
+            };
+
+            encryption.encrypt(testMessage).then((encryptedBody) => {
+                nock("https://test-server")
+                    .filteringPath(() => "/")
+                    .matchHeader("Authorization", authHeader)
+                    .matchHeader("User-Agent", `Hyperwallet Node SDK v${packageJson.version}`)
+                    .matchHeader("Accept", "application/json")
+                    .matchHeader("Content-Type", "multipart/form-data")
+                    .put("/", /.+/)
+                    .reply(201, encryptedBody, { "Content-Type": "application/jose+json" });
+
+                clientWithEncryption.doPutMultipart("test", { message: "Test message" }, (err, body, res) => {
+                    expect(err).to.be.undefined();
+                    expect(body).to.be.undefined();
+
+                    expect(res).to.be.undefined();
+                    cb();
+                });
+            });
+        });
+    });
+
     /** @test {ApiClient#doGet} */
     describe("doGet()", () => {
         let client;

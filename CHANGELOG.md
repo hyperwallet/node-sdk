@@ -1,5 +1,10 @@
 Changelog
 =========
+1.4.1
+-------------------
+- Add Venmo Accounts endpoints
+- Add Transfer Refunds endpoint
+- Add Multipart Form data upload to User 
 
 1.4.0
 -------------------
