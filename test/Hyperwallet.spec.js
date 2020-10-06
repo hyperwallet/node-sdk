@@ -284,6 +284,230 @@ describe("Hyperwallet", () => {
         });
     });
 
+    /** @test {Hyperwallet#activateUser} */
+    describe("activateUser()", () => {
+        let client;
+        let apiClientSpy;
+
+        beforeEach(() => {
+            apiClientSpy = sinon.spy();
+            client = new Hyperwallet({
+                username: "test-username",
+                password: "test-password",
+            });
+            client.client = {
+                doPost: apiClientSpy,
+            };
+        });
+
+        /**
+         * @test {Hyperwallet#activateUser}
+         */
+        it("should throw error if userToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.activateUser(undefined, callback)).to.throw("userToken is required");
+        });
+
+        /**
+         * @test {Hyperwallet#activateUser}
+         */
+        it("should send transition to 'ACTIVATED'", () => {
+            const callback = () => null;
+            client.activateUser("test-user-token", callback);
+
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("users/test-user-token/status-transitions", {
+                transition: "ACTIVATED",
+            }, {}, callback);
+        });
+    });
+
+    /** @test {Hyperwallet#deactivateUser} */
+    describe("deactivateUser()", () => {
+        let client;
+        let apiClientSpy;
+
+        beforeEach(() => {
+            apiClientSpy = sinon.spy();
+            client = new Hyperwallet({
+                username: "test-username",
+                password: "test-password",
+            });
+            client.client = {
+                doPost: apiClientSpy,
+            };
+        });
+
+        /**
+         * @test {Hyperwallet#deactivateUser}
+         */
+        it("should throw error if userToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.deactivateUser(undefined, callback)).to.throw("userToken is required");
+        });
+
+        /**
+         * @test {Hyperwallet#deactivateUser}
+         */
+        it("should send transition to 'DE_ACTIVATED'", () => {
+            const callback = () => null;
+            client.deactivateUser("test-user-token", callback);
+
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("users/test-user-token/status-transitions", {
+                transition: "DE_ACTIVATED",
+            }, {}, callback);
+        });
+    });
+
+    /** @test {Hyperwallet#lockUser} */
+    describe("lockUser()", () => {
+        let client;
+        let apiClientSpy;
+
+        beforeEach(() => {
+            apiClientSpy = sinon.spy();
+            client = new Hyperwallet({
+                username: "test-username",
+                password: "test-password",
+            });
+            client.client = {
+                doPost: apiClientSpy,
+            };
+        });
+
+        /**
+         * @test {Hyperwallet#lockUser}
+         */
+        it("should throw error if userToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.lockUser(undefined, callback)).to.throw("userToken is required");
+        });
+
+        /**
+         * @test {Hyperwallet#lockUser}
+         */
+        it("should send transition to 'LOCKED'", () => {
+            const callback = () => null;
+            client.lockUser("test-user-token", callback);
+
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("users/test-user-token/status-transitions", {
+                transition: "LOCKED",
+            }, {}, callback);
+        });
+    });
+
+    /** @test {Hyperwallet#freezeUser} */
+    describe("freezeUser()", () => {
+        let client;
+        let apiClientSpy;
+
+        beforeEach(() => {
+            apiClientSpy = sinon.spy();
+            client = new Hyperwallet({
+                username: "test-username",
+                password: "test-password",
+            });
+            client.client = {
+                doPost: apiClientSpy,
+            };
+        });
+
+        /**
+         * @test {Hyperwallet#freezeUser}
+         */
+        it("should throw error if userToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.freezeUser(undefined, callback)).to.throw("userToken is required");
+        });
+
+        /**
+         * @test {Hyperwallet#freezeUser}
+         */
+        it("should send transition to 'FROZEN'", () => {
+            const callback = () => null;
+            client.freezeUser("test-user-token", callback);
+
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("users/test-user-token/status-transitions", {
+                transition: "FROZEN",
+            }, {}, callback);
+        });
+    });
+
+    /** @test {Hyperwallet#preactivateUser} */
+    describe("preactivateUser()", () => {
+        let client;
+        let apiClientSpy;
+
+        beforeEach(() => {
+            apiClientSpy = sinon.spy();
+            client = new Hyperwallet({
+                username: "test-username",
+                password: "test-password",
+            });
+            client.client = {
+                doPost: apiClientSpy,
+            };
+        });
+
+        /**
+         * @test {Hyperwallet#preactivateUser}
+         */
+        it("should throw error if userToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.preactivateUser(undefined, callback)).to.throw("userToken is required");
+        });
+
+        /**
+         * @test {Hyperwallet#preactivateUser}
+         */
+        it("should send transition to 'PRE_ACTIVATED'", () => {
+            const callback = () => null;
+            client.preactivateUser("test-user-token", callback);
+
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("users/test-user-token/status-transitions", {
+                transition: "PRE_ACTIVATED",
+            }, {}, callback);
+        });
+    });
+
+    /** @test {Hyperwallet#createUserStatusTransition} */
+    describe("createUserStatusTransition()", () => {
+        let client;
+        let apiClientSpy;
+
+        beforeEach(() => {
+            apiClientSpy = sinon.spy();
+            client = new Hyperwallet({
+                username: "test-username",
+                password: "test-password",
+            });
+            client.client = {
+                doPost: apiClientSpy,
+            };
+        });
+
+        /** @test {Hyperwallet#createUserStatusTransition} */
+        it("should throw error if userToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.createUserStatusTransition(undefined, { test: "value" }, callback)).to.throw("userToken is required");
+        });
+
+        /** @test {Hyperwallet#createUserStatusTransition} */
+        it("should send post call to user status transition endpoint", () => {
+            const callback = () => null;
+            client.createUserStatusTransition("test-user-token", { test: "value" }, callback);
+
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("users/test-user-token/status-transitions", {
+                test: "value",
+            }, {}, callback);
+        });
+    });
+
     /** @test {Hyperwallet#getUserStatusTransition} */
     describe("getUserStatusTransition()", () => {
         let client;
