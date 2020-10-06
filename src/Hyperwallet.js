@@ -144,6 +144,7 @@ export default class Hyperwallet {
         };
         this.client.doPost(`users/${encodeURIComponent(userToken)}/status-transitions`, transition, {}, callback);
     }
+
     /**
      * Freeze a user account
      *
