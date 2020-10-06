@@ -95,6 +95,90 @@ export default class Hyperwallet {
     }
 
     /**
+     * Activate a user
+     *
+     * @param {string} userToken -  user token
+     * @param {api-callback} callback -  callback for this call
+     * @throws Will throw an error if userToken is not provided
+     */
+    activateUser(userToken, callback) {
+        if (!userToken) {
+            throw new Error("userToken is required");
+        }
+        const transition = {
+            transition: "ACTIVATED",
+        };
+        this.client.doPost(`users/${encodeURIComponent(userToken)}/status-transitions`, transition, {}, callback);
+    }
+
+    /**
+     * Deactivate a user
+     *
+     * @param {string} userToken -  user token
+     * @param {api-callback} callback -  callback for this call
+     * @throws Will throw an error if userToken is not provided
+     */
+    deactivateUser(userToken, callback) {
+        if (!userToken) {
+            throw new Error("userToken is required");
+        }
+        const transition = {
+            transition: "DE_ACTIVATED",
+        };
+        this.client.doPost(`users/${encodeURIComponent(userToken)}/status-transitions`, transition, {}, callback);
+    }
+
+    /**
+     * Lock a user account
+     *
+     * @param {string} userToken -  user token
+     * @param {api-callback} callback -  callback for this call
+     * @throws Will throw an error if userToken is not provided
+     */
+    lockUser(userToken, callback) {
+        if (!userToken) {
+            throw new Error("userToken is required");
+        }
+        const transition = {
+            transition: "LOCKED",
+        };
+        this.client.doPost(`users/${encodeURIComponent(userToken)}/status-transitions`, transition, {}, callback);
+    }
+    /**
+     * Freeze a user account
+     *
+     * @param {string} userToken -  user token
+     * @param {api-callback} callback -  callback for this call
+     * @throws Will throw an error if userToken is not provided
+     */
+    freezeUser(userToken, callback) {
+        if (!userToken) {
+            throw new Error("userToken is required");
+        }
+        const transition = {
+            transition: "FROZEN",
+        };
+        this.client.doPost(`users/${encodeURIComponent(userToken)}/status-transitions`, transition, {}, callback);
+    }
+
+    /**
+     * Pre-activate a user account
+     *
+     * @param {string} userToken -  user token
+     * @param {api-callback} callback -  callback for this call
+     * @throws Will throw an error if userToken is not provided
+     */
+    preactivateUser(userToken, callback) {
+        if (!userToken) {
+            throw new Error("userToken is required");
+        }
+        const transition = {
+            transition: "PRE_ACTIVATED",
+        };
+        this.client.doPost(`users/${encodeURIComponent(userToken)}/status-transitions`, transition, {}, callback);
+    }
+
+    /**
      * Create a user status transition
      *
      * @param {string} userToken - user token
