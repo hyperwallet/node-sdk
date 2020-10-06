@@ -284,6 +284,40 @@ describe("Hyperwallet", () => {
         });
     });
 
+    /** @test {Hyperwallet#createUserStatusTransition} */
+    describe("createUserStatusTransition()", () => {
+        let client;
+        let apiClientSpy;
+
+        beforeEach(() => {
+            apiClientSpy = sinon.spy();
+            client = new Hyperwallet({
+                username: "test-username",
+                password: "test-password",
+            });
+            client.client = {
+                doPost: apiClientSpy,
+            };
+        });
+
+        /** @test {Hyperwallet#createUserStatusTransition} */
+        it("should throw error if userToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.createUserStatusTransition(undefined, { test: "value" }, callback)).to.throw("userToken is required");
+        });
+
+        /** @test {Hyperwallet#createUserStatusTransition} */
+        it("should send post call to user status transition endpoint", () => {
+            const callback = () => null;
+            client.createUserStatusTransition("test-user-token", { test: "value" }, callback);
+
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("users/test-user-token/status-transitions", {
+                test: "value",
+            }, {}, callback);
+        });
+    });
+
     /** @test {Hyperwallet#getUserStatusTransition} */
     describe("getUserStatusTransition()", () => {
         let client;

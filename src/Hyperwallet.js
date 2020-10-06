@@ -95,6 +95,22 @@ export default class Hyperwallet {
     }
 
     /**
+     * Create a user status transition
+     *
+     * @param {string} userToken - user token
+     * @param {Object} data - user status transition data
+     * @param {api-callback} callback - The callback for this call
+     * @throws Will throw an error if userToken is not provided
+     */
+    createUserStatusTransition(userToken, data, callback) {
+        if (!userToken) {
+            throw new Error("userToken is required");
+        }
+
+        this.client.doPost(`users/${encodeURIComponent(userToken)}/status-transitions`, data, {}, callback);
+    }
+
+    /**
      * Get user status transition
      *
      * @param {string} userToken - The user token
