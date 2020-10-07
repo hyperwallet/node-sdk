@@ -141,7 +141,7 @@ export default class ApiClient {
                 }
             });
             req.end(this.wrapCallback("PUT", callback));
-        }).catch((err) => callback(err, undefined, undefined)).finally((err, body, res) => callback(err, body, res));
+        }).catch((err) => callback(err, undefined, undefined)).then((err, body, res) => callback(err, body, res));
     }
 
     /**

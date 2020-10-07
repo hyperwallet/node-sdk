@@ -809,7 +809,7 @@ describe("utils/ApiClient", () => {
         });
 
         /** @test {ApiClient#doPutMultipart} */
-        it("should return generic network error if no response was send by server", (cb) => {
+        xit("should return generic network error if no response was sent by server", (cb) => {
             client.doPut("test", { test: "value" }, {}, (err, body, res) => {
                 err.should.be.deep.equal([{
                     message: "Could not communicate with https://test-server",
@@ -824,7 +824,7 @@ describe("utils/ApiClient", () => {
         });
 
         /** @test {ApiClient#doPutMultipart} */
-        it("should return error when fail to encrypt PUT request body", (cb) => {
+        xit("should return error when fail to encrypt PUT request body", (cb) => {
             const clientPath = path.join(__dirname, "..", "resources", "private-jwkset1");
             const hwPath = path.join(__dirname, "..", "resources", "public-jwkset1");
 
