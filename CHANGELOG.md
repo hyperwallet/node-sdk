@@ -1,5 +1,12 @@
 Changelog
 =========
+1.5.0
+-------------------
+- Added Venmo accounts
+- Added Multipart upload documents feature for User
+- Added Transfer refunds
+- Added User status transitions (activate, deactivate, preactivate, freeze, lock)
+
 1.4.1
 -------------------
 - Add Venmo Accounts endpoints
