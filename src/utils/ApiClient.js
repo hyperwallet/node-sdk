@@ -106,9 +106,48 @@ export default class ApiClient {
     }
 
     /**
-     * Do a PUT call to the Hyperwallet API server
+     * Do a PUT call to the Hyperwallet API server to upload documents
      *
      * @param {string} partialUrl - The api endpoint to call (gets prefixed by `server` and `/rest/v3/`)
+     * @param {Object} data - The data to send to the server
+     * @param {api-callback} callback - The callback for this call
+     */
+    doPutMultipart(partialUrl, data, callback) {
+        let contentType = "multipart/form-data";
+        let accept = "application/json";
+        /* eslint-disable no-unused-vars */
+        const keys = Object.keys(data);
+        /* eslint-enable no-unused-vars */
+
+        let requestDataPromise = new Promise((resolve) => resolve(data));
+        if (this.isEncrypted) {
+            contentType = "multipart/form-data";
+            accept = "application/jose+json";
+            this.createJoseJsonParser();
+            requestDataPromise = this.encryption.encrypt(data);
+        }
+        requestDataPromise.then(() => {
+            const req = request
+                .put(`${this.server}/rest/v3/${partialUrl}`)
+                .auth(this.username, this.password)
+                .set("User-Agent", `Hyperwallet Node SDK v${this.version}`)
+                .type(contentType)
+                .accept(accept);
+            keys.forEach(key => {
+                if (key === "data") {
+                    req.field(key, JSON.stringify(data[key]));
+                } else {
+                    req.attach(key, data[key]);
+                }
+            });
+            req.end(this.wrapCallback("PUT", callback));
+        }).catch((err) => callback(err, undefined, undefined)).finally((err, body, res) => callback(err, body, res));
+    }
+
+    /**
+     * Do a PUT call to the Hyperwallet API server
+     *
+     * @param {string} partialUrl - The api endpoint to call (gets prefixed by server and /rest/v3/)
      * @param {Object} data - The data to send to the server
      * @param {Object} params - Query parameters to send in this call
      * @param {api-callback} callback - The callback for this call
