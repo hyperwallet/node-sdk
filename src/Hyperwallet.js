@@ -95,6 +95,107 @@ export default class Hyperwallet {
     }
 
     /**
+     * Activate a user
+     *
+     * @param {string} userToken -  user token
+     * @param {api-callback} callback -  callback for this call
+     * @throws Will throw an error if userToken is not provided
+     */
+    activateUser(userToken, callback) {
+        if (!userToken) {
+            throw new Error("userToken is required");
+        }
+        const transition = {
+            transition: "ACTIVATED",
+        };
+        this.client.doPost(`users/${encodeURIComponent(userToken)}/status-transitions`, transition, {}, callback);
+    }
+
+    /**
+     * Deactivate a user
+     *
+     * @param {string} userToken -  user token
+     * @param {api-callback} callback -  callback for this call
+     * @throws Will throw an error if userToken is not provided
+     */
+    deactivateUser(userToken, callback) {
+        if (!userToken) {
+            throw new Error("userToken is required");
+        }
+        const transition = {
+            transition: "DE_ACTIVATED",
+        };
+        this.client.doPost(`users/${encodeURIComponent(userToken)}/status-transitions`, transition, {}, callback);
+    }
+
+    /**
+     * Lock a user account
+     *
+     * @param {string} userToken -  user token
+     * @param {api-callback} callback -  callback for this call
+     * @throws Will throw an error if userToken is not provided
+     */
+    lockUser(userToken, callback) {
+        if (!userToken) {
+            throw new Error("userToken is required");
+        }
+        const transition = {
+            transition: "LOCKED",
+        };
+        this.client.doPost(`users/${encodeURIComponent(userToken)}/status-transitions`, transition, {}, callback);
+    }
+
+    /**
+     * Freeze a user account
+     *
+     * @param {string} userToken -  user token
+     * @param {api-callback} callback -  callback for this call
+     * @throws Will throw an error if userToken is not provided
+     */
+    freezeUser(userToken, callback) {
+        if (!userToken) {
+            throw new Error("userToken is required");
+        }
+        const transition = {
+            transition: "FROZEN",
+        };
+        this.client.doPost(`users/${encodeURIComponent(userToken)}/status-transitions`, transition, {}, callback);
+    }
+
+    /**
+     * Pre-activate a user account
+     *
+     * @param {string} userToken -  user token
+     * @param {api-callback} callback -  callback for this call
+     * @throws Will throw an error if userToken is not provided
+     */
+    preactivateUser(userToken, callback) {
+        if (!userToken) {
+            throw new Error("userToken is required");
+        }
+        const transition = {
+            transition: "PRE_ACTIVATED",
+        };
+        this.client.doPost(`users/${encodeURIComponent(userToken)}/status-transitions`, transition, {}, callback);
+    }
+
+    /**
+     * Create a user status transition
+     *
+     * @param {string} userToken - user token
+     * @param {Object} data - user status transition data
+     * @param {api-callback} callback - The callback for this call
+     * @throws Will throw an error if userToken is not provided
+     */
+    createUserStatusTransition(userToken, data, callback) {
+        if (!userToken) {
+            throw new Error("userToken is required");
+        }
+
+        this.client.doPost(`users/${encodeURIComponent(userToken)}/status-transitions`, data, {}, callback);
+    }
+
+    /**
      * Get user status transition
      *
      * @param {string} userToken - The user token
@@ -129,6 +230,25 @@ export default class Hyperwallet {
             throw new Error("userToken is required");
         }
         this.client.doGet(`users/${encodeURIComponent(userToken)}/status-transitions`, options, Hyperwallet.handle204Response(callback));
+    }
+
+    /**
+     * Upload Documents to User
+     *
+     * @param {string} userToken - The user token
+     * @param {Object} data - JSON object of the data and files to be uploaded
+     * @param {api-callback} callback - The callback for this call
+     *
+     * @throws Will throw an error if userToken is not provided
+     */
+    uploadDocuments(userToken, data, callback) {
+        if (!userToken) {
+            throw new Error("userToken is required");
+        }
+        if (!data) {
+            throw new Error("Files for upload are required");
+        }
+        this.client.doPutMultipart(`users/${encodeURIComponent(userToken)}`, data, callback);
     }
 
     //--------------------------------------
@@ -799,6 +919,60 @@ export default class Hyperwallet {
     }
 
     //--------------------------------------
+    // Transfer Refunds
+    //--------------------------------------
+
+    /**
+     * Create a transfer refund
+     *
+     * @param {string} transferToken - The transfer token
+     * @param {Object} data - The transfer refund data
+     * @param {api-callback} callback - The callback for this call
+     */
+    createTransferRefund(transferToken, data, callback) {
+        if (!transferToken) {
+            throw new Error("transferToken is required");
+        }
+        if (!data.clientRefundId) {
+            throw new Error("clientRefundId is required");
+        }
+        this.client.doPost(`transfers/${encodeURIComponent(transferToken)}/refunds`, data, {}, callback);
+    }
+
+    /**
+     * Get a transfer
+     *
+     * @param {string} transferToken - The transfer token
+     * @param {string} transferRefundToken - The transfer refund token
+     * @param {api-callback} callback - The callback for this call
+     *
+     * @throws Will throw an error if transferToken is not provided
+     */
+    getTransferRefund(transferToken, transferRefundToken, callback) {
+        if (!transferToken) {
+            throw new Error("transferToken is required");
+        }
+        if (!transferRefundToken) {
+            throw new Error("transferRefundToken is required");
+        }
+        this.client.doGet(`transfers/${encodeURIComponent(transferToken)}/refunds/${encodeURIComponent(transferRefundToken)}`, {}, callback);
+    }
+
+    /**
+     * List all transfers
+     *
+     * @param {string} transferToken - The transfer token
+     * @param {Object} options - The query parameters to send
+     * @param {api-callback} callback - The callback for this call
+     */
+    listTransferRefunds(transferToken, options, callback) {
+        if (!transferToken) {
+            throw new Error("transferToken is required");
+        }
+        this.client.doGet(`transfers/${encodeURIComponent(transferToken)}/refunds`, options, Hyperwallet.handle204Response(callback));
+    }
+
+    //--------------------------------------
     // PayPal Accounts
     //--------------------------------------
 
@@ -1454,5 +1628,175 @@ export default class Hyperwallet {
             }
             callback(err, data, res);
         };
+    }
+
+    //--------------------------------------
+    // Venmo Accounts
+    //--------------------------------------
+
+    /**
+     * Create a Venmo account
+     *
+     * @param {string} userToken - The user token
+     * @param {Object} data - The Venmo account data
+     * @param {api-callback} callback - The callback for this call
+     *
+     * @throws Will throw an error if userToken is not provided
+     */
+    createVenmoAccount(userToken, data, callback) {
+        if (!userToken) {
+            throw new Error("userToken is required");
+        }
+        if (!data.transferMethodCountry) {
+            throw new Error("transferMethodCountry is required");
+        }
+        if (!data.transferMethodCurrency) {
+            throw new Error("transferMethodCurrency is required");
+        }
+        if (!data.accountId) {
+            throw new Error("Account is required");
+        }
+        this.client.doPost(`users/${encodeURIComponent(userToken)}/venmo-accounts`, data, {}, callback);
+    }
+    /**
+     * Get a Venmo account
+     *
+     * @param {string} userToken - The user token
+     * @param {string} venmoAccountToken - The venmo account token
+     * @param {api-callback} callback - The callback for this call
+     *
+     * @throws Will throw an error if userToken or venmoAccountToken is not provided
+     */
+    getVenmoAccount(userToken, venmoAccountToken, callback) {
+        if (!userToken) {
+            throw new Error("userToken is required");
+        }
+        if (!venmoAccountToken) {
+            throw new Error("venmoAccountToken is required");
+        }
+        this.client.doGet(`users/${encodeURIComponent(userToken)}/venmo-accounts/${encodeURIComponent(venmoAccountToken)}`, {}, callback);
+    }
+
+    /**
+     * List all Venmo accounts
+     *
+     * @param {string} userToken - The user token
+     * @param {Object} options - The query parameters to send
+     * @param {api-callback} callback - The callback for this call
+     * @throws Will throw an error if userToken is not provided
+     */
+    listVenmoAccounts(userToken, options, callback) {
+        if (!userToken) {
+            throw new Error("userToken is required");
+        }
+        this.client.doGet(`users/${encodeURIComponent(userToken)}/venmo-accounts`, options, Hyperwallet.handle204Response(callback));
+    }
+
+    /**
+     * Update a venmo account
+     *
+     * @param {string} userToken - The user token
+     * @param {string} venmoAccountToken - The bank account token
+     * @param {Object} data - The venmo account data to update
+     * @param {api-callback} callback - The callback for this call
+     *
+     * @throws Will throw an error if userToken or venmoAccountToken is not provided
+     */
+    updateVenmoAccount(userToken, venmoAccountToken, data, callback) {
+        if (!userToken) {
+            throw new Error("userToken is required");
+        }
+        if (!venmoAccountToken) {
+            throw new Error("venmoAccountToken is required");
+        }
+        this.client.doPut(`users/${encodeURIComponent(userToken)}/venmo-accounts/${encodeURIComponent(venmoAccountToken)}`, data, {}, callback);
+    }
+
+    /**
+     * Deactivate a venmo account
+     *
+     * @param {string} userToken -  user token
+     * @param {string} venmoAccountToken - Venmo account token
+     * @param {api-callback} callback - callback for this call
+     *
+     * @throws Will throw an error if userToken or venmoAccountToken is not provided
+     */
+
+    deactivateVenmoAccount(userToken, venmoAccountToken, callback) {
+        if (!userToken) {
+            throw new Error("userToken is required");
+        }
+        if (!venmoAccountToken) {
+            throw new Error("venmoAccountToken is required");
+        }
+
+        const transition = {
+            transition: "DE-ACTIVATED",
+        };
+        this.client.doPost(`users/${encodeURIComponent(userToken)}/venmo-accounts/${encodeURIComponent(venmoAccountToken)}/status-transitions`, transition, {}, callback);
+    }
+
+    /**
+     * Create Venmo account status transition
+     *
+     * @param {string} userToken - The user token
+     * @param {string} venmoAccountToken - venmo account token
+     * @param {Object} data - Venmo account status transition data
+     * @param {api-callback} callback - The callback for this call
+     * @throws Will throw an error if userToken or venmoAccountToken is not provided
+     */
+    createVenmoAccountStatusTransition(userToken, venmoAccountToken, data, callback) {
+        if (!userToken) {
+            throw new Error("userToken is required");
+        }
+        if (!venmoAccountToken) {
+            throw new Error("venmoAccountToken is required");
+        }
+
+        this.client.doPost(`users/${encodeURIComponent(userToken)}/venmo-accounts/${encodeURIComponent(venmoAccountToken)}/status-transitions`, data, {}, callback);
+    }
+    /**
+     * Get Venmo account status transition
+     *
+     * @param {string} userToken -user token
+     * @param {string} venmoAccountToken - The venmo account token
+     * @param {string} statusTransitionToken - The venmo account status transition token
+     * @param {api-callback} callback - The callback for this call
+     *
+     * @throws Will throw an error if userToken or venmoAccountToken is not provided
+     */
+    getVenmoAccountStatusTransition(userToken, venmoAccountToken, statusTransitionToken, callback) {
+        if (!userToken) {
+            throw new Error("userToken is required");
+        }
+        if (!venmoAccountToken) {
+            throw new Error("venmoAccountToken is required");
+        }
+        if (!statusTransitionToken) {
+            throw new Error("statusTransitionToken is required");
+        }
+        this.client.doGet(`users/${encodeURIComponent(userToken)}/venmo-accounts/${encodeURIComponent(venmoAccountToken)}/status-transitions/${encodeURIComponent(statusTransitionToken)}`,
+            {},
+            callback);
+    }
+
+    /**
+     * List all venmo account status transitions
+     *
+     * @param {string} userToken - user token
+     * @param {string} venmoAccountToken - venmo account token
+     * @param {Object} options - query parameters to send
+     * @param {api-callback} callback - callback for this call
+     *
+     * @throws Will throw an error if userToken or venmoAccountToken is not provided
+     */
+    listVenmoAccountStatusTransitions(userToken, venmoAccountToken, options, callback) {
+        if (!userToken) {
+            throw new Error("userToken is required");
+        }
+        if (!venmoAccountToken) {
+            throw new Error("venmoAccountToken is required");
+        }
+        this.client.doGet(`users/${encodeURIComponent(userToken)}/venmo-accounts/${encodeURIComponent(venmoAccountToken)}/status-transitions`, options, Hyperwallet.handle204Response(callback));
     }
 }
