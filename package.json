@@ -4,7 +4,7 @@
   "description": "A library to manage users, transfer methods and payments through the Hyperwallet API",
   "main": "lib/index.js",
   "dependencies": {
-    "node-jose": "^1.0.0",
+    "node-jose": "^2.0.0",
     "object-assign": "^4.1.0",
     "superagent": "^4.0.0"
   },
@@ -54,7 +54,7 @@
     "eslint": "^4.19.1",
     "eslint-config-airbnb-base": "^3.0.1",
     "eslint-plugin-import": "^1.8.0",
-    "gh-pages": "^0.11.0",
+    "gh-pages": "^3.1.0",
     "isparta": "^4.1.1",
     "mocha": "^5.2.0",
     "nock": "^10.0.4",
