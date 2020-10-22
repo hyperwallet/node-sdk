@@ -1621,7 +1621,9 @@ export default class Hyperwallet {
         return (err, data, res) => {
             if (!err && res.status === 204) {
                 callback(err, {
-                    count: 0,
+                    hasNextPage: false,
+                    hasPreviousPage: false,
+                    limit: 0,
                     data: [],
                 }, res);
                 return;
