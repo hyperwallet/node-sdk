@@ -1317,7 +1317,6 @@ export default class Hyperwallet {
     listPayments(options, callback) {
         this.client.doGet("payments", options, Hyperwallet.handle204Response(callback));
     }
-
     /**
      * Create a payment status transition
      *
