@@ -19,7 +19,6 @@ export default class Hyperwallet {
         if (!username || !password) {
             throw new Error("You need to specify your API username and password!");
         }
-
         /**
          * The instance of the ApiClient
          *
