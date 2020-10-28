@@ -4280,4 +4280,250 @@ describe("Hyperwallet", () => {
             });
         });
     });
+    //--------------------------------------
+    // Business StakeHolder
+    //--------------------------------------
+
+    /** @test {Hyperwallet#createStakeholder} */
+    describe("createStakeholder()", () => {
+        let client;
+        let apiClientSpy;
+
+        beforeEach(() => {
+            apiClientSpy = sinon.spy();
+            client = new Hyperwallet({
+                username: "test-username",
+                password: "test-password",
+            });
+            client.client = {
+                doPost: apiClientSpy,
+            };
+        });
+
+        /** @test {Hyperwallet#createStakeholder} */
+        it("should throw error if userToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.createStakeholder(undefined, { test: "value" }, callback)).to.throw("userToken is required");
+        });
+    });
+    /** @test {Hyperwallet#listStakeholder} */
+    describe("listStakeholder()", () => {
+        let client;
+        let apiClientSpy;
+
+        beforeEach(() => {
+            apiClientSpy = sinon.spy();
+            client = new Hyperwallet({
+                username: "test-username",
+                password: "test-password",
+            });
+            client.client = {
+                doGet: apiClientSpy,
+            };
+        });
+
+        /** @test {Hyperwallet#listStakeholder} */
+        it("should throw error if userToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.listStakeholder(undefined, {}, callback)).to.throw("userToken is required");
+        });
+
+        /** @test {Hyperwallet#listStakeholder} */
+        it("should do get call with options", () => {
+            const callback = () => null;
+            client.listStakeholder("test-user-token", { test: "value" }, callback);
+
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("users/test-user-token/business-stakeholders", { test: "value" });
+        });
+
+        /** @test {Hyperwallet#listStakeholder} */
+        it("should do get call without options", () => {
+            const callback = () => null;
+            client.listStakeholder("test-user-token", {}, callback);
+
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("users/test-user-token/business-stakeholders", {});
+        });
+
+        /** @test {Hyperwallet#listStakeholder} */
+        it("should handle 204 return", (cb) => {
+            const callback = (err, data) => {
+                data.should.be.deep.equal({
+                    count: 0,
+                    data: [],
+                });
+
+                cb();
+            };
+            client.listStakeholder("test-user-token", {}, callback);
+
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("users/test-user-token/business-stakeholders", {});
+
+            apiClientSpy.getCall(0).args[2](undefined, {}, {
+                status: 204,
+            });
+        });
+    });
+
+    /** @test {Hyperwallet#updateStakeholder} */
+    describe("updateStakeholder()", () => {
+        let client;
+        let apiClientSpy;
+
+        beforeEach(() => {
+            apiClientSpy = sinon.spy();
+            client = new Hyperwallet({
+                username: "test-username",
+                password: "test-password",
+            });
+            client.client = {
+                doPut: apiClientSpy,
+            };
+        });
+
+        /** @test {Hyperwallet#updateStakeholder} */
+        it("should throw error if userToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.updateStakeholder(undefined, undefined, { test: "value" }, callback)).to.throw("userToken is required");
+        });
+
+        /** @test {Hyperwallet#updateStakeholder} */
+        it("should throw error if stakeholderToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.updateStakeholder("test-user-token", undefined, { test: "value" }, callback)).to.throw("stakeholderToken is required");
+        });
+
+        /** @test {Hyperwallet#updateStakeholder} */
+        it("should do put call to Stakeholder endpoint", () => {
+            const callback = () => null;
+            client.updateStakeholder("test-user-token", "test-stakeholder-token", {
+                test: "value",
+            }, callback);
+
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("users/test-user-token/business-stakeholders/test-stakeholder-token", {
+                test: "value",
+            }, {}, callback);
+        });
+    });
+    /** @test {Hyperwallet#deactivateStakeholder} */
+    describe("deactivateStakeholder()", () => {
+        let client;
+        let apiClientSpy;
+
+        beforeEach(() => {
+            apiClientSpy = sinon.spy();
+            client = new Hyperwallet({
+                username: "test-username",
+                password: "test-password",
+            });
+            client.client = {
+                doPost: apiClientSpy,
+            };
+        });
+
+        /** @test {Hyperwallet#deactivateStakeholder} */
+        it("should throw error if userToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.deactivateStakeholder(undefined, undefined, callback)).to.throw("userToken is required");
+        });
+
+        /** @test {Hyperwallet#deactivateStakeholder} */
+        it("should throw error if stakeholderToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.deactivateStakeholder("test-user-token", undefined, callback)).to.throw("stakeholderToken is required");
+        });
+
+        /** @test {Hyperwallet#deactivateStakeholder} */
+        it("should send transition to 'DE-ACTIVATED'", () => {
+            const callback = () => null;
+            client.deactivateStakeholder("test-user-token", "test-stakeholder-token", callback);
+
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("users/test-user-token/business-stakeholders/test-stakeholder-token/status-transitions", {
+                transition: "DE_ACTIVATED",
+            }, {}, callback);
+        });
+    });
+    /** @test {Hyperwallet#activateStakeholder} */
+    describe("activateStakeholder()", () => {
+        let client;
+        let apiClientSpy;
+
+        beforeEach(() => {
+            apiClientSpy = sinon.spy();
+            client = new Hyperwallet({
+                username: "test-username",
+                password: "test-password",
+            });
+            client.client = {
+                doPost: apiClientSpy,
+            };
+        });
+
+        /** @test {Hyperwallet#activateStakeholder} */
+        it("should throw error if userToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.activateStakeholder(undefined, undefined, callback)).to.throw("userToken is required");
+        });
+
+        /** @test {Hyperwallet#activateStakeholder} */
+        it("should throw error if stakeholderToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.activateStakeholder("test-user-token", undefined, callback)).to.throw("stakeholderToken is required");
+        });
+
+        /** @test {Hyperwallet#activateStakeholder} */
+        it("should send transition to 'DE-ACTIVATED'", () => {
+            const callback = () => null;
+            client.activateStakeholder("test-user-token", "test-stakeholder-token", callback);
+
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("users/test-user-token/business-stakeholders/test-stakeholder-token/status-transitions", {
+                transition: "ACTIVATED",
+            }, {}, callback);
+        });
+    });
+
+    /** @test {Hyperwallet#createStakeholderTransition} */
+    describe("createStakeholderTransition()", () => {
+        let client;
+        let apiClientSpy;
+
+        beforeEach(() => {
+            apiClientSpy = sinon.spy();
+            client = new Hyperwallet({
+                username: "test-username",
+                password: "test-password",
+            });
+            client.client = {
+                doPost: apiClientSpy,
+            };
+        });
+
+        /** @test {Hyperwallet#createStakeholderTransition} */
+        it("should throw error if userToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.createStakeholderTransition(undefined, undefined, { test: "value" }, callback)).to.throw("userToken is required");
+        });
+
+        /** @test {Hyperwallet#createStakeholderTransition} */
+        it("should throw error if stakeholderToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.createStakeholderTransition("test-user-token", undefined, { test: "value" }, callback)).to.throw("stakeholderToken is required");
+        });
+
+        /** @test {Hyperwallet#createStakeholderTransition} */
+        it("should send post call to StakeHolder status transition endpoint", () => {
+            const callback = () => null;
+            client.createStakeholderTransition("test-user-token", "test-stakeholder-token", { test: "value" }, callback);
+
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("users/test-user-token/business-stakeholders/test-stakeholder-token/status-transitions", {
+                test: "value",
+            }, {}, callback);
+        });
+    });
 });
