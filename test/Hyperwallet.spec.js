@@ -19,7 +19,6 @@ describe("Hyperwallet", () => {
                 username: "test-username",
                 password: "test-password",
             });
-
             client.client.username.should.be.equal("test-username");
             client.client.password.should.be.equal("test-password");
             client.client.server.should.be.equal("https://api.sandbox.hyperwallet.com");
