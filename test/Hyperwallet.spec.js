@@ -4646,4 +4646,46 @@ describe("Hyperwallet", () => {
             });
         });
     });
+    describe("uploadBusinessStakeholderDocuments()", () => {
+        let client;
+        let apiClientSpy;
+
+        beforeEach(() => {
+            apiClientSpy = sinon.spy();
+            client = new Hyperwallet({
+                username: "test-username",
+                password: "test-password",
+            });
+            client.client = {
+                doPutMultipart: apiClientSpy,
+            };
+        });
+
+        /** @test {Hyperwallet#uploadBusinessStakeholderDocuments} */
+        it("should throw error if userToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.uploadBusinessStakeholderDocuments(undefined, undefined, {}, callback)).to.throw("userToken is required");
+        });
+        /** @test {Hyperwallet#uploadBusinessStakeholderDocuments} */
+        it("should throw error if stakeholderToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.uploadBusinessStakeholderDocuments("test-user-token", undefined, {}, callback)).to.throw("stakeholderToken is required");
+        });
+        /** @test {Hyperwallet#uploadBusinessStakeholderDocuments} */
+        it("should throw error if data is missing", () => {
+            const callback = () => null;
+            expect(() => client.uploadBusinessStakeholderDocuments("test-user-token", "test-stakeholder-token", null, callback)).to.throw("Files for upload are require");
+        });
+
+        /** @test {Hyperwallet#uploadBusinessStakeholderDocuments} */
+        it("should do put call to upload multipart", () => {
+            const callback = () => null;
+
+            client.uploadBusinessStakeholderDocuments("users/test-user-token", "test-stakeholder-token", {
+                test: "value",
+            }, callback);
+
+            apiClientSpy.should.have.been.calledOnce();
+        });
+    });
 });

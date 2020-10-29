@@ -1969,7 +1969,7 @@ export default class Hyperwallet {
             throw new Error("userToken is required");
         }
         if (!stakeholderToken) {
-            throw new Error("userToken is required");
+            throw new Error("stakeholderToken is required");
         }
         if (!data) {
             throw new Error("Files for upload are required");
