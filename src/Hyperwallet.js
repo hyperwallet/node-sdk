@@ -1758,8 +1758,8 @@ export default class Hyperwallet {
     /**
      * Get Venmo account status transition
      *
-     * @param {string} usevenmorToken -user token
-     * @param {string} AccountToken - The venmo account token
+     * @param {string} userToken -user token
+     * @param {string} venmoAccountToken - The venmo account token
      * @param {string} statusTransitionToken - The venmo account status transition token
      * @param {api-callback} callback - The callback for this call
      *
