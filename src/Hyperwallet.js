@@ -1036,6 +1036,26 @@ export default class Hyperwallet {
     }
 
     /**
+     * Update a PayPal account
+     *
+     * @param {string} userToken - The user token
+     * @param {string} payPalAccountToken - The PayPal account token
+     * @param {Object} data - The PayPal account data to update
+     * @param {api-callback} callback - The callback for this call
+     *
+     * @throws Will throw an error if userToken or bankAccountToken is not provided
+     */
+    updatePayPalAccount(userToken, payPalAccountToken, data, callback) {
+        if (!userToken) {
+            throw new Error("userToken is required");
+        }
+        if (!payPalAccountToken) {
+            throw new Error("payPalAccountToken is required");
+        }
+        this.client.doPut(`users/${encodeURIComponent(userToken)}/paypal-accounts/${encodeURIComponent(payPalAccountToken)}`, data, {}, callback);
+    }
+
+    /**
      * Create PayPal account status transition
      *
      * @param {string} userToken - The user token
