@@ -1818,6 +1818,7 @@ export default class Hyperwallet {
         }
         this.client.doPost(`users/${encodeURIComponent(userToken)}/business-stakeholders`, data, {}, callback);
     }
+
     /**
      * Update a Business Stakeholder
      *
@@ -1847,7 +1848,7 @@ export default class Hyperwallet {
      *
      * @throws Will throw an error if userToken is not provided
      */
-    listBusinessStakeholder(userToken, options, callback) {
+    listBusinessStakeholders(userToken, options, callback) {
         if (!userToken) {
             throw new Error("userToken is required");
         }
@@ -1871,7 +1872,7 @@ export default class Hyperwallet {
         const transition = {
             transition: "ACTIVATED",
         };
-        this.client.doPost(`users/${encodeURIComponent(userToken)}/business-stakeholders/${encodeURIComponent(stakeholderToken)}/status-transitions`, transition, {}, callback);
+        this.createBusinessStakeholderStatusTransition(userToken, stakeholderToken, transition, callback);
     }
 
     /**
@@ -1891,7 +1892,7 @@ export default class Hyperwallet {
         const transition = {
             transition: "DE_ACTIVATED",
         };
-        this.client.doPost(`users/${encodeURIComponent(userToken)}/business-stakeholders/${encodeURIComponent(stakeholderToken)}/status-transitions`, transition, {}, callback);
+        this.createBusinessStakeholderStatusTransition(userToken, stakeholderToken, transition, callback);
     }
 
     /**
@@ -1911,6 +1912,7 @@ export default class Hyperwallet {
         }
         this.client.doPost(`users/${encodeURIComponent(userToken)}/business-stakeholders/${encodeURIComponent(stakeholderToken)}/status-transitions`, data, {}, callback);
     }
+
     /**
      * Get Business Stakeholder status transition
      *
@@ -1946,7 +1948,7 @@ export default class Hyperwallet {
      *
      * @throws Will throw an error if userToken or stakeholderToken is not provided
      */
-    listBusinessStakeholderStatusTransition(userToken, stakeholderToken, options, callback) {
+    listBusinessStakeholderStatusTransitions(userToken, stakeholderToken, options, callback) {
         if (!userToken) {
             throw new Error("userToken is required");
         }
@@ -1955,6 +1957,7 @@ export default class Hyperwallet {
         }
         this.client.doGet(`users/${encodeURIComponent(userToken)}/business-stakeholders/${encodeURIComponent(stakeholderToken)}/status-transitions`, options, Hyperwallet.handle204Response(callback));
     }
+
     /**
      * Upload Documents to Business Stakeholder
      *

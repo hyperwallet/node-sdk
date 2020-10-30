@@ -4305,6 +4305,7 @@ describe("Hyperwallet", () => {
             const callback = () => null;
             expect(() => client.createBusinessStakeholder(undefined, { test: "value" }, callback)).to.throw("userToken is required");
         });
+
         /** @test {Hyperwallet#createStakeholder} */
         it("should send post call to Stakeholder status transition endpoint", () => {
             const callback = () => null;
@@ -4316,8 +4317,8 @@ describe("Hyperwallet", () => {
             }, {}, callback);
         });
     });
-    /** @test {Hyperwallet#listBusinessStakeholder} */
-    describe("listBusinessStakeholder()", () => {
+    /** @test {Hyperwallet#listBusinessStakeholders} */
+    describe("listBusinessStakeholders()", () => {
         let client;
         let apiClientSpy;
 
@@ -4332,31 +4333,31 @@ describe("Hyperwallet", () => {
             };
         });
 
-        /** @test {Hyperwallet#listBusinessStakeholder} */
+        /** @test {Hyperwallet#listBusinessStakeholders} */
         it("should throw error if userToken is missing", () => {
             const callback = () => null;
-            expect(() => client.listBusinessStakeholder(undefined, {}, callback)).to.throw("userToken is required");
+            expect(() => client.listBusinessStakeholders(undefined, {}, callback)).to.throw("userToken is required");
         });
 
-        /** @test {Hyperwallet#listBusinessStakeholder} */
+        /** @test {Hyperwallet#listBusinessStakeholders} */
         it("should do get call with options", () => {
             const callback = () => null;
-            client.listBusinessStakeholder("test-user-token", { test: "value" }, callback);
+            client.listBusinessStakeholders("test-user-token", { test: "value" }, callback);
 
             apiClientSpy.should.have.been.calledOnce();
             apiClientSpy.should.have.been.calledWith("users/test-user-token/business-stakeholders", { test: "value" });
         });
 
-        /** @test {Hyperwallet#listBusinessStakeholder} */
+        /** @test {Hyperwallet#listBusinessStakeholders} */
         it("should do get call without options", () => {
             const callback = () => null;
-            client.listBusinessStakeholder("test-user-token", {}, callback);
+            client.listBusinessStakeholders("test-user-token", {}, callback);
 
             apiClientSpy.should.have.been.calledOnce();
             apiClientSpy.should.have.been.calledWith("users/test-user-token/business-stakeholders", {});
         });
 
-        /** @test {Hyperwallet#listStakeholder} */
+        /** @test {Hyperwallet#listBusinessStakeholders} */
         it("should handle 204 return", (cb) => {
             const callback = (err, data) => {
                 data.should.be.deep.equal({
@@ -4366,7 +4367,7 @@ describe("Hyperwallet", () => {
 
                 cb();
             };
-            client.listBusinessStakeholder("test-user-token", {}, callback);
+            client.listBusinessStakeholders("test-user-token", {}, callback);
 
             apiClientSpy.should.have.been.calledOnce();
             apiClientSpy.should.have.been.calledWith("users/test-user-token/business-stakeholders", {});
@@ -4580,8 +4581,8 @@ describe("Hyperwallet", () => {
         });
     });
 
-    /** @test {Hyperwallet#listBusinessStakeholderStatusTransition} */
-    describe("listBusinessStakeholderStatusTransition()", () => {
+    /** @test {Hyperwallet#listBusinessStakeholderStatusTransitions} */
+    describe("listBusinessStakeholderStatusTransitions()", () => {
         let client;
         let apiClientSpy;
 
@@ -4596,37 +4597,37 @@ describe("Hyperwallet", () => {
             };
         });
 
-        /** @test {Hyperwallet#listBusinessStakeholderStatusTransition} */
+        /** @test {Hyperwallet#listBusinessStakeholderStatusTransitions} */
         it("should throw error if userToken is missing", () => {
             const callback = () => null;
-            expect(() => client.listBusinessStakeholderStatusTransition(undefined, undefined, {}, callback)).to.throw("userToken is required");
+            expect(() => client.listBusinessStakeholderStatusTransitions(undefined, undefined, {}, callback)).to.throw("userToken is required");
         });
 
-        /** @test {Hyperwallet#listBusinessStakeholderStatusTransition} */
+        /** @test {Hyperwallet#listBusinessStakeholderStatusTransitions} */
         it("should throw error if stakeholderToken is missing", () => {
             const callback = () => null;
-            expect(() => client.listBusinessStakeholderStatusTransition("test-user-token", undefined, {}, callback)).to.throw("stakeholderToken is required");
+            expect(() => client.listBusinessStakeholderStatusTransitions("test-user-token", undefined, {}, callback)).to.throw("stakeholderToken is required");
         });
 
-        /** @test {Hyperwallet#listBusinessStakeholderStatusTransition} */
+        /** @test {Hyperwallet#listBusinessStakeholderStatusTransitions} */
         it("should do get call with options", () => {
             const callback = () => null;
-            client.listBusinessStakeholderStatusTransition("test-user-token", "test-stakeholder-token", { test: "value" }, callback);
+            client.listBusinessStakeholderStatusTransitions("test-user-token", "test-stakeholder-token", { test: "value" }, callback);
 
             apiClientSpy.should.have.been.calledOnce();
             apiClientSpy.should.have.been.calledWith("users/test-user-token/business-stakeholders/test-stakeholder-token/status-transitions", { test: "value" });
         });
 
-        /** @test {Hyperwallet#listBusinessStakeholderStatusTransition} */
+        /** @test {Hyperwallet#listBusinessStakeholderStatusTransitions} */
         it("should do get call without options", () => {
             const callback = () => null;
-            client.listBusinessStakeholderStatusTransition("test-user-token", "test-stakeholder-token", {}, callback);
+            client.listBusinessStakeholderStatusTransitions("test-user-token", "test-stakeholder-token", {}, callback);
 
             apiClientSpy.should.have.been.calledOnce();
             apiClientSpy.should.have.been.calledWith("users/test-user-token/business-stakeholders/test-stakeholder-token/status-transitions", {});
         });
 
-        /** @test {Hyperwallet#listBusinessStakeholderStatusTransition} */
+        /** @test {Hyperwallet#listBusinessStakeholderStatusTransitions} */
         it("should handle 204 return", (cb) => {
             const callback = (err, data) => {
                 data.should.be.deep.equal({
@@ -4636,7 +4637,7 @@ describe("Hyperwallet", () => {
 
                 cb();
             };
-            client.listBusinessStakeholderStatusTransition("test-user-token", "test-stakeholder-token", {}, callback);
+            client.listBusinessStakeholderStatusTransitions("test-user-token", "test-stakeholder-token", {}, callback);
 
             apiClientSpy.should.have.been.calledOnce();
             apiClientSpy.should.have.been.calledWith("users/test-user-token/business-stakeholders/test-stakeholder-token/status-transitions", {});
