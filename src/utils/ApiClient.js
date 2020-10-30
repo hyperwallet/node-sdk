@@ -77,7 +77,7 @@ export default class ApiClient {
     /**
      * Do a POST call to the Hyperwallet API server
      *
-     * @param {string} partialUrl - The api endpoint to call (gets prefixed by `server` and `/rest/v3/`)
+     * @param {string} partialUrl - The api endpoint to call (gets prefixed by `server` and `/rest/v4/`)
      * @param {Object} data - The data to send to the server
      * @param {Object} params - Query parameters to send in this call
      * @param {api-callback} callback - The callback for this call
@@ -94,7 +94,7 @@ export default class ApiClient {
         }
         requestDataPromise.then((requestData) => {
             request
-                .post(`${this.server}/rest/v3/${partialUrl}`)
+                .post(`${this.server}/rest/v4/${partialUrl}`)
                 .auth(this.username, this.password)
                 .set("User-Agent", `Hyperwallet Node SDK v${this.version}`)
                 .type(contentType)
@@ -108,7 +108,7 @@ export default class ApiClient {
     /**
      * Do a PUT call to the Hyperwallet API server to upload documents
      *
-     * @param {string} partialUrl - The api endpoint to call (gets prefixed by `server` and `/rest/v3/`)
+     * @param {string} partialUrl - The api endpoint to call (gets prefixed by `server` and `/rest/v4/`)
      * @param {Object} data - The data to send to the server
      * @param {api-callback} callback - The callback for this call
      */
@@ -128,7 +128,7 @@ export default class ApiClient {
         }
         requestDataPromise.then(() => {
             const req = request
-                .put(`${this.server}/rest/v3/${partialUrl}`)
+                .put(`${this.server}/rest/v4/${partialUrl}`)
                 .auth(this.username, this.password)
                 .set("User-Agent", `Hyperwallet Node SDK v${this.version}`)
                 .type(contentType)
@@ -147,7 +147,7 @@ export default class ApiClient {
     /**
      * Do a PUT call to the Hyperwallet API server
      *
-     * @param {string} partialUrl - The api endpoint to call (gets prefixed by server and /rest/v3/)
+     * @param {string} partialUrl - The api endpoint to call (gets prefixed by server and /rest/v4/)
      * @param {Object} data - The data to send to the server
      * @param {Object} params - Query parameters to send in this call
      * @param {api-callback} callback - The callback for this call
@@ -164,7 +164,7 @@ export default class ApiClient {
         }
         requestDataPromise.then((requestData) => {
             request
-                .put(`${this.server}/rest/v3/${partialUrl}`)
+                .put(`${this.server}/rest/v4/${partialUrl}`)
                 .auth(this.username, this.password)
                 .set("User-Agent", `Hyperwallet Node SDK v${this.version}`)
                 .type(contentType)
@@ -178,7 +178,7 @@ export default class ApiClient {
     /**
      * Do a GET call to the Hyperwallet API server
      *
-     * @param {string} partialUrl - The api endpoint to call (gets prefixed by `server` and `/rest/v3/`)
+     * @param {string} partialUrl - The api endpoint to call (gets prefixed by `server` and `/rest/v4/`)
      * @param {Object} params - Query parameters to send in this call
      * @param {api-callback} callback - The callback for this call
      */
@@ -191,7 +191,7 @@ export default class ApiClient {
             this.createJoseJsonParser();
         }
         request
-            .get(`${this.server}/rest/v3/${partialUrl}`)
+            .get(`${this.server}/rest/v4/${partialUrl}`)
             .auth(this.username, this.password)
             .set("User-Agent", `Hyperwallet Node SDK v${this.version}`)
             .type(contentType)

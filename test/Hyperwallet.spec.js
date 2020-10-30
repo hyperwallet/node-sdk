@@ -266,7 +266,9 @@ describe("Hyperwallet", () => {
         it("should handle 204 return", (cb) => {
             const callback = (err, data) => {
                 data.should.be.deep.equal({
-                    count: 0,
+                    hasNextPage: false,
+                    hasPreviousPage: false,
+                    limit: 0,
                     data: [],
                 });
 
@@ -589,7 +591,9 @@ describe("Hyperwallet", () => {
         it("should handle 204 return", (cb) => {
             const callback = (err, data) => {
                 data.should.be.deep.equal({
-                    count: 0,
+                    hasNextPage: false,
+                    hasPreviousPage: false,
+                    limit: 0,
                     data: [],
                 });
 
@@ -810,7 +814,9 @@ describe("Hyperwallet", () => {
         it("should handle 204 return", (cb) => {
             const callback = (err, data) => {
                 data.should.be.deep.equal({
-                    count: 0,
+                    hasNextPage: false,
+                    hasPreviousPage: false,
+                    limit: 0,
                     data: [],
                 });
 
@@ -1007,7 +1013,9 @@ describe("Hyperwallet", () => {
         it("should handle 204 return", (cb) => {
             const callback = (err, data) => {
                 data.should.be.deep.equal({
-                    count: 0,
+                    hasNextPage: false,
+                    hasPreviousPage: false,
+                    limit: 0,
                     data: [],
                 });
 
@@ -1224,7 +1232,9 @@ describe("Hyperwallet", () => {
         it("should handle 204 return", (cb) => {
             const callback = (err, data) => {
                 data.should.be.deep.equal({
-                    count: 0,
+                    hasNextPage: false,
+                    hasPreviousPage: false,
+                    limit: 0,
                     data: [],
                 });
 
@@ -1421,7 +1431,9 @@ describe("Hyperwallet", () => {
         it("should handle 204 return", (cb) => {
             const callback = (err, data) => {
                 data.should.be.deep.equal({
-                    count: 0,
+                    hasNextPage: false,
+                    hasPreviousPage: false,
+                    limit: 0,
                     data: [],
                 });
 
@@ -1571,7 +1583,9 @@ describe("Hyperwallet", () => {
         it("should handle 204 return", (cb) => {
             const callback = (err, data) => {
                 data.should.be.deep.equal({
-                    count: 0,
+                    hasNextPage: false,
+                    hasPreviousPage: false,
+                    limit: 0,
                     data: [],
                 });
 
@@ -1758,7 +1772,9 @@ describe("Hyperwallet", () => {
         it("should handle 204 return", (cb) => {
             const callback = (err, data) => {
                 data.should.be.deep.equal({
-                    count: 0,
+                    hasNextPage: false,
+                    hasPreviousPage: false,
+                    limit: 0,
                     data: [],
                 });
 
@@ -1924,7 +1940,9 @@ describe("Hyperwallet", () => {
         it("should handle 204 return", (cb) => {
             const callback = (err, data) => {
                 data.should.be.deep.equal({
-                    count: 0,
+                    hasNextPage: false,
+                    hasPreviousPage: false,
+                    limit: 0,
                     data: [],
                 });
 
@@ -2145,7 +2163,9 @@ describe("Hyperwallet", () => {
         it("should handle 204 return", (cb) => {
             const callback = (err, data) => {
                 data.should.be.deep.equal({
-                    count: 0,
+                    hasNextPage: false,
+                    hasPreviousPage: false,
+                    limit: 0,
                     data: [],
                 });
 
@@ -2368,7 +2388,9 @@ describe("Hyperwallet", () => {
         it("should handle 204 return", (cb) => {
             const callback = (err, data) => {
                 data.should.be.deep.equal({
-                    count: 0,
+                    hasNextPage: false,
+                    hasPreviousPage: false,
+                    limit: 0,
                     data: [],
                 });
 
@@ -2549,7 +2571,9 @@ describe("Hyperwallet", () => {
         it("should handle 204 return", (cb) => {
             const callback = (err, data) => {
                 data.should.be.deep.equal({
-                    count: 0,
+                    hasNextPage: false,
+                    hasPreviousPage: false,
+                    limit: 0,
                     data: [],
                 });
 
@@ -2740,7 +2764,9 @@ describe("Hyperwallet", () => {
         it("should handle 204 return", (cb) => {
             const callback = (err, data) => {
                 data.should.be.deep.equal({
-                    count: 0,
+                    hasNextPage: false,
+                    hasPreviousPage: false,
+                    limit: 0,
                     data: [],
                 });
 
@@ -2805,7 +2831,9 @@ describe("Hyperwallet", () => {
         it("should handle 204 return", (cb) => {
             const callback = (err, data) => {
                 data.should.be.deep.equal({
-                    count: 0,
+                    hasNextPage: false,
+                    hasPreviousPage: false,
+                    limit: 0,
                     data: [],
                 });
 
@@ -2872,7 +2900,9 @@ describe("Hyperwallet", () => {
         it("should handle 204 return", (cb) => {
             const callback = (err, data) => {
                 data.should.be.deep.equal({
-                    count: 0,
+                    hasNextPage: false,
+                    hasPreviousPage: false,
+                    limit: 0,
                     data: [],
                 });
 
@@ -2939,7 +2969,9 @@ describe("Hyperwallet", () => {
         it("should handle 204 return", (cb) => {
             const callback = (err, data) => {
                 data.should.be.deep.equal({
-                    count: 0,
+                    hasNextPage: false,
+                    hasPreviousPage: false,
+                    limit: 0,
                     data: [],
                 });
 
@@ -3076,7 +3108,9 @@ describe("Hyperwallet", () => {
         it("should handle 204 return", (cb) => {
             const callback = (err, data) => {
                 data.should.be.deep.equal({
-                    count: 0,
+                    hasNextPage: false,
+                    hasPreviousPage: false,
+                    limit: 0,
                     data: [],
                 });
 
@@ -3209,7 +3243,9 @@ describe("Hyperwallet", () => {
         it("should handle 204 return", (cb) => {
             const callback = (err, data) => {
                 data.should.be.deep.equal({
-                    count: 0,
+                    hasNextPage: false,
+                    hasPreviousPage: false,
+                    limit: 0,
                     data: [],
                 });
 
@@ -3419,7 +3455,9 @@ describe("Hyperwallet", () => {
         it("should handle 204 return", (cb) => {
             const callback = (err, data) => {
                 data.should.be.deep.equal({
-                    count: 0,
+                    hasNextPage: false,
+                    hasPreviousPage: false,
+                    limit: 0,
                     data: [],
                 });
 
@@ -3537,7 +3575,9 @@ describe("Hyperwallet", () => {
         it("should handle 204 return", (cb) => {
             const callback = (err, data) => {
                 data.should.be.deep.equal({
-                    count: 0,
+                    hasNextPage: false,
+                    hasPreviousPage: false,
+                    limit: 0,
                     data: [],
                 });
 
@@ -3598,7 +3638,9 @@ describe("Hyperwallet", () => {
         it("should handle 204 return", (cb) => {
             const callback = (err, data) => {
                 data.should.be.deep.equal({
-                    count: 0,
+                    hasNextPage: false,
+                    hasPreviousPage: false,
+                    limit: 0,
                     data: [],
                 });
 
@@ -3665,7 +3707,9 @@ describe("Hyperwallet", () => {
         it("should handle 204 return", (cb) => {
             const callback = (err, data) => {
                 data.should.be.deep.equal({
-                    count: 0,
+                    hasNextPage: false,
+                    hasPreviousPage: false,
+                    limit: 0,
                     data: [],
                 });
 
@@ -3723,7 +3767,9 @@ describe("Hyperwallet", () => {
         it("should handle 204 return", (cb) => {
             const callback = (err, data) => {
                 data.should.be.deep.equal({
-                    count: 0,
+                    hasNextPage: false,
+                    hasPreviousPage: false,
+                    limit: 0,
                     data: [],
                 });
 
@@ -3870,7 +3916,9 @@ describe("Hyperwallet", () => {
                 expect(err).to.be.undefined();
 
                 data.should.be.deep.equal({
-                    count: 0,
+                    hasNextPage: false,
+                    hasPreviousPage: false,
+                    limit: 0,
                     data: [],
                 });
                 res.should.be.deep.equal(providedRes);
@@ -4030,7 +4078,9 @@ describe("Hyperwallet", () => {
         it("should handle 204 return", (cb) => {
             const callback = (err, data) => {
                 data.should.be.deep.equal({
-                    count: 0,
+                    hasNextPage: false,
+                    hasPreviousPage: false,
+                    limit: 0,
                     data: [],
                 });
 
@@ -4264,7 +4314,9 @@ describe("Hyperwallet", () => {
         it("should handle 204 return", (cb) => {
             const callback = (err, data) => {
                 data.should.be.deep.equal({
-                    count: 0,
+                    hasNextPage: false,
+                    hasPreviousPage: false,
+                    limit: 0,
                     data: [],
                 });
 
@@ -4280,6 +4332,7 @@ describe("Hyperwallet", () => {
             });
         });
     });
+
     //--------------------------------------
     // Business StakeHolder
     //--------------------------------------
@@ -4317,6 +4370,7 @@ describe("Hyperwallet", () => {
             }, {}, callback);
         });
     });
+
     /** @test {Hyperwallet#listBusinessStakeholders} */
     describe("listBusinessStakeholders()", () => {
         let client;
@@ -4419,6 +4473,7 @@ describe("Hyperwallet", () => {
             }, {}, callback);
         });
     });
+
     /** @test {Hyperwallet#deactivateBusinessStakeholder} */
     describe("deactivateBusinessStakeholder()", () => {
         let client;
@@ -4458,6 +4513,7 @@ describe("Hyperwallet", () => {
             }, {}, callback);
         });
     });
+
     /** @test {Hyperwallet#activateBusinessStakeholder} */
     describe("activateBusinessStakeholder()", () => {
         let client;
@@ -4537,6 +4593,7 @@ describe("Hyperwallet", () => {
             }, {}, callback);
         });
     });
+
     /** @test {Hyperwallet#getBusinessStakeholderStatusTransition} */
     describe("getBusinessStakeholderStatusTransition()", () => {
         let client;
@@ -4647,6 +4704,7 @@ describe("Hyperwallet", () => {
             });
         });
     });
+
     describe("uploadBusinessStakeholderDocuments()", () => {
         let client;
         let apiClientSpy;
@@ -4667,11 +4725,13 @@ describe("Hyperwallet", () => {
             const callback = () => null;
             expect(() => client.uploadBusinessStakeholderDocuments(undefined, undefined, {}, callback)).to.throw("userToken is required");
         });
+
         /** @test {Hyperwallet#uploadBusinessStakeholderDocuments} */
         it("should throw error if stakeholderToken is missing", () => {
             const callback = () => null;
             expect(() => client.uploadBusinessStakeholderDocuments("test-user-token", undefined, {}, callback)).to.throw("stakeholderToken is required");
         });
+
         /** @test {Hyperwallet#uploadBusinessStakeholderDocuments} */
         it("should throw error if data is missing", () => {
             const callback = () => null;
