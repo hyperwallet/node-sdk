@@ -59,7 +59,7 @@ describe("utils/ApiClient", () => {
                 .matchHeader("User-Agent", `Hyperwallet Node SDK v${packageJson.version}`)
                 .matchHeader("Accept", "application/json")
                 .matchHeader("Content-Type", "application/json")
-                .post("/rest/v3/test", {
+                .post("/rest/v4/test", {
                     test: "value",
                 })
                 .query({ sort: "test" })
@@ -85,7 +85,7 @@ describe("utils/ApiClient", () => {
                 .matchHeader("User-Agent", `Hyperwallet Node SDK v${packageJson.version}`)
                 .matchHeader("Accept", "application/json")
                 .matchHeader("Content-Type", "application/json")
-                .post("/rest/v3/test", {
+                .post("/rest/v4/test", {
                     test: "value",
                 })
                 .query({ sort: "test" })
@@ -113,7 +113,7 @@ describe("utils/ApiClient", () => {
                 .matchHeader("User-Agent", `Hyperwallet Node SDK v${packageJson.version}`)
                 .matchHeader("Accept", "application/json")
                 .matchHeader("Content-Type", "application/json")
-                .post("/rest/v3/test", {
+                .post("/rest/v4/test", {
                     test: "value",
                 })
                 .query({ sort: "test" })
@@ -141,7 +141,7 @@ describe("utils/ApiClient", () => {
                 .matchHeader("User-Agent", `Hyperwallet Node SDK v${packageJson.version}`)
                 .matchHeader("Accept", "application/json")
                 .matchHeader("Content-Type", "application/json")
-                .post("/rest/v3/test", {
+                .post("/rest/v4/test", {
                     test: "value",
                 })
                 .reply(201, { response: "value" }, { "Content-Type": "application/json" });
@@ -181,7 +181,7 @@ describe("utils/ApiClient", () => {
                 .matchHeader("User-Agent", `Hyperwallet Node SDK v${packageJson.version}`)
                 .matchHeader("Accept", "application/json")
                 .matchHeader("Content-Type", "application/json")
-                .post("/rest/v3/test", {
+                .post("/rest/v4/test", {
                     test: "value",
                 })
                 .reply(404, {
@@ -395,7 +395,7 @@ describe("utils/ApiClient", () => {
                 .matchHeader("User-Agent", `Hyperwallet Node SDK v${packageJson.version}`)
                 .matchHeader("Accept", "application/json")
                 .matchHeader("Content-Type", "application/json")
-                .put("/rest/v3/test", {
+                .put("/rest/v4/test", {
                     test: "value",
                 })
                 .query({ sort: "test" })
@@ -421,7 +421,7 @@ describe("utils/ApiClient", () => {
                 .matchHeader("User-Agent", `Hyperwallet Node SDK v${packageJson.version}`)
                 .matchHeader("Accept", "application/json")
                 .matchHeader("Content-Type", "application/json")
-                .put("/rest/v3/test", {
+                .put("/rest/v4/test", {
                     test: "value",
                 })
                 .query({ sort: "test" })
@@ -449,7 +449,7 @@ describe("utils/ApiClient", () => {
                 .matchHeader("User-Agent", `Hyperwallet Node SDK v${packageJson.version}`)
                 .matchHeader("Accept", "application/json")
                 .matchHeader("Content-Type", "application/json")
-                .put("/rest/v3/test", {
+                .put("/rest/v4/test", {
                     test: "value",
                 })
                 .query({ sort: "test" })
@@ -477,7 +477,7 @@ describe("utils/ApiClient", () => {
                 .matchHeader("User-Agent", `Hyperwallet Node SDK v${packageJson.version}`)
                 .matchHeader("Accept", "application/json")
                 .matchHeader("Content-Type", "application/json")
-                .put("/rest/v3/test", {
+                .put("/rest/v4/test", {
                     test: "value",
                 })
                 .reply(200, { response: "value" }, { "Content-Type": "application/json" });
@@ -517,7 +517,7 @@ describe("utils/ApiClient", () => {
                 .matchHeader("User-Agent", `Hyperwallet Node SDK v${packageJson.version}`)
                 .matchHeader("Accept", "application/json")
                 .matchHeader("Content-Type", "application/json")
-                .put("/rest/v3/test", {
+                .put("/rest/v4/test", {
                     test: "value",
                 })
                 .reply(404, {
@@ -792,7 +792,7 @@ describe("utils/ApiClient", () => {
                 .matchHeader("User-Agent", `Hyperwallet Node SDK v${packageJson.version}`)
                 .matchHeader("Accept", "application/json")
                 .matchHeader("Content-Type", "multipart/form-data")
-                .put("/rest/v3/test", { test: "value" })
+                .put("/rest/v4/test", { test: "value" })
                 .reply(400, []
                     , { "Content-Type": "application/jose+json" });
 
@@ -885,7 +885,7 @@ describe("utils/ApiClient", () => {
                 .matchHeader("Authorization", authHeader)
                 .matchHeader("User-Agent", `Hyperwallet Node SDK v${packageJson.version}`)
                 .matchHeader("Accept", "application/json")
-                .get("/rest/v3/test")
+                .get("/rest/v4/test")
                 .query({ sort: "test" })
                 .reply(200, { response: "value" }, { "Content-Type": "application/json" });
 
@@ -908,7 +908,7 @@ describe("utils/ApiClient", () => {
                 .matchHeader("Authorization", authHeader)
                 .matchHeader("User-Agent", `Hyperwallet Node SDK v${packageJson.version}`)
                 .matchHeader("Accept", "application/json")
-                .get("/rest/v3/test")
+                .get("/rest/v4/test")
                 .query({ sort: "test" })
                 .reply(200, { response: "value" }, {
                     "Content-Type": "application/json;charset=utf-8",
@@ -933,7 +933,7 @@ describe("utils/ApiClient", () => {
                 .matchHeader("Authorization", authHeader)
                 .matchHeader("User-Agent", `Hyperwallet Node SDK v${packageJson.version}`)
                 .matchHeader("Accept", "application/json")
-                .get("/rest/v3/test")
+                .get("/rest/v4/test")
                 .query({ sort: "test" })
                 .reply(200, { response: "value" }, {
                     "Content-Type": "charset=utf-8;application/json",
@@ -958,7 +958,7 @@ describe("utils/ApiClient", () => {
                 .matchHeader("Authorization", authHeader)
                 .matchHeader("User-Agent", `Hyperwallet Node SDK v${packageJson.version}`)
                 .matchHeader("Accept", "application/json")
-                .get("/rest/v3/test")
+                .get("/rest/v4/test")
                 .reply(200, { response: "value" }, { "Content-Type": "application/json" });
 
             client.doGet("test", {}, (err, body, res) => {
@@ -995,7 +995,7 @@ describe("utils/ApiClient", () => {
                 .matchHeader("Authorization", authHeader)
                 .matchHeader("User-Agent", `Hyperwallet Node SDK v${packageJson.version}`)
                 .matchHeader("Accept", "application/json")
-                .get("/rest/v3/test")
+                .get("/rest/v4/test")
                 .reply(404, {
                     errors: [{
                         message: "message",

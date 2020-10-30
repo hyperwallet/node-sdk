@@ -19,7 +19,6 @@ export default class Hyperwallet {
         if (!username || !password) {
             throw new Error("You need to specify your API username and password!");
         }
-
         /**
          * The instance of the ApiClient
          *
@@ -1621,7 +1620,9 @@ export default class Hyperwallet {
         return (err, data, res) => {
             if (!err && res.status === 204) {
                 callback(err, {
-                    count: 0,
+                    hasNextPage: false,
+                    hasPreviousPage: false,
+                    limit: 0,
                     data: [],
                 }, res);
                 return;
