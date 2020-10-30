@@ -1870,10 +1870,10 @@ export default class Hyperwallet {
         if (!stakeholderToken) {
             throw new Error("stakeholderToken is required");
         }
-        const transition = {
+        const data = {
             transition: "ACTIVATED",
         };
-        this.createBusinessStakeholderStatusTransition(userToken, stakeholderToken, transition, callback);
+        this.createBusinessStakeholderStatusTransition(userToken, stakeholderToken, data, callback);
     }
 
     /**
@@ -1890,10 +1890,10 @@ export default class Hyperwallet {
         if (!stakeholderToken) {
             throw new Error("stakeholderToken is required");
         }
-        const transition = {
+        const data = {
             transition: "DE_ACTIVATED",
         };
-        this.createBusinessStakeholderStatusTransition(userToken, stakeholderToken, transition, callback);
+        this.createBusinessStakeholderStatusTransition(userToken, stakeholderToken, data, callback);
     }
 
     /**
