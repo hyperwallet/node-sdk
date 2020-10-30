@@ -4415,7 +4415,9 @@ describe("Hyperwallet", () => {
         it("should handle 204 return", (cb) => {
             const callback = (err, data) => {
                 data.should.be.deep.equal({
-                    count: 0,
+                    hasNextPage: false,
+                    hasPreviousPage: false,
+                    limit: 0,
                     data: [],
                 });
 
@@ -4688,7 +4690,9 @@ describe("Hyperwallet", () => {
         it("should handle 204 return", (cb) => {
             const callback = (err, data) => {
                 data.should.be.deep.equal({
-                    count: 0,
+                    hasNextPage: false,
+                    hasPreviousPage: false,
+                    limit: 0,
                     data: [],
                 });
 
