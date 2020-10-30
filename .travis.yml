@@ -5,14 +5,14 @@ node_js:
 - '6.15.1'      #boron
 - '8.14.0'      #carbon
 - '10.14.2'     #dubnium
-- stable
+- '14.13.1'     #stable
 
 script:
   - npm run prepublish-prod
 
 after_success:
-- if [ $TRAVIS_NODE_VERSION = 'stable' ] && [ $TRAVIS_BRANCH = 'master' ] && [ $TRAVIS_PULL_REQUEST = 'false' ]; then sh ./scripts/travisPublishDocs.sh; fi
-- if [ $TRAVIS_NODE_VERSION = 'stable' ]; then npm run coveralls; fi
+- if [ $TRAVIS_NODE_VERSION = '14.13.1' ] && [ $TRAVIS_BRANCH = 'master' ] && [ $TRAVIS_PULL_REQUEST = 'false' ]; then sh ./scripts/travisPublishDocs.sh; fi
+- if [ $TRAVIS_NODE_VERSION = '14.13.1' ]; then npm run coveralls; fi
 
 env:
   global:
