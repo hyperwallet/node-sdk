@@ -1042,7 +1042,7 @@ export default class Hyperwallet {
      * @param {Object} data - The PayPal account data to update
      * @param {api-callback} callback - The callback for this call
      *
-     * @throws Will throw an error if userToken or bankAccountToken is not provided
+     * @throws Will throw an error if userToken or payPalAccountToken is not provided
      */
     updatePayPalAccount(userToken, payPalAccountToken, data, callback) {
         if (!userToken) {
@@ -1072,6 +1072,49 @@ export default class Hyperwallet {
         }
 
         this.client.doPost(`users/${encodeURIComponent(userToken)}/paypal-accounts/${encodeURIComponent(payPalAccountToken)}/status-transitions`, data, {}, callback);
+    }
+
+    /**
+     * Get PayPal account status transition
+     *
+     * @param {string} userToken - The user token
+     * @param {string} payPalAccountToken - PayPal account token
+     * @param {string} statusTransitionToken - The PayPal account status transition token
+     * @param {api-callback} callback - The callback for this call
+     * @throws Will throw an error if userToken or payPalAccountToken or statusTransitionToken is not provided
+     */
+    getPayPalAccountStatusTransition(userToken, payPalAccountToken, statusTransitionToken, callback) {
+        if (!userToken) {
+            throw new Error("userToken is required");
+        }
+        if (!payPalAccountToken) {
+            throw new Error("payPalAccountToken is required");
+        }
+        if (!statusTransitionToken) {
+            throw new Error("statusTransitionToken is required");
+        }
+        this.client.doGet(`users/${encodeURIComponent(userToken)}/paypal-accounts/${encodeURIComponent(payPalAccountToken)}/status-transitions/${encodeURIComponent(statusTransitionToken)}`,
+            {},
+            callback);
+    }
+
+    /**
+     * List PayPal account status transition
+     *
+     * @param {string} userToken - The user token
+     * @param {string} payPalAccountToken - PayPal account token
+     * @param {Object} options - The query parameters to send
+     * @param {api-callback} callback - The callback for this call
+     * @throws Will throw an error if userToken or payPalAccountToken is not provided
+     */
+    listPayPalAccountStatusTransitions(userToken, payPalAccountToken, options, callback) {
+        if (!userToken) {
+            throw new Error("userToken is required");
+        }
+        if (!payPalAccountToken) {
+            throw new Error("payPalAccountToken is required");
+        }
+        this.client.doGet(`users/${encodeURIComponent(userToken)}/paypal-accounts/${encodeURIComponent(payPalAccountToken)}/status-transitions`, options, Hyperwallet.handle204Response(callback));
     }
 
     //--------------------------------------
