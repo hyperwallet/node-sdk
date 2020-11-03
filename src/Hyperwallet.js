@@ -91,6 +91,10 @@ export default class Hyperwallet {
      * @param {api-callback} callback - The callback for this call
      */
     listUsers(options, callback) {
+        const LIST_USER_FILTERS = ["clientUserId", "email", "programToken", "status", "verificationStatus"];
+        if (options && !this.isValidFilter(options, LIST_USER_FILTERS)) {
+            throw new Error("Invalid Filter");
+        }
         this.client.doGet("users", options, Hyperwallet.handle204Response(callback));
     }
 
@@ -1126,6 +1130,10 @@ export default class Hyperwallet {
         if (!userToken) {
             throw new Error("userToken is required");
         }
+        const LIST_BANK_ACCOUNTS_FILTERS = ["type", "status"];
+        if (options && !this.isValidFilter(options, LIST_BANK_ACCOUNTS_FILTERS)) {
+            throw new Error("Invalid Filter");
+        }
         this.client.doGet(`users/${encodeURIComponent(userToken)}/bank-accounts`, options, Hyperwallet.handle204Response(callback));
     }
 
@@ -1308,13 +1316,19 @@ export default class Hyperwallet {
         this.client.doGet(`payments/${encodeURIComponent(paymentToken)}`, {}, callback);
     }
 
+
     /**
      * List all payments
      *
      * @param {Object} options - The query parameters to send
      * @param {api-callback} callback - The callback for this call
+     * @throws Will throw an error if invalid payment is provided
      */
     listPayments(options, callback) {
+        const LIST_PAYMENT_FILTERS = ["clientPaymentId"];
+        if (options && !this.isValidFilter(options, LIST_PAYMENT_FILTERS)) {
+            throw new Error("Invalid Filter");
+        }
         this.client.doGet("payments", options, Hyperwallet.handle204Response(callback));
     }
 
@@ -1798,5 +1812,16 @@ export default class Hyperwallet {
             throw new Error("venmoAccountToken is required");
         }
         this.client.doGet(`users/${encodeURIComponent(userToken)}/venmo-accounts/${encodeURIComponent(venmoAccountToken)}/status-transitions`, options, Hyperwallet.handle204Response(callback));
+    }
+
+    /**
+     * Validate the options filter
+     *
+     * @param {Object} inputFilters - The query parameters in the URI
+     * @param {Object} listFilters - Defined list of filters for a business object
+     */
+
+    isValidFilter(inputFilters, listFilters) {
+        return Object.keys(inputFilters).every(elem => listFilters.includes(elem));
     }
 }
