@@ -527,6 +527,10 @@ export default class Hyperwallet {
         if (!prepaidCardToken) {
             throw new Error("prepaidCardToken is required");
         }
+        const LIST_PREPAID_CARD_STATUS_TRANSITION_FILTERS = ["transition"];
+        if (options && !this.isValidFilter(options, LIST_PREPAID_CARD_STATUS_TRANSITION_FILTERS)) {
+            throw new Error("Invalid Filter");
+        }
         this.client.doGet(`users/${encodeURIComponent(userToken)}/prepaid-cards/${encodeURIComponent(prepaidCardToken)}/status-transitions`, options, Hyperwallet.handle204Response(callback));
     }
 
@@ -689,6 +693,10 @@ export default class Hyperwallet {
         if (!bankCardToken) {
             throw new Error("bankCardToken is required");
         }
+        const LIST_BANK_CARD_STATUS_TRANSITION_FILTERS = ["status"];
+        if (options && !this.isValidFilter(options, LIST_BANK_CARD_STATUS_TRANSITION_FILTERS)) {
+            throw new Error("Invalid Filter");
+        }
         this.client.doGet(`users/${encodeURIComponent(userToken)}/bank-cards/${encodeURIComponent(bankCardToken)}/status-transitions`, options, Hyperwallet.handle204Response(callback));
     }
 
@@ -782,6 +790,10 @@ export default class Hyperwallet {
         if (!userToken) {
             throw new Error("userToken is required");
         }
+        const LIST_PAPER_CHECKS_FILTERS = ["status"];
+        if (options && !this.isValidFilter(options, LIST_PAPER_CHECKS_FILTERS)) {
+            throw new Error("Invalid Filter");
+        }
         this.client.doGet(`users/${encodeURIComponent(userToken)}/paper-checks`, options, Hyperwallet.handle204Response(callback));
     }
 
@@ -865,6 +877,10 @@ export default class Hyperwallet {
         }
         if (!paperCheckToken) {
             throw new Error("paperCheckToken is required");
+        }
+        const LIST_PAPER_CHECK_STATUS_TRANSITION_FILTERS = ["transition"];
+        if (options && !this.isValidFilter(options, LIST_PAPER_CHECK_STATUS_TRANSITION_FILTERS)) {
+            throw new Error("Invalid Filter");
         }
         this.client.doGet(`users/${encodeURIComponent(userToken)}/paper-checks/${encodeURIComponent(paperCheckToken)}/status-transitions`, options, Hyperwallet.handle204Response(callback));
     }
