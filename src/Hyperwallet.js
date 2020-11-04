@@ -605,8 +605,8 @@ export default class Hyperwallet {
         if (!userToken) {
             throw new Error("userToken is required");
         }
-        const LIST_BANK_FILTERS = ["status"];
-        if (options && !this.isValidFilter(options, LIST_BANK_FILTERS)) {
+        const LIST_BANK_CARDS_FILTERS = ["status"];
+        if (options && !this.isValidFilter(options, LIST_BANK_CARDS_FILTERS)) {
             throw new Error("Invalid Filter");
         }
         this.client.doGet(`users/${encodeURIComponent(userToken)}/bank-cards`, options, Hyperwallet.handle204Response(callback));
@@ -693,7 +693,7 @@ export default class Hyperwallet {
         if (!bankCardToken) {
             throw new Error("bankCardToken is required");
         }
-        const LIST_BANK_CARD_STATUS_TRANSITION_FILTERS = ["status"];
+        const LIST_BANK_CARD_STATUS_TRANSITION_FILTERS = ["transition"];
         if (options && !this.isValidFilter(options, LIST_BANK_CARD_STATUS_TRANSITION_FILTERS)) {
             throw new Error("Invalid Filter");
         }
@@ -1938,6 +1938,10 @@ export default class Hyperwallet {
     listBusinessStakeholders(userToken, options, callback) {
         if (!userToken) {
             throw new Error("userToken is required");
+        }
+        const LIST_BUSINESS_STAKEHOLDERS_FILTERS = ["status", "isBusinessContact", "isDirector", "isUltimateBeneficialOwner"];
+        if (options && !this.isValidFilter(options, LIST_BUSINESS_STAKEHOLDERS_FILTERS)) {
+            throw new Error("Invalid Filter");
         }
         this.client.doGet(`users/${encodeURIComponent(userToken)}/business-stakeholders`, options, Hyperwallet.handle204Response(callback));
     }
