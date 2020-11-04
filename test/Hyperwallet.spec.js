@@ -261,7 +261,7 @@ describe("Hyperwallet", () => {
             apiClientSpy.should.have.been.calledWith("users", {});
         });
 
-        /** @test {Hyperwallet#listPayments} */
+        /** @test {Hyperwallet#listUsers} */
         it("should throw error for invalid filter", () => {
             const callback = () => null;
             expect(() => client.listUsers({ test: "value" }, callback)).to.throw("Invalid Filter");
@@ -572,6 +572,11 @@ describe("Hyperwallet", () => {
             expect(() => client.listUserStatusTransitions(undefined, {}, callback)).to.throw("userToken is required");
         });
 
+        /** @test {Hyperwallet#listUserStatusTransitions} */
+        it("should throw error for invalid filter", () => {
+            const callback = () => null;
+            expect(() => client.listUserStatusTransitions("test-user-token", { test: "value" }, callback)).to.throw("Invalid Filter");
+        });
         /** @test {Hyperwallet#listUserStatusTransitions} */
         it("should do get call with options", () => {
             const callback = () => null;
@@ -2722,6 +2727,12 @@ describe("Hyperwallet", () => {
             expect(() => client.listBankAccountStatusTransitions(undefined, undefined, {}, callback)).to.throw("userToken is required");
         });
 
+
+        /** @test {Hyperwallet#listBankAccountStatusTransitions} */
+        it("should throw error for invalid filter", () => {
+            const callback = () => null;
+            expect(() => client.listBankAccountStatusTransitions("test-user-token", "test-bank-account-token", { test: "value" }, callback)).to.throw("Invalid Filter");
+        });
         /** @test {Hyperwallet#listBankAccountStatusTransitions} */
         it("should throw error if bankAccountToken is missing", () => {
             const callback = () => null;
@@ -3202,6 +3213,11 @@ describe("Hyperwallet", () => {
             expect(() => client.listPaymentStatusTransitions(undefined, {}, callback)).to.throw("paymentToken is required");
         });
 
+        /** @test {Hyperwallet#listPaymentStatusTransitions} */
+        it("should throw error for invalid filter", () => {
+            const callback = () => null;
+            expect(() => client.listPaymentStatusTransitions("test-payment-token", { test: "value" }, callback)).to.throw("Invalid Filter");
+        });
         /** @test {Hyperwallet#listPaymentStatusTransitions} */
         it("should do get call with options", () => {
             const callback = () => null;
@@ -4018,6 +4034,12 @@ describe("Hyperwallet", () => {
         it("should throw error if userToken is missing", () => {
             const callback = () => null;
             expect(() => client.listVenmoAccounts(undefined, {}, callback)).to.throw("userToken is required");
+        });
+
+        /** @test {Hyperwallet#listVenmoAccountStatusTransitions} */
+        it("should throw error for invalid filter", () => {
+            const callback = () => null;
+            expect(() => client.listVenmoAccountStatusTransitions("test-user-token", "test-venmo-account-token", { test: "value" }, callback)).to.throw("Invalid Filter");
         });
 
         /** @test {Hyperwallet#listVenmoAccounts} */
