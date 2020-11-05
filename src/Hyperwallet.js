@@ -2043,4 +2043,19 @@ export default class Hyperwallet {
         }
         this.client.doPutMultipart(`users/${encodeURIComponent(userToken)}/business-stakeholders/${encodeURIComponent(stakeholderToken)}`, data, callback);
     }
+
+    /**
+     * List of Transfer Methods
+     *
+     * @param {string} userToken - The user token
+     * @param {Object} options - The query parameters to send
+     * @param {api-callback} callback - The callback for this call
+     * @throws Will throw an error if userToken is not provided
+     */
+    listTransferMethods(userToken, options, callback) {
+        if (!userToken) {
+            throw new Error("userToken is required");
+        }
+        this.client.doGet(`users/${encodeURIComponent(userToken)}/transfer-methods`, options, Hyperwallet.handle204Response(callback));
+    }
 }
