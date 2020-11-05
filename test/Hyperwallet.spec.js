@@ -2001,6 +2001,86 @@ describe("Hyperwallet", () => {
         });
     });
 
+    /** @test {Hyperwallet#activatePayPalAccount} */
+    describe("activatePayPalAccount()", () => {
+        let client;
+        let apiClientSpy;
+
+        beforeEach(() => {
+            apiClientSpy = sinon.spy();
+            client = new Hyperwallet({
+                username: "test-username",
+                password: "test-password",
+            });
+            client.client = {
+                doPost: apiClientSpy,
+            };
+        });
+
+        /** @test {Hyperwallet#activatePayPalAccount} */
+        it("should throw error if userToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.activatePayPalAccount(undefined, undefined, callback)).to.throw("userToken is required");
+        });
+
+        /** @test {Hyperwallet#activatePayPalAccount} */
+        it("should throw error if payPalAccountToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.activatePayPalAccount("test-user-token", undefined, callback)).to.throw("payPalAccountToken is required");
+        });
+
+        /** @test {Hyperwallet#activatePayPalAccount} */
+        it("should send transition to 'ACTIVATED'", () => {
+            const callback = () => null;
+            client.activatePayPalAccount("test-user-token", "test-paypal-account-token", callback);
+
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("users/test-user-token/paypal-accounts/test-paypal-account-token/status-transitions", {
+                transition: "ACTIVATED",
+            }, {}, callback);
+        });
+    });
+
+    /** @test {Hyperwallet#deactivatePayPalAccount} */
+    describe("deactivatePayPalAccount()", () => {
+        let client;
+        let apiClientSpy;
+
+        beforeEach(() => {
+            apiClientSpy = sinon.spy();
+            client = new Hyperwallet({
+                username: "test-username",
+                password: "test-password",
+            });
+            client.client = {
+                doPost: apiClientSpy,
+            };
+        });
+
+        /** @test {Hyperwallet#deactivatePayPalAccount} */
+        it("should throw error if userToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.deactivatePayPalAccount(undefined, undefined, callback)).to.throw("userToken is required");
+        });
+
+        /** @test {Hyperwallet#deactivatePayPalAccount} */
+        it("should throw error if payPalAccountToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.deactivatePayPalAccount("test-user-token", undefined, callback)).to.throw("payPalAccountToken is required");
+        });
+
+        /** @test {Hyperwallet#deactivatePayPalAccount} */
+        it("should send transition to 'DE_ACTIVATED'", () => {
+            const callback = () => null;
+            client.deactivatePayPalAccount("test-user-token", "test-paypal-account-token", callback);
+
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("users/test-user-token/paypal-accounts/test-paypal-account-token/status-transitions", {
+                transition: "DE_ACTIVATED",
+            }, {}, callback);
+        });
+    });
+
     /** @test {Hyperwallet#createPayPalAccountStatusTransition} */
     describe("createPayPalAccountStatusTransition()", () => {
         let client;
@@ -4699,7 +4779,7 @@ describe("Hyperwallet", () => {
         });
 
         /** @test {Hyperwallet#activateBusinessStakeholder} */
-        it("should send transition to 'DE-ACTIVATED'", () => {
+        it("should send transition to 'ACTIVATED'", () => {
             const callback = () => null;
             client.activateBusinessStakeholder("test-user-token", "test-stakeholder-token", callback);
 
