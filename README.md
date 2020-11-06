@@ -6,7 +6,8 @@
 Hyperwallet REST SDK (Beta)
 ===========================
 
-A library to manage users, transfer methods and payments through the Hyperwallet Rest V3 API
+A library to manage users, transfer methods and payments through the Hyperwallet Rest V4 API
+To access Rest V3 APIs please use SDK v1.5
 
 Prerequisites
 ------------
