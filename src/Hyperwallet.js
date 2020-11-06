@@ -1075,6 +1075,72 @@ export default class Hyperwallet {
     }
 
     /**
+     * Update a PayPal account
+     *
+     * @param {string} userToken - The user token
+     * @param {string} payPalAccountToken - The PayPal account token
+     * @param {Object} data - The PayPal account data to update
+     * @param {api-callback} callback - The callback for this call
+     *
+     * @throws Will throw an error if userToken or payPalAccountToken is not provided
+     */
+    updatePayPalAccount(userToken, payPalAccountToken, data, callback) {
+        if (!userToken) {
+            throw new Error("userToken is required");
+        }
+        if (!payPalAccountToken) {
+            throw new Error("payPalAccountToken is required");
+        }
+        this.client.doPut(`users/${encodeURIComponent(userToken)}/paypal-accounts/${encodeURIComponent(payPalAccountToken)}`, data, {}, callback);
+    }
+
+    /**
+     * Activate a PayPal account
+     *
+     * @param {string} userToken - The user token
+     * @param {string} payPalAccountToken - The PayPal account token
+     * @param {api-callback} callback - The callback for this call
+     *
+     * @throws Will throw an error if userToken or payPalAccountToken is not provided
+     */
+    activatePayPalAccount(userToken, payPalAccountToken, callback) {
+        if (!userToken) {
+            throw new Error("userToken is required");
+        }
+        if (!payPalAccountToken) {
+            throw new Error("payPalAccountToken is required");
+        }
+
+        const transition = {
+            transition: "ACTIVATED",
+        };
+        this.client.doPost(`users/${encodeURIComponent(userToken)}/paypal-accounts/${encodeURIComponent(payPalAccountToken)}/status-transitions`, transition, {}, callback);
+    }
+
+    /**
+     * Deactivate a PayPal account
+     *
+     * @param {string} userToken - The user token
+     * @param {string} payPalAccountToken - The PayPal account token
+     * @param {api-callback} callback - The callback for this call
+     *
+     * @throws Will throw an error if userToken or payPalAccountToken is not provided
+     */
+    deactivatePayPalAccount(userToken, payPalAccountToken, callback) {
+        if (!userToken) {
+            throw new Error("userToken is required");
+        }
+        if (!payPalAccountToken) {
+            throw new Error("payPalAccountToken is required");
+        }
+
+        const transition = {
+            transition: "DE_ACTIVATED",
+        };
+        this.client.doPost(`users/${encodeURIComponent(userToken)}/paypal-accounts/${encodeURIComponent(payPalAccountToken)}/status-transitions`, transition, {}, callback);
+    }
+
+    /**
      * Create PayPal account status transition
      *
      * @param {string} userToken - The user token
@@ -1092,6 +1158,48 @@ export default class Hyperwallet {
         }
 
         this.client.doPost(`users/${encodeURIComponent(userToken)}/paypal-accounts/${encodeURIComponent(payPalAccountToken)}/status-transitions`, data, {}, callback);
+    }
+
+    /**
+     * Get PayPal account status transition
+     *
+     * @param {string} userToken - The user token
+     * @param {string} payPalAccountToken - PayPal account token
+     * @param {string} statusTransitionToken - The PayPal account status transition token
+     * @param {api-callback} callback - The callback for this call
+     * @throws Will throw an error if userToken or payPalAccountToken or statusTransitionToken is not provided
+     */
+    getPayPalAccountStatusTransition(userToken, payPalAccountToken, statusTransitionToken, callback) {
+        if (!userToken) {
+            throw new Error("userToken is required");
+        }
+        if (!payPalAccountToken) {
+            throw new Error("payPalAccountToken is required");
+        }
+        if (!statusTransitionToken) {
+            throw new Error("statusTransitionToken is required");
+        }
+        this.client.doGet(`users/${encodeURIComponent(userToken)}/paypal-accounts/${encodeURIComponent(payPalAccountToken)}/status-transitions/${encodeURIComponent(statusTransitionToken)}`,
+            {}, callback);
+    }
+
+    /**
+     * List PayPal account status transition
+     *
+     * @param {string} userToken - The user token
+     * @param {string} payPalAccountToken - PayPal account token
+     * @param {Object} options - The query parameters to send
+     * @param {api-callback} callback - The callback for this call
+     * @throws Will throw an error if userToken or payPalAccountToken is not provided
+     */
+    listPayPalAccountStatusTransitions(userToken, payPalAccountToken, options, callback) {
+        if (!userToken) {
+            throw new Error("userToken is required");
+        }
+        if (!payPalAccountToken) {
+            throw new Error("payPalAccountToken is required");
+        }
+        this.client.doGet(`users/${encodeURIComponent(userToken)}/paypal-accounts/${encodeURIComponent(payPalAccountToken)}/status-transitions`, options, Hyperwallet.handle204Response(callback));
     }
 
     //--------------------------------------
