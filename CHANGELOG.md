@@ -1,5 +1,15 @@
 Changelog
 =========
+
+2.0.0
+-------------------
+- Accesses V4 Rest APIs 
+- Added Business Stakeholders
+- Added updatePaypalAccount, getPayPalAccountStatusTransition, listPayPalAccountStatusTransitions
+- Added listTransferMethods
+- Added getTransferStatusTransition, listTransferStatusTransition
+- Added filters 
+
 1.5.0
 -------------------
 - Added Venmo accounts

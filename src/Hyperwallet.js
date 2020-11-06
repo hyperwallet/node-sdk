@@ -19,7 +19,6 @@ export default class Hyperwallet {
         if (!username || !password) {
             throw new Error("You need to specify your API username and password!");
         }
-
         /**
          * The instance of the ApiClient
          *
@@ -91,6 +90,10 @@ export default class Hyperwallet {
      * @param {api-callback} callback - The callback for this call
      */
     listUsers(options, callback) {
+        const LIST_USER_FILTERS = ["clientUserId", "email", "programToken", "status", "verificationStatus"];
+        if (options && !this.isValidFilter(options, LIST_USER_FILTERS)) {
+            throw new Error("Invalid Filter. Expected - ".concat(LIST_USER_FILTERS));
+        }
         this.client.doGet("users", options, Hyperwallet.handle204Response(callback));
     }
 
@@ -229,6 +232,10 @@ export default class Hyperwallet {
         if (!userToken) {
             throw new Error("userToken is required");
         }
+        const LIST_USER_STATUS_TRANSITION_FILTERS = ["transition"];
+        if (options && !this.isValidFilter(options, LIST_USER_STATUS_TRANSITION_FILTERS)) {
+            throw new Error("Invalid Filter. Expected - ".concat(LIST_USER_STATUS_TRANSITION_FILTERS));
+        }
         this.client.doGet(`users/${encodeURIComponent(userToken)}/status-transitions`, options, Hyperwallet.handle204Response(callback));
     }
 
@@ -321,6 +328,10 @@ export default class Hyperwallet {
     listPrepaidCards(userToken, options, callback) {
         if (!userToken) {
             throw new Error("userToken is required");
+        }
+        const LIST_PREPAID_CARDS_FILTERS = ["status"];
+        if (options && !this.isValidFilter(options, LIST_PREPAID_CARDS_FILTERS)) {
+            throw new Error("Invalid Filter. Expected - ".concat(LIST_PREPAID_CARDS_FILTERS));
         }
         this.client.doGet(`users/${encodeURIComponent(userToken)}/prepaid-cards`, options, Hyperwallet.handle204Response(callback));
     }
@@ -516,6 +527,10 @@ export default class Hyperwallet {
         if (!prepaidCardToken) {
             throw new Error("prepaidCardToken is required");
         }
+        const LIST_PREPAID_CARD_STATUS_TRANSITION_FILTERS = ["transition"];
+        if (options && !this.isValidFilter(options, LIST_PREPAID_CARD_STATUS_TRANSITION_FILTERS)) {
+            throw new Error("Invalid Filter. Expected - ".concat(LIST_PREPAID_CARD_STATUS_TRANSITION_FILTERS));
+        }
         this.client.doGet(`users/${encodeURIComponent(userToken)}/prepaid-cards/${encodeURIComponent(prepaidCardToken)}/status-transitions`, options, Hyperwallet.handle204Response(callback));
     }
 
@@ -589,6 +604,10 @@ export default class Hyperwallet {
     listBankCards(userToken, options, callback) {
         if (!userToken) {
             throw new Error("userToken is required");
+        }
+        const LIST_BANK_CARDS_FILTERS = ["status"];
+        if (options && !this.isValidFilter(options, LIST_BANK_CARDS_FILTERS)) {
+            throw new Error("Invalid Filter. Expected - ".concat(LIST_BANK_CARDS_FILTERS));
         }
         this.client.doGet(`users/${encodeURIComponent(userToken)}/bank-cards`, options, Hyperwallet.handle204Response(callback));
     }
@@ -673,6 +692,10 @@ export default class Hyperwallet {
         }
         if (!bankCardToken) {
             throw new Error("bankCardToken is required");
+        }
+        const LIST_BANK_CARD_STATUS_TRANSITION_FILTERS = ["transition"];
+        if (options && !this.isValidFilter(options, LIST_BANK_CARD_STATUS_TRANSITION_FILTERS)) {
+            throw new Error("Invalid Filter. Expected - ".concat(LIST_BANK_CARD_STATUS_TRANSITION_FILTERS));
         }
         this.client.doGet(`users/${encodeURIComponent(userToken)}/bank-cards/${encodeURIComponent(bankCardToken)}/status-transitions`, options, Hyperwallet.handle204Response(callback));
     }
@@ -767,6 +790,10 @@ export default class Hyperwallet {
         if (!userToken) {
             throw new Error("userToken is required");
         }
+        const LIST_PAPER_CHECKS_FILTERS = ["status"];
+        if (options && !this.isValidFilter(options, LIST_PAPER_CHECKS_FILTERS)) {
+            throw new Error("Invalid Filter. Expected - ".concat(LIST_PAPER_CHECKS_FILTERS));
+        }
         this.client.doGet(`users/${encodeURIComponent(userToken)}/paper-checks`, options, Hyperwallet.handle204Response(callback));
     }
 
@@ -851,6 +878,10 @@ export default class Hyperwallet {
         if (!paperCheckToken) {
             throw new Error("paperCheckToken is required");
         }
+        const LIST_PAPER_CHECK_STATUS_TRANSITION_FILTERS = ["transition"];
+        if (options && !this.isValidFilter(options, LIST_PAPER_CHECK_STATUS_TRANSITION_FILTERS)) {
+            throw new Error("Invalid Filter. Expected - ".concat(LIST_PAPER_CHECK_STATUS_TRANSITION_FILTERS));
+        }
         this.client.doGet(`users/${encodeURIComponent(userToken)}/paper-checks/${encodeURIComponent(paperCheckToken)}/status-transitions`, options, Hyperwallet.handle204Response(callback));
     }
 
@@ -899,6 +930,10 @@ export default class Hyperwallet {
      * @param {api-callback} callback - The callback for this call
      */
     listTransfers(options, callback) {
+        const LIST_TRANSFERS_FILTERS = ["clientTransferId", "sourceToken", "destinationToken"];
+        if (options && !this.isValidFilter(options, LIST_TRANSFERS_FILTERS)) {
+            throw new Error("Invalid Filter. Expected - ".concat(LIST_TRANSFERS_FILTERS));
+        }
         this.client.doGet("transfers", options, Hyperwallet.handle204Response(callback));
     }
 
@@ -1032,7 +1067,77 @@ export default class Hyperwallet {
         if (!userToken) {
             throw new Error("userToken is required");
         }
+        const LIST_PAYPAL_ACCOUNTS_FILTERS = ["status"];
+        if (options && !this.isValidFilter(options, LIST_PAYPAL_ACCOUNTS_FILTERS)) {
+            throw new Error("Invalid Filter. Expected - ".concat(LIST_PAYPAL_ACCOUNTS_FILTERS));
+        }
         this.client.doGet(`users/${encodeURIComponent(userToken)}/paypal-accounts`, options, Hyperwallet.handle204Response(callback));
+    }
+
+    /**
+     * Update a PayPal account
+     *
+     * @param {string} userToken - The user token
+     * @param {string} payPalAccountToken - The PayPal account token
+     * @param {Object} data - The PayPal account data to update
+     * @param {api-callback} callback - The callback for this call
+     *
+     * @throws Will throw an error if userToken or payPalAccountToken is not provided
+     */
+    updatePayPalAccount(userToken, payPalAccountToken, data, callback) {
+        if (!userToken) {
+            throw new Error("userToken is required");
+        }
+        if (!payPalAccountToken) {
+            throw new Error("payPalAccountToken is required");
+        }
+        this.client.doPut(`users/${encodeURIComponent(userToken)}/paypal-accounts/${encodeURIComponent(payPalAccountToken)}`, data, {}, callback);
+    }
+
+    /**
+     * Activate a PayPal account
+     *
+     * @param {string} userToken - The user token
+     * @param {string} payPalAccountToken - The PayPal account token
+     * @param {api-callback} callback - The callback for this call
+     *
+     * @throws Will throw an error if userToken or payPalAccountToken is not provided
+     */
+    activatePayPalAccount(userToken, payPalAccountToken, callback) {
+        if (!userToken) {
+            throw new Error("userToken is required");
+        }
+        if (!payPalAccountToken) {
+            throw new Error("payPalAccountToken is required");
+        }
+
+        const transition = {
+            transition: "ACTIVATED",
+        };
+        this.client.doPost(`users/${encodeURIComponent(userToken)}/paypal-accounts/${encodeURIComponent(payPalAccountToken)}/status-transitions`, transition, {}, callback);
+    }
+
+    /**
+     * Deactivate a PayPal account
+     *
+     * @param {string} userToken - The user token
+     * @param {string} payPalAccountToken - The PayPal account token
+     * @param {api-callback} callback - The callback for this call
+     *
+     * @throws Will throw an error if userToken or payPalAccountToken is not provided
+     */
+    deactivatePayPalAccount(userToken, payPalAccountToken, callback) {
+        if (!userToken) {
+            throw new Error("userToken is required");
+        }
+        if (!payPalAccountToken) {
+            throw new Error("payPalAccountToken is required");
+        }
+
+        const transition = {
+            transition: "DE_ACTIVATED",
+        };
+        this.client.doPost(`users/${encodeURIComponent(userToken)}/paypal-accounts/${encodeURIComponent(payPalAccountToken)}/status-transitions`, transition, {}, callback);
     }
 
     /**
@@ -1053,6 +1158,48 @@ export default class Hyperwallet {
         }
 
         this.client.doPost(`users/${encodeURIComponent(userToken)}/paypal-accounts/${encodeURIComponent(payPalAccountToken)}/status-transitions`, data, {}, callback);
+    }
+
+    /**
+     * Get PayPal account status transition
+     *
+     * @param {string} userToken - The user token
+     * @param {string} payPalAccountToken - PayPal account token
+     * @param {string} statusTransitionToken - The PayPal account status transition token
+     * @param {api-callback} callback - The callback for this call
+     * @throws Will throw an error if userToken or payPalAccountToken or statusTransitionToken is not provided
+     */
+    getPayPalAccountStatusTransition(userToken, payPalAccountToken, statusTransitionToken, callback) {
+        if (!userToken) {
+            throw new Error("userToken is required");
+        }
+        if (!payPalAccountToken) {
+            throw new Error("payPalAccountToken is required");
+        }
+        if (!statusTransitionToken) {
+            throw new Error("statusTransitionToken is required");
+        }
+        this.client.doGet(`users/${encodeURIComponent(userToken)}/paypal-accounts/${encodeURIComponent(payPalAccountToken)}/status-transitions/${encodeURIComponent(statusTransitionToken)}`,
+            {}, callback);
+    }
+
+    /**
+     * List PayPal account status transition
+     *
+     * @param {string} userToken - The user token
+     * @param {string} payPalAccountToken - PayPal account token
+     * @param {Object} options - The query parameters to send
+     * @param {api-callback} callback - The callback for this call
+     * @throws Will throw an error if userToken or payPalAccountToken is not provided
+     */
+    listPayPalAccountStatusTransitions(userToken, payPalAccountToken, options, callback) {
+        if (!userToken) {
+            throw new Error("userToken is required");
+        }
+        if (!payPalAccountToken) {
+            throw new Error("payPalAccountToken is required");
+        }
+        this.client.doGet(`users/${encodeURIComponent(userToken)}/paypal-accounts/${encodeURIComponent(payPalAccountToken)}/status-transitions`, options, Hyperwallet.handle204Response(callback));
     }
 
     //--------------------------------------
@@ -1126,6 +1273,10 @@ export default class Hyperwallet {
         if (!userToken) {
             throw new Error("userToken is required");
         }
+        const LIST_BANK_ACCOUNTS_FILTERS = ["type", "status"];
+        if (options && !this.isValidFilter(options, LIST_BANK_ACCOUNTS_FILTERS)) {
+            throw new Error("Invalid Filter. Expected - ".concat(LIST_BANK_ACCOUNTS_FILTERS));
+        }
         this.client.doGet(`users/${encodeURIComponent(userToken)}/bank-accounts`, options, Hyperwallet.handle204Response(callback));
     }
 
@@ -1145,7 +1296,6 @@ export default class Hyperwallet {
         if (!bankAccountToken) {
             throw new Error("bankAccountToken is required");
         }
-
         const transition = {
             transition: "DE-ACTIVATED",
         };
@@ -1215,6 +1365,10 @@ export default class Hyperwallet {
         if (!bankAccountToken) {
             throw new Error("bankAccountToken is required");
         }
+        const LIST_BANK_ACCOUNT_STATUS_TRANSITION_FILTERS = ["transition"];
+        if (options && !this.isValidFilter(options, LIST_BANK_ACCOUNT_STATUS_TRANSITION_FILTERS)) {
+            throw new Error("Invalid Filter. Expected - ".concat(LIST_BANK_ACCOUNT_STATUS_TRANSITION_FILTERS));
+        }
         this.client.doGet(`users/${encodeURIComponent(userToken)}/bank-accounts/${encodeURIComponent(bankAccountToken)}/status-transitions`, options, Hyperwallet.handle204Response(callback));
     }
 
@@ -1234,6 +1388,10 @@ export default class Hyperwallet {
     listBalancesForUser(userToken, options, callback) {
         if (!userToken) {
             throw new Error("userToken is required");
+        }
+        const LIST_USER_BALANCE_FILTERS = ["currency"];
+        if (options && !this.isValidFilter(options, LIST_USER_BALANCE_FILTERS)) {
+            throw new Error("Invalid Filter. Expected - ".concat(LIST_USER_BALANCE_FILTERS));
         }
         this.client.doGet(`users/${encodeURIComponent(userToken)}/balances`, options, Hyperwallet.handle204Response(callback));
     }
@@ -1255,6 +1413,7 @@ export default class Hyperwallet {
         if (!prepaidCardToken) {
             throw new Error("prepaidCardToken is required");
         }
+
         this.client.doGet(`users/${encodeURIComponent(userToken)}/prepaid-cards/${encodeURIComponent(prepaidCardToken)}/balances`, options, Hyperwallet.handle204Response(callback));
     }
 
@@ -1308,13 +1467,19 @@ export default class Hyperwallet {
         this.client.doGet(`payments/${encodeURIComponent(paymentToken)}`, {}, callback);
     }
 
+
     /**
      * List all payments
      *
      * @param {Object} options - The query parameters to send
      * @param {api-callback} callback - The callback for this call
+     * @throws Will throw an error if invalid payment is provided
      */
     listPayments(options, callback) {
+        const LIST_PAYMENT_FILTERS = ["clientPaymentId"];
+        if (options && !this.isValidFilter(options, LIST_PAYMENT_FILTERS)) {
+            throw new Error("Invalid Filter. Expected - ".concat(LIST_PAYMENT_FILTERS));
+        }
         this.client.doGet("payments", options, Hyperwallet.handle204Response(callback));
     }
 
@@ -1368,6 +1533,11 @@ export default class Hyperwallet {
         if (!paymentToken) {
             throw new Error("paymentToken is required");
         }
+        const LIST_PAYMENT_STATUS_TRANSITION_FILTERS = ["transition"];
+        if (options && !this.isValidFilter(options, LIST_PAYMENT_STATUS_TRANSITION_FILTERS)) {
+            throw new Error("Invalid Filter. Expected - ".concat(LIST_PAYMENT_STATUS_TRANSITION_FILTERS));
+        }
+
         this.client.doGet(`payments/${encodeURIComponent(paymentToken)}/status-transitions`, options, Hyperwallet.handle204Response(callback));
     }
 
@@ -1468,6 +1638,10 @@ export default class Hyperwallet {
         if (!userToken) {
             throw new Error("userToken is required");
         }
+        const LIST_TRANSFER_METHOD_CONFIG_FILTERS = ["userToken"];
+        if (options && !this.isValidFilter(options, LIST_TRANSFER_METHOD_CONFIG_FILTERS)) {
+            throw new Error("Invalid Filter. Expected - ".concat(LIST_TRANSFER_METHOD_CONFIG_FILTERS));
+        }
         const params = options ? objectAssign({}, options, { userToken }) : { userToken };
         this.client.doGet("transfer-method-configurations", params, Hyperwallet.handle204Response(callback));
     }
@@ -1567,6 +1741,10 @@ export default class Hyperwallet {
      * @param {api-callback} callback - The callback for this call
      */
     listWebhookNotifications(options, callback) {
+        const LIST_WEBHOOK_NOTIFICATIONS_FILTERS = ["programToken", "type"];
+        if (options && !this.isValidFilter(options, LIST_WEBHOOK_NOTIFICATIONS_FILTERS)) {
+            throw new Error("Invalid Filter. Expected - ".concat(LIST_WEBHOOK_NOTIFICATIONS_FILTERS));
+        }
         this.client.doGet("webhook-notifications", options, Hyperwallet.handle204Response(callback));
     }
 
@@ -1621,7 +1799,9 @@ export default class Hyperwallet {
         return (err, data, res) => {
             if (!err && res.status === 204) {
                 callback(err, {
-                    count: 0,
+                    hasNextPage: false,
+                    hasPreviousPage: false,
+                    limit: 0,
                     data: [],
                 }, res);
                 return;
@@ -1797,6 +1977,259 @@ export default class Hyperwallet {
         if (!venmoAccountToken) {
             throw new Error("venmoAccountToken is required");
         }
+        const LIST_VENMO_ACCOUNT_STATUS_TRANSITION_FILTERS = ["transition"];
+        if (options && !this.isValidFilter(options, LIST_VENMO_ACCOUNT_STATUS_TRANSITION_FILTERS)) {
+            throw new Error("Invalid Filter. Expected - ".concat(LIST_VENMO_ACCOUNT_STATUS_TRANSITION_FILTERS));
+        }
         this.client.doGet(`users/${encodeURIComponent(userToken)}/venmo-accounts/${encodeURIComponent(venmoAccountToken)}/status-transitions`, options, Hyperwallet.handle204Response(callback));
+    }
+
+    /**
+     * Validate the options filter
+     *
+     * @param {Object} inputFilters - The query parameters in the URI
+     * @param {Object} listFilters - Defined list of filters for a business object
+     */
+
+    isValidFilter(inputFilters, listFilters) {
+        return Object.keys(inputFilters).every(elem => listFilters.includes(elem));
+    }
+
+    //--------------------------------------
+    // Business StakeHolder
+    //--------------------------------------
+
+    /**
+     * Create a Business Stakeholder
+     *
+     * @param {string} userToken - The Stakeholder token
+     * @param {Object} data - The Stakeholder data
+     * @param {api-callback} callback - The callback for this call
+     *
+     * @throws Will throw an error if userToken is not provided
+     */
+    createBusinessStakeholder(userToken, data, callback) {
+        if (!userToken) {
+            throw new Error("userToken is required");
+        }
+        this.client.doPost(`users/${encodeURIComponent(userToken)}/business-stakeholders`, data, {}, callback);
+    }
+
+    /**
+     * Update a Business Stakeholder
+     *
+     * @param {string} userToken - The user token
+     * @param {string} stakeholderToken - The user token
+     * @param {Object} data - The Stakeholder data that should be updated
+     * @param {api-callback} callback - The callback for this call
+     *
+     * @throws Will throw an error if userToken is not provided
+     */
+    updateBusinessStakeholder(userToken, stakeholderToken, data, callback) {
+        if (!userToken) {
+            throw new Error("userToken is required");
+        }
+        if (!stakeholderToken) {
+            throw new Error("stakeholderToken is required");
+        }
+        this.client.doPut(`users/${encodeURIComponent(userToken)}/business-stakeholders/${encodeURIComponent(stakeholderToken)}`, data, {}, callback);
+    }
+
+    /**
+     * List all Business Stakeholder
+     *
+     * @param {string} userToken - The user token
+     * @param {Object} options - The query parameters to send
+     * @param {api-callback} callback - The callback for this call
+     *
+     * @throws Will throw an error if userToken is not provided
+     */
+    listBusinessStakeholders(userToken, options, callback) {
+        if (!userToken) {
+            throw new Error("userToken is required");
+        }
+        const LIST_BUSINESS_STAKEHOLDERS_FILTERS = ["status", "isBusinessContact", "isDirector", "isUltimateBeneficialOwner"];
+        if (options && !this.isValidFilter(options, LIST_BUSINESS_STAKEHOLDERS_FILTERS)) {
+            throw new Error("Invalid Filter. Expected - ".concat(LIST_BUSINESS_STAKEHOLDERS_FILTERS));
+        }
+        this.client.doGet(`users/${encodeURIComponent(userToken)}/business-stakeholders`, options, Hyperwallet.handle204Response(callback));
+    }
+
+    /**
+     * Activate a Business Stakeholder transition
+     *
+     * @param {string} userToken -  user token
+     * @param {string} stakeholderToken -  stakeholder token
+     * @param {api-callback} callback -  callback for this call
+     * @throws Will throw an error if userToken is not provided
+     */
+    activateBusinessStakeholder(userToken, stakeholderToken, callback) {
+        if (!userToken) {
+            throw new Error("userToken is required");
+        }
+        if (!stakeholderToken) {
+            throw new Error("stakeholderToken is required");
+        }
+        const data = {
+            transition: "ACTIVATED",
+        };
+        this.createBusinessStakeholderStatusTransition(userToken, stakeholderToken, data, callback);
+    }
+
+    /**
+     * Deactivate a Business Stakeholder transition
+     *
+     * @param {string} userToken -  user token
+     * @param {string} stakeholderToken -  stakeholder token
+     * @param {api-callback} callback -  callback for this call
+     * @throws Will throw an error if userToken is not provided
+     */
+    deactivateBusinessStakeholder(userToken, stakeholderToken, callback) {
+        if (!userToken) {
+            throw new Error("userToken is required");
+        }
+        if (!stakeholderToken) {
+            throw new Error("stakeholderToken is required");
+        }
+        const data = {
+            transition: "DE_ACTIVATED",
+        };
+        this.createBusinessStakeholderStatusTransition(userToken, stakeholderToken, data, callback);
+    }
+
+    /**
+     * Create a Business Stakeholder transition
+     *
+     * @param {string} userToken - user token
+     * @param {string} stakeholderToken -  stakeholder token
+     * @param {Object} data - Stakeholder transition data
+     * @param {api-callback} callback - The callback for this call
+     * @throws Will throw an error if userToken is not provided
+     */
+    createBusinessStakeholderStatusTransition(userToken, stakeholderToken, data, callback) {
+        if (!userToken) {
+            throw new Error("userToken is required");
+        }
+        if (!stakeholderToken) {
+            throw new Error("stakeholderToken is required");
+        }
+        this.client.doPost(`users/${encodeURIComponent(userToken)}/business-stakeholders/${encodeURIComponent(stakeholderToken)}/status-transitions`, data, {}, callback);
+    }
+
+    /**
+     * Get Business Stakeholder status transition
+     *
+     * @param {string} userToken -user token
+     * @param {string} stakeholderToken - The Business Stakeholder token
+     * @param {string} statusTransitionToken - The Business Stakeholder status transition token
+     * @param {api-callback} callback - The callback for this call
+     *
+     * @throws Will throw an error if userToken or stakeholderToken is not provided
+     */
+    getBusinessStakeholderStatusTransition(userToken, stakeholderToken, statusTransitionToken, callback) {
+        if (!userToken) {
+            throw new Error("userToken is required");
+        }
+        if (!stakeholderToken) {
+            throw new Error("stakeholderToken is required");
+        }
+        if (!statusTransitionToken) {
+            throw new Error("statusTransitionToken is required");
+        }
+        this.client.doGet(`users/${encodeURIComponent(userToken)}/business-stakeholders/${encodeURIComponent(stakeholderToken)}/status-transitions/${encodeURIComponent(statusTransitionToken)}`,
+            {},
+            callback);
+    }
+
+    /**
+     * List all Business Stakeholder status transitions
+     *
+     * @param {string} userToken - user token
+     * @param {string} stakeholderToken - Business Stakeholder token
+     * @param {Object} options - query parameters to send
+     * @param {api-callback} callback - callback for this call
+     *
+     * @throws Will throw an error if userToken or stakeholderToken is not provided
+     */
+    listBusinessStakeholderStatusTransitions(userToken, stakeholderToken, options, callback) {
+        if (!userToken) {
+            throw new Error("userToken is required");
+        }
+        if (!stakeholderToken) {
+            throw new Error("stakeholderToken is required");
+        }
+        this.client.doGet(`users/${encodeURIComponent(userToken)}/business-stakeholders/${encodeURIComponent(stakeholderToken)}/status-transitions`, options, Hyperwallet.handle204Response(callback));
+    }
+
+    /**
+     * Upload Documents to Business Stakeholder
+     *
+     * @param {string} userToken - The user token
+     * @param {string} stakeholderToken -  stakeholder token
+     * @param {Object} data - JSON object of the data and files to be uploaded
+     * @param {api-callback} callback - The callback for this call
+     *
+     * @throws Will throw an error if userToken is not provided
+     */
+    uploadBusinessStakeholderDocuments(userToken, stakeholderToken, data, callback) {
+        if (!userToken) {
+            throw new Error("userToken is required");
+        }
+        if (!stakeholderToken) {
+            throw new Error("stakeholderToken is required");
+        }
+        if (!data) {
+            throw new Error("Files for upload are required");
+        }
+        this.client.doPutMultipart(`users/${encodeURIComponent(userToken)}/business-stakeholders/${encodeURIComponent(stakeholderToken)}`, data, callback);
+    }
+
+    /**
+     * List of Transfer Methods
+     *
+     * @param {string} userToken - The user token
+     * @param {Object} options - The query parameters to send
+     * @param {api-callback} callback - The callback for this call
+     * @throws Will throw an error if userToken is not provided
+     */
+    listTransferMethods(userToken, options, callback) {
+        if (!userToken) {
+            throw new Error("userToken is required");
+        }
+        this.client.doGet(`users/${encodeURIComponent(userToken)}/transfer-methods`, options, Hyperwallet.handle204Response(callback));
+    }
+
+    /**
+     * Get a transfer status transition
+     *
+     * @param {string} transferToken - The transfer token
+     * @param {string} statusTransitionToken - The status transition token token
+     * @param {api-callback} callback - The callback for this call
+     *
+     * @throws Will throw an error if transferToken is not provided
+     * @throws Will throw an error if statusTransitionToken is not provided
+     */
+    getTransferStatusTransition(transferToken, statusTransitionToken, callback) {
+        if (!transferToken) {
+            throw new Error("transferToken is required");
+        }
+        if (!statusTransitionToken) {
+            throw new Error("statusTransitionToken is required");
+        }
+        this.client.doGet(`transfers/${encodeURIComponent(transferToken)}/status-transitions/${encodeURIComponent(statusTransitionToken)}`, {}, callback);
+    }
+
+    /**
+     * List all transfer status transitions
+     *
+     * @param {string} transferToken - The transfer token
+     * @param {Object} options - The query parameters to send
+     * @param {api-callback} callback - The callback for this call
+     */
+    listTransferStatusTransition(transferToken, options, callback) {
+        if (!transferToken) {
+            throw new Error("transferToken is required");
+        }
+        this.client.doGet(`transfers/${encodeURIComponent(transferToken)}/status-transitions`, options, Hyperwallet.handle204Response(callback));
     }
 }

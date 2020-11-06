@@ -19,7 +19,6 @@ describe("Hyperwallet", () => {
                 username: "test-username",
                 password: "test-password",
             });
-
             client.client.username.should.be.equal("test-username");
             client.client.password.should.be.equal("test-password");
             client.client.server.should.be.equal("https://api.sandbox.hyperwallet.com");
@@ -248,17 +247,20 @@ describe("Hyperwallet", () => {
         /** @test {Hyperwallet#listUsers} */
         it("should do get call with options", () => {
             const callback = () => null;
-            client.listUsers({ test: "value" }, callback);
-
+            client.listUsers({ clientUserId: "test-client-user-id", status: "test-status" }, callback);
             apiClientSpy.should.have.been.calledOnce();
-            apiClientSpy.should.have.been.calledWith("users", { test: "value" });
+            apiClientSpy.should.have.been.calledWith("users", { clientUserId: "test-client-user-id", status: "test-status" });
         });
 
+        /** @test {Hyperwallet#listUsers} */
+        it("should throw error for invalid filter", () => {
+            const callback = () => null;
+            expect(() => client.listUsers({ test1: "value" }, callback)).to.throw("Invalid Filter. Expected - clientUserId,email,programToken,status,verificationStatus");
+        });
         /** @test {Hyperwallet#listUsers} */
         it("should do get call without options", () => {
             const callback = () => null;
             client.listUsers({}, callback);
-
             apiClientSpy.should.have.been.calledOnce();
             apiClientSpy.should.have.been.calledWith("users", {});
         });
@@ -267,7 +269,9 @@ describe("Hyperwallet", () => {
         it("should handle 204 return", (cb) => {
             const callback = (err, data) => {
                 data.should.be.deep.equal({
-                    count: 0,
+                    hasNextPage: false,
+                    hasPreviousPage: false,
+                    limit: 0,
                     data: [],
                 });
 
@@ -563,18 +567,23 @@ describe("Hyperwallet", () => {
         });
 
         /** @test {Hyperwallet#listUserStatusTransitions} */
-        it("should throw error if userToken is missing", () => {
+        it("should do get call with options", () => {
             const callback = () => null;
-            expect(() => client.listUserStatusTransitions(undefined, {}, callback)).to.throw("userToken is required");
+            client.listUserStatusTransitions("test-user-token", { transition: "test-transition" }, callback);
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("users/test-user-token/status-transitions", { transition: "test-transition" });
         });
 
         /** @test {Hyperwallet#listUserStatusTransitions} */
-        it("should do get call with options", () => {
+        it("should throw error for invalid filter", () => {
             const callback = () => null;
-            client.listUserStatusTransitions("test-user-token", { test: "value" }, callback);
+            expect(() => client.listUserStatusTransitions("test-user-token", { test1: "value" }, callback)).to.throw("Invalid Filter. Expected - transition");
+        });
 
-            apiClientSpy.should.have.been.calledOnce();
-            apiClientSpy.should.have.been.calledWith("users/test-user-token/status-transitions", { test: "value" });
+        /** @test {Hyperwallet#listUserStatusTransitions} */
+        it("should throw error if userToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.listUserStatusTransitions(undefined, {}, callback)).to.throw("userToken is required");
         });
 
         /** @test {Hyperwallet#listUserStatusTransitions} */
@@ -590,7 +599,9 @@ describe("Hyperwallet", () => {
         it("should handle 204 return", (cb) => {
             const callback = (err, data) => {
                 data.should.be.deep.equal({
-                    count: 0,
+                    hasNextPage: false,
+                    hasPreviousPage: false,
+                    limit: 0,
                     data: [],
                 });
 
@@ -792,10 +803,16 @@ describe("Hyperwallet", () => {
         /** @test {Hyperwallet#listBankCards} */
         it("should do get call with options", () => {
             const callback = () => null;
-            client.listBankCards("test-user-token", { test: "value" }, callback);
+            client.listBankCards("test-user-token", { status: "test-status" }, callback);
 
             apiClientSpy.should.have.been.calledOnce();
-            apiClientSpy.should.have.been.calledWith("users/test-user-token/bank-cards", { test: "value" });
+            apiClientSpy.should.have.been.calledWith("users/test-user-token/bank-cards", { status: "test-status" });
+        });
+
+        /** @test {Hyperwallet#listBankCards} */
+        it("should throw error for invalid filter", () => {
+            const callback = () => null;
+            expect(() => client.listBankCards("test-user-token", { test: "value" }, callback)).to.throw("Invalid Filter. Expected - status");
         });
 
         /** @test {Hyperwallet#listBankCards} */
@@ -811,7 +828,9 @@ describe("Hyperwallet", () => {
         it("should handle 204 return", (cb) => {
             const callback = (err, data) => {
                 data.should.be.deep.equal({
-                    count: 0,
+                    hasNextPage: false,
+                    hasPreviousPage: false,
+                    limit: 0,
                     data: [],
                 });
 
@@ -989,10 +1008,15 @@ describe("Hyperwallet", () => {
         /** @test {Hyperwallet#listBankCardStatusTransitions} */
         it("should do get call with options", () => {
             const callback = () => null;
-            client.listBankCardStatusTransitions("test-user-token", "test-bank-card-token", { test: "value" }, callback);
-
+            client.listBankCardStatusTransitions("test-user-token", "test-bank-card-token", { transition: "test-transition" }, callback);
             apiClientSpy.should.have.been.calledOnce();
-            apiClientSpy.should.have.been.calledWith("users/test-user-token/bank-cards/test-bank-card-token/status-transitions", { test: "value" });
+            apiClientSpy.should.have.been.calledWith("users/test-user-token/bank-cards/test-bank-card-token/status-transitions", { transition: "test-transition" });
+        });
+
+        /** @test {Hyperwallet#listBankCardStatusTransitions} */
+        it("should throw error for invalid filter", () => {
+            const callback = () => null;
+            expect(() => client.listBankCardStatusTransitions("test-user-token", "test-bank-card-token", { test: "value" }, callback)).to.throw("Invalid Filter. Expected - transition");
         });
 
         /** @test {Hyperwallet#listBankCardStatusTransitions} */
@@ -1008,7 +1032,9 @@ describe("Hyperwallet", () => {
         it("should handle 204 return", (cb) => {
             const callback = (err, data) => {
                 data.should.be.deep.equal({
-                    count: 0,
+                    hasNextPage: false,
+                    hasPreviousPage: false,
+                    limit: 0,
                     data: [],
                 });
 
@@ -1206,10 +1232,15 @@ describe("Hyperwallet", () => {
         /** @test {Hyperwallet#listPaperChecks} */
         it("should do get call with options", () => {
             const callback = () => null;
-            client.listPaperChecks("test-user-token", { test: "value" }, callback);
-
+            client.listPaperChecks("test-user-token", { status: "test-status" }, callback);
             apiClientSpy.should.have.been.calledOnce();
-            apiClientSpy.should.have.been.calledWith("users/test-user-token/paper-checks", { test: "value" });
+            apiClientSpy.should.have.been.calledWith("users/test-user-token/paper-checks", { status: "test-status" });
+        });
+
+        /** @test {Hyperwallet#listPaperChecks} */
+        it("should throw error for invalid filter", () => {
+            const callback = () => null;
+            expect(() => client.listPaperChecks("test-user-token", { test: "value" }, callback)).to.throw("Invalid Filter. Expected - status");
         });
 
         /** @test {Hyperwallet#listPaperChecks} */
@@ -1225,7 +1256,9 @@ describe("Hyperwallet", () => {
         it("should handle 204 return", (cb) => {
             const callback = (err, data) => {
                 data.should.be.deep.equal({
-                    count: 0,
+                    hasNextPage: false,
+                    hasPreviousPage: false,
+                    limit: 0,
                     data: [],
                 });
 
@@ -1403,10 +1436,15 @@ describe("Hyperwallet", () => {
         /** @test {Hyperwallet#listPaperCheckStatusTransitions} */
         it("should do get call with options", () => {
             const callback = () => null;
-            client.listPaperCheckStatusTransitions("test-user-token", "test-paper-check-token", { test: "value" }, callback);
-
+            client.listPaperCheckStatusTransitions("test-user-token", "test-paper-check-token", { transition: "test-transition" }, callback);
             apiClientSpy.should.have.been.calledOnce();
-            apiClientSpy.should.have.been.calledWith("users/test-user-token/paper-checks/test-paper-check-token/status-transitions", { test: "value" });
+            apiClientSpy.should.have.been.calledWith("users/test-user-token/paper-checks/test-paper-check-token/status-transitions", { transition: "test-transition" });
+        });
+
+        /** @test {Hyperwallet#listPaperCheckStatusTransitions} */
+        it("should throw error for invalid filter", () => {
+            const callback = () => null;
+            expect(() => client.listPaperCheckStatusTransitions("test-user-token", "test-paper-check-token", { test: "value" }, callback)).to.throw("Invalid Filter. Expected - transition");
         });
 
         /** @test {Hyperwallet#listPaperCheckStatusTransitions} */
@@ -1422,7 +1460,9 @@ describe("Hyperwallet", () => {
         it("should handle 204 return", (cb) => {
             const callback = (err, data) => {
                 data.should.be.deep.equal({
-                    count: 0,
+                    hasNextPage: false,
+                    hasPreviousPage: false,
+                    limit: 0,
                     data: [],
                 });
 
@@ -1553,10 +1593,15 @@ describe("Hyperwallet", () => {
         /** @test {Hyperwallet#listTransfers} */
         it("should do get call with options", () => {
             const callback = () => null;
-            client.listTransfers({ test: "value" }, callback);
-
+            client.listTransfers({ clientTransferId: "test-status", sourceToken: "test-sourceToken", destinationToken: "test-destinationToken" }, callback);
             apiClientSpy.should.have.been.calledOnce();
-            apiClientSpy.should.have.been.calledWith("transfers", { test: "value" });
+            apiClientSpy.should.have.been.calledWith("transfers", { clientTransferId: "test-status", sourceToken: "test-sourceToken", destinationToken: "test-destinationToken" });
+        });
+
+        /** @test {Hyperwallet#listTransfers} */
+        it("should throw error for invalid filter", () => {
+            const callback = () => null;
+            expect(() => client.listTransfers({ test: "value" }, callback)).to.throw("Invalid Filter. Expected - clientTransferId,sourceToken,destinationToken");
         });
 
         /** @test {Hyperwallet#listTransfers} */
@@ -1572,7 +1617,9 @@ describe("Hyperwallet", () => {
         it("should handle 204 return", (cb) => {
             const callback = (err, data) => {
                 data.should.be.deep.equal({
-                    count: 0,
+                    hasNextPage: false,
+                    hasPreviousPage: false,
+                    limit: 0,
                     data: [],
                 });
 
@@ -1759,7 +1806,9 @@ describe("Hyperwallet", () => {
         it("should handle 204 return", (cb) => {
             const callback = (err, data) => {
                 data.should.be.deep.equal({
-                    count: 0,
+                    hasNextPage: false,
+                    hasPreviousPage: false,
+                    limit: 0,
                     data: [],
                 });
 
@@ -1906,17 +1955,21 @@ describe("Hyperwallet", () => {
         /** @test {Hyperwallet#listPayPalAccounts} */
         it("should do get call with options", () => {
             const callback = () => null;
-            client.listPayPalAccounts("test-user-token", { test: "value" }, callback);
-
+            client.listPayPalAccounts("test-user-token", { status: "test-status" }, callback);
             apiClientSpy.should.have.been.calledOnce();
-            apiClientSpy.should.have.been.calledWith("users/test-user-token/paypal-accounts", { test: "value" });
+            apiClientSpy.should.have.been.calledWith("users/test-user-token/paypal-accounts", { status: "test-status" });
+        });
+
+        /** @test {Hyperwallet#listPayPalAccounts} */
+        it("should throw error for invalid filter", () => {
+            const callback = () => null;
+            expect(() => client.listPayPalAccounts("test-user-token", { test: "value" }, callback)).to.throw("Invalid Filter. Expected - status");
         });
 
         /** @test {Hyperwallet#listPayPalAccounts} */
         it("should do get call without options", () => {
             const callback = () => null;
             client.listPayPalAccounts("test-user-token", {}, callback);
-
             apiClientSpy.should.have.been.calledOnce();
             apiClientSpy.should.have.been.calledWith("users/test-user-token/paypal-accounts", {});
         });
@@ -1925,7 +1978,9 @@ describe("Hyperwallet", () => {
         it("should handle 204 return", (cb) => {
             const callback = (err, data) => {
                 data.should.be.deep.equal({
-                    count: 0,
+                    hasNextPage: false,
+                    hasPreviousPage: false,
+                    limit: 0,
                     data: [],
                 });
 
@@ -1939,6 +1994,128 @@ describe("Hyperwallet", () => {
             apiClientSpy.getCall(0).args[2](undefined, {}, {
                 status: 204,
             });
+        });
+    });
+
+    /** @test {Hyperwallet#updatePayPalAccount} */
+    describe("updatePayPalAccount()", () => {
+        let client;
+        let apiClientSpy;
+
+        beforeEach(() => {
+            apiClientSpy = sinon.spy();
+            client = new Hyperwallet({
+                username: "test-username",
+                password: "test-password",
+            });
+            client.client = {
+                doPut: apiClientSpy,
+            };
+        });
+
+        /** @test {Hyperwallet#updatePayPalAccount} */
+        it("should throw error if userToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.updatePayPalAccount(undefined, undefined, { test: "value" }, callback)).to.throw("userToken is required");
+        });
+
+        /** @test {Hyperwallet#updatePayPalAccount} */
+        it("should throw error if payPalAccountToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.updatePayPalAccount("test-user-token", undefined, { test: "value" }, callback)).to.throw("payPalAccountToken is required");
+        });
+
+        /** @test {Hyperwallet#updatePayPalAccount} */
+        it("should do put call to paypal account endpoint", () => {
+            const callback = () => null;
+            client.updatePayPalAccount("test-user-token", "test-paypal-account-token", {
+                test: "value",
+            }, callback);
+
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("users/test-user-token/paypal-accounts/test-paypal-account-token", {
+                test: "value",
+            }, {}, callback);
+        });
+    });
+
+    /** @test {Hyperwallet#activatePayPalAccount} */
+    describe("activatePayPalAccount()", () => {
+        let client;
+        let apiClientSpy;
+
+        beforeEach(() => {
+            apiClientSpy = sinon.spy();
+            client = new Hyperwallet({
+                username: "test-username",
+                password: "test-password",
+            });
+            client.client = {
+                doPost: apiClientSpy,
+            };
+        });
+
+        /** @test {Hyperwallet#activatePayPalAccount} */
+        it("should throw error if userToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.activatePayPalAccount(undefined, undefined, callback)).to.throw("userToken is required");
+        });
+
+        /** @test {Hyperwallet#activatePayPalAccount} */
+        it("should throw error if payPalAccountToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.activatePayPalAccount("test-user-token", undefined, callback)).to.throw("payPalAccountToken is required");
+        });
+
+        /** @test {Hyperwallet#activatePayPalAccount} */
+        it("should send transition to 'ACTIVATED'", () => {
+            const callback = () => null;
+            client.activatePayPalAccount("test-user-token", "test-paypal-account-token", callback);
+
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("users/test-user-token/paypal-accounts/test-paypal-account-token/status-transitions", {
+                transition: "ACTIVATED",
+            }, {}, callback);
+        });
+    });
+
+    /** @test {Hyperwallet#deactivatePayPalAccount} */
+    describe("deactivatePayPalAccount()", () => {
+        let client;
+        let apiClientSpy;
+
+        beforeEach(() => {
+            apiClientSpy = sinon.spy();
+            client = new Hyperwallet({
+                username: "test-username",
+                password: "test-password",
+            });
+            client.client = {
+                doPost: apiClientSpy,
+            };
+        });
+
+        /** @test {Hyperwallet#deactivatePayPalAccount} */
+        it("should throw error if userToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.deactivatePayPalAccount(undefined, undefined, callback)).to.throw("userToken is required");
+        });
+
+        /** @test {Hyperwallet#deactivatePayPalAccount} */
+        it("should throw error if payPalAccountToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.deactivatePayPalAccount("test-user-token", undefined, callback)).to.throw("payPalAccountToken is required");
+        });
+
+        /** @test {Hyperwallet#deactivatePayPalAccount} */
+        it("should send transition to 'DE_ACTIVATED'", () => {
+            const callback = () => null;
+            client.deactivatePayPalAccount("test-user-token", "test-paypal-account-token", callback);
+
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("users/test-user-token/paypal-accounts/test-paypal-account-token/status-transitions", {
+                transition: "DE_ACTIVATED",
+            }, {}, callback);
         });
     });
 
@@ -1979,6 +2156,118 @@ describe("Hyperwallet", () => {
             apiClientSpy.should.have.been.calledWith("users/test-user-token/paypal-accounts/test-paypal-account-token/status-transitions", {
                 test: "value",
             }, {}, callback);
+        });
+    });
+
+    /** @test {Hyperwallet#getPayPalAccountStatusTransition} */
+    describe("getPayPalAccountStatusTransition()", () => {
+        let client;
+        let apiClientSpy;
+
+        beforeEach(() => {
+            apiClientSpy = sinon.spy();
+            client = new Hyperwallet({
+                username: "test-username",
+                password: "test-password",
+            });
+            client.client = {
+                doGet: apiClientSpy,
+            };
+        });
+
+        /** @test {Hyperwallet#getPayPalAccountStatusTransition} */
+        it("should throw error if userToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.getPayPalAccountStatusTransition(undefined, undefined, undefined, callback)).to.throw("userToken is required");
+        });
+
+        /** @test {Hyperwallet#getPayPalAccountStatusTransition} */
+        it("should throw error if payPalAccountToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.getPayPalAccountStatusTransition("test-user-token", undefined, undefined, callback)).to.throw("payPalAccountToken is required");
+        });
+
+        /** @test {Hyperwallet#getPayPalAccountStatusTransition} */
+        it("should throw error if statusTransitionToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.getPayPalAccountStatusTransition("test-user-token", "test-paypal-account-token", undefined, callback)).to.throw("statusTransitionToken is required");
+        });
+
+        /** @test {Hyperwallet#getPayPalAccountStatusTransition} */
+        it("should do get call if userToken, payPalAccountToken and statusTransitionToken is provided", () => {
+            const callback = () => null;
+            client.getPayPalAccountStatusTransition("test-user-token", "test-paypal-account-token", "status-transition-token", callback);
+
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("users/test-user-token/paypal-accounts/test-paypal-account-token/status-transitions/status-transition-token", {}, callback);
+        });
+    });
+
+    /** @test {Hyperwallet#listPayPalAccountStatusTransitions} */
+    describe("listPayPalAccountStatusTransitions()", () => {
+        let client;
+        let apiClientSpy;
+
+        beforeEach(() => {
+            apiClientSpy = sinon.spy();
+            client = new Hyperwallet({
+                username: "test-username",
+                password: "test-password",
+            });
+            client.client = {
+                doGet: apiClientSpy,
+            };
+        });
+
+        /** @test {Hyperwallet#listPayPalAccountStatusTransitions} */
+        it("should throw error if userToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.listPayPalAccountStatusTransitions(undefined, undefined, {}, callback)).to.throw("userToken is required");
+        });
+
+        /** @test {Hyperwallet#listPayPalAccountStatusTransitions} */
+        it("should throw error if payPalAccountToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.listPayPalAccountStatusTransitions("test-user-token", undefined, {}, callback)).to.throw("payPalAccountToken is required");
+        });
+
+        /** @test {Hyperwallet#listPayPalAccountStatusTransitions} */
+        it("should do get call with options", () => {
+            const callback = () => null;
+            client.listPayPalAccountStatusTransitions("test-user-token", "test-paypal-account-token", { test: "value" }, callback);
+
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("users/test-user-token/paypal-accounts/test-paypal-account-token/status-transitions", { test: "value" });
+        });
+
+        /** @test {Hyperwallet#listPayPalAccountStatusTransitions} */
+        it("should do get call without options", () => {
+            const callback = () => null;
+            client.listPayPalAccountStatusTransitions("test-user-token", "test-paypal-account-token", {}, callback);
+
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("users/test-user-token/paypal-accounts/test-paypal-account-token/status-transitions", {});
+        });
+
+        /** @test {Hyperwallet#listPayPalAccountStatusTransitions} */
+        it("should handle 204 return", (cb) => {
+            const callback = (err, data) => {
+                data.should.be.deep.equal({
+                    hasNextPage: false,
+                    hasPreviousPage: false,
+                    limit: 0,
+                    data: [],
+                });
+                cb();
+            };
+            client.listPayPalAccountStatusTransitions("test-user-token", "test-paypal-account-token", {}, callback);
+
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("users/test-user-token/paypal-accounts/test-paypal-account-token/status-transitions", {});
+
+            apiClientSpy.getCall(0).args[2](undefined, {}, {
+                status: 204,
+            });
         });
     });
 
@@ -2127,10 +2416,15 @@ describe("Hyperwallet", () => {
         /** @test {Hyperwallet#listPrepaidCards} */
         it("should do get call with options", () => {
             const callback = () => null;
-            client.listPrepaidCards("test-user-token", { test: "value" }, callback);
-
+            client.listPrepaidCards("test-user-token", { status: "test-status" }, callback);
             apiClientSpy.should.have.been.calledOnce();
-            apiClientSpy.should.have.been.calledWith("users/test-user-token/prepaid-cards", { test: "value" });
+            apiClientSpy.should.have.been.calledWith("users/test-user-token/prepaid-cards", { status: "test-status" });
+        });
+
+        /** @test {Hyperwallet#listPrepaidCards} */
+        it("should throw error for invalid filter", () => {
+            const callback = () => null;
+            expect(() => client.listPrepaidCards("test-user-token", { test: "value" }, callback)).to.throw("Invalid Filter. Expected - status");
         });
 
         /** @test {Hyperwallet#listPrepaidCards} */
@@ -2146,7 +2440,9 @@ describe("Hyperwallet", () => {
         it("should handle 204 return", (cb) => {
             const callback = (err, data) => {
                 data.should.be.deep.equal({
-                    count: 0,
+                    hasNextPage: false,
+                    hasPreviousPage: false,
+                    limit: 0,
                     data: [],
                 });
 
@@ -2350,10 +2646,15 @@ describe("Hyperwallet", () => {
         /** @test {Hyperwallet#listPrepaidCardStatusTransitions} */
         it("should do get call with options", () => {
             const callback = () => null;
-            client.listPrepaidCardStatusTransitions("test-user-token", "test-prepaid-card-token", { test: "value" }, callback);
-
+            client.listPrepaidCardStatusTransitions("test-user-token", "test-prepaid-card-token", { transition: "test-transition" }, callback);
             apiClientSpy.should.have.been.calledOnce();
-            apiClientSpy.should.have.been.calledWith("users/test-user-token/prepaid-cards/test-prepaid-card-token/status-transitions", { test: "value" });
+            apiClientSpy.should.have.been.calledWith("users/test-user-token/prepaid-cards/test-prepaid-card-token/status-transitions", { transition: "test-transition" });
+        });
+
+        /** @test {Hyperwallet#listPrepaidCardStatusTransitions} */
+        it("should throw error for invalid filter", () => {
+            const callback = () => null;
+            expect(() => client.listPrepaidCardStatusTransitions("test-user-token", "test-prepaid-card-token", { test: "value" }, callback)).to.throw("Invalid Filter. Expected - transition");
         });
 
         /** @test {Hyperwallet#listPrepaidCardStatusTransitions} */
@@ -2369,7 +2670,9 @@ describe("Hyperwallet", () => {
         it("should handle 204 return", (cb) => {
             const callback = (err, data) => {
                 data.should.be.deep.equal({
-                    count: 0,
+                    hasNextPage: false,
+                    hasPreviousPage: false,
+                    limit: 0,
                     data: [],
                 });
 
@@ -2527,30 +2830,34 @@ describe("Hyperwallet", () => {
             const callback = () => null;
             expect(() => client.listBankAccounts(undefined, {}, callback)).to.throw("userToken is required");
         });
-
         /** @test {Hyperwallet#listBankAccounts} */
         it("should do get call with options", () => {
             const callback = () => null;
-            client.listBankAccounts("test-user-token", { test: "value" }, callback);
-
+            client.listBankAccounts("test-user-token", { type: "test-type", status: "test-status" }, callback);
             apiClientSpy.should.have.been.calledOnce();
-            apiClientSpy.should.have.been.calledWith("users/test-user-token/bank-accounts", { test: "value" });
+            apiClientSpy.should.have.been.calledWith("users/test-user-token/bank-accounts", { type: "test-type", status: "test-status" });
+        });
+
+        /** @test {Hyperwallet#listBankAccounts} */
+        it("should throw error for invalid filter", () => {
+            const callback = () => null;
+            expect(() => client.listBankAccounts("test-user-token", { test: "value" }, callback)).to.throw("Invalid Filter. Expected - type,status");
         });
 
         /** @test {Hyperwallet#listBankAccounts} */
         it("should do get call without options", () => {
             const callback = () => null;
             client.listBankAccounts("test-user-token", {}, callback);
-
             apiClientSpy.should.have.been.calledOnce();
             apiClientSpy.should.have.been.calledWith("users/test-user-token/bank-accounts", {});
         });
-
         /** @test {Hyperwallet#listBankAccounts} */
         it("should handle 204 return", (cb) => {
             const callback = (err, data) => {
                 data.should.be.deep.equal({
-                    count: 0,
+                    hasNextPage: false,
+                    hasPreviousPage: false,
+                    limit: 0,
                     data: [],
                 });
 
@@ -2712,7 +3019,6 @@ describe("Hyperwallet", () => {
             const callback = () => null;
             expect(() => client.listBankAccountStatusTransitions(undefined, undefined, {}, callback)).to.throw("userToken is required");
         });
-
         /** @test {Hyperwallet#listBankAccountStatusTransitions} */
         it("should throw error if bankAccountToken is missing", () => {
             const callback = () => null;
@@ -2722,10 +3028,15 @@ describe("Hyperwallet", () => {
         /** @test {Hyperwallet#listBankAccountStatusTransitions} */
         it("should do get call with options", () => {
             const callback = () => null;
-            client.listBankAccountStatusTransitions("test-user-token", "test-bank-account-token", { test: "value" }, callback);
-
+            client.listBankAccountStatusTransitions("test-user-token", "test-bank-account-token", { transition: "test-transition" }, callback);
             apiClientSpy.should.have.been.calledOnce();
-            apiClientSpy.should.have.been.calledWith("users/test-user-token/bank-accounts/test-bank-account-token/status-transitions", { test: "value" });
+            apiClientSpy.should.have.been.calledWith("users/test-user-token/bank-accounts/test-bank-account-token/status-transitions", { transition: "test-transition" });
+        });
+
+        /** @test {Hyperwallet#listBankAccountStatusTransitions} */
+        it("should throw error for invalid filter", () => {
+            const callback = () => null;
+            expect(() => client.listBankAccountStatusTransitions("test-user-token", "test-bank-account-token", { test: "value" }, callback)).to.throw("Invalid Filter. Expected - transition");
         });
 
         /** @test {Hyperwallet#listBankAccountStatusTransitions} */
@@ -2741,7 +3052,9 @@ describe("Hyperwallet", () => {
         it("should handle 204 return", (cb) => {
             const callback = (err, data) => {
                 data.should.be.deep.equal({
-                    count: 0,
+                    hasNextPage: false,
+                    hasPreviousPage: false,
+                    limit: 0,
                     data: [],
                 });
 
@@ -2787,10 +3100,15 @@ describe("Hyperwallet", () => {
         /** @test {Hyperwallet#listBalancesForUser} */
         it("should do get call with options", () => {
             const callback = () => null;
-            client.listBalancesForUser("test-user-token", { test: "value" }, callback);
-
+            client.listBalancesForUser("test-user-token", { currency: "test-currency" }, callback);
             apiClientSpy.should.have.been.calledOnce();
-            apiClientSpy.should.have.been.calledWith("users/test-user-token/balances", { test: "value" });
+            apiClientSpy.should.have.been.calledWith("users/test-user-token/balances", { currency: "test-currency" });
+        });
+
+        /** @test {Hyperwallet#listBalancesForUser} */
+        it("should throw error for invalid filter", () => {
+            const callback = () => null;
+            expect(() => client.listBalancesForUser("test-user-token", { test: "value" }, callback)).to.throw("Invalid Filter. Expected - currency");
         });
 
         /** @test {Hyperwallet#listBalancesForUser} */
@@ -2806,7 +3124,9 @@ describe("Hyperwallet", () => {
         it("should handle 204 return", (cb) => {
             const callback = (err, data) => {
                 data.should.be.deep.equal({
-                    count: 0,
+                    hasNextPage: false,
+                    hasPreviousPage: false,
+                    limit: 0,
                     data: [],
                 });
 
@@ -2873,7 +3193,9 @@ describe("Hyperwallet", () => {
         it("should handle 204 return", (cb) => {
             const callback = (err, data) => {
                 data.should.be.deep.equal({
-                    count: 0,
+                    hasNextPage: false,
+                    hasPreviousPage: false,
+                    limit: 0,
                     data: [],
                 });
 
@@ -2940,7 +3262,9 @@ describe("Hyperwallet", () => {
         it("should handle 204 return", (cb) => {
             const callback = (err, data) => {
                 data.should.be.deep.equal({
-                    count: 0,
+                    hasNextPage: false,
+                    hasPreviousPage: false,
+                    limit: 0,
                     data: [],
                 });
 
@@ -3058,10 +3382,15 @@ describe("Hyperwallet", () => {
         /** @test {Hyperwallet#listPayments} */
         it("should do get call with options", () => {
             const callback = () => null;
-            client.listPayments({ test: "value" }, callback);
-
+            client.listPayments({ clientPaymentId: "test-client-payment-id" }, callback);
             apiClientSpy.should.have.been.calledOnce();
-            apiClientSpy.should.have.been.calledWith("payments", { test: "value" });
+            apiClientSpy.should.have.been.calledWith("payments", { clientPaymentId: "test-client-payment-id" });
+        });
+
+        /** @test {Hyperwallet#listPayments} */
+        it("should throw error for invalid filter", () => {
+            const callback = () => null;
+            expect(() => client.listPayments({ test: "value" }, callback)).to.throw("Invalid Filter. Expected - clientPaymentId");
         });
 
         /** @test {Hyperwallet#listPayments} */
@@ -3077,7 +3406,9 @@ describe("Hyperwallet", () => {
         it("should handle 204 return", (cb) => {
             const callback = (err, data) => {
                 data.should.be.deep.equal({
-                    count: 0,
+                    hasNextPage: false,
+                    hasPreviousPage: false,
+                    limit: 0,
                     data: [],
                 });
 
@@ -3191,10 +3522,15 @@ describe("Hyperwallet", () => {
         /** @test {Hyperwallet#listPaymentStatusTransitions} */
         it("should do get call with options", () => {
             const callback = () => null;
-            client.listPaymentStatusTransitions("test-payment-token", { test: "value" }, callback);
-
+            client.listPaymentStatusTransitions("test-payment-token", { transition: "test-transition" }, callback);
             apiClientSpy.should.have.been.calledOnce();
-            apiClientSpy.should.have.been.calledWith("payments/test-payment-token/status-transitions", { test: "value" });
+            apiClientSpy.should.have.been.calledWith("payments/test-payment-token/status-transitions", { transition: "test-transition" });
+        });
+
+        /** @test {Hyperwallet#listPaymentStatusTransitions} */
+        it("should throw error for invalid filter", () => {
+            const callback = () => null;
+            expect(() => client.listPaymentStatusTransitions("test-payment-token", { test: "value" }, callback)).to.throw("Invalid Filter. Expected - transition");
         });
 
         /** @test {Hyperwallet#listPaymentStatusTransitions} */
@@ -3210,7 +3546,9 @@ describe("Hyperwallet", () => {
         it("should handle 204 return", (cb) => {
             const callback = (err, data) => {
                 data.should.be.deep.equal({
-                    count: 0,
+                    hasNextPage: false,
+                    hasPreviousPage: false,
+                    limit: 0,
                     data: [],
                 });
 
@@ -3396,13 +3734,15 @@ describe("Hyperwallet", () => {
         /** @test {Hyperwallet#listTransferMethodConfigurations} */
         it("should do get call with options", () => {
             const callback = () => null;
-            client.listTransferMethodConfigurations("test-user-token", { test: "value" }, callback);
-
+            client.listTransferMethodConfigurations("test-user-token", { userToken: "test-userToken" }, callback);
             apiClientSpy.should.have.been.calledOnce();
-            apiClientSpy.should.have.been.calledWith("transfer-method-configurations", {
-                test: "value",
-                userToken: "test-user-token",
-            });
+            apiClientSpy.should.have.been.calledWith("transfer-method-configurations", { userToken: "test-user-token" });
+        });
+
+        /** @test {Hyperwallet#listTransferMethodConfigurations} */
+        it("should throw error for invalid filter", () => {
+            const callback = () => null;
+            expect(() => client.listTransferMethodConfigurations("test-user-token", { test: "value" }, callback)).to.throw("Invalid Filter. Expected - userToken");
         });
 
         /** @test {Hyperwallet#listTransferMethodConfigurations} */
@@ -3420,7 +3760,9 @@ describe("Hyperwallet", () => {
         it("should handle 204 return", (cb) => {
             const callback = (err, data) => {
                 data.should.be.deep.equal({
-                    count: 0,
+                    hasNextPage: false,
+                    hasPreviousPage: false,
+                    limit: 0,
                     data: [],
                 });
 
@@ -3538,7 +3880,9 @@ describe("Hyperwallet", () => {
         it("should handle 204 return", (cb) => {
             const callback = (err, data) => {
                 data.should.be.deep.equal({
-                    count: 0,
+                    hasNextPage: false,
+                    hasPreviousPage: false,
+                    limit: 0,
                     data: [],
                 });
 
@@ -3599,7 +3943,9 @@ describe("Hyperwallet", () => {
         it("should handle 204 return", (cb) => {
             const callback = (err, data) => {
                 data.should.be.deep.equal({
-                    count: 0,
+                    hasNextPage: false,
+                    hasPreviousPage: false,
+                    limit: 0,
                     data: [],
                 });
 
@@ -3666,7 +4012,9 @@ describe("Hyperwallet", () => {
         it("should handle 204 return", (cb) => {
             const callback = (err, data) => {
                 data.should.be.deep.equal({
-                    count: 0,
+                    hasNextPage: false,
+                    hasPreviousPage: false,
+                    limit: 0,
                     data: [],
                 });
 
@@ -3705,10 +4053,15 @@ describe("Hyperwallet", () => {
         /** @test {Hyperwallet#listWebhookNotifications} */
         it("should do get call with options", () => {
             const callback = () => null;
-            client.listWebhookNotifications({ test: "value" }, callback);
-
+            client.listWebhookNotifications({ programToken: "test-programToken", type: "test-type" }, callback);
             apiClientSpy.should.have.been.calledOnce();
-            apiClientSpy.should.have.been.calledWith("webhook-notifications", { test: "value" });
+            apiClientSpy.should.have.been.calledWith("webhook-notifications", { programToken: "test-programToken", type: "test-type" });
+        });
+
+        /** @test {Hyperwallet#listWebhookNotifications} */
+        it("should throw error for invalid filter", () => {
+            const callback = () => null;
+            expect(() => client.listWebhookNotifications({ test: "value" }, callback)).to.throw("Invalid Filter. Expected - programToken,type");
         });
 
         /** @test {Hyperwallet#listWebhookNotifications} */
@@ -3724,7 +4077,9 @@ describe("Hyperwallet", () => {
         it("should handle 204 return", (cb) => {
             const callback = (err, data) => {
                 data.should.be.deep.equal({
-                    count: 0,
+                    hasNextPage: false,
+                    hasPreviousPage: false,
+                    limit: 0,
                     data: [],
                 });
 
@@ -3871,7 +4226,9 @@ describe("Hyperwallet", () => {
                 expect(err).to.be.undefined();
 
                 data.should.be.deep.equal({
-                    count: 0,
+                    hasNextPage: false,
+                    hasPreviousPage: false,
+                    limit: 0,
                     data: [],
                 });
                 res.should.be.deep.equal(providedRes);
@@ -4013,7 +4370,6 @@ describe("Hyperwallet", () => {
         it("should do get call with options", () => {
             const callback = () => null;
             client.listVenmoAccounts("test-user-token", { test: "value" }, callback);
-
             apiClientSpy.should.have.been.calledOnce();
             apiClientSpy.should.have.been.calledWith("users/test-user-token/venmo-accounts", { test: "value" });
         });
@@ -4031,7 +4387,9 @@ describe("Hyperwallet", () => {
         it("should handle 204 return", (cb) => {
             const callback = (err, data) => {
                 data.should.be.deep.equal({
-                    count: 0,
+                    hasNextPage: false,
+                    hasPreviousPage: false,
+                    limit: 0,
                     data: [],
                 });
 
@@ -4246,10 +4604,15 @@ describe("Hyperwallet", () => {
         /** @test {Hyperwallet#listVenmoAccountStatusTransitions} */
         it("should do get call with options", () => {
             const callback = () => null;
-            client.listVenmoAccountStatusTransitions("test-user-token", "test-venmo-account-token", { test: "value" }, callback);
-
+            client.listVenmoAccountStatusTransitions("test-user-token", "test-venmo-account-token", { transition: "test-transition" }, callback);
             apiClientSpy.should.have.been.calledOnce();
-            apiClientSpy.should.have.been.calledWith("users/test-user-token/venmo-accounts/test-venmo-account-token/status-transitions", { test: "value" });
+            apiClientSpy.should.have.been.calledWith("users/test-user-token/venmo-accounts/test-venmo-account-token/status-transitions", { transition: "test-transition" });
+        });
+
+        /** @test {Hyperwallet#listVenmoAccountStatusTransitions} */
+        it("should throw error for invalid filter", () => {
+            const callback = () => null;
+            expect(() => client.listVenmoAccountStatusTransitions("test-user-token", "test-venmo-account-token", { test: "value" }, callback)).to.throw("Invalid Filter. Expected - transition");
         });
 
         /** @test {Hyperwallet#listVenmoAccountStatusTransitions} */
@@ -4265,7 +4628,9 @@ describe("Hyperwallet", () => {
         it("should handle 204 return", (cb) => {
             const callback = (err, data) => {
                 data.should.be.deep.equal({
-                    count: 0,
+                    hasNextPage: false,
+                    hasPreviousPage: false,
+                    limit: 0,
                     data: [],
                 });
 
@@ -4276,6 +4641,591 @@ describe("Hyperwallet", () => {
             apiClientSpy.should.have.been.calledOnce();
             apiClientSpy.should.have.been.calledWith("users/test-user-token/venmo-accounts/test-venmo-account-token/status-transitions", {});
 
+            apiClientSpy.getCall(0).args[2](undefined, {}, {
+                status: 204,
+            });
+        });
+    });
+
+    //--------------------------------------
+    // Business StakeHolder
+    //--------------------------------------
+
+    /** @test {Hyperwallet#createBusinessStakeholder} */
+    describe("createBusinessStakeholder()", () => {
+        let client;
+        let apiClientSpy;
+
+        beforeEach(() => {
+            apiClientSpy = sinon.spy();
+            client = new Hyperwallet({
+                username: "test-username",
+                password: "test-password",
+            });
+            client.client = {
+                doPost: apiClientSpy,
+            };
+        });
+
+        /** @test {Hyperwallet#createStakeholder} */
+        it("should throw error if userToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.createBusinessStakeholder(undefined, { test: "value" }, callback)).to.throw("userToken is required");
+        });
+
+        /** @test {Hyperwallet#createStakeholder} */
+        it("should send post call to Stakeholder status transition endpoint", () => {
+            const callback = () => null;
+            client.createBusinessStakeholder("test-user-token", { test: "value" }, callback);
+
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("users/test-user-token/business-stakeholders", {
+                test: "value",
+            }, {}, callback);
+        });
+    });
+
+    /** @test {Hyperwallet#listBusinessStakeholders} */
+    describe("listBusinessStakeholders()", () => {
+        let client;
+        let apiClientSpy;
+
+        beforeEach(() => {
+            apiClientSpy = sinon.spy();
+            client = new Hyperwallet({
+                username: "test-username",
+                password: "test-password",
+            });
+            client.client = {
+                doGet: apiClientSpy,
+            };
+        });
+
+        /** @test {Hyperwallet#listBusinessStakeholders} */
+        it("should throw error if userToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.listBusinessStakeholders(undefined, {}, callback)).to.throw("userToken is required");
+        });
+
+        /** @test {Hyperwallet#listBusinessStakeholders} */
+        it("should do get call with options", () => {
+            const callback = () => null;
+            client.listBusinessStakeholders("test-user-token", { status: "test-status", isBusinessContact: "test-isBusinessContact",
+                isDirector: "test-isDirector", isUltimateBeneficialOwner: "test-isUltimateBeneficialOwner" }, callback);
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("users/test-user-token/business-stakeholders", { status: "test-status", isBusinessContact: "test-isBusinessContact",
+                isDirector: "test-isDirector", isUltimateBeneficialOwner: "test-isUltimateBeneficialOwner" });
+        });
+
+        /** @test {Hyperwallet#listBusinessStakeholders} */
+        it("should throw error for invalid filter", () => {
+            const callback = () => null;
+            expect(() => client.listBusinessStakeholders("test-user-token", { test: "value" }, callback)).
+                to.throw("Invalid Filter. Expected - status,isBusinessContact,isDirector,isUltimateBeneficialOwner");
+        });
+
+        /** @test {Hyperwallet#listBusinessStakeholders} */
+        it("should do get call without options", () => {
+            const callback = () => null;
+            client.listBusinessStakeholders("test-user-token", {}, callback);
+
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("users/test-user-token/business-stakeholders", {});
+        });
+
+        /** @test {Hyperwallet#listBusinessStakeholders} */
+        it("should handle 204 return", (cb) => {
+            const callback = (err, data) => {
+                data.should.be.deep.equal({
+                    hasNextPage: false,
+                    hasPreviousPage: false,
+                    limit: 0,
+                    data: [],
+                });
+
+                cb();
+            };
+            client.listBusinessStakeholders("test-user-token", {}, callback);
+
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("users/test-user-token/business-stakeholders", {});
+
+            apiClientSpy.getCall(0).args[2](undefined, {}, {
+                status: 204,
+            });
+        });
+    });
+
+    /** @test {Hyperwallet#updateBusinessStakeholder} */
+    describe("updateBusinessStakeholder()", () => {
+        let client;
+        let apiClientSpy;
+
+        beforeEach(() => {
+            apiClientSpy = sinon.spy();
+            client = new Hyperwallet({
+                username: "test-username",
+                password: "test-password",
+            });
+            client.client = {
+                doPut: apiClientSpy,
+            };
+        });
+
+        /** @test {Hyperwallet#updateBusinessStakeholder} */
+        it("should throw error if userToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.updateBusinessStakeholder(undefined, undefined, { test: "value" }, callback)).to.throw("userToken is required");
+        });
+
+        /** @test {Hyperwallet#updateBusinessStakeholder} */
+        it("should throw error if stakeholderToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.updateBusinessStakeholder("test-user-token", undefined, { test: "value" }, callback)).to.throw("stakeholderToken is required");
+        });
+
+        /** @test {Hyperwallet#updateBusinessStakeholder} */
+        it("should do put call to Stakeholder endpoint", () => {
+            const callback = () => null;
+            client.updateBusinessStakeholder("test-user-token", "test-stakeholder-token", {
+                test: "value",
+            }, callback);
+
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("users/test-user-token/business-stakeholders/test-stakeholder-token", {
+                test: "value",
+            }, {}, callback);
+        });
+    });
+
+    /** @test {Hyperwallet#deactivateBusinessStakeholder} */
+    describe("deactivateBusinessStakeholder()", () => {
+        let client;
+        let apiClientSpy;
+
+        beforeEach(() => {
+            apiClientSpy = sinon.spy();
+            client = new Hyperwallet({
+                username: "test-username",
+                password: "test-password",
+            });
+            client.client = {
+                doPost: apiClientSpy,
+            };
+        });
+
+        /** @test {Hyperwallet#deactivateBusinessStakeholder} */
+        it("should throw error if userToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.deactivateBusinessStakeholder(undefined, undefined, callback)).to.throw("userToken is required");
+        });
+
+        /** @test {Hyperwallet#deactivateBusinessStakeholder} */
+        it("should throw error if stakeholderToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.deactivateBusinessStakeholder("test-user-token", undefined, callback)).to.throw("stakeholderToken is required");
+        });
+
+        /** @test {Hyperwallet#deactivateBusinessStakeholder} */
+        it("should send transition to 'DE-ACTIVATED'", () => {
+            const callback = () => null;
+            client.deactivateBusinessStakeholder("test-user-token", "test-stakeholder-token", callback);
+
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("users/test-user-token/business-stakeholders/test-stakeholder-token/status-transitions", {
+                transition: "DE_ACTIVATED",
+            }, {}, callback);
+        });
+    });
+
+    /** @test {Hyperwallet#activateBusinessStakeholder} */
+    describe("activateBusinessStakeholder()", () => {
+        let client;
+        let apiClientSpy;
+
+        beforeEach(() => {
+            apiClientSpy = sinon.spy();
+            client = new Hyperwallet({
+                username: "test-username",
+                password: "test-password",
+            });
+            client.client = {
+                doPost: apiClientSpy,
+            };
+        });
+
+        /** @test {Hyperwallet#activateBusinessStakeholder} */
+        it("should throw error if userToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.activateBusinessStakeholder(undefined, undefined, callback)).to.throw("userToken is required");
+        });
+
+        /** @test {Hyperwallet#activateBusinessStakeholder} */
+        it("should throw error if stakeholderToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.activateBusinessStakeholder("test-user-token", undefined, callback)).to.throw("stakeholderToken is required");
+        });
+
+        /** @test {Hyperwallet#activateBusinessStakeholder} */
+        it("should send transition to 'ACTIVATED'", () => {
+            const callback = () => null;
+            client.activateBusinessStakeholder("test-user-token", "test-stakeholder-token", callback);
+
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("users/test-user-token/business-stakeholders/test-stakeholder-token/status-transitions", {
+                transition: "ACTIVATED",
+            }, {}, callback);
+        });
+    });
+
+    /** @test {Hyperwallet#createBusinessStakeholderStatusTransition} */
+    describe("createBusinessStakeholderStatusTransition()", () => {
+        let client;
+        let apiClientSpy;
+
+        beforeEach(() => {
+            apiClientSpy = sinon.spy();
+            client = new Hyperwallet({
+                username: "test-username",
+                password: "test-password",
+            });
+            client.client = {
+                doPost: apiClientSpy,
+            };
+        });
+
+        /** @test {Hyperwallet#createBusinessStakeholderStatusTransition} */
+        it("should throw error if userToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.createBusinessStakeholderStatusTransition(undefined, undefined, { test: "value" }, callback)).to.throw("userToken is required");
+        });
+
+        /** @test {Hyperwallet#createBusinessStakeholderStatusTransition} */
+        it("should throw error if stakeholderToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.createBusinessStakeholderStatusTransition("test-user-token", undefined, { test: "value" }, callback)).to.throw("stakeholderToken is required");
+        });
+
+        /** @test {Hyperwallet#createBusinessStakeholderStatusTransition} */
+        it("should send post call to StakeHolder status transition endpoint", () => {
+            const callback = () => null;
+            client.createBusinessStakeholderStatusTransition("test-user-token", "test-stakeholder-token", { test: "value" }, callback);
+
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("users/test-user-token/business-stakeholders/test-stakeholder-token/status-transitions", {
+                test: "value",
+            }, {}, callback);
+        });
+    });
+
+    /** @test {Hyperwallet#getBusinessStakeholderStatusTransition} */
+    describe("getBusinessStakeholderStatusTransition()", () => {
+        let client;
+        let apiClientSpy;
+
+        beforeEach(() => {
+            apiClientSpy = sinon.spy();
+            client = new Hyperwallet({
+                username: "test-username",
+                password: "test-password",
+            });
+            client.client = {
+                doGet: apiClientSpy,
+            };
+        });
+
+        /** @test {Hyperwallet#getBusinessStakeholderStatusTransition} */
+        it("should throw error if userToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.getBusinessStakeholderStatusTransition(undefined, undefined, undefined, callback)).to.throw("userToken is required");
+        });
+
+        /** @test {Hyperwallet#getBusinessStakeholderStatusTransition} */
+        it("should throw error if stakeholderToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.getBusinessStakeholderStatusTransition("test-user-token", undefined, undefined, callback)).to.throw("stakeholderToken is required");
+        });
+
+        /** @test {Hyperwallet#getBusinessStakeholderStatusTransition} */
+        it("should throw error if statusTransitionToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.getBusinessStakeholderStatusTransition("test-user-token", "test-stakeholder-token", undefined, callback)).to.throw("statusTransitionToken is required");
+        });
+
+        /** @test {Hyperwallet#getBusinessStakeholderStatusTransition} */
+        it("should do get call if userToken, stakeholderToken and statusTransitionToken is provided", () => {
+            const callback = () => null;
+            client.getBusinessStakeholderStatusTransition("test-user-token", "test-stakeholder-token", "status-transition-token", callback);
+
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("users/test-user-token/business-stakeholders/test-stakeholder-token/status-transitions/status-transition-token", {}, callback);
+        });
+    });
+
+    /** @test {Hyperwallet#listBusinessStakeholderStatusTransitions} */
+    describe("listBusinessStakeholderStatusTransitions()", () => {
+        let client;
+        let apiClientSpy;
+
+        beforeEach(() => {
+            apiClientSpy = sinon.spy();
+            client = new Hyperwallet({
+                username: "test-username",
+                password: "test-password",
+            });
+            client.client = {
+                doGet: apiClientSpy,
+            };
+        });
+
+        /** @test {Hyperwallet#listBusinessStakeholderStatusTransitions} */
+        it("should throw error if userToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.listBusinessStakeholderStatusTransitions(undefined, undefined, {}, callback)).to.throw("userToken is required");
+        });
+
+        /** @test {Hyperwallet#listBusinessStakeholderStatusTransitions} */
+        it("should throw error if stakeholderToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.listBusinessStakeholderStatusTransitions("test-user-token", undefined, {}, callback)).to.throw("stakeholderToken is required");
+        });
+
+        /** @test {Hyperwallet#listBusinessStakeholderStatusTransitions} */
+        it("should do get call with options", () => {
+            const callback = () => null;
+            client.listBusinessStakeholderStatusTransitions("test-user-token", "test-stakeholder-token", { test: "value" }, callback);
+
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("users/test-user-token/business-stakeholders/test-stakeholder-token/status-transitions", { test: "value" });
+        });
+
+        /** @test {Hyperwallet#listBusinessStakeholderStatusTransitions} */
+        it("should do get call without options", () => {
+            const callback = () => null;
+            client.listBusinessStakeholderStatusTransitions("test-user-token", "test-stakeholder-token", {}, callback);
+
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("users/test-user-token/business-stakeholders/test-stakeholder-token/status-transitions", {});
+        });
+
+        /** @test {Hyperwallet#listBusinessStakeholderStatusTransitions} */
+        it("should handle 204 return", (cb) => {
+            const callback = (err, data) => {
+                data.should.be.deep.equal({
+                    hasNextPage: false,
+                    hasPreviousPage: false,
+                    limit: 0,
+                    data: [],
+                });
+
+                cb();
+            };
+            client.listBusinessStakeholderStatusTransitions("test-user-token", "test-stakeholder-token", {}, callback);
+
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("users/test-user-token/business-stakeholders/test-stakeholder-token/status-transitions", {});
+
+            apiClientSpy.getCall(0).args[2](undefined, {}, {
+                status: 204,
+            });
+        });
+    });
+
+    describe("uploadBusinessStakeholderDocuments()", () => {
+        let client;
+        let apiClientSpy;
+
+        beforeEach(() => {
+            apiClientSpy = sinon.spy();
+            client = new Hyperwallet({
+                username: "test-username",
+                password: "test-password",
+            });
+            client.client = {
+                doPutMultipart: apiClientSpy,
+            };
+        });
+
+        /** @test {Hyperwallet#uploadBusinessStakeholderDocuments} */
+        it("should throw error if userToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.uploadBusinessStakeholderDocuments(undefined, undefined, {}, callback)).to.throw("userToken is required");
+        });
+
+        /** @test {Hyperwallet#uploadBusinessStakeholderDocuments} */
+        it("should throw error if stakeholderToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.uploadBusinessStakeholderDocuments("test-user-token", undefined, {}, callback)).to.throw("stakeholderToken is required");
+        });
+
+        /** @test {Hyperwallet#uploadBusinessStakeholderDocuments} */
+        it("should throw error if data is missing", () => {
+            const callback = () => null;
+            expect(() => client.uploadBusinessStakeholderDocuments("test-user-token", "test-stakeholder-token", null, callback)).to.throw("Files for upload are require");
+        });
+
+        /** @test {Hyperwallet#uploadBusinessStakeholderDocuments} */
+        it("should do put call to upload multipart", () => {
+            const callback = () => null;
+
+            client.uploadBusinessStakeholderDocuments("users/test-user-token", "test-stakeholder-token", {
+                test: "value",
+            }, callback);
+
+            apiClientSpy.should.have.been.calledOnce();
+        });
+    });
+
+    /** @test {Hyperwallet#listTransferMethods} */
+    describe("listTransferMethods()", () => {
+        let client;
+        let apiClientSpy;
+
+        beforeEach(() => {
+            apiClientSpy = sinon.spy();
+            client = new Hyperwallet({
+                username: "test-username",
+                password: "test-password",
+            });
+            client.client = {
+                doGet: apiClientSpy,
+            };
+        });
+
+        /** @test {Hyperwallet#listTransferMethods} */
+        it("should throw error if userToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.listTransferMethods(undefined, {}, callback)).to.throw("userToken is required");
+        });
+
+        /** @test {Hyperwallet#listTransferMethods} */
+        it("should do get call with options", () => {
+            const callback = () => null;
+            client.listTransferMethods("test-user-token", { test: "value" }, callback);
+
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("users/test-user-token/transfer-methods", { test: "value" });
+        });
+
+        /** @test {Hyperwallet#listTransferMethods} */
+        it("should do get call without options", () => {
+            const callback = () => null;
+            client.listTransferMethods("test-user-token", {}, callback);
+
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("users/test-user-token/transfer-methods", {});
+        });
+
+        /** @test {Hyperwallet#listTransferMethods} */
+        it("should handle 204 return", (cb) => {
+            const callback = (err, data) => {
+                data.should.be.deep.equal({
+                    hasNextPage: false,
+                    hasPreviousPage: false,
+                    limit: 0,
+                    data: [],
+                });
+
+                cb();
+            };
+            client.listTransferMethods("test-user-token", {}, callback);
+
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("users/test-user-token/transfer-methods", {});
+
+            apiClientSpy.getCall(0).args[2](undefined, {}, {
+                status: 204,
+            });
+        });
+    });
+
+    /** @test {Hyperwallet#getTransferStatusTransition} */
+    describe("getTransferStatusTransition()", () => {
+        let client;
+        let apiClientSpy;
+        beforeEach(() => {
+            apiClientSpy = sinon.spy();
+            client = new Hyperwallet({
+                username: "test-username",
+                password: "test-password",
+            });
+            client.client = {
+                doGet: apiClientSpy,
+            };
+        });
+
+        /** @test {Hyperwallet#getTransferStatusTransition} */
+        it("should throw error if transferToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.getTransferStatusTransition(undefined, undefined, callback)).to.throw("transferToken is required");
+        });
+
+        /** @test {Hyperwallet#getTransferStatusTransition} */
+        it("should throw error if statusTransitionToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.getTransferStatusTransition("test-transfer-token", undefined, callback)).to.throw("statusTransitionToken is required");
+        });
+
+        /** @test {Hyperwallet#getTransferStatusTransition} */
+        it("should do get call if transferToken and statusTransitionToken is provided", () => {
+            const callback = () => null;
+            client.getTransferStatusTransition("test-transfer-token", "test-status-transition-token", callback);
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("transfers/test-transfer-token/status-transitions/test-status-transition-token", {}, callback);
+        });
+    });
+
+    /** @test {Hyperwallet#listTransferStatusTransition} */
+    describe("listTransferStatusTransition()", () => {
+        let client;
+        let apiClientSpy;
+        beforeEach(() => {
+            apiClientSpy = sinon.spy();
+            client = new Hyperwallet({
+                username: "test-username",
+                password: "test-password",
+            });
+            client.client = {
+                doGet: apiClientSpy,
+            };
+        });
+
+        /** @test {Hyperwallet#listTransferStatusTransition} */
+        it("should throw error if transferToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.listTransferStatusTransition(undefined, {}, callback)).to.throw("transferToken is required");
+        });
+
+        /** @test {Hyperwallet#listTransferStatusTransition} */
+        it("should do get call with options", () => {
+            const callback = () => null;
+            client.listTransferStatusTransition("test-transfer-token", { test: "value" }, callback);
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("transfers/test-transfer-token/status-transitions", { test: "value" });
+        });
+
+        /** @test {Hyperwallet#listTransferStatusTransition} */
+        it("should do get call without options", () => {
+            const callback = () => null;
+            client.listTransferStatusTransition("test-transfer-token", {}, callback);
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("transfers/test-transfer-token/status-transitions", {});
+        });
+
+        /** @test {Hyperwallet#listTransferStatusTransition} */
+        it("should handle 204 return", (cb) => {
+            const callback = (err, data) => {
+                data.should.be.deep.equal({
+                    hasNextPage: false,
+                    hasPreviousPage: false,
+                    limit: 0,
+                    data: [],
+                });
+                cb();
+            };
+            client.listTransferStatusTransition("test-transfer-token", {}, callback);
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("transfers/test-transfer-token/status-transitions", {});
             apiClientSpy.getCall(0).args[2](undefined, {}, {
                 status: 204,
             });
