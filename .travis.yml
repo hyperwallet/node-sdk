@@ -5,7 +5,7 @@ node_js:
 - '6.15.1'      #boron
 - '8.14.0'      #carbon
 - '10.14.2'     #dubnium
-- stable
+- '14.15.0'     #stable
 
 script:
   - npm run prepublish-prod
