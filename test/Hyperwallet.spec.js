@@ -4919,22 +4919,25 @@ describe("Hyperwallet", () => {
                 doGet: apiClientSpy,
             };
         });
+
         /** @test {Hyperwallet#getTransferStatusTransition} */
         it("should throw error if transferToken is missing", () => {
             const callback = () => null;
             expect(() => client.getTransferStatusTransition(undefined, undefined, callback)).to.throw("transferToken is required");
         });
+
         /** @test {Hyperwallet#getTransferStatusTransition} */
         it("should throw error if statusTransitionToken is missing", () => {
             const callback = () => null;
             expect(() => client.getTransferStatusTransition("test-transfer-token", undefined, callback)).to.throw("statusTransitionToken is required");
         });
+
         /** @test {Hyperwallet#getTransferStatusTransition} */
         it("should do get call if transferToken and statusTransitionToken is provided", () => {
             const callback = () => null;
-            client.getTransferStatusTransition("test-transfer-token", "status-transition-token", callback);
+            client.getTransferStatusTransition("test-transfer-token", "test-status-transition-token", callback);
             apiClientSpy.should.have.been.calledOnce();
-            apiClientSpy.should.have.been.calledWith("transfers/test-transfer-token/status-transitions/status-transition-token", {}, callback);
+            apiClientSpy.should.have.been.calledWith("transfers/test-transfer-token/status-transitions/test-status-transition-token", {}, callback);
         });
     });
 
@@ -4952,11 +4955,13 @@ describe("Hyperwallet", () => {
                 doGet: apiClientSpy,
             };
         });
+
         /** @test {Hyperwallet#listTransferStatusTransition} */
         it("should throw error if transferToken is missing", () => {
             const callback = () => null;
             expect(() => client.listTransferStatusTransition(undefined, {}, callback)).to.throw("transferToken is required");
         });
+
         /** @test {Hyperwallet#listTransferStatusTransition} */
         it("should do get call with options", () => {
             const callback = () => null;
@@ -4964,6 +4969,7 @@ describe("Hyperwallet", () => {
             apiClientSpy.should.have.been.calledOnce();
             apiClientSpy.should.have.been.calledWith("transfers/test-transfer-token/status-transitions", { test: "value" });
         });
+
         /** @test {Hyperwallet#listTransferStatusTransition} */
         it("should do get call without options", () => {
             const callback = () => null;
@@ -4971,6 +4977,7 @@ describe("Hyperwallet", () => {
             apiClientSpy.should.have.been.calledOnce();
             apiClientSpy.should.have.been.calledWith("transfers/test-transfer-token/status-transitions", {});
         });
+
         /** @test {Hyperwallet#listTransferStatusTransition} */
         it("should handle 204 return", (cb) => {
             const callback = (err, data) => {
