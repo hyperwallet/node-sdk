@@ -24,7 +24,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/hyperwallet/rest-v3-node-sdk.git"
+    "url": "https://github.com/hyperwallet/node-sdk.git"
   },
   "keywords": [
     "hyperwallet",
@@ -38,9 +38,9 @@
   "author": "Florian Krauthan <fkrauthan@hyperwallet.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/hyperwallet/rest-v3-node-sdk/issues"
+    "url": "https://github.com/hyperwallet/node-sdk/issues"
   },
-  "homepage": "http://hyperwallet.github.io/rest-v3-node-sdk",
+  "homepage": "http://hyperwallet.github.io/node-sdk",
   "devDependencies": {
     "babel-cli": "^6.9.0",
     "babel-eslint": "^8.2.6",
