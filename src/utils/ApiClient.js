@@ -1,6 +1,8 @@
 import request from "superagent";
 import packageJson from "../../package.json";
 import Encryption from "./Encryption";
+import { v4 as uuidv4 } from "uuid";
+
 
 /**
  * The callback interface for api calls
@@ -97,6 +99,9 @@ export default class ApiClient {
                 .post(`${this.server}/rest/v3/${partialUrl}`)
                 .auth(this.username, this.password)
                 .set("User-Agent", `Hyperwallet Node SDK v${this.version}`)
+                .set("x-sdk-version", this.version)
+                .set("x-sdk-type", "NodeJS")
+                .set("x-sdk-contextId", uuidv4())
                 .type(contentType)
                 .accept(accept)
                 .query(params)
@@ -194,6 +199,9 @@ export default class ApiClient {
             .get(`${this.server}/rest/v3/${partialUrl}`)
             .auth(this.username, this.password)
             .set("User-Agent", `Hyperwallet Node SDK v${this.version}`)
+            .set("x-sdk-version", this.version)
+            .set("x-sdk-type", "NodeJS")
+            .set("x-sdk-contextId", uuidv4())
             .type(contentType)
             .accept(accept)
             .query(params)

@@ -1,13 +1,14 @@
 {
   "name": "hyperwallet-sdk",
-  "version": "1.5.0",
+  "version": "2.1.0",
   "description": "A library to manage users, transfer methods and payments through the Hyperwallet API",
   "main": "lib/index.js",
   "dependencies": {
     "form-data": "^3.0.0",
     "node-jose": "^2.0.0",
     "object-assign": "^4.1.0",
-    "superagent": "^4.0.0"
+    "superagent": "^4.0.0",
+    "uuid": "^8.3.1"
   },
   "scripts": {
     "lint": "eslint ./src && eslint ./test && eslint ./examples",
