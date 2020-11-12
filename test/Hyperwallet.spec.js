@@ -4281,4 +4281,65 @@ describe("Hyperwallet", () => {
             });
         });
     });
+
+    /** @test {Hyperwallet#listTransferMethods} */
+    describe("listTransferMethods()", () => {
+        let client;
+        let apiClientSpy;
+
+        beforeEach(() => {
+            apiClientSpy = sinon.spy();
+            client = new Hyperwallet({
+                username: "test-username",
+                password: "test-password",
+            });
+            client.client = {
+                doGet: apiClientSpy,
+            };
+        });
+
+        /** @test {Hyperwallet#listTransferMethods} */
+        it("should throw error if userToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.listTransferMethods(undefined, {}, callback)).to.throw("userToken is required");
+        });
+
+        /** @test {Hyperwallet#listTransferMethods} */
+        it("should do get call with options", () => {
+            const callback = () => null;
+            client.listTransferMethods("test-user-token", { test: "value" }, callback);
+
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("users/test-user-token/transfer-methods", { test: "value" });
+        });
+
+        /** @test {Hyperwallet#listTransferMethods} */
+        it("should do get call without options", () => {
+            const callback = () => null;
+            client.listTransferMethods("test-user-token", {}, callback);
+
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("users/test-user-token/transfer-methods", {});
+        });
+
+        /** @test {Hyperwallet#listTransferMethods} */
+        it("should handle 204 return", (cb) => {
+            const callback = (err, data) => {
+                data.should.be.deep.equal({
+                    count: 0,
+                    data: [],
+                });
+
+                cb();
+            };
+            client.listTransferMethods("test-user-token", {}, callback);
+
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("users/test-user-token/transfer-methods", {});
+
+            apiClientSpy.getCall(0).args[2](undefined, {}, {
+                status: 204,
+            });
+        });
+    });
 });
