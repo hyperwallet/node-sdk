@@ -66,7 +66,7 @@ export default class ApiClient {
          * @protected
          */
         this.isEncrypted = false;
-        this.contextId =  uuidv4();
+        this.contextId = uuidv4();
         if (encryptionData && encryptionData.clientPrivateKeySetPath && encryptionData.hyperwalletKeySetPath) {
             this.isEncrypted = true;
             this.clientPrivateKeySetPath = encryptionData.clientPrivateKeySetPath;
