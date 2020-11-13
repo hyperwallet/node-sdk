@@ -90,7 +90,7 @@ export default class Hyperwallet {
      * @param {api-callback} callback - The callback for this call
      */
     listUsers(options, callback) {
-        const LIST_USER_FILTERS = ["clientUserId", "email", "programToken", "status", "verificationStatus"];
+        const LIST_USER_FILTERS = ["clientUserId", "createdAfter", "createdBefore", "email", "limit", "programToken", "sortBy", "status", "verificationStatus"];
         if (options && !this.isValidFilter(options, LIST_USER_FILTERS)) {
             throw new Error("Invalid Filter. Expected - ".concat(LIST_USER_FILTERS));
         }
