@@ -66,7 +66,7 @@ export default class ApiClient {
          * @protected
          */
         this.isEncrypted = false;
-
+        this.contextId =  uuidv4();
         if (encryptionData && encryptionData.clientPrivateKeySetPath && encryptionData.hyperwalletKeySetPath) {
             this.isEncrypted = true;
             this.clientPrivateKeySetPath = encryptionData.clientPrivateKeySetPath;
@@ -100,7 +100,7 @@ export default class ApiClient {
                 .set("User-Agent", `Hyperwallet Node SDK v${this.version}`)
                 .set("x-sdk-version", this.version)
                 .set("x-sdk-type", "NodeJS")
-                .set("x-sdk-contextId", uuidv4())
+                .set("x-sdk-contextId", this.contextId)
                 .type(contentType)
                 .accept(accept)
                 .query(params)
@@ -137,7 +137,7 @@ export default class ApiClient {
                 .set("User-Agent", `Hyperwallet Node SDK v${this.version}`)
                 .set("x-sdk-version", this.version)
                 .set("x-sdk-type", "NodeJS")
-                .set("x-sdk-contextId", uuidv4())
+                .set("x-sdk-contextId", this.contextId)
                 .type(contentType)
                 .accept(accept);
             keys.forEach(key => {
@@ -176,7 +176,7 @@ export default class ApiClient {
                 .set("User-Agent", `Hyperwallet Node SDK v${this.version}`)
                 .set("x-sdk-version", this.version)
                 .set("x-sdk-type", "NodeJS")
-                .set("x-sdk-contextId", uuidv4())
+                .set("x-sdk-contextId", this.contextId)
                 .type(contentType)
                 .accept(accept)
                 .query(params)
@@ -206,7 +206,7 @@ export default class ApiClient {
             .set("User-Agent", `Hyperwallet Node SDK v${this.version}`)
             .set("x-sdk-version", this.version)
             .set("x-sdk-type", "NodeJS")
-            .set("x-sdk-contextId", uuidv4())
+            .set("x-sdk-contextId", this.contextId)
             .type(contentType)
             .accept(accept)
             .query(params)
