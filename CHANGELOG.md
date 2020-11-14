@@ -1,6 +1,10 @@
 Changelog
 =========
 
+2.0.2
+-------------------
+- Added header data to requests (user-agent, sdk-version etc)
+
 2.0.1
 -------------------
 - Accesses V4 Rest APIs 
