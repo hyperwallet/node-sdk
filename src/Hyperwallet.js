@@ -1476,7 +1476,7 @@ export default class Hyperwallet {
      * @throws Will throw an error if invalid payment is provided
      */
     listPayments(options, callback) {
-        const LIST_PAYMENT_FILTERS = ["clientPaymentId"];
+        const LIST_PAYMENT_FILTERS = ["createdAfter", "createdBefore", "clientPaymentId", "limit", "releaseDate", "sortBy"];
         if (options && !this.isValidFilter(options, LIST_PAYMENT_FILTERS)) {
             throw new Error("Invalid Filter. Expected - ".concat(LIST_PAYMENT_FILTERS));
         }

@@ -3393,7 +3393,7 @@ describe("Hyperwallet", () => {
         /** @test {Hyperwallet#listPayments} */
         it("should throw error for invalid filter", () => {
             const callback = () => null;
-            expect(() => client.listPayments({ test: "value" }, callback)).to.throw("Invalid Filter. Expected - clientPaymentId");
+            expect(() => client.listPayments({ test: "value" }, callback)).to.throw("Invalid Filter. Expected - createdAfter,createdBefore,clientPaymentId,limit,releaseDate,sortBy");
         });
 
         /** @test {Hyperwallet#listPayments} */
