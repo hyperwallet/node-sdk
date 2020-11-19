@@ -1801,15 +1801,15 @@ export default class Hyperwallet {
     }
 
     /**
-     * Get a transfer status transition
-     *
-     * @param {string} transferToken - The transfer token
-     * @param {string} statusTransitionToken - The status transition token token
-     * @param {api-callback} callback - The callback for this call
-     *
-     * @throws Will throw an error if transferToken is not provided
-     * @throws Will throw an error if statusTransitionToken is not provided
-     */
+      * Get a transfer status transition
+      *
+      * @param {string} transferToken - The transfer token
+      * @param {string} statusTransitionToken - The status transition token token
+      * @param {api-callback} callback - The callback for this call
+      *
+      * @throws Will throw an error if transferToken is not provided
+      * @throws Will throw an error if statusTransitionToken is not provided
+      */
     getTransferStatusTransition(transferToken, statusTransitionToken, callback) {
         if (!transferToken) {
             throw new Error("transferToken is required");
@@ -1821,16 +1821,31 @@ export default class Hyperwallet {
     }
 
     /**
-     * List all transfer status transitions
-     *
-     * @param {string} transferToken - The transfer token
-     * @param {Object} options - The query parameters to send
-     * @param {api-callback} callback - The callback for this call
-     */
+      * List all transfer status transitions
+      *
+      * @param {string} transferToken - The transfer token
+      * @param {Object} options - The query parameters to send
+      * @param {api-callback} callback - The callback for this call
+      */
     listTransferStatusTransition(transferToken, options, callback) {
         if (!transferToken) {
             throw new Error("transferToken is required");
         }
         this.client.doGet(`transfers/${encodeURIComponent(transferToken)}/status-transitions`, options, Hyperwallet.handle204Response(callback));
+    }
+
+    /**
+      * List of Transfer Methods
+      *
+      * @param {string} userToken - The user token
+      * @param {Object} options - The query parameters to send
+      * @param {api-callback} callback - The callback for this call
+      * @throws Will throw an error if userToken is not provided
+      */
+    listTransferMethods(userToken, options, callback) {
+        if (!userToken) {
+            throw new Error("userToken is required");
+        }
+        this.client.doGet(`users/${encodeURIComponent(userToken)}/transfer-methods`, options, Hyperwallet.handle204Response(callback));
     }
 }
