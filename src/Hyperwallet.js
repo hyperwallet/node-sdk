@@ -524,6 +524,10 @@ export default class Hyperwallet {
         if (!prepaidCardToken) {
             throw new Error("prepaidCardToken is required");
         }
+        const LIST_PREPAID_CARD_STATUS_TRANSITION_FILTERS = ["transition"];
+        if (options && !this.isValidFilter(options, LIST_PREPAID_CARD_STATUS_TRANSITION_FILTERS)) {
+            throw new Error("Invalid Filter. Expected - ".concat(LIST_PREPAID_CARD_STATUS_TRANSITION_FILTERS));
+        }
         this.client.doGet(`users/${encodeURIComponent(userToken)}/prepaid-cards/${encodeURIComponent(prepaidCardToken)}/status-transitions`, options, Hyperwallet.handle204Response(callback));
     }
 
@@ -685,6 +689,10 @@ export default class Hyperwallet {
         }
         if (!bankCardToken) {
             throw new Error("bankCardToken is required");
+        }
+        const LIST_BANK_CARD_STATUS_TRANSITION_FILTERS = ["transition"];
+        if (options && !this.isValidFilter(options, LIST_BANK_CARD_STATUS_TRANSITION_FILTERS)) {
+            throw new Error("Invalid Filter. Expected - ".concat(LIST_BANK_CARD_STATUS_TRANSITION_FILTERS));
         }
         this.client.doGet(`users/${encodeURIComponent(userToken)}/bank-cards/${encodeURIComponent(bankCardToken)}/status-transitions`, options, Hyperwallet.handle204Response(callback));
     }
@@ -866,6 +874,10 @@ export default class Hyperwallet {
         }
         if (!paperCheckToken) {
             throw new Error("paperCheckToken is required");
+        }
+        const LIST_PAPER_CHECK_STATUS_TRANSITION_FILTERS = ["transition"];
+        if (options && !this.isValidFilter(options, LIST_PAPER_CHECK_STATUS_TRANSITION_FILTERS)) {
+            throw new Error("Invalid Filter. Expected - ".concat(LIST_PAPER_CHECK_STATUS_TRANSITION_FILTERS));
         }
         this.client.doGet(`users/${encodeURIComponent(userToken)}/paper-checks/${encodeURIComponent(paperCheckToken)}/status-transitions`, options, Hyperwallet.handle204Response(callback));
     }
@@ -1243,6 +1255,10 @@ export default class Hyperwallet {
         if (!bankAccountToken) {
             throw new Error("bankAccountToken is required");
         }
+        const LIST_BANK_ACCOUNT_STATUS_TRANSITION_FILTERS = ["transition"];
+        if (options && !this.isValidFilter(options, LIST_BANK_ACCOUNT_STATUS_TRANSITION_FILTERS)) {
+            throw new Error("Invalid Filter. Expected - ".concat(LIST_BANK_ACCOUNT_STATUS_TRANSITION_FILTERS));
+        }
         this.client.doGet(`users/${encodeURIComponent(userToken)}/bank-accounts/${encodeURIComponent(bankAccountToken)}/status-transitions`, options, Hyperwallet.handle204Response(callback));
     }
 
@@ -1404,6 +1420,10 @@ export default class Hyperwallet {
         if (!paymentToken) {
             throw new Error("paymentToken is required");
         }
+        const LIST_PAYMENT_STATUS_TRANSITION_FILTERS = ["transition"];
+        if (options && !this.isValidFilter(options, LIST_PAYMENT_STATUS_TRANSITION_FILTERS)) {
+            throw new Error("Invalid Filter. Expected - ".concat(LIST_PAYMENT_STATUS_TRANSITION_FILTERS));
+        }
         this.client.doGet(`payments/${encodeURIComponent(paymentToken)}/status-transitions`, options, Hyperwallet.handle204Response(callback));
     }
 
@@ -1504,6 +1524,10 @@ export default class Hyperwallet {
         if (!userToken) {
             throw new Error("userToken is required");
         }
+        const LIST_TRANSFER_METHOD_CONFIG_FILTERS = ["userToken"];
+        if (options && !this.isValidFilter(options, LIST_TRANSFER_METHOD_CONFIG_FILTERS)) {
+            throw new Error("Invalid Filter. Expected - ".concat(LIST_TRANSFER_METHOD_CONFIG_FILTERS));
+        }
         const params = options ? objectAssign({}, options, { userToken }) : { userToken };
         this.client.doGet("transfer-method-configurations", params, Hyperwallet.handle204Response(callback));
     }
@@ -1603,6 +1627,10 @@ export default class Hyperwallet {
      * @param {api-callback} callback - The callback for this call
      */
     listWebhookNotifications(options, callback) {
+        const LIST_WEBHOOK_NOTIFICATIONS_FILTERS = ["programToken", "type"];
+        if (options && !this.isValidFilter(options, LIST_WEBHOOK_NOTIFICATIONS_FILTERS)) {
+            throw new Error("Invalid Filter. Expected - ".concat(LIST_WEBHOOK_NOTIFICATIONS_FILTERS));
+        }
         this.client.doGet("webhook-notifications", options, Hyperwallet.handle204Response(callback));
     }
 
