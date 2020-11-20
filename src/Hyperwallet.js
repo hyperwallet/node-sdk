@@ -233,6 +233,10 @@ export default class Hyperwallet {
         if (!userToken) {
             throw new Error("userToken is required");
         }
+        const LIST_USER_STATUS_TRANSITION_FILTERS = ["transition"];
+        if (options && !this.isValidFilter(options, LIST_USER_STATUS_TRANSITION_FILTERS)) {
+            throw new Error("Invalid Filter. Expected - ".concat(LIST_USER_STATUS_TRANSITION_FILTERS));
+        }
         this.client.doGet(`users/${encodeURIComponent(userToken)}/status-transitions`, options, Hyperwallet.handle204Response(callback));
     }
 
@@ -1862,6 +1866,128 @@ export default class Hyperwallet {
             throw new Error("venmoAccountToken is required");
         }
         this.client.doGet(`users/${encodeURIComponent(userToken)}/venmo-accounts/${encodeURIComponent(venmoAccountToken)}/status-transitions`, options, Hyperwallet.handle204Response(callback));
+    }
+
+    /**
+     * Get a transfer status transition
+     *
+     * @param {string} transferToken - The transfer token
+     * @param {string} statusTransitionToken - The status transition token token
+     * @param {api-callback} callback - The callback for this call
+     *
+     * @throws Will throw an error if transferToken is not provided
+     * @throws Will throw an error if statusTransitionToken is not provided
+     */
+    getTransferStatusTransition(transferToken, statusTransitionToken, callback) {
+        if (!transferToken) {
+            throw new Error("transferToken is required");
+        }
+        if (!statusTransitionToken) {
+            throw new Error("statusTransitionToken is required");
+        }
+        this.client.doGet(`transfers/${encodeURIComponent(transferToken)}/status-transitions/${encodeURIComponent(statusTransitionToken)}`, {}, callback);
+    }
+
+    /**
+     * List all transfer status transitions
+     *
+     * @param {string} transferToken - The transfer token
+     * @param {Object} options - The query parameters to send
+     * @param {api-callback} callback - The callback for this call
+     */
+    listTransferStatusTransition(transferToken, options, callback) {
+        if (!transferToken) {
+            throw new Error("transferToken is required");
+        }
+        const LIST_TRANSFER_STATUS_TRANSITION_FILTERS = ["transition"];
+        if (options && !this.isValidFilter(options, LIST_TRANSFER_STATUS_TRANSITION_FILTERS)) {
+            throw new Error("Invalid Filter. Expected - ".concat(LIST_TRANSFER_STATUS_TRANSITION_FILTERS));
+        }
+        this.client.doGet(`transfers/${encodeURIComponent(transferToken)}/status-transitions`, options, Hyperwallet.handle204Response(callback));
+    }
+
+    /**
+     * List of Transfer Methods
+     *
+     * @param {string} userToken - The user token
+     * @param {Object} options - The query parameters to send
+     * @param {api-callback} callback - The callback for this call
+     * @throws Will throw an error if userToken is not provided
+     */
+    listTransferMethods(userToken, options, callback) {
+        if (!userToken) {
+            throw new Error("userToken is required");
+        }
+        this.client.doGet(`users/${encodeURIComponent(userToken)}/transfer-methods`, options, Hyperwallet.handle204Response(callback));
+    }
+
+    /**
+     * Deactivate a PayPal account
+     *
+     * @param {string} userToken - The user token
+     * @param {string} payPalAccountToken - The PayPal account token
+     * @param {api-callback} callback - The callback for this call
+     *
+     * @throws Will throw an error if userToken or payPalAccountToken is not provided
+     */
+    deactivatePayPalAccount(userToken, payPalAccountToken, callback) {
+        if (!userToken) {
+            throw new Error("userToken is required");
+        }
+        if (!payPalAccountToken) {
+            throw new Error("payPalAccountToken is required");
+        }
+
+        const transition = {
+            transition: "DE_ACTIVATED",
+        };
+        this.client.doPost(`users/${encodeURIComponent(userToken)}/paypal-accounts/${encodeURIComponent(payPalAccountToken)}/status-transitions`, transition, {}, callback);
+    }
+
+    /**
+     * Get PayPal account status transition
+     *
+     * @param {string} userToken - The user token
+     * @param {string} payPalAccountToken - PayPal account token
+     * @param {string} statusTransitionToken - The PayPal account status transition token
+     * @param {api-callback} callback - The callback for this call
+     * @throws Will throw an error if userToken or payPalAccountToken or statusTransitionToken is not provided
+     */
+    getPayPalAccountStatusTransition(userToken, payPalAccountToken, statusTransitionToken, callback) {
+        if (!userToken) {
+            throw new Error("userToken is required");
+        }
+        if (!payPalAccountToken) {
+            throw new Error("payPalAccountToken is required");
+        }
+        if (!statusTransitionToken) {
+            throw new Error("statusTransitionToken is required");
+        }
+        this.client.doGet(`users/${encodeURIComponent(userToken)}/paypal-accounts/${encodeURIComponent(payPalAccountToken)}/status-transitions/${encodeURIComponent(statusTransitionToken)}`,
+            {}, callback);
+    }
+
+    /**
+     * List PayPal account status transition
+     *
+     * @param {string} userToken - The user token
+     * @param {string} payPalAccountToken - PayPal account token
+     * @param {Object} options - The query parameters to send
+     * @param {api-callback} callback - The callback for this call
+     * @throws Will throw an error if userToken or payPalAccountToken is not provided
+     */
+    listPayPalAccountStatusTransitions(userToken, payPalAccountToken, options, callback) {
+        if (!userToken) {
+            throw new Error("userToken is required");
+        }
+        if (!payPalAccountToken) {
+            throw new Error("payPalAccountToken is required");
+        }
+        const LIST_PAYPAL_ACCOUNT_STATUS_TRANSITION_FILTERS = ["transition"];
+        if (options && !this.isValidFilter(options, LIST_PAYPAL_ACCOUNT_STATUS_TRANSITION_FILTERS)) {
+            throw new Error("Invalid Filter. Expected - ".concat(LIST_PAYPAL_ACCOUNT_STATUS_TRANSITION_FILTERS));
+        }
+        this.client.doGet(`users/${encodeURIComponent(userToken)}/paypal-accounts/${encodeURIComponent(payPalAccountToken)}/status-transitions`, options, Hyperwallet.handle204Response(callback));
     }
 
     /**
