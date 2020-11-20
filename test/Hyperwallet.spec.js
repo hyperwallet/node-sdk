@@ -4433,4 +4433,154 @@ describe("Hyperwallet", () => {
             });
         });
     });
+
+    /** @test {Hyperwallet#deactivatePayPalAccount} */
+    describe("deactivatePayPalAccount()", () => {
+        let client;
+        let apiClientSpy;
+
+        beforeEach(() => {
+            apiClientSpy = sinon.spy();
+            client = new Hyperwallet({
+                username: "test-username",
+                password: "test-password",
+            });
+            client.client = {
+                doPost: apiClientSpy,
+            };
+        });
+
+        /** @test {Hyperwallet#deactivatePayPalAccount} */
+        it("should throw error if userToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.deactivatePayPalAccount(undefined, undefined, callback)).to.throw("userToken is required");
+        });
+
+        /** @test {Hyperwallet#deactivatePayPalAccount} */
+        it("should throw error if payPalAccountToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.deactivatePayPalAccount("test-user-token", undefined, callback)).to.throw("payPalAccountToken is required");
+        });
+
+        /** @test {Hyperwallet#deactivatePayPalAccount} */
+        it("should send transition to 'DE_ACTIVATED'", () => {
+            const callback = () => null;
+            client.deactivatePayPalAccount("test-user-token", "test-paypal-account-token", callback);
+
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("users/test-user-token/paypal-accounts/test-paypal-account-token/status-transitions", {
+                transition: "DE_ACTIVATED",
+            }, {}, callback);
+        });
+    });
+
+    /** @test {Hyperwallet#getPayPalAccountStatusTransition} */
+    describe("getPayPalAccountStatusTransition()", () => {
+        let client;
+        let apiClientSpy;
+
+        beforeEach(() => {
+            apiClientSpy = sinon.spy();
+            client = new Hyperwallet({
+                username: "test-username",
+                password: "test-password",
+            });
+            client.client = {
+                doGet: apiClientSpy,
+            };
+        });
+
+        /** @test {Hyperwallet#getPayPalAccountStatusTransition} */
+        it("should throw error if userToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.getPayPalAccountStatusTransition(undefined, undefined, undefined, callback)).to.throw("userToken is required");
+        });
+
+        /** @test {Hyperwallet#getPayPalAccountStatusTransition} */
+        it("should throw error if payPalAccountToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.getPayPalAccountStatusTransition("test-user-token", undefined, undefined, callback)).to.throw("payPalAccountToken is required");
+        });
+
+        /** @test {Hyperwallet#getPayPalAccountStatusTransition} */
+        it("should throw error if statusTransitionToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.getPayPalAccountStatusTransition("test-user-token", "test-paypal-account-token", undefined, callback)).to.throw("statusTransitionToken is required");
+        });
+
+        /** @test {Hyperwallet#getPayPalAccountStatusTransition} */
+        it("should do get call if userToken, payPalAccountToken and statusTransitionToken is provided", () => {
+            const callback = () => null;
+            client.getPayPalAccountStatusTransition("test-user-token", "test-paypal-account-token", "status-transition-token", callback);
+
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("users/test-user-token/paypal-accounts/test-paypal-account-token/status-transitions/status-transition-token", {}, callback);
+        });
+    });
+
+    /** @test {Hyperwallet#listPayPalAccountStatusTransitions} */
+    describe("listPayPalAccountStatusTransitions()", () => {
+        let client;
+        let apiClientSpy;
+
+        beforeEach(() => {
+            apiClientSpy = sinon.spy();
+            client = new Hyperwallet({
+                username: "test-username",
+                password: "test-password",
+            });
+            client.client = {
+                doGet: apiClientSpy,
+            };
+        });
+
+        /** @test {Hyperwallet#listPayPalAccountStatusTransitions} */
+        it("should throw error if userToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.listPayPalAccountStatusTransitions(undefined, undefined, {}, callback)).to.throw("userToken is required");
+        });
+
+        /** @test {Hyperwallet#listPayPalAccountStatusTransitions} */
+        it("should throw error if payPalAccountToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.listPayPalAccountStatusTransitions("test-user-token", undefined, {}, callback)).to.throw("payPalAccountToken is required");
+        });
+
+        /** @test {Hyperwallet#listPayPalAccountStatusTransitions} */
+        it("should do get call with options", () => {
+            const callback = () => null;
+            client.listPayPalAccountStatusTransitions("test-user-token", "test-paypal-account-token", { test: "value" }, callback);
+
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("users/test-user-token/paypal-accounts/test-paypal-account-token/status-transitions", { test: "value" });
+        });
+
+        /** @test {Hyperwallet#listPayPalAccountStatusTransitions} */
+        it("should do get call without options", () => {
+            const callback = () => null;
+            client.listPayPalAccountStatusTransitions("test-user-token", "test-paypal-account-token", {}, callback);
+
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("users/test-user-token/paypal-accounts/test-paypal-account-token/status-transitions", {});
+        });
+
+        /** @test {Hyperwallet#listPayPalAccountStatusTransitions} */
+        it("should handle 204 return", (cb) => {
+            const callback = (err, data) => {
+                data.should.be.deep.equal({
+                    count: 0,
+                    data: [],
+                });
+                cb();
+            };
+            client.listPayPalAccountStatusTransitions("test-user-token", "test-paypal-account-token", {}, callback);
+
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("users/test-user-token/paypal-accounts/test-paypal-account-token/status-transitions", {});
+
+            apiClientSpy.getCall(0).args[2](undefined, {}, {
+                status: 204,
+            });
+        });
+    });
 });

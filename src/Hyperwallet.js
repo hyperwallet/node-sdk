@@ -1801,15 +1801,15 @@ export default class Hyperwallet {
     }
 
     /**
-      * Get a transfer status transition
-      *
-      * @param {string} transferToken - The transfer token
-      * @param {string} statusTransitionToken - The status transition token token
-      * @param {api-callback} callback - The callback for this call
-      *
-      * @throws Will throw an error if transferToken is not provided
-      * @throws Will throw an error if statusTransitionToken is not provided
-      */
+     * Get a transfer status transition
+     *
+     * @param {string} transferToken - The transfer token
+     * @param {string} statusTransitionToken - The status transition token token
+     * @param {api-callback} callback - The callback for this call
+     *
+     * @throws Will throw an error if transferToken is not provided
+     * @throws Will throw an error if statusTransitionToken is not provided
+     */
     getTransferStatusTransition(transferToken, statusTransitionToken, callback) {
         if (!transferToken) {
             throw new Error("transferToken is required");
@@ -1821,12 +1821,12 @@ export default class Hyperwallet {
     }
 
     /**
-      * List all transfer status transitions
-      *
-      * @param {string} transferToken - The transfer token
-      * @param {Object} options - The query parameters to send
-      * @param {api-callback} callback - The callback for this call
-      */
+     * List all transfer status transitions
+     *
+     * @param {string} transferToken - The transfer token
+     * @param {Object} options - The query parameters to send
+     * @param {api-callback} callback - The callback for this call
+     */
     listTransferStatusTransition(transferToken, options, callback) {
         if (!transferToken) {
             throw new Error("transferToken is required");
@@ -1835,17 +1835,82 @@ export default class Hyperwallet {
     }
 
     /**
-      * List of Transfer Methods
-      *
-      * @param {string} userToken - The user token
-      * @param {Object} options - The query parameters to send
-      * @param {api-callback} callback - The callback for this call
-      * @throws Will throw an error if userToken is not provided
-      */
+     * List of Transfer Methods
+     *
+     * @param {string} userToken - The user token
+     * @param {Object} options - The query parameters to send
+     * @param {api-callback} callback - The callback for this call
+     * @throws Will throw an error if userToken is not provided
+     */
     listTransferMethods(userToken, options, callback) {
         if (!userToken) {
             throw new Error("userToken is required");
         }
         this.client.doGet(`users/${encodeURIComponent(userToken)}/transfer-methods`, options, Hyperwallet.handle204Response(callback));
+    }
+
+    /**
+     * Deactivate a PayPal account
+     *
+     * @param {string} userToken - The user token
+     * @param {string} payPalAccountToken - The PayPal account token
+     * @param {api-callback} callback - The callback for this call
+     *
+     * @throws Will throw an error if userToken or payPalAccountToken is not provided
+     */
+    deactivatePayPalAccount(userToken, payPalAccountToken, callback) {
+        if (!userToken) {
+            throw new Error("userToken is required");
+        }
+        if (!payPalAccountToken) {
+            throw new Error("payPalAccountToken is required");
+        }
+
+        const transition = {
+            transition: "DE_ACTIVATED",
+        };
+        this.client.doPost(`users/${encodeURIComponent(userToken)}/paypal-accounts/${encodeURIComponent(payPalAccountToken)}/status-transitions`, transition, {}, callback);
+    }
+
+    /**
+     * Get PayPal account status transition
+     *
+     * @param {string} userToken - The user token
+     * @param {string} payPalAccountToken - PayPal account token
+     * @param {string} statusTransitionToken - The PayPal account status transition token
+     * @param {api-callback} callback - The callback for this call
+     * @throws Will throw an error if userToken or payPalAccountToken or statusTransitionToken is not provided
+     */
+    getPayPalAccountStatusTransition(userToken, payPalAccountToken, statusTransitionToken, callback) {
+        if (!userToken) {
+            throw new Error("userToken is required");
+        }
+        if (!payPalAccountToken) {
+            throw new Error("payPalAccountToken is required");
+        }
+        if (!statusTransitionToken) {
+            throw new Error("statusTransitionToken is required");
+        }
+        this.client.doGet(`users/${encodeURIComponent(userToken)}/paypal-accounts/${encodeURIComponent(payPalAccountToken)}/status-transitions/${encodeURIComponent(statusTransitionToken)}`,
+            {}, callback);
+    }
+
+    /**
+     * List PayPal account status transition
+     *
+     * @param {string} userToken - The user token
+     * @param {string} payPalAccountToken - PayPal account token
+     * @param {Object} options - The query parameters to send
+     * @param {api-callback} callback - The callback for this call
+     * @throws Will throw an error if userToken or payPalAccountToken is not provided
+     */
+    listPayPalAccountStatusTransitions(userToken, payPalAccountToken, options, callback) {
+        if (!userToken) {
+            throw new Error("userToken is required");
+        }
+        if (!payPalAccountToken) {
+            throw new Error("payPalAccountToken is required");
+        }
+        this.client.doGet(`users/${encodeURIComponent(userToken)}/paypal-accounts/${encodeURIComponent(payPalAccountToken)}/status-transitions`, options, Hyperwallet.handle204Response(callback));
     }
 }
