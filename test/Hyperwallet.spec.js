@@ -4637,7 +4637,6 @@ describe("Hyperwallet", () => {
         it("should do get call with options", () => {
             const callback = () => null;
             client.listPayPalAccountStatusTransitions("test-user-token", "test-paypal-account-token", { transition: "test-transition" }, callback);
-
             apiClientSpy.should.have.been.calledOnce();
             apiClientSpy.should.have.been.calledWith("users/test-user-token/paypal-accounts/test-paypal-account-token/status-transitions", { transition: "test-transition" });
         });
