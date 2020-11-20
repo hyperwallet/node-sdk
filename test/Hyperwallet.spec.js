@@ -263,6 +263,7 @@ describe("Hyperwallet", () => {
         it("should do get call without options", () => {
             const callback = () => null;
             client.listUsers({}, callback);
+
             apiClientSpy.should.have.been.calledOnce();
             apiClientSpy.should.have.been.calledWith("users", {});
         });
