@@ -1,5 +1,14 @@
 Changelog
 =========
+
+1.6.0
+-------------------
+- Added custom headers 
+- Added Transfer status transitions (get, list)
+- Added Paypal accounts status transitions
+- Added filters
+- Added listTransferMethods
+
 1.5.0
 -------------------
 - Added Venmo accounts
