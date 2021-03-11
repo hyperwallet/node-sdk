@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.6.1
+1.6.2
 -------------------
 - Added custom headers 
 - Added Transfer status transitions (get, list)
