@@ -1297,7 +1297,7 @@ export default class Hyperwallet {
             throw new Error("bankAccountToken is required");
         }
         const transition = {
-            transition: "DE-ACTIVATED",
+            transition: "DE_ACTIVATED",
         };
         this.client.doPost(`users/${encodeURIComponent(userToken)}/bank-accounts/${encodeURIComponent(bankAccountToken)}/status-transitions`, transition, {}, callback);
     }
@@ -1911,7 +1911,7 @@ export default class Hyperwallet {
         }
 
         const transition = {
-            transition: "DE-ACTIVATED",
+            transition: "DE_ACTIVATED",
         };
         this.client.doPost(`users/${encodeURIComponent(userToken)}/venmo-accounts/${encodeURIComponent(venmoAccountToken)}/status-transitions`, transition, {}, callback);
     }
