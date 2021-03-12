@@ -2903,13 +2903,13 @@ describe("Hyperwallet", () => {
         });
 
         /** @test {Hyperwallet#deactivateBankAccount} */
-        it("should send transition to 'DE-ACTIVATED'", () => {
+        it("should send transition to 'DE_ACTIVATED'", () => {
             const callback = () => null;
             client.deactivateBankAccount("test-user-token", "test-bank-account-token", callback);
 
             apiClientSpy.should.have.been.calledOnce();
             apiClientSpy.should.have.been.calledWith("users/test-user-token/bank-accounts/test-bank-account-token/status-transitions", {
-                transition: "DE-ACTIVATED",
+                transition: "DE_ACTIVATED",
             }, {}, callback);
         });
     });
@@ -4477,13 +4477,13 @@ describe("Hyperwallet", () => {
         });
 
         /** @test {Hyperwallet#deactivateVenmoAccount} */
-        it("should send transition to 'DE-ACTIVATED'", () => {
+        it("should send transition to 'DE_ACTIVATED'", () => {
             const callback = () => null;
             client.deactivateVenmoAccount("test-user-token", "test-venmo-account-token", callback);
 
             apiClientSpy.should.have.been.calledOnce();
             apiClientSpy.should.have.been.calledWith("users/test-user-token/venmo-accounts/test-venmo-account-token/status-transitions", {
-                transition: "DE-ACTIVATED",
+                transition: "DE_ACTIVATED",
             }, {}, callback);
         });
     });
@@ -4827,7 +4827,7 @@ describe("Hyperwallet", () => {
         });
 
         /** @test {Hyperwallet#deactivateBusinessStakeholder} */
-        it("should send transition to 'DE-ACTIVATED'", () => {
+        it("should send transition to 'DE_ACTIVATED'", () => {
             const callback = () => null;
             client.deactivateBusinessStakeholder("test-user-token", "test-stakeholder-token", callback);
 
