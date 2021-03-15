@@ -1982,6 +1982,48 @@ describe("Hyperwallet", () => {
         });
     });
 
+    /** @test {Hyperwallet#updatePayPalAccount} */
+    describe("updatePayPalAccount()", () => {
+        let client;
+        let apiClientSpy;
+
+        beforeEach(() => {
+            apiClientSpy = sinon.spy();
+            client = new Hyperwallet({
+                username: "test-username",
+                password: "test-password",
+            });
+            client.client = {
+                doPut: apiClientSpy,
+            };
+        });
+
+        /** @test {Hyperwallet#updatePayPalAccount} */
+        it("should throw error if userToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.updatePayPalAccount(undefined, undefined, { test: "value" }, callback)).to.throw("userToken is required");
+        });
+
+        /** @test {Hyperwallet#updatePayPalAccount} */
+        it("should throw error if payPalAccountToken is missing", () => {
+            const callback = () => null;
+            expect(() => client.updatePayPalAccount("test-user-token", undefined, { test: "value" }, callback)).to.throw("payPalAccountToken is required");
+        });
+
+        /** @test {Hyperwallet#updatePayPalAccount} */
+        it("should do put call to paypal account endpoint", () => {
+            const callback = () => null;
+            client.updatePayPalAccount("test-user-token", "test-paypal-account-token", {
+                test: "value",
+            }, callback);
+
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("users/test-user-token/paypal-accounts/test-paypal-account-token", {
+                test: "value",
+            }, {}, callback);
+        });
+    });
+
     /** @test {Hyperwallet#createPayPalAccountStatusTransition} */
     describe("createPayPalAccountStatusTransition()", () => {
         let client;
@@ -2650,13 +2692,13 @@ describe("Hyperwallet", () => {
         });
 
         /** @test {Hyperwallet#deactivateBankAccount} */
-        it("should send transition to 'DE-ACTIVATED'", () => {
+        it("should send transition to 'DE_ACTIVATED'", () => {
             const callback = () => null;
             client.deactivateBankAccount("test-user-token", "test-bank-account-token", callback);
 
             apiClientSpy.should.have.been.calledOnce();
             apiClientSpy.should.have.been.calledWith("users/test-user-token/bank-accounts/test-bank-account-token/status-transitions", {
-                transition: "DE-ACTIVATED",
+                transition: "DE_ACTIVATED",
             }, {}, callback);
         });
     });
@@ -4200,13 +4242,13 @@ describe("Hyperwallet", () => {
         });
 
         /** @test {Hyperwallet#deactivateVenmoAccount} */
-        it("should send transition to 'DE-ACTIVATED'", () => {
+        it("should send transition to 'DE_ACTIVATED'", () => {
             const callback = () => null;
             client.deactivateVenmoAccount("test-user-token", "test-venmo-account-token", callback);
 
             apiClientSpy.should.have.been.calledOnce();
             apiClientSpy.should.have.been.calledWith("users/test-user-token/venmo-accounts/test-venmo-account-token/status-transitions", {
-                transition: "DE-ACTIVATED",
+                transition: "DE_ACTIVATED",
             }, {}, callback);
         });
     });
