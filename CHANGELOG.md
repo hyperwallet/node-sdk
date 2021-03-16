@@ -1,6 +1,11 @@
 Changelog
 =========
 
+1.6.3
+-------------------
+- Update paypal account method added
+- Bank account status transition changed from DE-ACTIVATED to DE_ACTIVATED
+
 1.6.2
 -------------------
 - Added custom headers 
