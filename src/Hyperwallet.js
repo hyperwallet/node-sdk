@@ -2016,7 +2016,8 @@ export default class Hyperwallet {
      * @param {Object} inputFilters - The query parameters in the URI
      * @param {Object} listFilters - Defined list of filters for a business object
      */
-    isValidFilter(inputFilters, listFilters) {
-        return Object.keys(inputFilters).every(elem => listFilters.includes(elem));
+    isValidFilter(options, listFilters) {
+        const optionKeys = Object.keys(options);
+        return listFilters.every(elem => optionKeys.includes(elem));
     }
 }
