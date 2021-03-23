@@ -2018,6 +2018,9 @@ export default class Hyperwallet {
      */
     isValidFilter(options, listFilters) {
         const optionKeys = Object.keys(options);
+        if (optionKeys.length === 0) {
+            return true;
+        }
         return listFilters.every(elem => optionKeys.includes(elem));
     }
 }
