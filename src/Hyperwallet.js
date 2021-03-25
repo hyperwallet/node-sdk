@@ -2009,7 +2009,7 @@ export default class Hyperwallet {
     /**
      * Validate the options filter
      *
-     * @param {Object} inputFilters - The query parameters in the URI
+     * @param {Object} options - The query parameters in the URI
      * @param {Object} listFilters - Defined list of filters for a business object
      */
     isValidFilter(options, listFilters) {
