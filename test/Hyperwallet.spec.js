@@ -248,9 +248,11 @@ describe("Hyperwallet", () => {
         /** @test {Hyperwallet#listUsers} */
         it("should do get call with options", () => {
             const callback = () => null;
-            client.listUsers({ clientUserId: "test-client-user-id", status: "test-status" }, callback);
+            client.listUsers({ clientUserId: "test-client-user-id", email: "test-email", programToken: "test-programToken",
+                status: "test-status", verificationStatus: "test-verificationStatus" }, callback);
             apiClientSpy.should.have.been.calledOnce();
-            apiClientSpy.should.have.been.calledWith("users", { clientUserId: "test-client-user-id", status: "test-status" });
+            apiClientSpy.should.have.been.calledWith("users", { clientUserId: "test-client-user-id", email: "test-email",
+                programToken: "test-programToken", status: "test-status", verificationStatus: "test-verificationStatus" });
         });
 
         /** @test {Hyperwallet#listUsers} */
