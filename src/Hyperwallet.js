@@ -1651,6 +1651,11 @@ export default class Hyperwallet {
      * @param {api-callback} callback - The callback for this call
      */
     listWebhookNotifications(options, callback) {
+        const LIST_WEBHOOK_NOTIFICATIONS_FILTERS = ["programToken", "createdBefore", "createdAfter",
+            "type", "sortBy", "offset", "limit"];
+        if (options && !this.isValidFilter(options, LIST_WEBHOOK_NOTIFICATIONS_FILTERS)) {
+            throw new Error("Invalid Filter. Expected - ".concat(LIST_WEBHOOK_NOTIFICATIONS_FILTERS));
+        }
         this.client.doGet("webhook-notifications", options, Hyperwallet.handle204Response(callback));
     }
 
@@ -2013,10 +2018,6 @@ export default class Hyperwallet {
      * @param {Object} listFilters - Defined list of filters for a business object
      */
     isValidFilter(options, listFilters) {
-        const optionKeys = Object.keys(options);
-        if (optionKeys.length === 0) {
-            return true;
-        }
-        return listFilters.every(elem => optionKeys.includes(elem));
+        return Object.keys(options).every(elem => listFilters.includes(elem));
     }
 }

@@ -3833,7 +3833,8 @@ describe("Hyperwallet", () => {
         /** @test {Hyperwallet#listWebhookNotifications} */
         it("should throw error for invalid filter", () => {
             const callback = () => null;
-            expect(() => client.listWebhookNotifications({ test: "value" }, callback)).to.throw("Invalid Filter. Expected - programToken,type");
+            expect(() => client.listWebhookNotifications({ test: "value" }, callback)).to.throw(
+                "Invalid Filter. Expected - programToken,createdBefore,createdAfter,type,sortBy,offset,limit");
         });
 
         /** @test {Hyperwallet#listWebhookNotifications} */
