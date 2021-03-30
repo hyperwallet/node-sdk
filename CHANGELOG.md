@@ -1,5 +1,8 @@
 Changelog
 =========
+1.6.4
+------------------
+- List webhook notification filters updated
 
 1.6.3
 -------------------
