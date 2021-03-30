@@ -248,9 +248,11 @@ describe("Hyperwallet", () => {
         /** @test {Hyperwallet#listUsers} */
         it("should do get call with options", () => {
             const callback = () => null;
-            client.listUsers({ clientUserId: "test-client-user-id", status: "test-status" }, callback);
+            client.listUsers({ clientUserId: "test-client-user-id", email: "test-email", programToken: "test-programToken",
+                status: "test-status", verificationStatus: "test-verificationStatus" }, callback);
             apiClientSpy.should.have.been.calledOnce();
-            apiClientSpy.should.have.been.calledWith("users", { clientUserId: "test-client-user-id", status: "test-status" });
+            apiClientSpy.should.have.been.calledWith("users", { clientUserId: "test-client-user-id", email: "test-email",
+                programToken: "test-programToken", status: "test-status", verificationStatus: "test-verificationStatus" });
         });
 
         /** @test {Hyperwallet#listUsers} */
@@ -3831,7 +3833,8 @@ describe("Hyperwallet", () => {
         /** @test {Hyperwallet#listWebhookNotifications} */
         it("should throw error for invalid filter", () => {
             const callback = () => null;
-            expect(() => client.listWebhookNotifications({ test: "value" }, callback)).to.throw("Invalid Filter. Expected - programToken,type");
+            expect(() => client.listWebhookNotifications({ test: "value" }, callback)).to.throw(
+                "Invalid Filter. Expected - programToken,createdBefore,createdAfter,type,sortBy,offset,limit");
         });
 
         /** @test {Hyperwallet#listWebhookNotifications} */
