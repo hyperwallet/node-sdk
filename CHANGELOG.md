@@ -1,6 +1,10 @@
 Changelog
 =========
 
+2.0.3
+-------------------
+- Filters added to list Webhook events
+
 2.0.2
 -------------------
 - Added header data to requests (user-agent, sdk-version etc)
