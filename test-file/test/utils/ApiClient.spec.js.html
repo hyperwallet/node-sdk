@@ -1,0 +1,1335 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../../">
+  <title data-ice="title">test/utils/ApiClient.spec.js | Hyperwallet REST SDK</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  <script src="script/manual.js"></script>
+<meta name="description" content="A library to manage users, transfer methods and payments through the Hyperwallet API"><meta property="twitter:card" content="summary"><meta property="twitter:title" content="Hyperwallet REST SDK"><meta property="twitter:description" content="A library to manage users, transfer methods and payments through the Hyperwallet API"></head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  <a href="test.html" data-ice="testLink">Test</a>
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+<a style="position:relative; top:3px;" href="https://github.com/hyperwallet/node-sdk"><img width="20px" src="./image/github.png"></a></header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Hyperwallet.js~Hyperwallet.html">Hyperwallet</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#utils">utils</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/utils/ApiClient.js~ApiClient.html">ApiClient</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/utils/Encryption.js~Encryption.html">Encryption</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-api-callback">api-callback</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">test/utils/ApiClient.spec.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import chai, { expect } from &quot;chai&quot;;
+import dirtyChai from &quot;dirty-chai&quot;;
+import nock from &quot;nock&quot;;
+import path from &quot;path&quot;;
+import Encryption from &quot;../../src/utils/Encryption&quot;;
+
+import ApiClient from &quot;../../src/utils/ApiClient&quot;;
+
+import packageJson from &quot;../../package.json&quot;;
+
+chai.should();
+chai.use(dirtyChai);
+
+/** @test {ApiClient} */
+describe(&quot;utils/ApiClient&quot;, () =&gt; {
+    /** @test {ApiClient#constructor} */
+    describe(&quot;constructor()&quot;, () =&gt; {
+        /** @test {ApiClient#constructor} */
+        it(&quot;should set provided values as private members&quot;, () =&gt; {
+            const client = new ApiClient(&quot;test-username&quot;, &quot;test-password&quot;, &quot;test-server&quot;);
+
+            client.username.should.be.equal(&quot;test-username&quot;);
+            client.password.should.be.equal(&quot;test-password&quot;);
+            client.server.should.be.equal(&quot;test-server&quot;);
+        });
+
+        /** @test {ApiClient#constructor} */
+        it(&quot;should set the version to package.json version&quot;, () =&gt; {
+            const client = new ApiClient(&quot;test-username&quot;, &quot;test-password&quot;, &quot;test-server&quot;);
+            client.version.should.be.equal(packageJson.version);
+        });
+    });
+
+    /** @test {ApiClient#doPost} */
+    describe(&quot;doPost()&quot;, () =&gt; {
+        let client;
+        let authHeader;
+
+        before(() =&gt; {
+            nock.disableNetConnect();
+        });
+        after(() =&gt; {
+            nock.enableNetConnect();
+        });
+
+        beforeEach(() =&gt; {
+            client = new ApiClient(&quot;test-username&quot;, &quot;test-password&quot;, &quot;https://test-server&quot;);
+
+            authHeader = &quot;Basic dGVzdC11c2VybmFtZTp0ZXN0LXBhc3N3b3Jk&quot;;
+        });
+        afterEach(() =&gt; {
+            nock.cleanAll();
+        });
+
+        /** @test {ApiClient#doPost} */
+        it(&quot;should return response if call was successful (with query parameters)&quot;, (cb) =&gt; {
+            nock(&quot;https://test-server&quot;)
+                .matchHeader(&quot;Authorization&quot;, authHeader)
+                .matchHeader(&quot;User-Agent&quot;, `Hyperwallet Node SDK v${packageJson.version}`)
+                .matchHeader(&quot;Accept&quot;, &quot;application/json&quot;)
+                .matchHeader(&quot;Content-Type&quot;, &quot;application/json&quot;)
+                .post(&quot;/rest/v4/test&quot;, {
+                    test: &quot;value&quot;,
+                })
+                .query({ sort: &quot;test&quot; })
+                .reply(201, { response: &quot;value&quot; }, { &quot;Content-Type&quot;: &quot;application/json&quot; });
+
+            client.doPost(&quot;test&quot;, { test: &quot;value&quot; }, { sort: &quot;test&quot; }, (err, body, res) =&gt; {
+                expect(err).to.be.undefined();
+
+                body.should.be.deep.equal({
+                    response: &quot;value&quot;,
+                });
+
+                res.status.should.be.equal(201);
+
+                cb();
+            });
+        });
+
+        /** @test {ApiClient#doPost} */
+        it(&quot;should return response if call was successful (with query parameters) when content type contains charset&quot;, (cb) =&gt; {
+            nock(&quot;https://test-server&quot;)
+                .matchHeader(&quot;Authorization&quot;, authHeader)
+                .matchHeader(&quot;User-Agent&quot;, `Hyperwallet Node SDK v${packageJson.version}`)
+                .matchHeader(&quot;Accept&quot;, &quot;application/json&quot;)
+                .matchHeader(&quot;Content-Type&quot;, &quot;application/json&quot;)
+                .post(&quot;/rest/v4/test&quot;, {
+                    test: &quot;value&quot;,
+                })
+                .query({ sort: &quot;test&quot; })
+                .reply(201, { response: &quot;value&quot; }, {
+                    &quot;Content-Type&quot;: &quot;application/json;charset=utf-8&quot;,
+                });
+
+            client.doPost(&quot;test&quot;, { test: &quot;value&quot; }, { sort: &quot;test&quot; }, (err, body, res) =&gt; {
+                expect(err).to.be.undefined();
+
+                body.should.be.deep.equal({
+                    response: &quot;value&quot;,
+                });
+
+                res.status.should.be.equal(201);
+
+                cb();
+            });
+        });
+
+        /** @test {ApiClient#doPost} */
+        it(&quot;should return response if call was successful (with query parameters) when content type contains charset ahead&quot;, (cb) =&gt; {
+            nock(&quot;https://test-server&quot;)
+                .matchHeader(&quot;Authorization&quot;, authHeader)
+                .matchHeader(&quot;User-Agent&quot;, `Hyperwallet Node SDK v${packageJson.version}`)
+                .matchHeader(&quot;Accept&quot;, &quot;application/json&quot;)
+                .matchHeader(&quot;Content-Type&quot;, &quot;application/json&quot;)
+                .post(&quot;/rest/v4/test&quot;, {
+                    test: &quot;value&quot;,
+                })
+                .query({ sort: &quot;test&quot; })
+                .reply(201, { response: &quot;value&quot; }, {
+                    &quot;Content-Type&quot;: &quot;charset=utf-8;application/json&quot;,
+                });
+
+            client.doPost(&quot;test&quot;, { test: &quot;value&quot; }, { sort: &quot;test&quot; }, (err, body, res) =&gt; {
+                expect(err).to.be.undefined();
+
+                JSON.parse(body.toString(&quot;utf8&quot;)).should.be.deep.equal({
+                    response: &quot;value&quot;,
+                });
+
+                res.status.should.be.equal(201);
+
+                cb();
+            });
+        });
+
+        /** @test {ApiClient#doPost} */
+        it(&quot;should return response if call was successful (without query parameters)&quot;, (cb) =&gt; {
+            nock(&quot;https://test-server&quot;)
+                .matchHeader(&quot;Authorization&quot;, authHeader)
+                .matchHeader(&quot;User-Agent&quot;, `Hyperwallet Node SDK v${packageJson.version}`)
+                .matchHeader(&quot;Accept&quot;, &quot;application/json&quot;)
+                .matchHeader(&quot;Content-Type&quot;, &quot;application/json&quot;)
+                .post(&quot;/rest/v4/test&quot;, {
+                    test: &quot;value&quot;,
+                })
+                .reply(201, { response: &quot;value&quot; }, { &quot;Content-Type&quot;: &quot;application/json&quot; });
+
+            client.doPost(&quot;test&quot;, { test: &quot;value&quot; }, {}, (err, body, res) =&gt; {
+                expect(err).to.be.undefined();
+
+                body.should.be.deep.equal({
+                    response: &quot;value&quot;,
+                });
+
+                res.status.should.be.equal(201);
+
+                cb();
+            });
+        });
+
+        /** @test {ApiClient#doPost} */
+        it(&quot;should return generic network error if no response was send by server&quot;, (cb) =&gt; {
+            client.doPost(&quot;test&quot;, { test: &quot;value&quot; }, {}, (err, body, res) =&gt; {
+                err.should.be.deep.equal([{
+                    message: &quot;Could not communicate with https://test-server&quot;,
+                    code: &quot;COMMUNICATION_ERROR&quot;,
+                }]);
+
+                expect(body).to.be.undefined();
+                expect(res).to.be.undefined();
+
+                cb();
+            });
+        });
+
+        /** @test {ApiClient#doPost} */
+        it(&quot;should return error message if responses contains error&quot;, (cb) =&gt; {
+            nock(&quot;https://test-server&quot;)
+                .matchHeader(&quot;Authorization&quot;, authHeader)
+                .matchHeader(&quot;User-Agent&quot;, `Hyperwallet Node SDK v${packageJson.version}`)
+                .matchHeader(&quot;Accept&quot;, &quot;application/json&quot;)
+                .matchHeader(&quot;Content-Type&quot;, &quot;application/json&quot;)
+                .post(&quot;/rest/v4/test&quot;, {
+                    test: &quot;value&quot;,
+                })
+                .reply(404, {
+                    errors: [{
+                        message: &quot;message&quot;,
+                        code: &quot;FORBIDDEN&quot;,
+                        relatedResources: [&quot;trm-f3d38df1-adb7-4127-9858-e72ebe682a79&quot;,
+                            &quot;trm-601b1401-4464-4f3f-97b3-09079ee7723b&quot;],
+                    }],
+                }, { &quot;Content-Type&quot;: &quot;application/json&quot; });
+
+            client.doPost(&quot;test&quot;, { test: &quot;value&quot; }, {}, (err, body, res) =&gt; {
+                err.should.be.deep.equal([{
+                    message: &quot;message&quot;,
+                    code: &quot;FORBIDDEN&quot;,
+                    relatedResources: [&quot;trm-f3d38df1-adb7-4127-9858-e72ebe682a79&quot;,
+                        &quot;trm-601b1401-4464-4f3f-97b3-09079ee7723b&quot;],
+                }]);
+
+                body.should.be.deep.equal({
+                    errors: [{
+                        message: &quot;message&quot;,
+                        code: &quot;FORBIDDEN&quot;,
+                        relatedResources: [&quot;trm-f3d38df1-adb7-4127-9858-e72ebe682a79&quot;,
+                            &quot;trm-601b1401-4464-4f3f-97b3-09079ee7723b&quot;],
+                    }],
+                });
+
+                res.status.should.be.equal(404);
+
+                cb();
+            });
+        });
+
+        /** @test {ApiClient#doPost} */
+        it(&quot;should return encrypted response if encrypted POST call was successful (without query parameters)&quot;, (cb) =&gt; {
+            const clientPath = path.join(__dirname, &quot;..&quot;, &quot;resources&quot;, &quot;private-jwkset1&quot;);
+            const hwPath = path.join(__dirname, &quot;..&quot;, &quot;resources&quot;, &quot;public-jwkset1&quot;);
+            const clientWithEncryption = new ApiClient(&quot;test-username&quot;, &quot;test-password&quot;, &quot;https://test-server&quot;, {
+                clientPrivateKeySetPath: clientPath,
+                hyperwalletKeySetPath: hwPath,
+            });
+            const encryption = new Encryption(clientPath, hwPath);
+            const testMessage = {
+                message: &quot;Test message&quot;,
+            };
+
+            encryption.encrypt(testMessage).then((encryptedBody) =&gt; {
+                nock(&quot;https://test-server&quot;)
+                    .filteringPath(() =&gt; &quot;/&quot;)
+                    .matchHeader(&quot;Authorization&quot;, authHeader)
+                    .matchHeader(&quot;User-Agent&quot;, `Hyperwallet Node SDK v${packageJson.version}`)
+                    .matchHeader(&quot;Accept&quot;, &quot;application/jose+json&quot;)
+                    .matchHeader(&quot;Content-Type&quot;, &quot;application/jose+json&quot;)
+                    .post(&quot;/&quot;, /.+/)
+                    .reply(200, encryptedBody, {
+                        &quot;Content-Type&quot;: &quot;application/jose+json&quot;,
+                    });
+
+                clientWithEncryption.doPost(&quot;test&quot;, { message: &quot;Test message&quot; }, {}, (err, body, res) =&gt; {
+                    expect(err).to.be.undefined();
+
+                    expect(res).to.not.be.undefined();
+
+                    body.should.be.deep.equal({
+                        message: &quot;Test message&quot;,
+                    });
+
+                    cb();
+                });
+            });
+        });
+
+        /** @test {ApiClient#doPost} */
+        it(&quot;should return encrypted response if encrypted POST call was successful when content type contains charset&quot;, (cb) =&gt; {
+            const clientPath = path.join(__dirname, &quot;..&quot;, &quot;resources&quot;, &quot;private-jwkset1&quot;);
+            const hwPath = path.join(__dirname, &quot;..&quot;, &quot;resources&quot;, &quot;public-jwkset1&quot;);
+            const clientWithEncryption = new ApiClient(&quot;test-username&quot;, &quot;test-password&quot;, &quot;https://test-server&quot;, {
+                clientPrivateKeySetPath: clientPath,
+                hyperwalletKeySetPath: hwPath,
+            });
+            const encryption = new Encryption(clientPath, hwPath);
+            const testMessage = {
+                message: &quot;Test message&quot;,
+            };
+
+            encryption.encrypt(testMessage).then((encryptedBody) =&gt; {
+                nock(&quot;https://test-server&quot;)
+                    .filteringPath(() =&gt; &quot;/&quot;)
+                    .matchHeader(&quot;Authorization&quot;, authHeader)
+                    .matchHeader(&quot;User-Agent&quot;, `Hyperwallet Node SDK v${packageJson.version}`)
+                    .matchHeader(&quot;Accept&quot;, &quot;application/jose+json&quot;)
+                    .matchHeader(&quot;Content-Type&quot;, &quot;application/jose+json&quot;)
+                    .post(&quot;/&quot;, /.+/)
+                    .reply(200, encryptedBody, {
+                        &quot;Content-Type&quot;: &quot;application/jose+json;charset=utf-8&quot;,
+                    });
+
+                clientWithEncryption.doPost(&quot;test&quot;, { message: &quot;Test message&quot; }, {}, (err, body, res) =&gt; {
+                    expect(err).to.be.undefined();
+
+                    expect(res).to.not.be.undefined();
+
+                    body.should.be.deep.equal({
+                        message: &quot;Test message&quot;,
+                    });
+
+                    cb();
+                });
+            });
+        });
+
+        /** @test {ApiClient#doPost} */
+        it(&quot;should return error when encrypted response body is empty&quot;, (cb) =&gt; {
+            const clientPath = path.join(__dirname, &quot;..&quot;, &quot;resources&quot;, &quot;private-jwkset1&quot;);
+            const hwPath = path.join(__dirname, &quot;..&quot;, &quot;resources&quot;, &quot;public-jwkset1&quot;);
+            const clientWithEncryption = new ApiClient(&quot;test-username&quot;, &quot;test-password&quot;, &quot;https://test-server&quot;, {
+                clientPrivateKeySetPath: clientPath,
+                hyperwalletKeySetPath: hwPath,
+            });
+            const encryption = new Encryption(clientPath, hwPath);
+            const testMessage = {
+                message: &quot;Test message&quot;,
+            };
+
+            encryption.encrypt(testMessage).then(() =&gt; {
+                nock(&quot;https://test-server&quot;)
+                    .filteringPath(() =&gt; &quot;/&quot;)
+                    .matchHeader(&quot;Authorization&quot;, authHeader)
+                    .matchHeader(&quot;User-Agent&quot;, `Hyperwallet Node SDK v${packageJson.version}`)
+                    .matchHeader(&quot;Accept&quot;, &quot;application/jose+json&quot;)
+                    .matchHeader(&quot;Content-Type&quot;, &quot;application/jose+json&quot;)
+                    .post(&quot;/&quot;, /.+/)
+                    .reply(200, null, {
+                        &quot;Content-Type&quot;: &quot;application/jose+json&quot;,
+                    });
+
+                clientWithEncryption.doPost(&quot;test&quot;, { message: &quot;Test message&quot; }, {}, (err, body, res) =&gt; {
+                    expect(body).to.be.undefined();
+
+                    expect(res).to.be.undefined();
+
+                    err.should.be.deep.equal(&quot;Try to decrypt empty response body&quot;);
+
+                    cb();
+                });
+            });
+        });
+
+        /** @test {ApiClient#doPost} */
+        it(&quot;should return error when fail to encrypt POST request body&quot;, (cb) =&gt; {
+            const clientPath = path.join(__dirname, &quot;..&quot;, &quot;resources&quot;, &quot;private-jwkset1&quot;);
+            const hwPath = path.join(__dirname, &quot;..&quot;, &quot;resources&quot;, &quot;public-jwkset1&quot;);
+            const clientWithEncryption = new ApiClient(&quot;test-username&quot;, &quot;test-password&quot;, &quot;https://test-server&quot;, {
+                clientPrivateKeySetPath: &quot;wrongPath&quot;,
+                hyperwalletKeySetPath: hwPath,
+            });
+            const encryption = new Encryption(clientPath, hwPath);
+            const testMessage = {
+                message: &quot;Test message&quot;,
+            };
+
+            encryption.encrypt(testMessage).then((encryptedBody) =&gt; {
+                nock(&quot;https://test-server&quot;)
+                    .filteringPath(() =&gt; &quot;/&quot;)
+                    .matchHeader(&quot;Authorization&quot;, authHeader)
+                    .matchHeader(&quot;User-Agent&quot;, `Hyperwallet Node SDK v${packageJson.version}`)
+                    .matchHeader(&quot;Accept&quot;, &quot;application/json&quot;)
+                    .matchHeader(&quot;Content-Type&quot;, &quot;application/jose+json&quot;)
+                    .post(&quot;/&quot;, /.+/)
+                    .reply(201, encryptedBody);
+
+                clientWithEncryption.doPost(&quot;test&quot;, { message: &quot;Test message&quot; }, {}, (err, body, res) =&gt; {
+                    expect(body).to.be.undefined();
+
+                    expect(res).to.be.undefined();
+
+                    err.should.be.deep.equal(&quot;Failed to encrypt body for POST request&quot;);
+
+                    cb();
+                });
+            });
+        });
+    });
+
+    /** @test {ApiClient#doPut} */
+    describe(&quot;doPut()&quot;, () =&gt; {
+        let client;
+        let authHeader;
+
+        before(() =&gt; {
+            nock.disableNetConnect();
+        });
+        after(() =&gt; {
+            nock.enableNetConnect();
+        });
+
+        beforeEach(() =&gt; {
+            client = new ApiClient(&quot;test-username&quot;, &quot;test-password&quot;, &quot;https://test-server&quot;);
+
+            authHeader = &quot;Basic dGVzdC11c2VybmFtZTp0ZXN0LXBhc3N3b3Jk&quot;;
+        });
+        afterEach(() =&gt; {
+            nock.cleanAll();
+        });
+
+        /** @test {ApiClient#doPut} */
+        it(&quot;should return response if call was successful (with query parameters)&quot;, (cb) =&gt; {
+            nock(&quot;https://test-server&quot;)
+                .matchHeader(&quot;Authorization&quot;, authHeader)
+                .matchHeader(&quot;User-Agent&quot;, `Hyperwallet Node SDK v${packageJson.version}`)
+                .matchHeader(&quot;Accept&quot;, &quot;application/json&quot;)
+                .matchHeader(&quot;Content-Type&quot;, &quot;application/json&quot;)
+                .put(&quot;/rest/v4/test&quot;, {
+                    test: &quot;value&quot;,
+                })
+                .query({ sort: &quot;test&quot; })
+                .reply(200, { response: &quot;value&quot; }, { &quot;Content-Type&quot;: &quot;application/json&quot; });
+
+            client.doPut(&quot;test&quot;, { test: &quot;value&quot; }, { sort: &quot;test&quot; }, (err, body, res) =&gt; {
+                expect(err).to.be.undefined();
+
+                body.should.be.deep.equal({
+                    response: &quot;value&quot;,
+                });
+
+                res.status.should.be.equal(200);
+
+                cb();
+            });
+        });
+
+        /** @test {ApiClient#doPut} */
+        it(&quot;should return response if call was successful (with query parameters) when content type contains charset&quot;, (cb) =&gt; {
+            nock(&quot;https://test-server&quot;)
+                .matchHeader(&quot;Authorization&quot;, authHeader)
+                .matchHeader(&quot;User-Agent&quot;, `Hyperwallet Node SDK v${packageJson.version}`)
+                .matchHeader(&quot;Accept&quot;, &quot;application/json&quot;)
+                .matchHeader(&quot;Content-Type&quot;, &quot;application/json&quot;)
+                .put(&quot;/rest/v4/test&quot;, {
+                    test: &quot;value&quot;,
+                })
+                .query({ sort: &quot;test&quot; })
+                .reply(200, { response: &quot;value&quot; }, {
+                    &quot;Content-Type&quot;: &quot;application/json;charset=utf-8&quot;,
+                });
+
+            client.doPut(&quot;test&quot;, { test: &quot;value&quot; }, { sort: &quot;test&quot; }, (err, body, res) =&gt; {
+                expect(err).to.be.undefined();
+
+                body.should.be.deep.equal({
+                    response: &quot;value&quot;,
+                });
+
+                res.status.should.be.equal(200);
+
+                cb();
+            });
+        });
+
+        /** @test {ApiClient#doPut} */
+        it(&quot;should return response if call was successful (with query parameters) when content type contains charset ahead&quot;, (cb) =&gt; {
+            nock(&quot;https://test-server&quot;)
+                .matchHeader(&quot;Authorization&quot;, authHeader)
+                .matchHeader(&quot;User-Agent&quot;, `Hyperwallet Node SDK v${packageJson.version}`)
+                .matchHeader(&quot;Accept&quot;, &quot;application/json&quot;)
+                .matchHeader(&quot;Content-Type&quot;, &quot;application/json&quot;)
+                .put(&quot;/rest/v4/test&quot;, {
+                    test: &quot;value&quot;,
+                })
+                .query({ sort: &quot;test&quot; })
+                .reply(200, { response: &quot;value&quot; }, {
+                    &quot;Content-Type&quot;: &quot;charset=utf-8;application/json&quot;,
+                });
+
+            client.doPut(&quot;test&quot;, { test: &quot;value&quot; }, { sort: &quot;test&quot; }, (err, body, res) =&gt; {
+                expect(err).to.be.undefined();
+
+                JSON.parse(body.toString(&quot;utf8&quot;)).should.be.deep.equal({
+                    response: &quot;value&quot;,
+                });
+
+                res.status.should.be.equal(200);
+
+                cb();
+            });
+        });
+
+        /** @test {ApiClient#doPut} */
+        it(&quot;should return response if call was successful (without query parameters)&quot;, (cb) =&gt; {
+            nock(&quot;https://test-server&quot;)
+                .matchHeader(&quot;Authorization&quot;, authHeader)
+                .matchHeader(&quot;User-Agent&quot;, `Hyperwallet Node SDK v${packageJson.version}`)
+                .matchHeader(&quot;Accept&quot;, &quot;application/json&quot;)
+                .matchHeader(&quot;Content-Type&quot;, &quot;application/json&quot;)
+                .put(&quot;/rest/v4/test&quot;, {
+                    test: &quot;value&quot;,
+                })
+                .reply(200, { response: &quot;value&quot; }, { &quot;Content-Type&quot;: &quot;application/json&quot; });
+
+            client.doPut(&quot;test&quot;, { test: &quot;value&quot; }, {}, (err, body, res) =&gt; {
+                expect(err).to.be.undefined();
+
+                body.should.be.deep.equal({
+                    response: &quot;value&quot;,
+                });
+
+                res.status.should.be.equal(200);
+
+                cb();
+            });
+        });
+
+        /** @test {ApiClient#doPut} */
+        it(&quot;should return generic network error if no response was send by server&quot;, (cb) =&gt; {
+            client.doPut(&quot;test&quot;, { test: &quot;value&quot; }, {}, (err, body, res) =&gt; {
+                err.should.be.deep.equal([{
+                    message: &quot;Could not communicate with https://test-server&quot;,
+                    code: &quot;COMMUNICATION_ERROR&quot;,
+                }]);
+
+                expect(body).to.be.undefined();
+                expect(res).to.be.undefined();
+
+                cb();
+            });
+        });
+
+        /** @test {ApiClient#doPut} */
+        it(&quot;should return error message if responses contains error&quot;, (cb) =&gt; {
+            nock(&quot;https://test-server&quot;)
+                .matchHeader(&quot;Authorization&quot;, authHeader)
+                .matchHeader(&quot;User-Agent&quot;, `Hyperwallet Node SDK v${packageJson.version}`)
+                .matchHeader(&quot;Accept&quot;, &quot;application/json&quot;)
+                .matchHeader(&quot;Content-Type&quot;, &quot;application/json&quot;)
+                .put(&quot;/rest/v4/test&quot;, {
+                    test: &quot;value&quot;,
+                })
+                .reply(404, {
+                    errors: [{
+                        message: &quot;message&quot;,
+                        code: &quot;FORBIDDEN&quot;,
+                        relatedResources: [&quot;trm-f3d38df1-adb7-4127-9858-e72ebe682a79&quot;,
+                            &quot;trm-601b1401-4464-4f3f-97b3-09079ee7723b&quot;],
+                    }],
+                }, { &quot;Content-Type&quot;: &quot;application/json&quot; });
+
+            client.doPut(&quot;test&quot;, { test: &quot;value&quot; }, {}, (err, body, res) =&gt; {
+                err.should.be.deep.equal([{
+                    message: &quot;message&quot;,
+                    code: &quot;FORBIDDEN&quot;,
+                    relatedResources: [&quot;trm-f3d38df1-adb7-4127-9858-e72ebe682a79&quot;,
+                        &quot;trm-601b1401-4464-4f3f-97b3-09079ee7723b&quot;],
+                }]);
+
+                body.should.be.deep.equal({
+                    errors: [{
+                        message: &quot;message&quot;,
+                        code: &quot;FORBIDDEN&quot;,
+                        relatedResources: [&quot;trm-f3d38df1-adb7-4127-9858-e72ebe682a79&quot;,
+                            &quot;trm-601b1401-4464-4f3f-97b3-09079ee7723b&quot;],
+                    }],
+                });
+
+                res.status.should.be.equal(404);
+
+                cb();
+            });
+        });
+
+        /** @test {ApiClient#doPut} */
+        it(&quot;should return encrypted response if encrypted PUT call was successful (without query parameters)&quot;, (cb) =&gt; {
+            const clientPath = path.join(__dirname, &quot;..&quot;, &quot;resources&quot;, &quot;private-jwkset1&quot;);
+            const hwPath = path.join(__dirname, &quot;..&quot;, &quot;resources&quot;, &quot;public-jwkset1&quot;);
+            const clientWithEncryption = new ApiClient(&quot;test-username&quot;, &quot;test-password&quot;, &quot;https://test-server&quot;, {
+                clientPrivateKeySetPath: clientPath,
+                hyperwalletKeySetPath: hwPath,
+            });
+            const encryption = new Encryption(clientPath, hwPath);
+            const testMessage = {
+                message: &quot;Test message&quot;,
+            };
+
+            encryption.encrypt(testMessage).then((encryptedBody) =&gt; {
+                nock(&quot;https://test-server&quot;)
+                    .filteringPath(() =&gt; &quot;/&quot;)
+                    .matchHeader(&quot;Authorization&quot;, authHeader)
+                    .matchHeader(&quot;User-Agent&quot;, `Hyperwallet Node SDK v${packageJson.version}`)
+                    .matchHeader(&quot;Accept&quot;, &quot;application/jose+json&quot;)
+                    .matchHeader(&quot;Content-Type&quot;, &quot;application/jose+json&quot;)
+                    .put(&quot;/&quot;, /.+/)
+                    .reply(201, encryptedBody, { &quot;Content-Type&quot;: &quot;application/jose+json&quot; });
+
+                clientWithEncryption.doPut(&quot;test&quot;, { message: &quot;Test message&quot; }, {}, (err, body, res) =&gt; {
+                    expect(err).to.be.undefined();
+
+                    expect(res).to.not.be.undefined();
+
+                    body.should.be.deep.equal({
+                        message: &quot;Test message&quot;,
+                    });
+
+                    cb();
+                });
+            });
+        });
+
+        /** @test {ApiClient#doPut} */
+        it(&quot;should return encrypted response if encrypted PUT call was successful when content type contains charset&quot;, (cb) =&gt; {
+            const clientPath = path.join(__dirname, &quot;..&quot;, &quot;resources&quot;, &quot;private-jwkset1&quot;);
+            const hwPath = path.join(__dirname, &quot;..&quot;, &quot;resources&quot;, &quot;public-jwkset1&quot;);
+            const clientWithEncryption = new ApiClient(&quot;test-username&quot;, &quot;test-password&quot;, &quot;https://test-server&quot;, {
+                clientPrivateKeySetPath: clientPath,
+                hyperwalletKeySetPath: hwPath,
+            });
+            const encryption = new Encryption(clientPath, hwPath);
+            const testMessage = {
+                message: &quot;Test message&quot;,
+            };
+
+            encryption.encrypt(testMessage).then((encryptedBody) =&gt; {
+                nock(&quot;https://test-server&quot;)
+                    .filteringPath(() =&gt; &quot;/&quot;)
+                    .matchHeader(&quot;Authorization&quot;, authHeader)
+                    .matchHeader(&quot;User-Agent&quot;, `Hyperwallet Node SDK v${packageJson.version}`)
+                    .matchHeader(&quot;Accept&quot;, &quot;application/jose+json&quot;)
+                    .matchHeader(&quot;Content-Type&quot;, &quot;application/jose+json&quot;)
+                    .put(&quot;/&quot;, /.+/)
+                    .reply(201, encryptedBody, {
+                        &quot;Content-Type&quot;: &quot;application/jose+json;charset=utf-8&quot;,
+                    });
+
+                clientWithEncryption.doPut(&quot;test&quot;, { message: &quot;Test message&quot; }, {}, (err, body, res) =&gt; {
+                    expect(err).to.be.undefined();
+
+                    expect(res).to.not.be.undefined();
+
+                    body.should.be.deep.equal({
+                        message: &quot;Test message&quot;,
+                    });
+
+                    cb();
+                });
+            });
+        });
+
+        /** @test {ApiClient#doPut} */
+        it(&quot;should return error when fail to encrypt PUT request body&quot;, (cb) =&gt; {
+            const clientPath = path.join(__dirname, &quot;..&quot;, &quot;resources&quot;, &quot;private-jwkset1&quot;);
+            const hwPath = path.join(__dirname, &quot;..&quot;, &quot;resources&quot;, &quot;public-jwkset1&quot;);
+            const clientWithEncryption = new ApiClient(&quot;test-username&quot;, &quot;test-password&quot;, &quot;https://test-server&quot;, {
+                clientPrivateKeySetPath: &quot;wrongPath&quot;,
+                hyperwalletKeySetPath: hwPath,
+            });
+            const encryption = new Encryption(clientPath, hwPath);
+            const testMessage = {
+                message: &quot;Test message&quot;,
+            };
+
+            encryption.encrypt(testMessage).then((encryptedBody) =&gt; {
+                nock(&quot;https://test-server&quot;)
+                    .filteringPath(() =&gt; &quot;/&quot;)
+                    .matchHeader(&quot;Authorization&quot;, authHeader)
+                    .matchHeader(&quot;User-Agent&quot;, `Hyperwallet Node SDK v${packageJson.version}`)
+                    .matchHeader(&quot;Accept&quot;, &quot;application/json&quot;)
+                    .matchHeader(&quot;Content-Type&quot;, &quot;application/jose+json&quot;)
+                    .put(&quot;/&quot;, /.+/)
+                    .reply(201, encryptedBody);
+
+                clientWithEncryption.doPut(&quot;test&quot;, { message: &quot;Test message&quot; }, {}, (err, body, res) =&gt; {
+                    expect(body).to.be.undefined();
+
+                    expect(res).to.be.undefined();
+
+                    err.should.be.deep.equal(&quot;Failed to encrypt body for PUT request&quot;);
+
+                    cb();
+                });
+            });
+        });
+
+        /** @test {ApiClient#doPut} */
+        it(&quot;should return error when fail to decrypt PUT response body&quot;, (cb) =&gt; {
+            const clientPath = path.join(__dirname, &quot;..&quot;, &quot;resources&quot;, &quot;private-jwkset1-wrong-jwe&quot;);
+            const hwPath = path.join(__dirname, &quot;..&quot;, &quot;resources&quot;, &quot;public-jwkset1&quot;);
+            const clientWithEncryption = new ApiClient(&quot;test-username&quot;, &quot;test-password&quot;, &quot;https://test-server&quot;, {
+                clientPrivateKeySetPath: clientPath,
+                hyperwalletKeySetPath: hwPath,
+            });
+            const encryption = new Encryption(clientPath, hwPath);
+            const testMessage = {
+                message: &quot;Test message&quot;,
+            };
+
+            encryption.encrypt(testMessage).then((encryptedBody) =&gt; {
+                nock(&quot;https://test-server&quot;)
+                    .filteringPath(() =&gt; &quot;/&quot;)
+                    .matchHeader(&quot;Authorization&quot;, authHeader)
+                    .matchHeader(&quot;User-Agent&quot;, `Hyperwallet Node SDK v${packageJson.version}`)
+                    .matchHeader(&quot;Accept&quot;, &quot;application/jose+json&quot;)
+                    .matchHeader(&quot;Content-Type&quot;, &quot;application/jose+json&quot;)
+                    .put(&quot;/&quot;, /.+/)
+                    .reply(201, encryptedBody, { &quot;Content-Type&quot;: &quot;application/jose+json&quot; });
+
+                clientWithEncryption.doPut(&quot;test&quot;, { message: &quot;Test message&quot; }, {}, (err, body, res) =&gt; {
+                    err.should.be.deep.equal(&quot;Failed to decrypt response for PUT request&quot;);
+
+                    expect(body).to.not.be.undefined();
+
+                    expect(res).to.not.be.undefined();
+
+                    cb();
+                });
+            });
+        });
+
+        /** @test {ApiClient#doPut} */
+        it(&quot;should return error when server responses with error on encrypted PUT request&quot;, (cb) =&gt; {
+            const clientPath = path.join(__dirname, &quot;..&quot;, &quot;resources&quot;, &quot;private-jwkset1&quot;);
+            const hwPath = path.join(__dirname, &quot;..&quot;, &quot;resources&quot;, &quot;public-jwkset1&quot;);
+            const clientWithEncryption = new ApiClient(&quot;test-username&quot;, &quot;test-password&quot;, &quot;https://test-server&quot;, {
+                clientPrivateKeySetPath: clientPath,
+                hyperwalletKeySetPath: hwPath,
+            });
+            const encryption = new Encryption(clientPath, hwPath);
+            const errorMessage = {
+                errors: [
+                    &quot;test1&quot;,
+                    &quot;test2&quot;,
+                ],
+            };
+
+            encryption.encrypt(errorMessage).then((encryptedBody) =&gt; {
+                nock(&quot;https://test-server&quot;)
+                    .filteringPath(() =&gt; &quot;/&quot;)
+                    .matchHeader(&quot;Authorization&quot;, authHeader)
+                    .matchHeader(&quot;User-Agent&quot;, `Hyperwallet Node SDK v${packageJson.version}`)
+                    .matchHeader(&quot;Accept&quot;, &quot;application/jose+json&quot;)
+                    .matchHeader(&quot;Content-Type&quot;, &quot;application/jose+json&quot;)
+                    .put(&quot;/&quot;, /.+/)
+                    .reply(404, encryptedBody, { &quot;Content-Type&quot;: &quot;application/jose+json&quot; });
+
+                clientWithEncryption.doPut(&quot;test&quot;, { message: &quot;Test message&quot; }, {}, (err, body, res) =&gt; {
+                    err.should.be.deep.equal([
+                        &quot;test1&quot;,
+                        &quot;test2&quot;,
+                    ]);
+
+                    body.should.be.deep.equal({
+                        errors: [
+                            &quot;test1&quot;,
+                            &quot;test2&quot;,
+                        ],
+                    });
+
+                    res.should.be.deep.equal({
+                        body: {
+                            errors: [
+                                &quot;test1&quot;,
+                                &quot;test2&quot;,
+                            ],
+                        },
+                    });
+
+                    cb();
+                });
+            });
+        });
+    });
+
+    /** @test {ApiClient#doPutMultipart} */
+    describe(&quot;doPutMultipart()&quot;, () =&gt; {
+        let client;
+        let authHeader;
+
+        before(() =&gt; {
+            nock.disableNetConnect();
+        });
+        after(() =&gt; {
+            nock.enableNetConnect();
+        });
+
+        beforeEach(() =&gt; {
+            client = new ApiClient(&quot;test-username&quot;, &quot;test-password&quot;, &quot;https://test-server&quot;);
+
+            authHeader = &quot;Basic dGVzdC11c2VybmFtZTp0ZXN0LXBhc3N3b3Jk&quot;;
+        });
+        afterEach(() =&gt; {
+            nock.cleanAll();
+        });
+        const testFile1 = path.join(__dirname, &quot;..&quot;, &quot;resources&quot;, &quot;TestFile1.png&quot;);
+        const documents = {
+            documents: [{
+                type: &quot;DRIVERS_LICENSE&quot;,
+                country: &quot;US&quot;,
+                category: &quot;IDENTIFICATION&quot;,
+            }],
+        };
+        const data = {
+            data: JSON.stringify(documents),
+            drivers_license_front: testFile1,
+        };
+
+        /** @test {ApiClient#doPutMultipart} */
+        it(&quot;should return error response for call&quot;, (cb) =&gt; {
+            nock(&quot;https://test-server&quot;)
+                .matchHeader(&quot;Authorization&quot;, authHeader)
+                .matchHeader(&quot;User-Agent&quot;, `Hyperwallet Node SDK v${packageJson.version}`)
+                .matchHeader(&quot;Accept&quot;, &quot;application/json&quot;)
+                .matchHeader(&quot;Content-Type&quot;, &quot;multipart/form-data&quot;)
+                .put(&quot;/rest/v4/test&quot;, { test: &quot;value&quot; })
+                .reply(400, []
+                    , { &quot;Content-Type&quot;: &quot;application/jose+json&quot; });
+
+            client.doPutMultipart(&quot;test&quot;, data, (err, body, res) =&gt; {
+                err.should.be.deep.equal([{
+                    message: &quot;Could not communicate with https://test-server&quot;,
+                    code: &quot;COMMUNICATION_ERROR&quot;,
+                }]);
+                expect(body).to.be.undefined();
+                expect(res).to.be.undefined();
+
+                cb();
+            });
+        });
+
+        /** @test {ApiClient#doPutMultipart} */
+        xit(&quot;should return generic network error if no response was sent by server&quot;, (cb) =&gt; {
+            client.doPut(&quot;test&quot;, { test: &quot;value&quot; }, {}, (err, body, res) =&gt; {
+                err.should.be.deep.equal([{
+                    message: &quot;Could not communicate with https://test-server&quot;,
+                    code: &quot;COMMUNICATION_ERROR&quot;,
+                }]);
+
+                expect(body).to.be.undefined();
+                expect(res).to.be.undefined();
+
+                cb();
+            });
+        });
+
+        /** @test {ApiClient#doPutMultipart} */
+        xit(&quot;should return error when fail to encrypt PUT request body&quot;, (cb) =&gt; {
+            const clientPath = path.join(__dirname, &quot;..&quot;, &quot;resources&quot;, &quot;private-jwkset1&quot;);
+            const hwPath = path.join(__dirname, &quot;..&quot;, &quot;resources&quot;, &quot;public-jwkset1&quot;);
+
+            const clientWithEncryption = new ApiClient(&quot;test-username&quot;, &quot;test-password&quot;, &quot;https://test-server&quot;, {
+                clientPrivateKeySetPath: &quot;wrongPath&quot;,
+                hyperwalletKeySetPath: hwPath,
+            });
+            const encryption = new Encryption(clientPath, hwPath);
+            const testMessage = {
+                message: &quot;Test message&quot;,
+            };
+
+            encryption.encrypt(testMessage).then((encryptedBody) =&gt; {
+                nock(&quot;https://test-server&quot;)
+                    .filteringPath(() =&gt; &quot;/&quot;)
+                    .matchHeader(&quot;Authorization&quot;, authHeader)
+                    .matchHeader(&quot;User-Agent&quot;, `Hyperwallet Node SDK v${packageJson.version}`)
+                    .matchHeader(&quot;Accept&quot;, &quot;application/json&quot;)
+                    .matchHeader(&quot;Content-Type&quot;, &quot;multipart/form-data&quot;)
+                    .put(&quot;/&quot;, /.+/)
+                    .reply(201, encryptedBody, { &quot;Content-Type&quot;: &quot;application/jose+json&quot; });
+
+                clientWithEncryption.doPutMultipart(&quot;test&quot;, { message: &quot;Test message&quot; }, (err, body, res) =&gt; {
+                    expect(err).to.be.undefined();
+                    expect(body).to.be.undefined();
+
+                    expect(res).to.be.undefined();
+                    cb();
+                });
+            });
+        });
+    });
+
+    /** @test {ApiClient#doGet} */
+    describe(&quot;doGet()&quot;, () =&gt; {
+        let client;
+        let authHeader;
+
+        before(() =&gt; {
+            nock.disableNetConnect();
+        });
+        after(() =&gt; {
+            nock.enableNetConnect();
+        });
+
+        beforeEach(() =&gt; {
+            client = new ApiClient(&quot;test-username&quot;, &quot;test-password&quot;, &quot;https://test-server&quot;);
+
+            authHeader = &quot;Basic dGVzdC11c2VybmFtZTp0ZXN0LXBhc3N3b3Jk&quot;;
+        });
+        afterEach(() =&gt; {
+            nock.cleanAll();
+        });
+
+        /** @test {ApiClient#doGet} */
+        it(&quot;should return response if call was successful (with query parameters)&quot;, (cb) =&gt; {
+            nock(&quot;https://test-server&quot;)
+                .matchHeader(&quot;Authorization&quot;, authHeader)
+                .matchHeader(&quot;User-Agent&quot;, `Hyperwallet Node SDK v${packageJson.version}`)
+                .matchHeader(&quot;Accept&quot;, &quot;application/json&quot;)
+                .get(&quot;/rest/v4/test&quot;)
+                .query({ sort: &quot;test&quot; })
+                .reply(200, { response: &quot;value&quot; }, { &quot;Content-Type&quot;: &quot;application/json&quot; });
+
+            client.doGet(&quot;test&quot;, { sort: &quot;test&quot; }, (err, body, res) =&gt; {
+                expect(err).to.be.undefined();
+
+                body.should.be.deep.equal({
+                    response: &quot;value&quot;,
+                });
+
+                res.status.should.be.equal(200);
+
+                cb();
+            });
+        });
+
+        /** @test {ApiClient#doGet} */
+        it(&quot;should return response if call was successful (with query parameters) when content type contains charset&quot;, (cb) =&gt; {
+            nock(&quot;https://test-server&quot;)
+                .matchHeader(&quot;Authorization&quot;, authHeader)
+                .matchHeader(&quot;User-Agent&quot;, `Hyperwallet Node SDK v${packageJson.version}`)
+                .matchHeader(&quot;Accept&quot;, &quot;application/json&quot;)
+                .get(&quot;/rest/v4/test&quot;)
+                .query({ sort: &quot;test&quot; })
+                .reply(200, { response: &quot;value&quot; }, {
+                    &quot;Content-Type&quot;: &quot;application/json;charset=utf-8&quot;,
+                });
+
+            client.doGet(&quot;test&quot;, { sort: &quot;test&quot; }, (err, body, res) =&gt; {
+                expect(err).to.be.undefined();
+
+                body.should.be.deep.equal({
+                    response: &quot;value&quot;,
+                });
+
+                res.status.should.be.equal(200);
+
+                cb();
+            });
+        });
+
+        /** @test {ApiClient#doGet} */
+        it(&quot;should return response if call was successful (with query parameters) when content type contains charset ahead&quot;, (cb) =&gt; {
+            nock(&quot;https://test-server&quot;)
+                .matchHeader(&quot;Authorization&quot;, authHeader)
+                .matchHeader(&quot;User-Agent&quot;, `Hyperwallet Node SDK v${packageJson.version}`)
+                .matchHeader(&quot;Accept&quot;, &quot;application/json&quot;)
+                .get(&quot;/rest/v4/test&quot;)
+                .query({ sort: &quot;test&quot; })
+                .reply(200, { response: &quot;value&quot; }, {
+                    &quot;Content-Type&quot;: &quot;charset=utf-8;application/json&quot;,
+                });
+
+            client.doGet(&quot;test&quot;, { sort: &quot;test&quot; }, (err, body, res) =&gt; {
+                expect(err).to.be.undefined();
+
+                JSON.parse(body.toString(&quot;utf8&quot;)).should.be.deep.equal({
+                    response: &quot;value&quot;,
+                });
+
+                res.status.should.be.equal(200);
+
+                cb();
+            });
+        });
+
+        /** @test {ApiClient#doGet} */
+        it(&quot;should return response if call was successful (without query parameters)&quot;, (cb) =&gt; {
+            nock(&quot;https://test-server&quot;)
+                .matchHeader(&quot;Authorization&quot;, authHeader)
+                .matchHeader(&quot;User-Agent&quot;, `Hyperwallet Node SDK v${packageJson.version}`)
+                .matchHeader(&quot;Accept&quot;, &quot;application/json&quot;)
+                .get(&quot;/rest/v4/test&quot;)
+                .reply(200, { response: &quot;value&quot; }, { &quot;Content-Type&quot;: &quot;application/json&quot; });
+
+            client.doGet(&quot;test&quot;, {}, (err, body, res) =&gt; {
+                expect(err).to.be.undefined();
+
+                body.should.be.deep.equal({
+                    response: &quot;value&quot;,
+                });
+
+                res.status.should.be.equal(200);
+
+                cb();
+            });
+        });
+
+        /** @test {ApiClient#doGet} */
+        it(&quot;should return generic network error if no response was send by server&quot;, (cb) =&gt; {
+            client.doGet(&quot;test&quot;, {}, (err, body, res) =&gt; {
+                err.should.be.deep.equal([{
+                    message: &quot;Could not communicate with https://test-server&quot;,
+                    code: &quot;COMMUNICATION_ERROR&quot;,
+                }]);
+
+                expect(body).to.be.undefined();
+                expect(res).to.be.undefined();
+
+                cb();
+            });
+        });
+
+        /** @test {ApiClient#doGet} */
+        it(&quot;should return error message if responses contains error&quot;, (cb) =&gt; {
+            nock(&quot;https://test-server&quot;)
+                .matchHeader(&quot;Authorization&quot;, authHeader)
+                .matchHeader(&quot;User-Agent&quot;, `Hyperwallet Node SDK v${packageJson.version}`)
+                .matchHeader(&quot;Accept&quot;, &quot;application/json&quot;)
+                .get(&quot;/rest/v4/test&quot;)
+                .reply(404, {
+                    errors: [{
+                        message: &quot;message&quot;,
+                        code: &quot;FORBIDDEN&quot;,
+                        relatedResources: [&quot;trm-f3d38df1-adb7-4127-9858-e72ebe682a79&quot;,
+                            &quot;trm-601b1401-4464-4f3f-97b3-09079ee7723b&quot;],
+                    }],
+                }, { &quot;Content-Type&quot;: &quot;application/json&quot; });
+
+            client.doGet(&quot;test&quot;, {}, (err, body, res) =&gt; {
+                err.should.be.deep.equal([{
+                    message: &quot;message&quot;,
+                    code: &quot;FORBIDDEN&quot;,
+                    relatedResources: [&quot;trm-f3d38df1-adb7-4127-9858-e72ebe682a79&quot;,
+                        &quot;trm-601b1401-4464-4f3f-97b3-09079ee7723b&quot;],
+                }]);
+
+                body.should.be.deep.equal({
+                    errors: [{
+                        message: &quot;message&quot;,
+                        code: &quot;FORBIDDEN&quot;,
+                        relatedResources: [&quot;trm-f3d38df1-adb7-4127-9858-e72ebe682a79&quot;,
+                            &quot;trm-601b1401-4464-4f3f-97b3-09079ee7723b&quot;],
+                    }],
+                });
+
+                res.status.should.be.equal(404);
+
+                cb();
+            });
+        });
+
+        /** @test {ApiClient#doGet} */
+        it(&quot;should return encrypted response if encrypted GET call was successful (without query parameters)&quot;, (cb) =&gt; {
+            const clientPath = path.join(__dirname, &quot;..&quot;, &quot;resources&quot;, &quot;private-jwkset1&quot;);
+            const hwPath = path.join(__dirname, &quot;..&quot;, &quot;resources&quot;, &quot;public-jwkset1&quot;);
+            const clientWithEncryption = new ApiClient(&quot;test-username&quot;, &quot;test-password&quot;, &quot;https://test-server&quot;, {
+                clientPrivateKeySetPath: clientPath,
+                hyperwalletKeySetPath: hwPath,
+            });
+            const encryption = new Encryption(clientPath, hwPath);
+            const testMessage = {
+                message: &quot;Test message&quot;,
+            };
+
+            encryption.encrypt(testMessage).then((encryptedBody) =&gt; {
+                nock(&quot;https://test-server&quot;)
+                    .filteringPath(() =&gt; &quot;/&quot;)
+                    .matchHeader(&quot;Authorization&quot;, authHeader)
+                    .matchHeader(&quot;User-Agent&quot;, `Hyperwallet Node SDK v${packageJson.version}`)
+                    .matchHeader(&quot;Accept&quot;, &quot;application/jose+json&quot;)
+                    .get(&quot;/&quot;)
+                    .reply(200, encryptedBody, { &quot;Content-Type&quot;: &quot;application/jose+json&quot; });
+
+                clientWithEncryption.doGet(&quot;test&quot;, {}, (err, body, res) =&gt; {
+                    expect(err).to.be.undefined();
+
+                    expect(res).to.not.be.undefined();
+
+                    body.should.be.deep.equal({
+                        message: &quot;Test message&quot;,
+                    });
+
+                    cb();
+                });
+            });
+        });
+
+        /** @test {ApiClient#doGet} */
+        it(&quot;should return encrypted response if encrypted GET call was successful when content type contains charset&quot;, (cb) =&gt; {
+            const clientPath = path.join(__dirname, &quot;..&quot;, &quot;resources&quot;, &quot;private-jwkset1&quot;);
+            const hwPath = path.join(__dirname, &quot;..&quot;, &quot;resources&quot;, &quot;public-jwkset1&quot;);
+            const clientWithEncryption = new ApiClient(&quot;test-username&quot;, &quot;test-password&quot;, &quot;https://test-server&quot;, {
+                clientPrivateKeySetPath: clientPath,
+                hyperwalletKeySetPath: hwPath,
+            });
+            const encryption = new Encryption(clientPath, hwPath);
+            const testMessage = {
+                message: &quot;Test message&quot;,
+            };
+
+            encryption.encrypt(testMessage).then((encryptedBody) =&gt; {
+                nock(&quot;https://test-server&quot;)
+                    .filteringPath(() =&gt; &quot;/&quot;)
+                    .matchHeader(&quot;Authorization&quot;, authHeader)
+                    .matchHeader(&quot;User-Agent&quot;, `Hyperwallet Node SDK v${packageJson.version}`)
+                    .matchHeader(&quot;Accept&quot;, &quot;application/jose+json&quot;)
+                    .get(&quot;/&quot;)
+                    .reply(200, encryptedBody, {
+                        &quot;Content-Type&quot;: &quot;application/jose+json;charset=utf-8&quot;,
+                    });
+
+                clientWithEncryption.doGet(&quot;test&quot;, {}, (err, body, res) =&gt; {
+                    expect(err).to.be.undefined();
+
+                    expect(res).to.not.be.undefined();
+
+                    body.should.be.deep.equal({
+                        message: &quot;Test message&quot;,
+                    });
+
+                    cb();
+                });
+            });
+        });
+    });
+
+    describe(&quot;wrapCallback()&quot;, () =&gt; {
+        it(&quot;should return a &apos;function&apos; without a argument&quot;, () =&gt; {
+            const client = new ApiClient(&quot;test-username&quot;, &quot;test-password&quot;, &quot;test-server&quot;);
+
+            client.wrapCallback().should.be.a(&quot;function&quot;);
+        });
+
+        it(&quot;should return a &apos;function&apos; with a argument&quot;, () =&gt; {
+            const client = new ApiClient(&quot;test-username&quot;, &quot;test-password&quot;, &quot;test-server&quot;);
+
+            client.wrapCallback(() =&gt; null).should.be.a(&quot;function&quot;);
+        });
+
+        it(&quot;should be able to run without any arguments&quot;, () =&gt; {
+            const client = new ApiClient(&quot;test-username&quot;, &quot;test-password&quot;, &quot;test-server&quot;);
+            client.wrapCallback()(new Error());
+        });
+
+        it(&quot;should call callback with &apos;body&apos; and &apos;res&apos; if no error happened&quot;, (cb) =&gt; {
+            const client = new ApiClient(&quot;test-username&quot;, &quot;test-password&quot;, &quot;test-server&quot;);
+
+            const rawRes = {
+                body: &quot;test&quot;,
+                status: 200,
+                type: &quot;application/json&quot;,
+            };
+
+            const callback = client.wrapCallback(&quot;POST&quot;, (err, body, res) =&gt; {
+                expect(err).to.be.undefined();
+
+                body.should.be.equal(&quot;test&quot;);
+                rawRes.should.be.deep.equal(res);
+
+                cb();
+            });
+            callback(undefined, rawRes);
+        });
+
+        it(&quot;should call callback with &apos;errors&apos;, &apos;body&apos; and &apos;res&apos; if &apos;body&apos; contains errors&quot;, (cb) =&gt; {
+            const client = new ApiClient(&quot;test-username&quot;, &quot;test-password&quot;, &quot;test-server&quot;);
+
+            const rawRes = {
+                body: {
+                    errors: [{
+                        message: &quot;message&quot;,
+                        code: &quot;FORBIDDEN&quot;,
+                        relatedResources: [&quot;trm-f3d38df1-adb7-4127-9858-e72ebe682a79&quot;,
+                            &quot;trm-601b1401-4464-4f3f-97b3-09079ee7723b&quot;],
+                    }],
+                },
+                status: 404,
+                type: &quot;application/json&quot;,
+            };
+
+            const callback = client.wrapCallback(&quot;POST&quot;, (err, body, res) =&gt; {
+                err.should.be.deep.equal([{
+                    message: &quot;message&quot;,
+                    code: &quot;FORBIDDEN&quot;,
+                    relatedResources: [&quot;trm-f3d38df1-adb7-4127-9858-e72ebe682a79&quot;,
+                        &quot;trm-601b1401-4464-4f3f-97b3-09079ee7723b&quot;],
+                }]);
+                body.should.be.deep.equal({
+                    errors: [{
+                        message: &quot;message&quot;,
+                        code: &quot;FORBIDDEN&quot;,
+                        relatedResources: [&quot;trm-f3d38df1-adb7-4127-9858-e72ebe682a79&quot;,
+                            &quot;trm-601b1401-4464-4f3f-97b3-09079ee7723b&quot;],
+                    }],
+                });
+                rawRes.should.be.deep.equal(res);
+
+                cb();
+            });
+            callback(new Error(), rawRes);
+        });
+
+        it(&quot;should call callback with static error message as &apos;errors&apos;, &apos;body&apos; and &apos;res&apos; if &apos;body&apos; contains no errors&quot;, (cb) =&gt; {
+            const client = new ApiClient(&quot;test-username&quot;, &quot;test-password&quot;, &quot;test-server&quot;);
+
+            const rawRes = {
+                body: &quot;test&quot;,
+                status: 404,
+                type: &quot;application/json&quot;,
+            };
+
+            const callback = client.wrapCallback(&quot;POST&quot;, (err, body, res) =&gt; {
+                err.should.be.deep.equal([{
+                    message: &quot;Could not communicate with test-server&quot;,
+                    code: &quot;COMMUNICATION_ERROR&quot;,
+                }]);
+                body.should.be.equal(&quot;test&quot;);
+                rawRes.should.be.deep.equal(res);
+
+                cb();
+            });
+            callback(new Error(), rawRes);
+        });
+
+        it(&quot;should call callback with &apos;body&apos; and &apos;res&apos; and application/jose+json Content-Type&quot;, (cb) =&gt; {
+            const clientPath = path.join(__dirname, &quot;..&quot;, &quot;resources&quot;, &quot;private-jwkset1&quot;);
+            const hwPath = path.join(__dirname, &quot;..&quot;, &quot;resources&quot;, &quot;public-jwkset1&quot;);
+            const clientWithEncryption = new ApiClient(&quot;test-username&quot;, &quot;test-password&quot;, &quot;https://test-server&quot;, {
+                clientPrivateKeySetPath: clientPath,
+                hyperwalletKeySetPath: hwPath,
+            });
+
+            const encryption = new Encryption(clientPath, hwPath);
+            const testMessage = {
+                message: &quot;Test message&quot;,
+            };
+
+            encryption.encrypt(testMessage).then((encryptedBody) =&gt; {
+                const callback = clientWithEncryption.wrapCallback(&quot;POST&quot;, (err, body, res) =&gt; {
+                    expect(err).to.be.undefined();
+                    expect(res).not.to.be.undefined();
+                    body.should.be.deep.equal(testMessage);
+
+                    cb();
+                });
+                const rawRes = {
+                    body: encryptedBody,
+                    status: 200,
+                    type: &quot;application/jose+json&quot;,
+                };
+                callback(undefined, rawRes);
+            });
+        });
+
+        it(&quot;should call callback with static error message as &apos;errors&apos;, when Content-Type is wrong&quot;, (cb) =&gt; {
+            const client = new ApiClient(&quot;test-username&quot;, &quot;test-password&quot;, &quot;test-server&quot;);
+
+            const rawRes = {
+                body: &quot;test&quot;,
+                status: 200,
+                header: {
+                    &quot;content-type&quot;: &quot;wrongContentType&quot;,
+                },
+            };
+
+            const callback = client.wrapCallback(&quot;POST&quot;, (err, body, res) =&gt; {
+                err.should.be.deep.equal([{
+                    message: &quot;Invalid Content-Type specified in Response Header&quot;,
+                }]);
+                body.should.be.equal(&quot;test&quot;);
+                rawRes.should.be.deep.equal(res);
+
+                cb();
+            });
+            callback(new Error(), rawRes);
+        });
+
+        it(&quot;should call callback with no errors if Content-type is missing and response is noContent&quot;, (cb) =&gt; {
+            const client = new ApiClient(&quot;test-username&quot;, &quot;test-password&quot;, &quot;test-server&quot;);
+
+            const rawRes = {
+                body: &quot;test&quot;,
+                status: 204,
+                header: {
+                },
+            };
+
+            const callback = client.wrapCallback(&quot;POST&quot;, (err, body, res) =&gt; {
+                expect(err).to.be.undefined();
+
+                body.should.be.equal(&quot;test&quot;);
+                rawRes.should.be.deep.equal(res);
+
+                cb();
+            });
+            callback(undefined, rawRes);
+        });
+    });
+});
+</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(1.1.0)</span><img src="./image/esdoc-logo-mini-black.png"></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>

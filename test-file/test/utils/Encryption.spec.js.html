@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../../">
+  <title data-ice="title">test/utils/Encryption.spec.js | Hyperwallet REST SDK</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  <script src="script/manual.js"></script>
+<meta name="description" content="A library to manage users, transfer methods and payments through the Hyperwallet API"><meta property="twitter:card" content="summary"><meta property="twitter:title" content="Hyperwallet REST SDK"><meta property="twitter:description" content="A library to manage users, transfer methods and payments through the Hyperwallet API"></head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  <a href="test.html" data-ice="testLink">Test</a>
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+<a style="position:relative; top:3px;" href="https://github.com/hyperwallet/node-sdk"><img width="20px" src="./image/github.png"></a></header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Hyperwallet.js~Hyperwallet.html">Hyperwallet</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#utils">utils</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/utils/ApiClient.js~ApiClient.html">ApiClient</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/utils/Encryption.js~Encryption.html">Encryption</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-api-callback">api-callback</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">test/utils/Encryption.spec.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import path from &quot;path&quot;;
+import nock from &quot;nock&quot;;
+import fs from &quot;fs&quot;;
+import Encryption from &quot;../../src/utils/Encryption&quot;;
+
+/** @test {Encryption} */
+describe(&quot;utils/Encryption&quot;, () =&gt; {
+    /** @test {Encryption#constructor} */
+    describe(&quot;constructor()&quot;, () =&gt; {
+        /** @test {Encryption#constructor} */
+        it(&quot;should set default values for encryption properties&quot;, () =&gt; {
+            const encryption = new Encryption(&quot;clientPrivateKeySetLocation&quot;, &quot;hyperwalletKeySetLocation&quot;);
+
+            encryption.clientPrivateKeySetLocation.should.be.equal(&quot;clientPrivateKeySetLocation&quot;);
+            encryption.hyperwalletKeySetLocation.should.be.equal(&quot;hyperwalletKeySetLocation&quot;);
+            encryption.encryptionAlgorithm.should.be.equal(&quot;RSA-OAEP-256&quot;);
+            encryption.signAlgorithm.should.be.equal(&quot;RS256&quot;);
+            encryption.encryptionMethod.should.be.equal(&quot;A256CBC-HS512&quot;);
+            encryption.jwsExpirationMinutes.should.be.equal(5);
+        });
+
+        /** @test {Encryption#constructor} */
+        it(&quot;should set encryption properties by constructor&quot;, () =&gt; {
+            const encryption = new Encryption(&quot;clientPrivateKeySetLocation&quot;, &quot;hyperwalletKeySetLocation&quot;,
+                &quot;encryptionAlgorithm&quot;, &quot;signAlgorithm&quot;, &quot;encryptionMethod&quot;, 12);
+
+            encryption.clientPrivateKeySetLocation.should.be.equal(&quot;clientPrivateKeySetLocation&quot;);
+            encryption.hyperwalletKeySetLocation.should.be.equal(&quot;hyperwalletKeySetLocation&quot;);
+            encryption.encryptionAlgorithm.should.be.equal(&quot;encryptionAlgorithm&quot;);
+            encryption.signAlgorithm.should.be.equal(&quot;signAlgorithm&quot;);
+            encryption.encryptionMethod.should.be.equal(&quot;encryptionMethod&quot;);
+            encryption.jwsExpirationMinutes.should.be.equal(12);
+        });
+    });
+
+    /** @test {Encryption#encrypt} */
+    describe(&quot;encrypt()&quot;, () =&gt; {
+        let encryption;
+        let testMessage;
+        let clientPath;
+        let hwPath;
+
+        beforeEach(() =&gt; {
+            clientPath = path.join(__dirname, &quot;..&quot;, &quot;resources&quot;, &quot;private-jwkset1&quot;);
+            hwPath = path.join(__dirname, &quot;..&quot;, &quot;resources&quot;, &quot;public-jwkset1&quot;);
+            encryption = new Encryption(clientPath, hwPath);
+            testMessage = {
+                message: &quot;Test message&quot;,
+            };
+        });
+
+        /** @test {Encryption#encrypt} */
+        it(&quot;should successfully encrypt and decrypt text message&quot;, (cb) =&gt; {
+            encryption.encrypt(testMessage).then((encryptedBody) =&gt; {
+                encryption.decrypt(encryptedBody).then((decryptedBody) =&gt; {
+                    decryptedBody.payload.toString(&quot;utf8&quot;).should.be.deep.equal(JSON.stringify(testMessage));
+                    cb();
+                });
+            });
+        });
+
+        /** @test {Encryption#encrypt} */
+        it(&quot;should successfully decode and encode encrypted text message&quot;, (cb) =&gt; {
+            encryption.encrypt(testMessage).then((encryptedBody) =&gt; {
+                const decodedMessage = encryption.base64Decode(encryptedBody);
+                const encodedMessage = encryption.base64Encode(decodedMessage);
+                encodedMessage.should.be.deep.equal(encryptedBody);
+                cb();
+            });
+        });
+
+        /** @test {Encryption#encrypt} */
+        it(&quot;should throw exception when wrong jwk key set location is given&quot;, (cb) =&gt; {
+            encryption = new Encryption(&quot;wrong_keyset_path&quot;, hwPath);
+            encryption.encrypt(testMessage)
+                .catch((error) =&gt; {
+                    error.message.should.be.equal(&quot;Wrong JWK set location path = wrong_keyset_path&quot;);
+                    cb();
+                });
+        });
+
+        /** @test {Encryption#encrypt} */
+        it(&quot;should throw exception when wrong jwk key is set for encryption&quot;, (cb) =&gt; {
+            encryption = new Encryption(clientPath, hwPath, &quot;RS256&quot;);
+            encryption.encrypt(testMessage)
+                .catch((error) =&gt; {
+                    error.message.should.be.equal(&quot;Failed to encrypt payload with key id = 2018_sig_rsa_RS256_2048&quot;);
+                    cb();
+                });
+        });
+
+        /** @test {Encryption#encrypt} */
+        it(&quot;should throw exception when signing body with key algorithm that doesn&apos;t present in jwkset&quot;, (cb) =&gt; {
+            encryption = new Encryption(clientPath, hwPath, &quot;RSA-OAEP-256&quot;, &quot;RS256-not-present&quot;);
+            encryption.encrypt(testMessage)
+                .catch((error) =&gt; {
+                    error.message.should.be.equal(&quot;JWK set doesn&apos;t contain key with algorithm = RS256-not-present&quot;);
+                    cb();
+                });
+        });
+
+        /** @test {Encryption#encrypt} */
+        it(&quot;should throw exception when signing body with wrong jwk key&quot;, (cb) =&gt; {
+            encryption = new Encryption(clientPath, hwPath, &quot;RSA-OAEP-256&quot;, &quot;RSA-OAEP-256&quot;);
+            encryption.encrypt(testMessage)
+                .catch((error) =&gt; {
+                    error.message.should.be.equal(&quot;Failed to sign with key id = 2018_enc_rsa_RSA-OAEP-256&quot;);
+                    cb();
+                });
+        });
+
+        /** @test {Encryption#encrypt} */
+        it(&quot;should throw exception when jwk keyset file is invalid&quot;, (cb) =&gt; {
+            encryption = new Encryption(path.join(__dirname, &quot;..&quot;, &quot;resources&quot;, &quot;jwkset-invalid&quot;), hwPath);
+            encryption.encrypt(testMessage)
+                .catch((error) =&gt; {
+                    error.message.should.be.equal(&quot;Failed to create keyStore from given jwkSet&quot;);
+                    cb();
+                });
+        });
+
+        /** @test {Encryption#encrypt} */
+        it(&quot;should throw exception when jwk keyset file location is wrong&quot;, (cb) =&gt; {
+            encryption = new Encryption(path.join(__dirname, &quot;..&quot;, &quot;resources&quot;), hwPath);
+            encryption.encrypt(testMessage)
+                .catch((error) =&gt; {
+                    error.message.should.be.equal(&quot;Error: EISDIR: illegal operation on a directory, read&quot;);
+                    cb();
+                });
+        });
+
+        /** @test {Encryption#encrypt} */
+        it(&quot;should successfully encrypt and decrypt text message with url keyset path&quot;, (cb) =&gt; {
+            fs.readFile(clientPath, { encoding: &quot;utf-8&quot; }, (err, keySetData) =&gt; {
+                nock(&quot;https://test-server&quot;)
+                    .get(&quot;/test&quot;)
+                    .reply(200, keySetData)
+                    .get(&quot;/test&quot;)
+                    .reply(200, keySetData);
+                encryption = new Encryption(&quot;https://test-server/test&quot;, hwPath);
+                const encryption2 = new Encryption(clientPath, hwPath);
+                encryption.encrypt(testMessage).then((encryptedBody) =&gt; {
+                    encryption2.decrypt(encryptedBody).then((decryptedBody) =&gt; {
+                        decryptedBody.payload.toString(&quot;utf8&quot;).should.be.deep.equal(JSON.stringify(testMessage));
+                        cb();
+                    });
+                });
+            });
+        });
+
+        /** @test {Encryption#encrypt} */
+        it(&quot;should throw exception when not supported encryption algorithm is given&quot;, (cb) =&gt; {
+            encryption = new Encryption(clientPath, hwPath, &quot;unsupported_encryption_algorithm&quot;);
+            encryption.encrypt(testMessage)
+                .catch((error) =&gt; {
+                    error.message.should.be.equal(&quot;JWK set doesn&apos;t contain key with algorithm = unsupported_encryption_algorithm&quot;);
+                    cb();
+                });
+        });
+    });
+
+    /** @test {Encryption#decrypt} */
+    describe(&quot;decrypt()&quot;, () =&gt; {
+        let encryption;
+        let testMessage;
+        let clientPath;
+        let clientPath2;
+        let hwPath;
+        let hwPath2;
+
+        beforeEach(() =&gt; {
+            clientPath = path.join(__dirname, &quot;..&quot;, &quot;resources&quot;, &quot;private-jwkset1&quot;);
+            hwPath = path.join(__dirname, &quot;..&quot;, &quot;resources&quot;, &quot;public-jwkset1&quot;);
+            clientPath2 = path.join(__dirname, &quot;..&quot;, &quot;resources&quot;, &quot;private-jwkset2&quot;);
+            hwPath2 = path.join(__dirname, &quot;..&quot;, &quot;resources&quot;, &quot;public-jwkset2&quot;);
+            encryption = new Encryption(clientPath, hwPath);
+            testMessage = {
+                message: &quot;Test message&quot;,
+            };
+        });
+
+        /** @test {Encryption#decrypt} */
+        it(&quot;should fail decryption when wrong private key is used&quot;, (cb) =&gt; {
+            const encryption2 = new Encryption(clientPath2, hwPath2);
+            encryption.encrypt(testMessage).then((encryptedBody) =&gt; {
+                encryption2.decrypt(encryptedBody)
+                    .catch((error) =&gt; {
+                        error.message.should.be.equal(&quot;Failed to decrypt payload with key id = 2018_enc_rsa_RSA-OAEP-256&quot;);
+                        cb();
+                    });
+            });
+        });
+
+        /** @test {Encryption#decrypt} */
+        it(&quot;should fail decryption when sign algorithm is not found in keyset&quot;, (cb) =&gt; {
+            const encryption2 = new Encryption(clientPath, hwPath, &quot;RSA-OAEP-256&quot;, &quot;RS256-OAEP-256&quot;);
+            encryption.encrypt(testMessage).then((encryptedBody) =&gt; {
+                encryption2.decrypt(encryptedBody)
+                    .catch((error) =&gt; {
+                        error.message.should.be.equal(&quot;JWK set doesn&apos;t contain key with algorithm = RS256-OAEP-256&quot;);
+                        cb();
+                    });
+            });
+        });
+
+        /** @test {Encryption#decrypt} */
+        it(&quot;should fail decryption when algorithm is not found in jwkset&quot;, (cb) =&gt; {
+            const encryption2 = new Encryption(clientPath, hwPath, &quot;RSA-OAEP-256-absent&quot;);
+            encryption.encrypt(testMessage).then((encryptedBody) =&gt; {
+                encryption2.decrypt(encryptedBody)
+                    .catch((error) =&gt; {
+                        error.message.should.be.equal(&quot;JWK set doesn&apos;t contain key with algorithm = RSA-OAEP-256-absent&quot;);
+                        cb();
+                    });
+            });
+        });
+
+        /** @test {Encryption#decrypt} */
+        it(&quot;should fail signature verification when wrong public key is used&quot;, (cb) =&gt; {
+            const encryption2 = new Encryption(clientPath, hwPath2);
+            encryption.encrypt(testMessage).then((encryptedBody) =&gt; {
+                encryption2.decrypt(encryptedBody)
+                    .catch((error) =&gt; {
+                        error.message.should.be.equal(&quot;Failed to verify signature with key id = 2018_sig_rsa_RS256_2048&quot;);
+                        cb();
+                    });
+            });
+        });
+
+        /** @test {Encryption#decrypt} */
+        it(&quot;should throw exception when jws signature has expired&quot;, (cb) =&gt; {
+            const encryption2 = new Encryption(clientPath, hwPath2, &quot;RSA-OAEP-256&quot;, &quot;RS256&quot;, &quot;A256CBC-HS512&quot;, -5);
+            encryption2.encrypt(testMessage).then(() =&gt; {
+                encryption2.signBody(testMessage).then((signedBody) =&gt; {
+                    encryption2.checkSignature(signedBody)
+                        .catch((error) =&gt; {
+                            error.message.should.be.equal(&quot;JWS signature has expired&quot;);
+                            cb();
+                        });
+                });
+            });
+        });
+    });
+});
+</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(1.1.0)</span><img src="./image/esdoc-logo-mini-black.png"></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>

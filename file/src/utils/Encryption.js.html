@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../../">
+  <title data-ice="title">src/utils/Encryption.js | Hyperwallet REST SDK</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  <script src="script/manual.js"></script>
+<meta name="description" content="A library to manage users, transfer methods and payments through the Hyperwallet API"><meta property="twitter:card" content="summary"><meta property="twitter:title" content="Hyperwallet REST SDK"><meta property="twitter:description" content="A library to manage users, transfer methods and payments through the Hyperwallet API"></head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  <a href="test.html" data-ice="testLink">Test</a>
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+<a style="position:relative; top:3px;" href="https://github.com/hyperwallet/node-sdk"><img width="20px" src="./image/github.png"></a></header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Hyperwallet.js~Hyperwallet.html">Hyperwallet</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#utils">utils</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/utils/ApiClient.js~ApiClient.html">ApiClient</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/utils/Encryption.js~Encryption.html">Encryption</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-api-callback">api-callback</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">src/utils/Encryption.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import jose from &quot;node-jose&quot;;
+import fs from &quot;fs&quot;;
+import request from &quot;superagent&quot;;
+
+/**
+ * The Hyperwallet Encryption processor
+ */
+export default class Encryption {
+    /**
+     * Create a instance of the Encryption service
+     *
+     * @param {string} clientPrivateKeySetLocation - String that can be a URL or path to file with client JWK set
+     * @param {string} hyperwalletKeySetLocation - String that can be a URL or path to file with hyperwallet JWK set
+     * @param {string} encryptionAlgorithm - JWE encryption algorithm, by default value = RSA-OAEP-256
+     * @param {string} signAlgorithm - JWS signature algorithm, by default value = RS256
+     * @param {string} encryptionMethod - JWE encryption method, by default value = A256CBC-HS512
+     * @param {string} jwsExpirationMinutes - Minutes when JWS signature is valid
+     */
+    constructor(clientPrivateKeySetLocation, hyperwalletKeySetLocation, encryptionAlgorithm = &quot;RSA-OAEP-256&quot;,
+        signAlgorithm = &quot;RS256&quot;, encryptionMethod = &quot;A256CBC-HS512&quot;, jwsExpirationMinutes = 5) {
+        /**
+         * String that can be a URL or path to file with client JWK set
+         *
+         * @type {string}
+         * @protected
+         */
+        this.clientPrivateKeySetLocation = clientPrivateKeySetLocation;
+
+        /**
+         * String that can be a URL or path to file with hyperwallet JWK set
+         *
+         * @type {string}
+         * @protected
+         */
+        this.hyperwalletKeySetLocation = hyperwalletKeySetLocation;
+
+        /**
+         * Client KeyStore object
+         *
+         * @type {string}
+         * @protected
+         */
+        this.clientKeyStore = null;
+
+        /**
+         * Hyperwallet KeyStore object
+         *
+         * @type {string}
+         * @protected
+         */
+        this.hwKeyStore = null;
+
+        /**
+         * JWE encryption algorithm, by default value = RSA-OAEP-256
+         *
+         * @type {string}
+         * @protected
+         */
+        this.encryptionAlgorithm = encryptionAlgorithm;
+
+        /**
+         * JWS signature algorithm, by default value = RS256
+         *
+         * @type {string}
+         * @protected
+         */
+        this.signAlgorithm = signAlgorithm;
+
+        /**
+         * JWE encryption method, by default value = A256CBC-HS512
+         *
+         * @type {string}
+         * @protected
+         */
+        this.encryptionMethod = encryptionMethod;
+
+        /**
+         * Minutes when JWS signature is valid, by default value = 5
+         *
+         * @type {number}
+         * @protected
+         */
+        this.jwsExpirationMinutes = jwsExpirationMinutes;
+    }
+
+    /**
+     * Makes an encrypted request : 1) signs the request body; 2) encrypts payload after signature
+     *
+     * @param {string} body - The request body to be encrypted
+     */
+    encrypt(body) {
+        return new Promise((resolve, reject) =&gt; {
+            const keyStorePromise = (this.clientKeyStore &amp;&amp; this.hwKeyStore) ? Promise.resolve(this.keyStore) : this.createKeyStore();
+            keyStorePromise
+                .then(() =&gt; this.signBody(body))
+                .then((signedBody) =&gt; this.encryptBody(signedBody))
+                .then((result) =&gt; resolve(result))
+                .catch((error) =&gt; reject(error));
+        });
+    }
+
+    /**
+     * Decrypts encrypted response : 1) decrypts the request body; 2) verifies the payload signature
+     *
+     * @param {string} body - The response body to be decrypted
+     */
+    decrypt(body) {
+        return new Promise((resolve, reject) =&gt; {
+            const keyStorePromise = this.keyStore ? Promise.resolve(this.keyStore) : this.createKeyStore();
+            keyStorePromise
+                .then(() =&gt; this.decryptBody(body))
+                .then((decryptedBody) =&gt; this.checkSignature(decryptedBody.plaintext))
+                .then((result) =&gt; resolve(result))
+                .catch((error) =&gt; reject(error));
+        });
+    }
+
+    /**
+     * Verify if response body has a valid signature
+     *
+     * @param {string} body - The response body to be verified
+     */
+    checkSignature(body) {
+        return new Promise((resolve, reject) =&gt; {
+            const key = this.hwKeyStore.all({ alg: this.signAlgorithm })[0];
+            if (!key) {
+                reject(new Error(`JWK set doesn&apos;t contain key with algorithm = ${this.signAlgorithm}`));
+            }
+            const options = {
+                handlers: {
+                    exp: (jws) =&gt; {
+                        if (this.getCurrentTime() &gt; jws.header.exp) {
+                            reject(new Error(&quot;JWS signature has expired&quot;));
+                        }
+                    },
+                },
+            };
+            jose.JWS.createVerify(key, options)
+                .verify(body.toString())
+                .then((result) =&gt; resolve(result))
+                .catch(() =&gt; reject(new Error(`Failed to verify signature with key id = ${key.kid}`)));
+        });
+    }
+
+    /**
+     * Decrypts the response body
+     *
+     * @param {string} body - The response body to be decrypted
+     */
+    decryptBody(body) {
+        return new Promise((resolve, reject) =&gt; {
+            const key = this.clientKeyStore.all({ alg: this.encryptionAlgorithm })[0];
+            if (!key) {
+                reject(new Error(`JWK set doesn&apos;t contain key with algorithm = ${this.encryptionAlgorithm}`));
+            }
+            jose.JWE.createDecrypt(key)
+                .decrypt(body)
+                .then((result) =&gt; resolve(result))
+                .catch(() =&gt; reject(new Error(`Failed to decrypt payload with key id = ${key.kid}`)));
+        });
+    }
+
+    /**
+     * Encrypts the request body
+     *
+     * @param {string} body - The request body to be encrypted
+     */
+    encryptBody(body) {
+        return new Promise((resolve, reject) =&gt; {
+            const key = this.hwKeyStore.all({ alg: this.encryptionAlgorithm })[0];
+            if (!key) {
+                reject(new Error(`JWK set doesn&apos;t contain key with algorithm = ${this.encryptionAlgorithm}`));
+            }
+            const encryptionHeader = {
+                format: &quot;compact&quot;,
+                alg: key.alg,
+                enc: this.encryptionMethod,
+                kid: key.kid,
+            };
+            jose.JWE.createEncrypt(encryptionHeader, key)
+                .update(body)
+                .final()
+                .then((result) =&gt; resolve(result))
+                .catch(() =&gt; reject(new Error(`Failed to encrypt payload with key id = ${key.kid}`)));
+        });
+    }
+
+    /**
+     * Makes signature for request body
+     *
+     * @param {string} body - The request body to be signed
+     */
+    signBody(body) {
+        return new Promise((resolve, reject) =&gt; {
+            const key = this.clientKeyStore.all({ alg: this.signAlgorithm })[0];
+            if (!key) {
+                reject(new Error(`JWK set doesn&apos;t contain key with algorithm = ${this.signAlgorithm}`));
+            }
+            const signHeader = {
+                format: &quot;compact&quot;,
+                alg: key.alg,
+                fields: {
+                    crit: [&quot;exp&quot;],
+                    exp: this.getSignatureExpirationTime(),
+                    kid: key.kid,
+                },
+            };
+            jose.JWS.createSign(signHeader, key)
+                .update(JSON.stringify(body), &quot;utf8&quot;)
+                .final()
+                .then((result) =&gt; resolve(result))
+                .catch(() =&gt; reject(new Error(`Failed to sign with key id = ${key.kid}`)));
+        });
+    }
+
+    /**
+     * Calculates signature expiration time in seconds ( by default expiration time = 5 minutes )
+     */
+    getSignatureExpirationTime() {
+        const millisecondsInMinute = 60000;
+        const millisecondsInSecond = 1000;
+        const currentTime = new Date(new Date().getTime() + this.jwsExpirationMinutes * millisecondsInMinute).getTime();
+        return Math.round(currentTime / millisecondsInSecond);
+    }
+
+    /**
+     * Get current time in seconds
+     */
+    getCurrentTime() {
+        const millisecondsInSecond = 1000;
+        return Math.round(new Date().getTime() / millisecondsInSecond);
+    }
+
+    /**
+     * Creates 2 JWK key stores : 1) for client keys 2) for hyperwallet keys
+     */
+    createKeyStore() {
+        return new Promise((resolve, reject) =&gt; {
+            this.readKeySet(this.hyperwalletKeySetLocation)
+                .then((jwkSet) =&gt; this.createKeyStoreFromJwkSet(this.hyperwalletKeySetLocation, jwkSet))
+                .then(() =&gt; this.readKeySet(this.clientPrivateKeySetLocation))
+                .then((jwkSet) =&gt; this.createKeyStoreFromJwkSet(this.clientPrivateKeySetLocation, jwkSet))
+                .then((result) =&gt; resolve(result))
+                .catch((error) =&gt; reject(error));
+        });
+    }
+
+    /**
+     * Converts JWK set in JSON format to JOSE key store format
+     *
+     * @param {string} jwkSetPath - The location of JWK set (can be URL string or path to file)
+     * @param {string} jwkSet - The JSON representation of JWK set, to be converted to keystore
+     */
+    createKeyStoreFromJwkSet(jwkSetPath, jwkSet) {
+        return new Promise((resolve, reject) =&gt; {
+            jose.JWK.asKeyStore(jwkSet).
+                then((result) =&gt; {
+                    if (jwkSetPath === this.clientPrivateKeySetLocation) {
+                        this.clientKeyStore = result;
+                    } else {
+                        this.hwKeyStore = result;
+                    }
+                    resolve(result);
+                })
+                .catch(() =&gt; reject(new Error(&quot;Failed to create keyStore from given jwkSet&quot;)));
+        });
+    }
+
+    /**
+     * Reads JWK set in JSON format either from given URL or path to local file
+     *
+     * @param {string} keySetPath - The location of JWK set (can be URL string or path to file)
+     */
+    readKeySet(keySetPath) {
+        return new Promise((resolve, reject) =&gt; {
+            if (fs.existsSync(keySetPath)) {
+                fs.readFile(keySetPath, { encoding: &quot;utf-8&quot; }, (err, keySetData) =&gt; {
+                    if (!err) {
+                        resolve(keySetData);
+                    } else {
+                        reject(new Error(err));
+                    }
+                });
+            } else {
+                this.checkUrlIsValid(keySetPath, (isValid) =&gt; {
+                    if (isValid) {
+                        request(keySetPath, (error, response) =&gt; {
+                            if (!error) {
+                                const responseBody = response.body &amp;&amp; Object.keys(response.body).length !== 0 ? response.body : response.text;
+                                resolve(responseBody);
+                            }
+                        });
+                    } else {
+                        reject(new Error(`Wrong JWK set location path = ${keySetPath}`));
+                    }
+                });
+            }
+        });
+    }
+
+    /**
+     * Checks if an input string is a valid URL
+     *
+     * @param {string} url - The URL string to be verified
+     * @param {string} callback - The callback method to process the verification result of input url
+     */
+    checkUrlIsValid(url, callback) {
+        request(url, (error, response) =&gt; {
+            callback(!error &amp;&amp; response.statusCode === 200);
+        });
+    }
+
+    /**
+     * Convert encrypted string to array of Buffer
+     *
+     * @param {string} encryptedBody - Encrypted body to be decoded
+     */
+    base64Decode(encryptedBody) {
+        const parts = encryptedBody.split(&quot;.&quot;);
+        const decodedParts = [];
+        parts.forEach(elem =&gt; {
+            decodedParts.push(jose.util.base64url.decode(elem));
+        });
+        const decodedBody = {};
+        decodedBody.parts = decodedParts;
+        return decodedBody;
+    }
+
+    /**
+     * Convert array of Buffer to encrypted string
+     *
+     * @param {string} decodedBody - Array of Buffer to be decoded to encrypted string
+     */
+    base64Encode(decodedBody) {
+        const encodedParts = [];
+        decodedBody.parts.forEach(part =&gt; {
+            encodedParts.push(jose.util.base64url.encode(Buffer.from(JSON.parse(JSON.stringify(part)).data)));
+        });
+        return encodedParts.join(&quot;.&quot;);
+    }
+}
+</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(1.1.0)</span><img src="./image/esdoc-logo-mini-black.png"></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>

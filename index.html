@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl">
+  <title data-ice="title">Home | Hyperwallet REST SDK</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  <script src="script/manual.js"></script>
+<meta name="description" content="A library to manage users, transfer methods and payments through the Hyperwallet API"><meta property="twitter:card" content="summary"><meta property="twitter:title" content="Hyperwallet REST SDK"><meta property="twitter:description" content="A library to manage users, transfer methods and payments through the Hyperwallet API"></head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  <a href="test.html" data-ice="testLink">Test</a>
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+<a style="position:relative; top:3px;" href="https://github.com/hyperwallet/node-sdk"><img width="20px" src="./image/github.png"></a></header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Hyperwallet.js~Hyperwallet.html">Hyperwallet</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#utils">utils</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/utils/ApiClient.js~ApiClient.html">ApiClient</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/utils/Encryption.js~Encryption.html">Encryption</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-api-callback">api-callback</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><div data-ice="index" class="github-markdown"><p><a href="https://travis-ci.org/hyperwallet/node-sdk"><img src="https://travis-ci.org/hyperwallet/node-sdk.png?branch=master" alt="Build Status"></a>
+<a href="https://coveralls.io/github/hyperwallet/node-sdk?branch=master"><img src="https://coveralls.io/repos/github/hyperwallet/node-sdk/badge.svg?branch=master" alt="Coverage Status"></a>
+<a href="http://hyperwallet.github.io/node-sdk"><img src="http://hyperwallet.github.io/node-sdk/badge.svg?t=0" alt="Document"></a>
+<a href="http://badge.fury.io/js/hyperwallet-sdk"><img src="https://badge.fury.io/js/hyperwallet-sdk.png" alt="NPM version"></a></p>
+<h1 id="hyperwallet-rest-sdk--beta-">Hyperwallet REST SDK (Beta)</h1><p>A library to manage users, transfer methods and payments through the Hyperwallet Rest V4 API
+To access Rest V3 APIs please use SDK v1.5</p>
+<h2 id="prerequisites">Prerequisites</h2><p>Hyperwallet&apos;s NodeJS server SDK requires at minimum NodeJS 6.15.1 and above.</p>
+<h2 id="installation">Installation</h2><pre><code class="lang-bash"><code class="source-code prettyprint">$ npm install hyperwallet-sdk</code>
+</code></pre>
+<h2 id="documentation">Documentation</h2><p>Documentation is available at <a href="http://hyperwallet.github.io/node-sdk">http://hyperwallet.github.io/node-sdk</a>.</p>
+<h2 id="api-overview">API Overview</h2><p>To write an app using the SDK</p>
+<ul>
+<li>Register for a sandbox account and get your username, password and program token at the <a href="https://portal.hyperwallet.com">Hyperwallet Program Portal</a>.</li>
+<li>Add dependency <code>hyperwallet-sdk</code> to your <code>package.json</code>.</li>
+<li><p>Require <code>hyperwallet-sdk</code> in your file</p>
+<pre><code class="lang-js"><code class="source-code prettyprint">var Hyperwallet = require(&quot;hyperwallet-sdk&quot;);</code>
+</code></pre>
+</li>
+<li><p>Create a instance of the Hyperwallet Client (with username, password and program token)</p>
+<pre><code class="lang-js"><code class="source-code prettyprint">var client = new Hyperwallet({
+  username: &quot;restapiuser@4917301618&quot;,
+  password: &quot;mySecurePassword!&quot;,
+  programToken: &quot;prg-645fc30d-83ed-476c-a412-32c82738a20e&quot;,
+});</code>
+</code></pre>
+</li>
+<li><p>Start making API calls (e.g. create a user)</p>
+<pre><code class="lang-js"><code class="source-code prettyprint">var userData = {
+   clientUserId: &quot;test-client-id-1&quot;,
+   profileType: &quot;INDIVIDUAL&quot;,
+   firstName: &quot;Daffyd&quot;,
+   lastName: &quot;y Goliath&quot;,
+   email: &quot;testmail-1@hyperwallet.com&quot;,
+   addressLine1: &quot;123 Main Street&quot;,
+   city: &quot;Austin&quot;,
+   stateProvince: &quot;TX&quot;,
+   country: &quot;US&quot;,
+   postalCode: &quot;78701&quot;,
+};
+
+client.createUser(userData, function(errors, body, res) {
+   if (errors) {
+      console.log(&quot;Create User Failed&quot;);
+      console.log(errors);
+   } else {
+      console.log(&quot;Create User Response&quot;);
+      console.log(body);
+   }
+});</code>
+</code></pre>
+<p>The displayed callback format is valid for all SDK methods. For more information see the <a href="http://hyperwallet.github.io/node-sdk/typedef/index.html#static-typedef-api-callback">Callback Documentation</a>.</p>
+</li>
+</ul>
+<h2 id="development">Development</h2><p>Run the tests using <a href="https://www.npmjs.com/"><code>npm</code></a>:</p>
+<pre><code class="lang-bash"><code class="source-code prettyprint">$ npm install
+$ npm test</code>
+</code></pre>
+<h2 id="reference">Reference</h2><p><a href="https://sandbox.hyperwallet.com/developer-portal/#/docs">REST API Reference</a></p>
+<h2 id="license">License</h2><p><a href="https://raw.githubusercontent.com/hyperwallet/node-sdk/master/LICENSE">MIT</a></p>
+</div>
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(1.1.0)</span><img src="./image/esdoc-logo-mini-black.png"></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>

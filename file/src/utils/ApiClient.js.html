@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../../">
+  <title data-ice="title">src/utils/ApiClient.js | Hyperwallet REST SDK</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  <script src="script/manual.js"></script>
+<meta name="description" content="A library to manage users, transfer methods and payments through the Hyperwallet API"><meta property="twitter:card" content="summary"><meta property="twitter:title" content="Hyperwallet REST SDK"><meta property="twitter:description" content="A library to manage users, transfer methods and payments through the Hyperwallet API"></head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  <a href="test.html" data-ice="testLink">Test</a>
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+<a style="position:relative; top:3px;" href="https://github.com/hyperwallet/node-sdk"><img width="20px" src="./image/github.png"></a></header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Hyperwallet.js~Hyperwallet.html">Hyperwallet</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#utils">utils</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/utils/ApiClient.js~ApiClient.html">ApiClient</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/utils/Encryption.js~Encryption.html">Encryption</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-api-callback">api-callback</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">src/utils/ApiClient.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import request from &quot;superagent&quot;;
+import packageJson from &quot;../../package.json&quot;;
+import Encryption from &quot;./Encryption&quot;;
+import { v4 as uuidv4 } from &quot;uuid&quot;;
+
+/**
+ * The callback interface for api calls
+ *
+ * @typedef {function} api-callback
+ * @param {Object[]} [errors] - In case of an error an array with error objects otherwise undefined
+ * @param {string} [errors[].fieldName] - The field name (if error is caused by a particular field)
+ * @param {string} errors[].message - The error message
+ * @param {string} errors[].code - The error code
+ * @param {Object} data - The rest response body
+ * @param {Object} res - The raw superagent response object
+ */
+
+/**
+ * The Hyperwallet API Client
+ */
+export default class ApiClient {
+    /**
+     * Create a instance of the API client
+     *
+     * @param {string} username - The API username
+     * @param {string} password - The API password
+     * @param {string} server - The API server to connect to
+     * @param {string} encryptionData - The API encryption data
+     */
+    constructor(username, password, server, encryptionData) {
+        /**
+         * The API username
+         *
+         * @type {string}
+         * @protected
+         */
+        this.username = username;
+
+        /**
+         * The API password
+         *
+         * @type {string}
+         * @protected
+         */
+        this.password = password;
+
+        /**
+         * The API server to connect to
+         * @type {string}
+         * @protected
+         */
+        this.server = server;
+
+        /**
+         * The Node SDK Version number
+         *
+         * @type {string}
+         * @protected
+         */
+        this.version = packageJson.version;
+
+        /**
+         * The flag shows if encryption is enabled
+         *
+         * @type {boolean}
+         * @protected
+         */
+        this.isEncrypted = false;
+        this.contextId = uuidv4();
+        if (encryptionData &amp;&amp; encryptionData.clientPrivateKeySetPath &amp;&amp; encryptionData.hyperwalletKeySetPath) {
+            this.isEncrypted = true;
+            this.clientPrivateKeySetPath = encryptionData.clientPrivateKeySetPath;
+            this.hyperwalletKeySetPath = encryptionData.hyperwalletKeySetPath;
+            this.encryption = new Encryption(this.clientPrivateKeySetPath, this.hyperwalletKeySetPath);
+        }
+    }
+
+    /**
+     * Do a POST call to the Hyperwallet API server
+     *
+     * @param {string} partialUrl - The api endpoint to call (gets prefixed by `server` and `/rest/v4/`)
+     * @param {Object} data - The data to send to the server
+     * @param {Object} params - Query parameters to send in this call
+     * @param {api-callback} callback - The callback for this call
+     */
+    doPost(partialUrl, data, params, callback) {
+        let contentType = &quot;application/json&quot;;
+        let accept = &quot;application/json&quot;;
+        let requestDataPromise = new Promise((resolve) =&gt; resolve(data));
+        if (this.isEncrypted) {
+            contentType = &quot;application/jose+json&quot;;
+            accept = &quot;application/jose+json&quot;;
+            this.createJoseJsonParser();
+            requestDataPromise = this.encryption.encrypt(data);
+        }
+        requestDataPromise.then((requestData) =&gt; {
+            request
+                .post(`${this.server}/rest/v4/${partialUrl}`)
+                .auth(this.username, this.password)
+                .set(&quot;User-Agent&quot;, `Hyperwallet Node SDK v${this.version}`)
+                .set(&quot;x-sdk-version&quot;, this.version)
+                .set(&quot;x-sdk-type&quot;, &quot;NodeJS&quot;)
+                .set(&quot;x-sdk-contextId&quot;, this.contextId)
+                .type(contentType)
+                .accept(accept)
+                .query(params)
+                .send(requestData)
+                .end(this.wrapCallback(&quot;POST&quot;, callback));
+        }).catch(() =&gt; callback(&quot;Failed to encrypt body for POST request&quot;, undefined, undefined));
+    }
+
+    /**
+     * Do a PUT call to the Hyperwallet API server to upload documents
+     *
+     * @param {string} partialUrl - The api endpoint to call (gets prefixed by `server` and `/rest/v4/`)
+     * @param {Object} data - The data to send to the server
+     * @param {api-callback} callback - The callback for this call
+     */
+    doPutMultipart(partialUrl, data, callback) {
+        let contentType = &quot;multipart/form-data&quot;;
+        let accept = &quot;application/json&quot;;
+        /* eslint-disable no-unused-vars */
+        const keys = Object.keys(data);
+        /* eslint-enable no-unused-vars */
+
+        let requestDataPromise = new Promise((resolve) =&gt; resolve(data));
+        if (this.isEncrypted) {
+            contentType = &quot;multipart/form-data&quot;;
+            accept = &quot;application/jose+json&quot;;
+            this.createJoseJsonParser();
+            requestDataPromise = this.encryption.encrypt(data);
+        }
+        requestDataPromise.then(() =&gt; {
+            const req = request
+                .put(`${this.server}/rest/v4/${partialUrl}`)
+                .auth(this.username, this.password)
+                .set(&quot;User-Agent&quot;, `Hyperwallet Node SDK v${this.version}`)
+                .set(&quot;x-sdk-version&quot;, this.version)
+                .set(&quot;x-sdk-type&quot;, &quot;NodeJS&quot;)
+                .set(&quot;x-sdk-contextId&quot;, this.contextId)
+                .type(contentType)
+                .accept(accept);
+            keys.forEach(key =&gt; {
+                if (key === &quot;data&quot;) {
+                    req.field(key, JSON.stringify(data[key]));
+                } else {
+                    req.attach(key, data[key]);
+                }
+            });
+            req.end(this.wrapCallback(&quot;PUT&quot;, callback));
+        }).catch((err) =&gt; callback(err, undefined, undefined)).then((err, body, res) =&gt; callback(err, body, res));
+    }
+
+    /**
+     * Do a PUT call to the Hyperwallet API server
+     *
+     * @param {string} partialUrl - The api endpoint to call (gets prefixed by server and /rest/v4/)
+     * @param {Object} data - The data to send to the server
+     * @param {Object} params - Query parameters to send in this call
+     * @param {api-callback} callback - The callback for this call
+     */
+    doPut(partialUrl, data, params, callback) {
+        let contentType = &quot;application/json&quot;;
+        let accept = &quot;application/json&quot;;
+        let requestDataPromise = new Promise((resolve) =&gt; resolve(data));
+        if (this.isEncrypted) {
+            contentType = &quot;application/jose+json&quot;;
+            accept = &quot;application/jose+json&quot;;
+            this.createJoseJsonParser();
+            requestDataPromise = this.encryption.encrypt(data);
+        }
+        requestDataPromise.then((requestData) =&gt; {
+            request
+                .put(`${this.server}/rest/v4/${partialUrl}`)
+                .auth(this.username, this.password)
+                .set(&quot;User-Agent&quot;, `Hyperwallet Node SDK v${this.version}`)
+                .set(&quot;x-sdk-version&quot;, this.version)
+                .set(&quot;x-sdk-type&quot;, &quot;NodeJS&quot;)
+                .set(&quot;x-sdk-contextId&quot;, this.contextId)
+                .type(contentType)
+                .accept(accept)
+                .query(params)
+                .send(requestData)
+                .end(this.wrapCallback(&quot;PUT&quot;, callback));
+        }).catch(() =&gt; callback(&quot;Failed to encrypt body for PUT request&quot;, undefined, undefined));
+    }
+
+    /**
+     * Do a GET call to the Hyperwallet API server
+     *
+     * @param {string} partialUrl - The api endpoint to call (gets prefixed by `server` and `/rest/v4/`)
+     * @param {Object} params - Query parameters to send in this call
+     * @param {api-callback} callback - The callback for this call
+     */
+    doGet(partialUrl, params, callback) {
+        let contentType = &quot;application/json&quot;;
+        let accept = &quot;application/json&quot;;
+        if (this.isEncrypted) {
+            contentType = &quot;application/jose+json&quot;;
+            accept = &quot;application/jose+json&quot;;
+            this.createJoseJsonParser();
+        }
+        request
+            .get(`${this.server}/rest/v4/${partialUrl}`)
+            .auth(this.username, this.password)
+            .set(&quot;User-Agent&quot;, `Hyperwallet Node SDK v${this.version}`)
+            .set(&quot;x-sdk-version&quot;, this.version)
+            .set(&quot;x-sdk-type&quot;, &quot;NodeJS&quot;)
+            .set(&quot;x-sdk-contextId&quot;, this.contextId)
+            .type(contentType)
+            .accept(accept)
+            .query(params)
+            .end(this.wrapCallback(&quot;GET&quot;, callback));
+    }
+
+    /**
+     * Wrap a callback to process possible API and network errors
+     *
+     * @param {string} httpMethod - The http method that is currently processing
+     * @param {api-callback} callback - The final callback
+     * @returns {function(err: Object, res: Object)} - The super agent callback
+     *
+     * @private
+     */
+    wrapCallback(httpMethod, callback = () =&gt; null) {
+        return (err, res) =&gt; {
+            const expectedContentType = (this.isEncrypted) ? &quot;application/jose+json&quot; : &quot;application/json&quot;;
+            const invalidContentType = res &amp;&amp; res.header &amp;&amp; res.status !== 204 &amp;&amp; res.header[&quot;content-type&quot;].indexOf(expectedContentType) === -1;
+            if (invalidContentType) {
+                callback([{
+                    message: &quot;Invalid Content-Type specified in Response Header&quot;,
+                }], res ? res.body : undefined, res);
+                return;
+            }
+            if (this.isEncrypted) {
+                this.processEncryptedResponse(httpMethod, err, res.body, callback);
+            } else {
+                this.processNonEncryptedResponse(err, res, callback);
+            }
+        };
+    }
+
+    /**
+     * Process non encrypted response from server
+     *
+     * @param {Object} err - Error object
+     * @param {Object} res - Response object
+     * @param {api-callback} callback - The final callback
+     *
+     * @private
+     */
+    processNonEncryptedResponse(err, res, callback) {
+        if (!err) {
+            callback(undefined, res.body, res);
+            return;
+        }
+
+        let errors = [
+            {
+                message: `Could not communicate with ${this.server}`,
+                code: &quot;COMMUNICATION_ERROR&quot;,
+            },
+        ];
+        if (res &amp;&amp; res.body &amp;&amp; res.body.errors) {
+            errors = res.body.errors;
+        }
+        callback(errors, res ? res.body : undefined, res);
+    }
+
+    /**
+     * Process encrypted response from server
+     *
+     * @param {string} httpMethod - The http method that is currently processing
+     * @param {Object} err - Error object
+     * @param {Object} res - Response object
+     * @param {api-callback} callback - The final callback
+     *
+     * @private
+     */
+    processEncryptedResponse(httpMethod, err, res, callback) {
+        if (!res) {
+            callback(&quot;Try to decrypt empty response body&quot;, undefined, undefined);
+        }
+        this.encryption.decrypt(res)
+            .then((decryptedData) =&gt; {
+                const responseBody = JSON.parse(decryptedData.payload.toString());
+                if (responseBody.errors) {
+                    const responseWithErrors = {};
+                    responseWithErrors.body = responseBody;
+                    this.processNonEncryptedResponse(responseBody, responseWithErrors, callback);
+                } else {
+                    callback(undefined, responseBody, decryptedData);
+                }
+            })
+            .catch(() =&gt; callback(`Failed to decrypt response for ${httpMethod} request`, res, res));
+    }
+
+    /**
+     * Creates response body parser for application/jose+json content-type
+     *
+     * @private
+     */
+    createJoseJsonParser() {
+        request.parse[&quot;application/jose+json&quot;] = (res, callback) =&gt; {
+            let data = &quot;&quot;;
+            res.on(&quot;data&quot;, (chunk) =&gt; {
+                data += chunk;
+            });
+            res.on(&quot;end&quot;, () =&gt; {
+                callback(null, data);
+            });
+        };
+    }
+}
+</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(1.1.0)</span><img src="./image/esdoc-logo-mini-black.png"></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>
