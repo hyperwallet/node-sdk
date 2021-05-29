@@ -257,7 +257,10 @@ describe("Hyperwallet", () => {
         /** @test {Hyperwallet#listUsers} */
         it("should throw error for invalid filter", () => {
             const callback = () => null;
-            expect(() => client.listUsers({ test1: "value" }, callback)).to.throw("Invalid Filter. Expected - clientUserId,email,programToken,status,verificationStatus");
+            expect(() => client.listUsers({ test1: "value" }, callback))
+                .to.throw(
+                    "Invalid Filter. Expected - clientUserId,createdAfter,createdBefore,email,limit,programToken,sortBy,status,verificationStatus"
+                );
         });
         /** @test {Hyperwallet#listUsers} */
         it("should do get call without options", () => {
@@ -3392,7 +3395,7 @@ describe("Hyperwallet", () => {
         /** @test {Hyperwallet#listPayments} */
         it("should throw error for invalid filter", () => {
             const callback = () => null;
-            expect(() => client.listPayments({ test: "value" }, callback)).to.throw("Invalid Filter. Expected - clientPaymentId");
+            expect(() => client.listPayments({ test: "value" }, callback)).to.throw("Invalid Filter. Expected - createdAfter,createdBefore,clientPaymentId,limit,releaseDate,sortBy");
         });
 
         /** @test {Hyperwallet#listPayments} */
