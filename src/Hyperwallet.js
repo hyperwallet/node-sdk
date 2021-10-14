@@ -2166,6 +2166,10 @@ export default class Hyperwallet {
         if (!stakeholderToken) {
             throw new Error("stakeholderToken is required");
         }
+        const LIST_BUSINESS_STAKEHOLDER_STATUS_TRANSITION_FILTERS = ["transition", "createdBefore", "createdAfter", "sortBy", "offset", "limit"];
+        if (options && !this.isValidFilter(options, LIST_BUSINESS_STAKEHOLDER_STATUS_TRANSITION_FILTERS)) {
+            throw new Error("Invalid Filter. Expected - ".concat(LIST_BUSINESS_STAKEHOLDER_STATUS_TRANSITION_FILTERS));
+        }
         this.client.doGet(`users/${encodeURIComponent(userToken)}/business-stakeholders/${encodeURIComponent(stakeholderToken)}/status-transitions`, options, Hyperwallet.handle204Response(callback));
     }
 

@@ -4779,7 +4779,7 @@ describe("Hyperwallet", () => {
         /** @test {Hyperwallet#listBusinessStakeholders} */
         it("should throw error for invalid filter", () => {
             const callback = () => null;
-            expect(() => client.listBusinessStakeholders("test-user-token", { test: "value" }, callback)).
+            expect(() => client.listBusinessStakeholders("test-user-token", { status: "test-status", test: "value" }, callback)).
                 to.throw("Invalid Filter. Expected - status,createdBefore,createdAfter,sortBy,limit");
         });
 
@@ -5052,10 +5052,17 @@ describe("Hyperwallet", () => {
         /** @test {Hyperwallet#listBusinessStakeholderStatusTransitions} */
         it("should do get call with options", () => {
             const callback = () => null;
-            client.listBusinessStakeholderStatusTransitions("test-user-token", "test-stakeholder-token", { test: "value" }, callback);
+            client.listBusinessStakeholderStatusTransitions("test-user-token", "test-stakeholder-token", { transition: "test-transition" }, callback);
 
             apiClientSpy.should.have.been.calledOnce();
-            apiClientSpy.should.have.been.calledWith("users/test-user-token/business-stakeholders/test-stakeholder-token/status-transitions", { test: "value" });
+            apiClientSpy.should.have.been.calledWith("users/test-user-token/business-stakeholders/test-stakeholder-token/status-transitions", { transition: "test-transition" });
+        });
+
+        /** @test {Hyperwallet#listBusinessStakeholderStatusTransitions} */
+        it("should throw error for invalid filter", () => {
+            const callback = () => null;
+            expect(() => client.listBusinessStakeholderStatusTransitions("test-user-token", "test-stakeholder-token", { transition: "test-transition", test: "value" }, callback))
+                .to.throw("Invalid Filter. Expected - transition,createdBefore,createdAfter,sortBy,offset,limit");
         });
 
         /** @test {Hyperwallet#listBusinessStakeholderStatusTransitions} */
