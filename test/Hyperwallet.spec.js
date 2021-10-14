@@ -4771,18 +4771,16 @@ describe("Hyperwallet", () => {
         /** @test {Hyperwallet#listBusinessStakeholders} */
         it("should do get call with options", () => {
             const callback = () => null;
-            client.listBusinessStakeholders("test-user-token", { status: "test-status", isBusinessContact: "test-isBusinessContact",
-                isDirector: "test-isDirector", isUltimateBeneficialOwner: "test-isUltimateBeneficialOwner" }, callback);
+            client.listBusinessStakeholders("test-user-token", { status: "test-status" }, callback);
             apiClientSpy.should.have.been.calledOnce();
-            apiClientSpy.should.have.been.calledWith("users/test-user-token/business-stakeholders", { status: "test-status", isBusinessContact: "test-isBusinessContact",
-                isDirector: "test-isDirector", isUltimateBeneficialOwner: "test-isUltimateBeneficialOwner" });
+            apiClientSpy.should.have.been.calledWith("users/test-user-token/business-stakeholders", { status: "test-status" });
         });
 
         /** @test {Hyperwallet#listBusinessStakeholders} */
         it("should throw error for invalid filter", () => {
             const callback = () => null;
             expect(() => client.listBusinessStakeholders("test-user-token", { test: "value" }, callback)).
-                to.throw("Invalid Filter. Expected - status,isBusinessContact,isDirector,isUltimateBeneficialOwner");
+                to.throw("Invalid Filter. Expected - status,createdBefore,createdAfter,sortBy,limit");
         });
 
         /** @test {Hyperwallet#listBusinessStakeholders} */

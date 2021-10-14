@@ -2055,7 +2055,7 @@ export default class Hyperwallet {
         if (!userToken) {
             throw new Error("userToken is required");
         }
-        const LIST_BUSINESS_STAKEHOLDERS_FILTERS = ["status", "isBusinessContact", "isDirector", "isUltimateBeneficialOwner"];
+        const LIST_BUSINESS_STAKEHOLDERS_FILTERS = ["status", "createdBefore", "createdAfter", "sortBy", "limit"];
         // TODO: Is this included in api, if so follow rules of user listing?
         if (options && !this.isValidFilter(options, LIST_BUSINESS_STAKEHOLDERS_FILTERS)) {
             throw new Error("Invalid Filter. Expected - ".concat(LIST_BUSINESS_STAKEHOLDERS_FILTERS));
