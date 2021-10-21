@@ -248,7 +248,7 @@ describe("Hyperwallet", () => {
         it("should do get call with options", () => {
             const callback = () => null;
             const options = { clientUserId: "test-client-user-id", email: "test-email", programToken: "test-programToken", status: "test-status", verificationStatus: "test-verificationStatus",
-                createdBefore: "test-createdBefore", createdAfter: "test-createdBefore", sortBy: "test-sortBy", offset: "test-offset", limit: "test-limit" };
+                createdBefore: "test-createdBefore", createdAfter: "test-createdBefore", sortBy: "test-sortBy", limit: "test-limit" };
             client.listUsers(options, callback);
             apiClientSpy.should.have.been.calledOnce();
             apiClientSpy.should.have.been.calledWith("users", options);
@@ -258,7 +258,7 @@ describe("Hyperwallet", () => {
         it("should throw error for invalid filter", () => {
             const callback = () => null;
             expect(() => client.listUsers({ clientUserId: "test-client-user-id", test1: "value" }, callback))
-                .to.throw("Invalid Filter. Expected - clientUserId,email,programToken,status,verificationStatus,createdBefore,createdAfter,sortBy,offset,limit");
+                .to.throw("Invalid Filter. Expected - clientUserId,email,programToken,status,verificationStatus,createdBefore,createdAfter,sortBy,limit");
         });
         /** @test {Hyperwallet#listUsers} */
         it("should do get call without options", () => {
@@ -573,7 +573,7 @@ describe("Hyperwallet", () => {
         it("should do get call with options", () => {
             const callback = () => null;
             const options = { transition: "test-transition", createdBefore: "test-createdBefore", createdAfter: "test-createdBefore",
-                sortBy: "test-sortBy", offset: "test-offset", limit: "test-limit" };
+                sortBy: "test-sortBy", limit: "test-limit" };
             client.listUserStatusTransitions("test-user-token", options, callback);
             apiClientSpy.should.have.been.calledOnce();
             apiClientSpy.should.have.been.calledWith("users/test-user-token/status-transitions", options);
@@ -583,7 +583,7 @@ describe("Hyperwallet", () => {
         it("should throw error for invalid filter", () => {
             const callback = () => null;
             expect(() => client.listUserStatusTransitions("test-user-token", { transition: "test-transition", test1: "value" }, callback))
-                .to.throw("Invalid Filter. Expected - transition,createdBefore,createdAfter,sortBy,offset,limit");
+                .to.throw("Invalid Filter. Expected - transition,createdBefore,createdAfter,sortBy,limit");
         });
 
         /** @test {Hyperwallet#listUserStatusTransitions} */
@@ -809,8 +809,8 @@ describe("Hyperwallet", () => {
         /** @test {Hyperwallet#listBankCards} */
         it("should do get call with options", () => {
             const callback = () => null;
-            const options = { status: "test-status", type: "test-type", createdOn: "test-createdOn", createdBefore: "test-createdBefore", createdAfter: "test-createdBefore",
-                sortBy: "test-sortBy", offset: "test-offset", limit: "test-limit" };
+            const options = { status: "test-status", createdBefore: "test-createdBefore", createdAfter: "test-createdBefore",
+                sortBy: "test-sortBy", limit: "test-limit" };
             client.listBankCards("test-user-token", options, callback);
 
             apiClientSpy.should.have.been.calledOnce();
@@ -821,7 +821,7 @@ describe("Hyperwallet", () => {
         it("should throw error for invalid filter", () => {
             const callback = () => null;
             expect(() => client.listBankCards("test-user-token", { status: "test-status", test: "value" }, callback))
-                .to.throw("Invalid Filter. Expected - status,type,createdBefore,createdOn,createdAfter,sortBy,offset,limit");
+                .to.throw("Invalid Filter. Expected - status,createdBefore,createdAfter,sortBy,limit");
         });
 
         /** @test {Hyperwallet#listBankCards} */
@@ -1018,7 +1018,7 @@ describe("Hyperwallet", () => {
         it("should do get call with options", () => {
             const callback = () => null;
             const options = { transition: "test-transition", createdBefore: "test-createdBefore", createdAfter: "test-createdBefore",
-                sortBy: "test-sortBy", offset: "test-offset", limit: "test-limit" };
+                sortBy: "test-sortBy", limit: "test-limit" };
             client.listBankCardStatusTransitions("test-user-token", "test-bank-card-token", options, callback);
             apiClientSpy.should.have.been.calledOnce();
             apiClientSpy.should.have.been.calledWith("users/test-user-token/bank-cards/test-bank-card-token/status-transitions", options);
@@ -1028,7 +1028,7 @@ describe("Hyperwallet", () => {
         it("should throw error for invalid filter", () => {
             const callback = () => null;
             expect(() => client.listBankCardStatusTransitions("test-user-token", "test-bank-card-token", { transition: "test-transition", test: "value" }, callback))
-                .to.throw("Invalid Filter. Expected - transition,createdBefore,createdAfter,sortBy,offset,limit");
+                .to.throw("Invalid Filter. Expected - transition,createdBefore,createdAfter,sortBy,limit");
         });
 
         /** @test {Hyperwallet#listBankCardStatusTransitions} */
@@ -1245,7 +1245,7 @@ describe("Hyperwallet", () => {
         it("should do get call with options", () => {
             const callback = () => null;
             const options = { status: "test-status", createdBefore: "test-createdBefore", createdAfter: "test-createdBefore",
-                sortBy: "test-sortBy", offset: "test-offset", limit: "test-limit" };
+                sortBy: "test-sortBy", limit: "test-limit" };
             client.listPaperChecks("test-user-token", options, callback);
             apiClientSpy.should.have.been.calledOnce();
             apiClientSpy.should.have.been.calledWith("users/test-user-token/paper-checks", options);
@@ -1255,7 +1255,7 @@ describe("Hyperwallet", () => {
         it("should throw error for invalid filter", () => {
             const callback = () => null;
             expect(() => client.listPaperChecks("test-user-token", { status: "test-status", test: "value" }, callback))
-                .to.throw("Invalid Filter. Expected - status,createdBefore,createdAfter,sortBy,offset,limit");
+                .to.throw("Invalid Filter. Expected - status,createdBefore,createdAfter,sortBy,limit");
         });
 
         /** @test {Hyperwallet#listPaperChecks} */
@@ -1452,7 +1452,7 @@ describe("Hyperwallet", () => {
         it("should do get call with options", () => {
             const callback = () => null;
             const options = { transition: "test-transition", createdBefore: "test-createdBefore", createdAfter: "test-createdBefore",
-                sortBy: "test-sortBy", offset: "test-offset", limit: "test-limit" };
+                sortBy: "test-sortBy", limit: "test-limit" };
             client.listPaperCheckStatusTransitions("test-user-token", "test-paper-check-token", options, callback);
             apiClientSpy.should.have.been.calledOnce();
             apiClientSpy.should.have.been.calledWith("users/test-user-token/paper-checks/test-paper-check-token/status-transitions", options);
@@ -1462,7 +1462,7 @@ describe("Hyperwallet", () => {
         it("should throw error for invalid filter", () => {
             const callback = () => null;
             expect(() => client.listPaperCheckStatusTransitions("test-user-token", "test-paper-check-token", { transition: "test-transition", test: "value" }, callback))
-                .to.throw("Invalid Filter. Expected - transition,createdBefore,createdAfter,sortBy,offset,limit");
+                .to.throw("Invalid Filter. Expected - transition,createdBefore,createdAfter,sortBy,limit");
         });
 
         /** @test {Hyperwallet#listPaperCheckStatusTransitions} */
@@ -1612,7 +1612,7 @@ describe("Hyperwallet", () => {
         it("should do get call with options", () => {
             const callback = () => null;
             const options = { clientTransferId: "test-clientTransferId", sourceToken: "test-sourceToken", destinationToken: "test-destinationToken",
-                createdBefore: "test-createdBefore", createdAfter: "test-createdBefore", offset: "test-offset", limit: "test-limit" };
+                createdBefore: "test-createdBefore", createdAfter: "test-createdBefore", limit: "test-limit" };
             client.listTransfers(options, callback);
             apiClientSpy.should.have.been.calledOnce();
             apiClientSpy.should.have.been.calledWith("transfers", options);
@@ -1622,7 +1622,7 @@ describe("Hyperwallet", () => {
         it("should throw error for invalid filter", () => {
             const callback = () => null;
             expect(() => client.listTransfers({ clientTransferId: "test-clientTransferId", test: "value" }, callback))
-                .to.throw("Invalid Filter. Expected - clientTransferId,sourceToken,destinationToken,createdBefore,createdAfter,offset,limit");
+                .to.throw("Invalid Filter. Expected - clientTransferId,sourceToken,destinationToken,createdBefore,createdAfter,limit");
         });
 
         /** @test {Hyperwallet#listTransfers} */
@@ -1976,8 +1976,8 @@ describe("Hyperwallet", () => {
         /** @test {Hyperwallet#listPayPalAccounts} */
         it("should do get call with options", () => {
             const callback = () => null;
-            const options = { status: "test-status", type: "test-type", createdBefore: "test-createdBefore",
-                createdOn: "test-createdOn", createdAfter: "test-createdBefore", sortBy: "test-sortBy", offset: "test-offset", limit: "test-limit" };
+            const options = { status: "test-status", createdBefore: "test-createdBefore",
+                createdAfter: "test-createdBefore", sortBy: "test-sortBy", limit: "test-limit" };
             client.listPayPalAccounts("test-user-token", options, callback);
             apiClientSpy.should.have.been.calledOnce();
             apiClientSpy.should.have.been.calledWith("users/test-user-token/paypal-accounts", options);
@@ -1987,7 +1987,7 @@ describe("Hyperwallet", () => {
         it("should throw error for invalid filter", () => {
             const callback = () => null;
             expect(() => client.listPayPalAccounts("test-user-token", { status: "test-status", test: "value" }, callback))
-                .to.throw("Invalid Filter. Expected - status,type,createdBefore,createdOn,createdAfter,sortBy,offset,limit");
+                .to.throw("Invalid Filter. Expected - status,createdBefore,createdAfter,sortBy,limit");
         });
 
         /** @test {Hyperwallet#listPayPalAccounts} */
@@ -2258,10 +2258,17 @@ describe("Hyperwallet", () => {
         /** @test {Hyperwallet#listPayPalAccountStatusTransitions} */
         it("should do get call with options", () => {
             const callback = () => null;
-            client.listPayPalAccountStatusTransitions("test-user-token", "test-paypal-account-token", { test: "value" }, callback);
+            client.listPayPalAccountStatusTransitions("test-user-token", "test-paypal-account-token", { transition: "test-transition" }, callback);
 
             apiClientSpy.should.have.been.calledOnce();
-            apiClientSpy.should.have.been.calledWith("users/test-user-token/paypal-accounts/test-paypal-account-token/status-transitions", { test: "value" });
+            apiClientSpy.should.have.been.calledWith("users/test-user-token/paypal-accounts/test-paypal-account-token/status-transitions", { transition: "test-transition" });
+        });
+
+        /** @test {Hyperwallet#listPayPalAccountStatusTransitions} */
+        it("should throw error for invalid filter", () => {
+            const callback = () => null;
+            expect(() => client.listPayPalAccountStatusTransitions("test-user-token", "test-paypal-account-token", { transition: "test-transition", test: "value" }, callback))
+                .to.throw("Invalid Filter. Expected - transition,createdBefore,createdAfter,sortBy,limit");
         });
 
         /** @test {Hyperwallet#listPayPalAccountStatusTransitions} */
@@ -2440,7 +2447,7 @@ describe("Hyperwallet", () => {
         /** @test {Hyperwallet#listPrepaidCards} */
         it("should do get call with options", () => {
             const callback = () => null;
-            const options = { status: "test-status", createdBefore: "test-createdBefore", createdAfter: "test-createdBefore", sortBy: "test-sortBy", offset: "test-offset", limit: "test-limit" };
+            const options = { status: "test-status", createdBefore: "test-createdBefore", createdAfter: "test-createdBefore", sortBy: "test-sortBy", limit: "test-limit" };
             client.listPrepaidCards("test-user-token", options, callback);
             apiClientSpy.should.have.been.calledOnce();
             apiClientSpy.should.have.been.calledWith("users/test-user-token/prepaid-cards", options);
@@ -2450,7 +2457,7 @@ describe("Hyperwallet", () => {
         it("should throw error for invalid filter", () => {
             const callback = () => null;
             expect(() => client.listPrepaidCards("test-user-token", { status: "test-status", test: "value" }, callback))
-                .to.throw("Invalid Filter. Expected - status,createdBefore,createdAfter,sortBy,offset,limit");
+                .to.throw("Invalid Filter. Expected - status,createdBefore,createdAfter,sortBy,limit");
         });
 
         /** @test {Hyperwallet#listPrepaidCards} */
@@ -2673,7 +2680,7 @@ describe("Hyperwallet", () => {
         it("should do get call with options", () => {
             const callback = () => null;
             const options = { transition: "test-transition", createdBefore: "test-createdBefore", createdAfter: "test-createdBefore",
-                sortBy: "test-sortBy", offset: "test-offset", limit: "test-limit" };
+                sortBy: "test-sortBy", limit: "test-limit" };
             client.listPrepaidCardStatusTransitions("test-user-token", "test-prepaid-card-token", options, callback);
             apiClientSpy.should.have.been.calledOnce();
             apiClientSpy.should.have.been.calledWith("users/test-user-token/prepaid-cards/test-prepaid-card-token/status-transitions", options);
@@ -2683,7 +2690,7 @@ describe("Hyperwallet", () => {
         it("should throw error for invalid filter", () => {
             const callback = () => null;
             expect(() => client.listPrepaidCardStatusTransitions("test-user-token", "test-prepaid-card-token", { transition: "test-transition", test: "value" }, callback))
-                .to.throw("Invalid Filter. Expected - transition,createdBefore,createdAfter,sortBy,offset,limit");
+                .to.throw("Invalid Filter. Expected - transition,createdBefore,createdAfter,sortBy,limit");
         });
 
         /** @test {Hyperwallet#listPrepaidCardStatusTransitions} */
@@ -2863,7 +2870,7 @@ describe("Hyperwallet", () => {
         it("should do get call with options", () => {
             const callback = () => null;
             const options = { type: "test-type", status: "test-status", createdBefore: "test-createdBefore", createdAfter: "test-createdBefore",
-                sortBy: "test-sortBy", offset: "test-offset", limit: "test-limit" };
+                sortBy: "test-sortBy", limit: "test-limit" };
             client.listBankAccounts("test-user-token", options, callback);
             apiClientSpy.should.have.been.calledOnce();
             apiClientSpy.should.have.been.calledWith("users/test-user-token/bank-accounts", options);
@@ -2873,7 +2880,7 @@ describe("Hyperwallet", () => {
         it("should throw error for invalid filter", () => {
             const callback = () => null;
             expect(() => client.listBankAccounts("test-user-token", { type: "test-type", test: "value" }, callback))
-                .to.throw("Invalid Filter. Expected - type,status,createdBefore,createdAfter,sortBy,offset,limit");
+                .to.throw("Invalid Filter. Expected - type,status,createdBefore,createdAfter,sortBy,limit");
         });
 
         /** @test {Hyperwallet#listBankAccounts} */
@@ -3061,7 +3068,7 @@ describe("Hyperwallet", () => {
         it("should do get call with options", () => {
             const callback = () => null;
             const options = { transition: "test-transition", createdBefore: "test-createdBefore", createdAfter: "test-createdBefore",
-                sortBy: "test-sortBy", offset: "test-offset", limit: "test-limit" };
+                sortBy: "test-sortBy", limit: "test-limit" };
             client.listBankAccountStatusTransitions("test-user-token", "test-bank-account-token", options, callback);
             apiClientSpy.should.have.been.calledOnce();
             apiClientSpy.should.have.been.calledWith("users/test-user-token/bank-accounts/test-bank-account-token/status-transitions", options);
@@ -3071,7 +3078,7 @@ describe("Hyperwallet", () => {
         it("should throw error for invalid filter", () => {
             const callback = () => null;
             expect(() => client.listBankAccountStatusTransitions("test-user-token", "test-bank-account-token", { transition: "test-transition", test: "value" }, callback))
-                .to.throw("Invalid Filter. Expected - transition,createdBefore,createdAfter,sortBy,offset,limit");
+                .to.throw("Invalid Filter. Expected - transition,createdBefore,createdAfter,sortBy,limit");
         });
 
         /** @test {Hyperwallet#listBankAccountStatusTransitions} */
@@ -3135,7 +3142,7 @@ describe("Hyperwallet", () => {
         /** @test {Hyperwallet#listBalancesForUser} */
         it("should do get call with options", () => {
             const callback = () => null;
-            const options = { currency: "test-currency", sortBy: "test-sortBy", offset: "test-offset", limit: "test-limit" };
+            const options = { currency: "test-currency", limit: "test-limit" };
             client.listBalancesForUser("test-user-token", options, callback);
             apiClientSpy.should.have.been.calledOnce();
             apiClientSpy.should.have.been.calledWith("users/test-user-token/balances", options);
@@ -3145,7 +3152,7 @@ describe("Hyperwallet", () => {
         it("should throw error for invalid filter", () => {
             const callback = () => null;
             expect(() => client.listBalancesForUser("test-user-token", { currency: "test-currency", test: "value" }, callback))
-                .to.throw("Invalid Filter. Expected - currency,sortBy,offset,limit");
+                .to.throw("Invalid Filter. Expected - currency,limit");
         });
 
         /** @test {Hyperwallet#listBalancesForUser} */
@@ -3211,10 +3218,17 @@ describe("Hyperwallet", () => {
         /** @test {Hyperwallet#listBalancesForPrepaidCard} */
         it("should do get call with options", () => {
             const callback = () => null;
-            client.listBalancesForPrepaidCard("test-user-token", "test-prepaid-card-token", { test: "value" }, callback);
+            client.listBalancesForPrepaidCard("test-user-token", "test-prepaid-card-token", { sortBy: "test-sortBy", limit: "test-limit" }, callback);
 
             apiClientSpy.should.have.been.calledOnce();
-            apiClientSpy.should.have.been.calledWith("users/test-user-token/prepaid-cards/test-prepaid-card-token/balances", { test: "value" });
+            apiClientSpy.should.have.been.calledWith("users/test-user-token/prepaid-cards/test-prepaid-card-token/balances", { sortBy: "test-sortBy", limit: "test-limit" });
+        });
+
+        /** @test {Hyperwallet#listBalancesForPrepaidCard} */
+        it("should throw error for invalid filter", () => {
+            const callback = () => null;
+            expect(() => client.listBalancesForPrepaidCard("test-user-token", "test-prepaid-card-token", { sortBy: "test-sortBy", test: "value" }, callback))
+                .to.throw("Invalid Filter. Expected - sortBy,limit");
         });
 
         /** @test {Hyperwallet#listBalancesForPrepaidCard} */
@@ -3280,10 +3294,17 @@ describe("Hyperwallet", () => {
         /** @test {Hyperwallet#listBalancesForAccount} */
         it("should do get call with options", () => {
             const callback = () => null;
-            client.listBalancesForAccount("test-program-token", "test-account-token", { test: "value" }, callback);
+            client.listBalancesForAccount("test-program-token", "test-account-token", { currency: "test-currency", sortBy: "test-sortBy", limit: "test-limit" }, callback);
 
             apiClientSpy.should.have.been.calledOnce();
-            apiClientSpy.should.have.been.calledWith("programs/test-program-token/accounts/test-account-token/balances", { test: "value" });
+            apiClientSpy.should.have.been.calledWith("programs/test-program-token/accounts/test-account-token/balances", { currency: "test-currency", sortBy: "test-sortBy", limit: "test-limit" });
+        });
+
+        /** @test {Hyperwallet#listBalancesForAccount} */
+        it("should throw error for invalid filter", () => {
+            const callback = () => null;
+            expect(() => client.listBalancesForAccount("test-program-token", "test-account-token", { currency: "test-currency", test: "value" }, callback))
+                .to.throw("Invalid Filter. Expected - currency,sortBy,limit");
         });
 
         /** @test {Hyperwallet#listBalancesForAccount} */
@@ -3419,8 +3440,8 @@ describe("Hyperwallet", () => {
         /** @test {Hyperwallet#listPayments} */
         it("should do get call with options", () => {
             const callback = () => null;
-            const options = { clientPaymentId: "test-client-payment-id", currency: "test-currency", memo: "test-memo", releaseDate: "test-releaseDate",
-                createdBefore: "test-createdBefore", createdAfter: "test-createdBefore", sortBy: "test-sortBy", offset: "test-offset", limit: "test-limit" };
+            const options = { clientPaymentId: "test-client-payment-id", releaseDate: "test-releaseDate",
+                createdBefore: "test-createdBefore", createdAfter: "test-createdBefore", sortBy: "test-sortBy", limit: "test-limit" };
             client.listPayments(options, callback);
             apiClientSpy.should.have.been.calledOnce();
             apiClientSpy.should.have.been.calledWith("payments", options);
@@ -3430,7 +3451,7 @@ describe("Hyperwallet", () => {
         it("should throw error for invalid filter", () => {
             const callback = () => null;
             expect(() => client.listPayments({ clientPaymentId: "test-client-payment-id", test: "value" }, callback))
-                .to.throw("Invalid Filter. Expected - clientPaymentId,currency,memo,releaseDate,createdBefore,createdAfter,sortBy,offset,limit");
+                .to.throw("Invalid Filter. Expected - clientPaymentId,releaseDate,createdBefore,createdAfter,sortBy,limit");
         });
 
         /** @test {Hyperwallet#listPayments} */
@@ -3563,7 +3584,7 @@ describe("Hyperwallet", () => {
         it("should do get call with options", () => {
             const callback = () => null;
             const options = { transition: "test-transition", createdBefore: "test-createdBefore", createdAfter: "test-createdBefore",
-                sortBy: "test-sortBy", offset: "test-offset", limit: "test-limit" };
+                sortBy: "test-sortBy", limit: "test-limit" };
             client.listPaymentStatusTransitions("test-payment-token", options, callback);
             apiClientSpy.should.have.been.calledOnce();
             apiClientSpy.should.have.been.calledWith("payments/test-payment-token/status-transitions", options);
@@ -3573,7 +3594,7 @@ describe("Hyperwallet", () => {
         it("should throw error for invalid filter", () => {
             const callback = () => null;
             expect(() => client.listPaymentStatusTransitions("test-payment-token", { transition: "test-transition", test: "value" }, callback))
-                .to.throw("Invalid Filter. Expected - transition,createdBefore,createdAfter,sortBy,offset,limit");
+                .to.throw("Invalid Filter. Expected - transition,createdBefore,createdAfter,sortBy,limit");
         });
 
         /** @test {Hyperwallet#listPaymentStatusTransitions} */
@@ -3777,7 +3798,7 @@ describe("Hyperwallet", () => {
         /** @test {Hyperwallet#listTransferMethodConfigurations} */
         it("should do get call with options", () => {
             const callback = () => null;
-            const options = { userToken: "test-userToken", offset: "test-offset", limit: "test-limit" };
+            const options = { userToken: "test-userToken", limit: "test-limit" };
             client.listTransferMethodConfigurations("test-user-token", options, callback);
             apiClientSpy.should.have.been.calledOnce();
             options.userToken = "test-user-token";
@@ -3788,7 +3809,7 @@ describe("Hyperwallet", () => {
         it("should throw error for invalid filter", () => {
             const callback = () => null;
             expect(() => client.listTransferMethodConfigurations("test-user-token", { userToken: "test-userToken", test: "value" }, callback))
-                .to.throw("Invalid Filter. Expected - userToken,offset,limit");
+                .to.throw("Invalid Filter. Expected - userToken,limit");
         });
 
         /** @test {Hyperwallet#listTransferMethodConfigurations} */
@@ -3907,10 +3928,17 @@ describe("Hyperwallet", () => {
         /** @test {Hyperwallet#listReceiptsForProgramAccount} */
         it("should do get call with options", () => {
             const callback = () => null;
-            client.listReceiptsForProgramAccount("test-program-token", "test-account-token", { test: "value" }, callback);
+            client.listReceiptsForProgramAccount("test-program-token", "test-account-token", { currency: "test-currency" }, callback);
 
             apiClientSpy.should.have.been.calledOnce();
-            apiClientSpy.should.have.been.calledWith("programs/test-program-token/accounts/test-account-token/receipts", { test: "value" });
+            apiClientSpy.should.have.been.calledWith("programs/test-program-token/accounts/test-account-token/receipts", { currency: "test-currency" });
+        });
+
+        /** @test {Hyperwallet#listReceiptsForProgramAccount} */
+        it("should throw error for invalid filter", () => {
+            const callback = () => null;
+            expect(() => client.listReceiptsForProgramAccount("test-program-token", "test-account-token", { currency: "test-currency", test: "value" }, callback))
+                .to.throw("Invalid Filter. Expected - currency,createdBefore,createdAfter,sortBy,limit");
         });
 
         /** @test {Hyperwallet#listReceiptsForProgramAccount} */
@@ -3970,10 +3998,17 @@ describe("Hyperwallet", () => {
         /** @test {Hyperwallet#listReceiptsForUser} */
         it("should do get call with options", () => {
             const callback = () => null;
-            client.listReceiptsForUser("test-user-token", { test: "value" }, callback);
+            client.listReceiptsForUser("test-user-token", { createdBefore: "test-createdBefore" }, callback);
 
             apiClientSpy.should.have.been.calledOnce();
-            apiClientSpy.should.have.been.calledWith("users/test-user-token/receipts", { test: "value" });
+            apiClientSpy.should.have.been.calledWith("users/test-user-token/receipts", { createdBefore: "test-createdBefore" });
+        });
+
+        /** @test {Hyperwallet#listReceiptsForUser} */
+        it("should throw error for invalid filter", () => {
+            const callback = () => null;
+            expect(() => client.listReceiptsForUser("test-user-token", { createdBefore: "test-createdBefore", test: "value" }, callback))
+                .to.throw("Invalid Filter. Expected - createdBefore,createdAfter,sortBy,limit");
         });
 
         /** @test {Hyperwallet#listReceiptsForUser} */
@@ -4039,10 +4074,17 @@ describe("Hyperwallet", () => {
         /** @test {Hyperwallet#listReceiptsForPrepaidCard} */
         it("should do get call with options", () => {
             const callback = () => null;
-            client.listReceiptsForPrepaidCard("test-user-token", "test-prepaid-card-token", { test: "value" }, callback);
+            client.listReceiptsForPrepaidCard("test-user-token", "test-prepaid-card-token", { createdBefore: "test-createdBefore" }, callback);
 
             apiClientSpy.should.have.been.calledOnce();
-            apiClientSpy.should.have.been.calledWith("users/test-user-token/prepaid-cards/test-prepaid-card-token/receipts", { test: "value" });
+            apiClientSpy.should.have.been.calledWith("users/test-user-token/prepaid-cards/test-prepaid-card-token/receipts", { createdBefore: "test-createdBefore" });
+        });
+
+        /** @test {Hyperwallet#listReceiptsForPrepaidCard} */
+        it("should throw error for invalid filter", () => {
+            const callback = () => null;
+            expect(() => client.listReceiptsForPrepaidCard("test-user-token", "test-prepaid-card-token", { createdBefore: "test-createdBefore", test: "value" }, callback))
+                .to.throw("Invalid Filter. Expected - createdBefore,createdAfter");
         });
 
         /** @test {Hyperwallet#listReceiptsForPrepaidCard} */
@@ -4100,7 +4142,7 @@ describe("Hyperwallet", () => {
         it("should do get call with options", () => {
             const callback = () => null;
             const options = { programToken: "test-programToken", type: "test-type", createdBefore: "test-createdBefore",
-                createdAfter: "test-createdAfter", sortBy: "test-sortBy", offset: "test-offset", limit: "test-limit" };
+                createdAfter: "test-createdAfter", sortBy: "test-sortBy", limit: "test-limit" };
             client.listWebhookNotifications(options, callback);
             apiClientSpy.should.have.been.calledOnce();
             apiClientSpy.should.have.been.calledWith("webhook-notifications", options);
@@ -4110,7 +4152,7 @@ describe("Hyperwallet", () => {
         it("should throw error for invalid filter", () => {
             const callback = () => null;
             expect(() => client.listWebhookNotifications({ programToken: "test-programToken", test: "value" }, callback))
-                .to.throw("Invalid Filter. Expected - programToken,createdBefore,createdAfter,type,sortBy,offset,limit");
+                .to.throw("Invalid Filter. Expected - programToken,createdBefore,createdAfter,type,sortBy,limit");
         });
 
         /** @test {Hyperwallet#listWebhookNotifications} */
@@ -4419,7 +4461,7 @@ describe("Hyperwallet", () => {
         it("should do get call with options", () => {
             const callback = () => null;
             const options = { type: "test-type", status: "test-status", createdBefore: "test-createdBefore", createdAfter: "test-createdBefore",
-                sortBy: "test-sortBy", offset: "test-offset", limit: "test-limit" };
+                sortBy: "test-sortBy", limit: "test-limit" };
             client.listVenmoAccounts("test-user-token", options, callback);
             apiClientSpy.should.have.been.calledOnce();
             apiClientSpy.should.have.been.calledWith("users/test-user-token/venmo-accounts", options);
@@ -4428,8 +4470,8 @@ describe("Hyperwallet", () => {
         /** @test {Hyperwallet#listVenmoAccounts} */
         it("should throw error for invalid filter", () => {
             const callback = () => null;
-            expect(() => client.listVenmoAccounts("test-user-token", { programToken: "test-programToken", test: "value" }, callback))
-                .to.throw("Invalid Filter. Expected - type,status,createdBefore,createdAfter,sortBy,offset,limit");
+            expect(() => client.listVenmoAccounts("test-user-token", { type: "test-type", test: "value" }, callback))
+                .to.throw("Invalid Filter. Expected - type,status,createdBefore,createdAfter,sortBy,limit");
         });
 
         /** @test {Hyperwallet#listVenmoAccounts} */
@@ -4663,7 +4705,7 @@ describe("Hyperwallet", () => {
         it("should do get call with options", () => {
             const callback = () => null;
             const options = { transition: "test-transition", createdBefore: "test-createdBefore", createdAfter: "test-createdBefore",
-                sortBy: "test-sortBy", offset: "test-offset", limit: "test-limit" };
+                sortBy: "test-sortBy", limit: "test-limit" };
             client.listVenmoAccountStatusTransitions("test-user-token", "test-venmo-account-token", options, callback);
             apiClientSpy.should.have.been.calledOnce();
             apiClientSpy.should.have.been.calledWith("users/test-user-token/venmo-accounts/test-venmo-account-token/status-transitions", options);
@@ -4673,7 +4715,7 @@ describe("Hyperwallet", () => {
         it("should throw error for invalid filter", () => {
             const callback = () => null;
             expect(() => client.listVenmoAccountStatusTransitions("test-user-token", "test-venmo-account-token", { transition: "test-transition", test: "value" }, callback))
-                .to.throw("Invalid Filter. Expected - transition,createdBefore,createdAfter,sortBy,offset,limit");
+                .to.throw("Invalid Filter. Expected - transition,createdBefore,createdAfter,sortBy,limit");
         });
 
         /** @test {Hyperwallet#listVenmoAccountStatusTransitions} */
@@ -5167,10 +5209,17 @@ describe("Hyperwallet", () => {
         /** @test {Hyperwallet#listTransferMethods} */
         it("should do get call with options", () => {
             const callback = () => null;
-            client.listTransferMethods("test-user-token", { test: "value" }, callback);
+            client.listTransferMethods("test-user-token", { status: "test-status" }, callback);
 
             apiClientSpy.should.have.been.calledOnce();
-            apiClientSpy.should.have.been.calledWith("users/test-user-token/transfer-methods", { test: "value" });
+            apiClientSpy.should.have.been.calledWith("users/test-user-token/transfer-methods", { status: "test-status" });
+        });
+
+        /** @test {Hyperwallet#listTransferMethods} */
+        it("should throw error for invalid filter", () => {
+            const callback = () => null;
+            expect(() => client.listTransferMethods("test-user-token", { status: "test-status", test: "value" }, callback))
+                .to.throw("Invalid Filter. Expected - status,type,createdBefore,createdAfter,sortBy,limit");
         });
 
         /** @test {Hyperwallet#listTransferMethods} */
