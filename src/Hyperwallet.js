@@ -1610,6 +1610,10 @@ export default class Hyperwallet {
         if (!accountToken) {
             throw new Error("accountToken is required");
         }
+        const LIST_ACCOUNT_RECEIPTS_FILTERS = ["currency", "createdBefore", "createdAfter", "sortBy", "offset", "limit"];
+        if (options && !this.isValidFilter(options, LIST_ACCOUNT_RECEIPTS_FILTERS)) {
+            throw new Error("Invalid Filter. Expected - ".concat(LIST_ACCOUNT_RECEIPTS_FILTERS));
+        }
         this.client.doGet(`programs/${encodeURIComponent(programToken)}/accounts/${encodeURIComponent(accountToken)}/receipts`, options, Hyperwallet.handle204Response(callback));
     }
 
@@ -1625,6 +1629,10 @@ export default class Hyperwallet {
     listReceiptsForUser(userToken, options, callback) {
         if (!userToken) {
             throw new Error("userToken is required");
+        }
+        const LIST_USER_RECEIPTS_FILTERS = ["currency", "createdBefore", "createdAfter", "sortBy", "offset", "limit"];
+        if (options && !this.isValidFilter(options, LIST_USER_RECEIPTS_FILTERS)) {
+            throw new Error("Invalid Filter. Expected - ".concat(LIST_USER_RECEIPTS_FILTERS));
         }
         this.client.doGet(`users/${encodeURIComponent(userToken)}/receipts`, options, Hyperwallet.handle204Response(callback));
     }
@@ -1645,6 +1653,10 @@ export default class Hyperwallet {
         }
         if (!prepaidCardToken) {
             throw new Error("prepaidCardToken is required");
+        }
+        const LIST_PREPAID_CARD_RECEIPTS_FILTERS = ["createdBefore", "createdAfter"];
+        if (options && !this.isValidFilter(options, LIST_PREPAID_CARD_RECEIPTS_FILTERS)) {
+            throw new Error("Invalid Filter. Expected - ".concat(LIST_PREPAID_CARD_RECEIPTS_FILTERS));
         }
         this.client.doGet(`users/${encodeURIComponent(userToken)}/prepaid-cards/${encodeURIComponent(prepaidCardToken)}/receipts`, options, Hyperwallet.handle204Response(callback));
     }
@@ -1955,6 +1967,10 @@ export default class Hyperwallet {
     listTransferMethods(userToken, options, callback) {
         if (!userToken) {
             throw new Error("userToken is required");
+        }
+        const LIST_TRANSFER_METHODS_FILTERS = ["status", "type", "createdBefore", "createdAfter", "sortBy", "offset", "limit"];
+        if (options && !this.isValidFilter(options, LIST_TRANSFER_METHODS_FILTERS)) {
+            throw new Error("Invalid Filter. Expected - ".concat(LIST_TRANSFER_METHODS_FILTERS));
         }
         this.client.doGet(`users/${encodeURIComponent(userToken)}/transfer-methods`, options, Hyperwallet.handle204Response(callback));
     }
