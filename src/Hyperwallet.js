@@ -1,4 +1,6 @@
 import objectAssign from "object-assign";
+import HyperwalletVerificationDocument from "./models/HyperwalletVerificationDocument";
+import HyperwalletVerificationDocumentReason from "./models/HyperwalletVerificationDocumentReason";
 import ApiClient from "./utils/ApiClient";
 
 /**
@@ -240,6 +242,39 @@ export default class Hyperwallet {
     }
 
     /**
+     * Format response before passing to callback
+     *
+     * @param {Object} err - Error object
+     * @param {Object} body - Body object
+     * @param {Object} res - Response object
+     *
+     */
+    formatResForCallback(err, body, res) {
+        const retBody = body;
+        if (!err) {
+            const documents = body.documents;
+            if (documents && documents.length > 0) {
+                const documentsArr = [];
+                documents.forEach(dVal => {
+                    const doc = dVal;
+                    const reasons = dVal.reasons;
+                    if (reasons && reasons.length > 0) {
+                        const reasonsArr = [];
+                        reasons.forEach(rVal => {
+                            reasonsArr.push(new HyperwalletVerificationDocumentReason(rVal));
+                        });
+                        doc.reasons = reasonsArr;
+                    }
+                    documentsArr.push(new HyperwalletVerificationDocument(doc));
+                });
+                retBody.documents = documentsArr;
+            }
+        }
+        return { err, body: retBody, res };
+    }
+
+
+    /**
      * Upload Documents to User
      *
      * @param {string} userToken - The user token
@@ -255,8 +290,11 @@ export default class Hyperwallet {
         if (!data || Object.keys(data).length < 1) {
             throw new Error("Files for upload are required");
         }
-        
-        this.client.doPutMultipart(`users/${encodeURIComponent(userToken)}`, data, callback);
+
+        const formattedRes = this.client.doPutMultipart(`users/${encodeURIComponent(userToken)}`, data, this.formatResForCallback);
+        if (formattedRes) {
+            callback(formattedRes.err, formattedRes.body, formattedRes.res);
+        }
     }
 
     //--------------------------------------
@@ -2184,7 +2222,10 @@ export default class Hyperwallet {
         if (!data) {
             throw new Error("Files for upload are required");
         }
-        this.client.doPutMultipart(`users/${encodeURIComponent(userToken)}/business-stakeholders/${encodeURIComponent(stakeholderToken)}`, data, callback);
+        const formattedRes = this.client.doPutMultipart(`users/${encodeURIComponent(userToken)}/business-stakeholders/${encodeURIComponent(stakeholderToken)}`, data, this.formatResForCallback);
+        if (formattedRes) {
+            callback(formattedRes.err, formattedRes.body, formattedRes.res);
+        }
     }
 
     /**
