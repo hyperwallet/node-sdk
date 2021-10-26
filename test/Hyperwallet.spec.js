@@ -96,6 +96,73 @@ describe("Hyperwallet", () => {
     });
 
     //--------------------------------------
+    // Helpers
+    //--------------------------------------
+
+    /** @test {Hyperwallet#formatResForCallback} */
+    describe("formatResForCallback()", () => {
+        let client;
+
+        beforeEach(() => {
+            client = new Hyperwallet({
+                username: "test-username",
+                password: "test-password",
+            });
+        });
+        /** @test {Hyperwallet#formatResForCallback} */
+        it("should return a formated response body, parse reasons", () => {
+            const uploadRejectionData = {
+                body: {
+                    token: "tkn-12345",
+                    documents: [{
+                        category: "IDENTIFICATION",
+                        type: "DRIVERS_LICENSE",
+                        country: "AL",
+                        status: "INVALID",
+                        reasons: [
+                            {
+                                name: "DOCUMENT_CORRECTION_REQUIRED",
+                                description: "Document requires correction",
+                            },
+                            {
+                                name: "DOCUMENT_NOT_DECISIVE",
+                                description: "Decision cannot be made based on document. Alternative document required",
+                            },
+                        ],
+                        createdOn: "2020-11-24T19:05:02",
+                    }],
+                } };
+            const formattedRes = client.client.formatResForCallback(uploadRejectionData);
+            expect(formattedRes.body.documents[0].type).to.equal(uploadRejectionData.body.documents[0].type);
+            expect(formattedRes.body.documents[0].reasons[0].name).to.equal(uploadRejectionData.body.documents[0].reasons[0].name);
+        });
+
+        /** @test {Hyperwallet#formatResForCallback} */
+        it("should return a formated response body, parse documents", () => {
+            const uploadRejectionData = {
+                body: {
+                    token: "tkn-12345",
+                    documents: [{
+                        category: "IDENTIFICATION",
+                        type: "DRIVERS_LICENSE",
+                        country: "AL",
+                        status: "NEW",
+                        createdOn: "2020-11-24T19:05:02",
+                    }],
+                } };
+            const formattedRes = client.client.formatResForCallback(uploadRejectionData);
+            expect(formattedRes.body.documents[0].type).to.equal(uploadRejectionData.body.documents[0].type);
+        });
+
+        /** @test {Hyperwallet#formatResForCallback} */
+        it("should not modify response body with no documents", () => {
+            const uploadData = { body: { token: "tkn-12345" } };
+            const formattedRes = client.client.formatResForCallback(uploadData);
+            expect(formattedRes.body.token).to.equal(uploadData.body.token);
+        });
+    });
+
+    //--------------------------------------
     // Users
     //--------------------------------------
 
