@@ -254,7 +254,7 @@ export default class Hyperwallet {
         if (!userToken) {
             throw new Error("userToken is required");
         }
-        if (!data) {
+        if (!data || Object.keys(data).length < 1) {
             throw new Error("Files for upload are required");
         }
         this.client.doPutMultipart(`users/${encodeURIComponent(userToken)}`, data, callback);
