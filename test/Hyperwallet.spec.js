@@ -134,6 +134,7 @@ describe("Hyperwallet", () => {
             const formattedRes = client.client.formatResForCallback(uploadRejectionData);
             expect(formattedRes.body.documents[0].type).to.equal(uploadRejectionData.body.documents[0].type);
             expect(formattedRes.body.documents[0].reasons[0].name).to.equal(uploadRejectionData.body.documents[0].reasons[0].name);
+            expect(formattedRes.body.documents[0].createdOn).to.equal(uploadRejectionData.body.documents[0].createdOn);
         });
 
         /** @test {Hyperwallet#formatResForCallback} */
@@ -151,6 +152,7 @@ describe("Hyperwallet", () => {
                 } };
             const formattedRes = client.client.formatResForCallback(uploadRejectionData);
             expect(formattedRes.body.documents[0].type).to.equal(uploadRejectionData.body.documents[0].type);
+            expect(formattedRes.body.documents[0].createdOn).to.equal(uploadRejectionData.body.documents[0].createdOn);
         });
 
         /** @test {Hyperwallet#formatResForCallback} */
