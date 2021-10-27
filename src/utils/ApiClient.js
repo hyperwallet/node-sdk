@@ -2,6 +2,8 @@ import request from "superagent";
 import packageJson from "../../package.json";
 import Encryption from "./Encryption";
 import { v4 as uuidv4 } from "uuid";
+import HyperwalletVerificationDocument from "../models/HyperwalletVerificationDocument";
+import HyperwalletVerificationDocumentReason from "../models/HyperwalletVerificationDocumentReason";
 
 /**
  * The callback interface for api calls
@@ -73,6 +75,38 @@ export default class ApiClient {
             this.hyperwalletKeySetPath = encryptionData.hyperwalletKeySetPath;
             this.encryption = new Encryption(this.clientPrivateKeySetPath, this.hyperwalletKeySetPath);
         }
+    }
+
+    /**
+     * Format response to documents model before passing to callback
+     *
+     * @param {Object} res - Response object
+     *
+     */
+    formatResForCallback(res) {
+        const retRes = res;
+
+        if (res && res.body) {
+            const retBody = res.body;
+            const documents = retBody.documents;
+            if (documents && documents.length > 0) {
+                const documentsArr = [];
+                documents.forEach(dVal => {
+                    const doc = dVal;
+                    if (dVal.reasons && dVal.reasons.length > 0) {
+                        const reasonsArr = [];
+                        dVal.reasons.forEach(rVal => {
+                            reasonsArr.push(new HyperwalletVerificationDocumentReason(rVal));
+                        });
+                        doc.reasons = reasonsArr;
+                    }
+                    documentsArr.push(new HyperwalletVerificationDocument(doc));
+                });
+                retBody.documents = documentsArr;
+                retRes.body = retBody;
+            }
+        }
+        return retRes;
     }
 
     /**
@@ -251,7 +285,8 @@ export default class ApiClient {
      */
     processNonEncryptedResponse(err, res, callback) {
         if (!err) {
-            callback(undefined, res.body, res);
+            const formattedRes = this.formatResForCallback(res);
+            callback(undefined, formattedRes.body, formattedRes);
             return;
         }
 
@@ -289,7 +324,8 @@ export default class ApiClient {
                     responseWithErrors.body = responseBody;
                     this.processNonEncryptedResponse(responseBody, responseWithErrors, callback);
                 } else {
-                    callback(undefined, responseBody, decryptedData);
+                    const formattedRes = this.formatResForCallback({ body: responseBody });
+                    callback(undefined, formattedRes.body, decryptedData);
                 }
             })
             .catch(() => callback(`Failed to decrypt response for ${httpMethod} request`, res, res));
