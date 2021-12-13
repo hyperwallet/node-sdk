@@ -318,7 +318,8 @@ describe("Hyperwallet", () => {
         it("should do get call with options", () => {
             const callback = () => null;
             const options = { clientUserId: "test-client-user-id", email: "test-email", programToken: "test-programToken", status: "test-status", verificationStatus: "test-verificationStatus",
-                createdBefore: "test-createdBefore", createdAfter: "test-createdBefore", sortBy: "test-sortBy", offset: "test-offset", limit: "test-limit" };
+                taxVerificationStatus: "test-taxVerificationStatus", createdBefore: "test-createdBefore", createdAfter: "test-createdBefore", sortBy: "test-sortBy",
+                offset: "test-offset", limit: "test-limit" };
             client.listUsers(options, callback);
             apiClientSpy.should.have.been.calledOnce();
             apiClientSpy.should.have.been.calledWith("users", options);
@@ -328,7 +329,7 @@ describe("Hyperwallet", () => {
         it("should throw error for invalid filter", () => {
             const callback = () => null;
             expect(() => client.listUsers({ clientUserId: "test-client-user-id", test1: "value" }, callback))
-                .to.throw("Invalid Filter. Expected - clientUserId,email,programToken,status,verificationStatus,createdBefore,createdAfter,sortBy,offset,limit");
+                .to.throw("Invalid Filter. Expected - clientUserId,email,programToken,status,verificationStatus,taxVerificationStatus,createdBefore,createdAfter,sortBy,offset,limit");
         });
 
         /** @test {Hyperwallet#listUsers} */
