@@ -1,6 +1,12 @@
 Changelog
 =========
 
+2.1.0
+-------------------
+- Updated parameter filters for GET List Endpoints
+- Added taxVerificationStatus to Users
+- Added Document and RejectionReason Models for document upload and parse
+
 2.0.3
 -------------------
 - Filters added to list Webhook events
