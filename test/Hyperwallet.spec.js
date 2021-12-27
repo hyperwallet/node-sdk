@@ -316,7 +316,7 @@ describe("Hyperwallet", () => {
         it("should do get call with options", () => {
             const callback = () => null;
             const options = { clientUserId: "test-client-user-id", email: "test-email", programToken: "test-programToken", status: "test-status", verificationStatus: "test-verificationStatus",
-                taxVerificationStatus: "test-taxVerificationStatus",  createdBefore: "test-createdBefore", createdAfter: "test-createdBefore", sortBy: "test-sortBy", limit: "test-limit" };
+                taxVerificationStatus: "test-taxVerificationStatus", createdBefore: "test-createdBefore", createdAfter: "test-createdBefore", sortBy: "test-sortBy", limit: "test-limit" };
             client.listUsers(options, callback);
             apiClientSpy.should.have.been.calledOnce();
             apiClientSpy.should.have.been.calledWith("users", options);
