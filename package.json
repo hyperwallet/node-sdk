@@ -7,7 +7,6 @@
     "form-data": "^3.0.0",
     "node-jose": "^2.0.0",
     "object-assign": "^4.1.0",
-    "publishy": "0.0.2",
     "superagent": "^4.0.0",
     "uuid": "^8.3.1"
   },
@@ -18,7 +17,7 @@
     "deploy-docs": "npm run docs && gh-pages -d docs",
     "test": "npm run lint && npm run test-unit",
     "test-unit": "mocha --compilers js:babel-register test/**/*.js test/*.js",
-    "test-coverage": "babel-node ./node_modules/.bin/isparta cover _mocha -- test/**/*.js test/*.js",
+    "test-coverage": "nyc npm run test",
     "coveralls": "npm run test-coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
     "prepublish-prod": "npm test && npm run prod",
     "publish-please": "publish-please",
@@ -58,10 +57,9 @@
     "eslint-config-airbnb-base": "^3.0.1",
     "eslint-plugin-import": "^1.8.0",
     "gh-pages": "^3.1.0",
-    "isparta": "^4.1.1",
     "mocha": "^5.2.0",
     "nock": "^10.0.4",
-    "nyc": "15.0.0",
+    "nyc": "^15.0.0",
     "publish-please": "^5.4.3",
     "sinon": "^1.17.4",
     "sinon-chai": "^2.8.0"
