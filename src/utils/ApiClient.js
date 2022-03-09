@@ -140,7 +140,7 @@ export default class ApiClient {
                 .query(params)
                 .send(requestData)
                 .end(this.wrapCallback("POST", callback));
-        }).catch(() => callback("Failed to encrypt body for POST request", undefined, undefined));
+        }).catch(() => callback([{ message: "Failed to encrypt body for POST request" }], undefined, undefined));
     }
 
     /**
@@ -182,7 +182,7 @@ export default class ApiClient {
                 }
             });
             req.end(this.wrapCallback("PUT", callback));
-        }).catch((err) => callback(err, undefined, undefined)).then((err, body, res) => callback(err, body, res));
+        }).catch((err) => callback(err, undefined, undefined));
     }
 
     /**
@@ -216,7 +216,7 @@ export default class ApiClient {
                 .query(params)
                 .send(requestData)
                 .end(this.wrapCallback("PUT", callback));
-        }).catch(() => callback("Failed to encrypt body for PUT request", undefined, undefined));
+        }).catch(() => callback([{ message: "Failed to encrypt body for PUT request" }], undefined, undefined));
     }
 
     /**
@@ -258,15 +258,20 @@ export default class ApiClient {
      */
     wrapCallback(httpMethod, callback = () => null) {
         return (err, res) => {
-            const expectedContentType = (this.isEncrypted) ? "application/jose+json" : "application/json";
-            const invalidContentType = res && res.header && res.status !== 204 && res.header["content-type"].indexOf(expectedContentType) === -1;
-            if (invalidContentType) {
-                callback([{
-                    message: "Invalid Content-Type specified in Response Header",
-                }], res ? res.body : undefined, res);
-                return;
+            const contentTypeHeader = res && res.header ? res.header["content-type"] : undefined;
+            if (!err) {
+                const expectedContentType = (this.isEncrypted) ? "application/jose+json" : "application/json";
+                const invalidContentType = res && res.status !== 204
+                  && contentTypeHeader && contentTypeHeader.indexOf(expectedContentType) === -1;
+                if (invalidContentType) {
+                    callback([{
+                        message: "Invalid Content-Type specified in Response Header",
+                    }], res ? res.body : undefined, res);
+                    return;
+                }
             }
-            if (this.isEncrypted) {
+            if (this.isEncrypted && contentTypeHeader && contentTypeHeader.includes("application/jose+json")
+              && res.body && this.isNotEmptyBody(res.body)) {
                 this.processEncryptedResponse(httpMethod, err, res.body, callback);
             } else {
                 this.processNonEncryptedResponse(err, res, callback);
@@ -292,8 +297,8 @@ export default class ApiClient {
 
         let errors = [
             {
-                message: `Could not communicate with ${this.server}`,
-                code: "COMMUNICATION_ERROR",
+                message: err.status ? err.message : `Could not communicate with ${this.server}`,
+                code: err.status ? err.status.toString() : "COMMUNICATION_ERROR",
             },
         ];
         if (res && res.body && res.body.errors) {
@@ -313,9 +318,6 @@ export default class ApiClient {
      * @private
      */
     processEncryptedResponse(httpMethod, err, res, callback) {
-        if (!res) {
-            callback("Try to decrypt empty response body", undefined, undefined);
-        }
         this.encryption.decrypt(res)
             .then((decryptedData) => {
                 const responseBody = JSON.parse(decryptedData.payload.toString());
@@ -328,7 +330,7 @@ export default class ApiClient {
                     callback(undefined, formattedRes.body, decryptedData);
                 }
             })
-            .catch(() => callback(`Failed to decrypt response for ${httpMethod} request`, res, res));
+            .catch(() => callback([{ message: `Failed to decrypt response for ${httpMethod} request` }], res, res));
     }
 
     /**
@@ -346,5 +348,14 @@ export default class ApiClient {
                 callback(null, data);
             });
         };
+    }
+
+    /**
+     * Helper function to check if the response body is an empty object
+     *
+     * @private
+     */
+    isNotEmptyBody(body) {
+        return !(Object.keys(body).length === 0 && Object.getPrototypeOf(body) === Object.prototype);
     }
 }
