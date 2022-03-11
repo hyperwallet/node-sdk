@@ -261,9 +261,7 @@ export default class ApiClient {
             const contentTypeHeader = res && res.header ? res.header["content-type"] : undefined;
             if (!err) {
                 const expectedContentType = (this.isEncrypted) ? "application/jose+json" : "application/json";
-                const invalidContentType = res && res.status !== 204
-                  && contentTypeHeader && contentTypeHeader.indexOf(expectedContentType) === -1;
-                if (invalidContentType) {
+                if (res && res.status !== 204 && contentTypeHeader && !contentTypeHeader.includes(expectedContentType)) {
                     callback([{
                         message: "Invalid Content-Type specified in Response Header",
                     }], res ? res.body : undefined, res);
@@ -271,7 +269,7 @@ export default class ApiClient {
                 }
             }
             if (this.isEncrypted && contentTypeHeader && contentTypeHeader.includes("application/jose+json")
-              && res.body && this.isNotEmptyBody(res.body)) {
+              && res.body && this.isNotEmptyResponseBody(res.body)) {
                 this.processEncryptedResponse(httpMethod, err, res.body, callback);
             } else {
                 this.processNonEncryptedResponse(err, res, callback);
@@ -355,7 +353,16 @@ export default class ApiClient {
      *
      * @private
      */
-    isNotEmptyBody(body) {
-        return !(Object.keys(body).length === 0 && Object.getPrototypeOf(body) === Object.prototype);
+    isEmptyResponseBody(body) {
+        return Object.keys(body).length === 0 && Object.getPrototypeOf(body) === Object.prototype;
+    }
+
+    /**
+     * Helper function to check if the response body is not an empty object
+     *
+     * @private
+     */
+    isNotEmptyResponseBody(body) {
+        return !this.isEmptyResponseBody(body);
     }
 }
