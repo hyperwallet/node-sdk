@@ -292,8 +292,8 @@ describe("utils/ApiClient", () => {
                 .post("/rest/v4/test", {
                     test: "value",
                 })
-                .reply(429, "<html lang='en'><head><title>Request Rejected</title>" +
-                  "</head><body>The requested URL was rejected. Please consult with your administrator.</body></html>",
+                .reply(429, "<html lang='en'><head><title>Request Rejected</title>"
+                  + "</head><body>The requested URL was rejected. Please consult with your administrator.</body></html>",
                 { "Content-Type": "text/html" });
 
             client.doPost("test", { test: "value" }, {}, (err, body, res) => {
@@ -772,8 +772,8 @@ describe("utils/ApiClient", () => {
                 .put("/rest/v4/test", {
                     test: "value",
                 })
-                .reply(429, "<html lang='en'><head><title>Request Rejected</title>" +
-                "</head><body>The requested URL was rejected. Please consult with your administrator.</body></html>",
+                .reply(429, "<html lang='en'><head><title>Request Rejected</title>"
+                + "</head><body>The requested URL was rejected. Please consult with your administrator.</body></html>",
                 { "Content-Type": "text/html" });
 
             client.doPut("test", { test: "value" }, {}, (err, body, res) => {
@@ -1423,8 +1423,8 @@ describe("utils/ApiClient", () => {
                 .matchHeader("User-Agent", `Hyperwallet Node SDK v${packageJson.version}`)
                 .matchHeader("Accept", "application/json")
                 .get("/rest/v4/test")
-                .reply(429, "<html lang='en'><head><title>Request Rejected</title>" +
-              "</head><body>The requested URL was rejected. Please consult with your administrator.</body></html>",
+                .reply(429, "<html lang='en'><head><title>Request Rejected</title>"
+              + "</head><body>The requested URL was rejected. Please consult with your administrator.</body></html>",
                 { "Content-Type": "text/html" });
 
             client.doGet("test", {}, (err, body, res) => {

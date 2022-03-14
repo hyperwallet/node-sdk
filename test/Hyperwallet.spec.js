@@ -4,6 +4,7 @@ import sinon from "sinon";
 import sinonChai from "sinon-chai";
 
 import Hyperwallet from "../src/Hyperwallet";
+import ApiClient from "../src/utils/ApiClient";
 
 chai.should();
 chai.use(dirtyChai);
@@ -100,14 +101,6 @@ describe("Hyperwallet", () => {
 
     /** @test {Hyperwallet#formatResForCallback} */
     describe("formatResForCallback()", () => {
-        let client;
-
-        beforeEach(() => {
-            client = new Hyperwallet({
-                username: "test-username",
-                password: "test-password",
-            });
-        });
         /** @test {Hyperwallet#formatResForCallback} */
         it("should return a formated response body, parse reasons", () => {
             const uploadRejectionData = {
@@ -130,8 +123,9 @@ describe("Hyperwallet", () => {
                         ],
                         createdOn: "2020-11-24T19:05:02",
                     }],
-                } };
-            const formattedRes = client.client.formatResForCallback(uploadRejectionData);
+                },
+            };
+            const formattedRes = ApiClient.formatResForCallback(uploadRejectionData);
             expect(formattedRes.body.documents[0].type).to.equal(uploadRejectionData.body.documents[0].type);
             expect(formattedRes.body.documents[0].reasons[0].name).to.equal(uploadRejectionData.body.documents[0].reasons[0].name);
             expect(formattedRes.body.documents[0].createdOn).to.equal(uploadRejectionData.body.documents[0].createdOn);
@@ -149,8 +143,9 @@ describe("Hyperwallet", () => {
                         status: "NEW",
                         createdOn: "2020-11-24T19:05:02",
                     }],
-                } };
-            const formattedRes = client.client.formatResForCallback(uploadRejectionData);
+                },
+            };
+            const formattedRes = ApiClient.formatResForCallback(uploadRejectionData);
             expect(formattedRes.body.documents[0].type).to.equal(uploadRejectionData.body.documents[0].type);
             expect(formattedRes.body.documents[0].createdOn).to.equal(uploadRejectionData.body.documents[0].createdOn);
         });
@@ -158,7 +153,7 @@ describe("Hyperwallet", () => {
         /** @test {Hyperwallet#formatResForCallback} */
         it("should not modify response body with no documents", () => {
             const uploadData = { body: { token: "tkn-12345" } };
-            const formattedRes = client.client.formatResForCallback(uploadData);
+            const formattedRes = ApiClient.formatResForCallback(uploadData);
             expect(formattedRes.body.token).to.equal(uploadData.body.token);
         });
     });
@@ -315,8 +310,18 @@ describe("Hyperwallet", () => {
         /** @test {Hyperwallet#listUsers} */
         it("should do get call with options", () => {
             const callback = () => null;
-            const options = { clientUserId: "test-client-user-id", email: "test-email", programToken: "test-programToken", status: "test-status", verificationStatus: "test-verificationStatus",
-                taxVerificationStatus: "test-taxVerificationStatus", createdBefore: "test-createdBefore", createdAfter: "test-createdBefore", sortBy: "test-sortBy", limit: "test-limit" };
+            const options = {
+                clientUserId: "test-client-user-id",
+                email: "test-email",
+                programToken: "test-programToken",
+                status: "test-status",
+                verificationStatus: "test-verificationStatus",
+                taxVerificationStatus: "test-taxVerificationStatus",
+                createdBefore: "test-createdBefore",
+                createdAfter: "test-createdBefore",
+                sortBy: "test-sortBy",
+                limit: "test-limit",
+            };
             client.listUsers(options, callback);
             apiClientSpy.should.have.been.calledOnce();
             apiClientSpy.should.have.been.calledWith("users", options);
@@ -640,8 +645,13 @@ describe("Hyperwallet", () => {
         /** @test {Hyperwallet#listUserStatusTransitions} */
         it("should do get call with options", () => {
             const callback = () => null;
-            const options = { transition: "test-transition", createdBefore: "test-createdBefore", createdAfter: "test-createdBefore",
-                sortBy: "test-sortBy", limit: "test-limit" };
+            const options = {
+                transition: "test-transition",
+                createdBefore: "test-createdBefore",
+                createdAfter: "test-createdBefore",
+                sortBy: "test-sortBy",
+                limit: "test-limit",
+            };
             client.listUserStatusTransitions("test-user-token", options, callback);
             apiClientSpy.should.have.been.calledOnce();
             apiClientSpy.should.have.been.calledWith("users/test-user-token/status-transitions", options);
@@ -877,8 +887,13 @@ describe("Hyperwallet", () => {
         /** @test {Hyperwallet#listBankCards} */
         it("should do get call with options", () => {
             const callback = () => null;
-            const options = { status: "test-status", createdBefore: "test-createdBefore", createdAfter: "test-createdBefore",
-                sortBy: "test-sortBy", limit: "test-limit" };
+            const options = {
+                status: "test-status",
+                createdBefore: "test-createdBefore",
+                createdAfter: "test-createdBefore",
+                sortBy: "test-sortBy",
+                limit: "test-limit",
+            };
             client.listBankCards("test-user-token", options, callback);
 
             apiClientSpy.should.have.been.calledOnce();
@@ -1085,8 +1100,13 @@ describe("Hyperwallet", () => {
         /** @test {Hyperwallet#listBankCardStatusTransitions} */
         it("should do get call with options", () => {
             const callback = () => null;
-            const options = { transition: "test-transition", createdBefore: "test-createdBefore", createdAfter: "test-createdBefore",
-                sortBy: "test-sortBy", limit: "test-limit" };
+            const options = {
+                transition: "test-transition",
+                createdBefore: "test-createdBefore",
+                createdAfter: "test-createdBefore",
+                sortBy: "test-sortBy",
+                limit: "test-limit",
+            };
             client.listBankCardStatusTransitions("test-user-token", "test-bank-card-token", options, callback);
             apiClientSpy.should.have.been.calledOnce();
             apiClientSpy.should.have.been.calledWith("users/test-user-token/bank-cards/test-bank-card-token/status-transitions", options);
@@ -1312,8 +1332,13 @@ describe("Hyperwallet", () => {
         /** @test {Hyperwallet#listPaperChecks} */
         it("should do get call with options", () => {
             const callback = () => null;
-            const options = { status: "test-status", createdBefore: "test-createdBefore", createdAfter: "test-createdBefore",
-                sortBy: "test-sortBy", limit: "test-limit" };
+            const options = {
+                status: "test-status",
+                createdBefore: "test-createdBefore",
+                createdAfter: "test-createdBefore",
+                sortBy: "test-sortBy",
+                limit: "test-limit",
+            };
             client.listPaperChecks("test-user-token", options, callback);
             apiClientSpy.should.have.been.calledOnce();
             apiClientSpy.should.have.been.calledWith("users/test-user-token/paper-checks", options);
@@ -1519,8 +1544,13 @@ describe("Hyperwallet", () => {
         /** @test {Hyperwallet#listPaperCheckStatusTransitions} */
         it("should do get call with options", () => {
             const callback = () => null;
-            const options = { transition: "test-transition", createdBefore: "test-createdBefore", createdAfter: "test-createdBefore",
-                sortBy: "test-sortBy", limit: "test-limit" };
+            const options = {
+                transition: "test-transition",
+                createdBefore: "test-createdBefore",
+                createdAfter: "test-createdBefore",
+                sortBy: "test-sortBy",
+                limit: "test-limit",
+            };
             client.listPaperCheckStatusTransitions("test-user-token", "test-paper-check-token", options, callback);
             apiClientSpy.should.have.been.calledOnce();
             apiClientSpy.should.have.been.calledWith("users/test-user-token/paper-checks/test-paper-check-token/status-transitions", options);
@@ -1679,8 +1709,14 @@ describe("Hyperwallet", () => {
         /** @test {Hyperwallet#listTransfers} */
         it("should do get call with options", () => {
             const callback = () => null;
-            const options = { clientTransferId: "test-clientTransferId", sourceToken: "test-sourceToken", destinationToken: "test-destinationToken",
-                createdBefore: "test-createdBefore", createdAfter: "test-createdBefore", limit: "test-limit" };
+            const options = {
+                clientTransferId: "test-clientTransferId",
+                sourceToken: "test-sourceToken",
+                destinationToken: "test-destinationToken",
+                createdBefore: "test-createdBefore",
+                createdAfter: "test-createdBefore",
+                limit: "test-limit",
+            };
             client.listTransfers(options, callback);
             apiClientSpy.should.have.been.calledOnce();
             apiClientSpy.should.have.been.calledWith("transfers", options);
@@ -2044,8 +2080,13 @@ describe("Hyperwallet", () => {
         /** @test {Hyperwallet#listPayPalAccounts} */
         it("should do get call with options", () => {
             const callback = () => null;
-            const options = { status: "test-status", createdBefore: "test-createdBefore",
-                createdAfter: "test-createdBefore", sortBy: "test-sortBy", limit: "test-limit" };
+            const options = {
+                status: "test-status",
+                createdBefore: "test-createdBefore",
+                createdAfter: "test-createdBefore",
+                sortBy: "test-sortBy",
+                limit: "test-limit",
+            };
             client.listPayPalAccounts("test-user-token", options, callback);
             apiClientSpy.should.have.been.calledOnce();
             apiClientSpy.should.have.been.calledWith("users/test-user-token/paypal-accounts", options);
@@ -2515,7 +2556,9 @@ describe("Hyperwallet", () => {
         /** @test {Hyperwallet#listPrepaidCards} */
         it("should do get call with options", () => {
             const callback = () => null;
-            const options = { status: "test-status", createdBefore: "test-createdBefore", createdAfter: "test-createdBefore", sortBy: "test-sortBy", limit: "test-limit" };
+            const options = {
+                status: "test-status", createdBefore: "test-createdBefore", createdAfter: "test-createdBefore", sortBy: "test-sortBy", limit: "test-limit",
+            };
             client.listPrepaidCards("test-user-token", options, callback);
             apiClientSpy.should.have.been.calledOnce();
             apiClientSpy.should.have.been.calledWith("users/test-user-token/prepaid-cards", options);
@@ -2747,8 +2790,13 @@ describe("Hyperwallet", () => {
         /** @test {Hyperwallet#listPrepaidCardStatusTransitions} */
         it("should do get call with options", () => {
             const callback = () => null;
-            const options = { transition: "test-transition", createdBefore: "test-createdBefore", createdAfter: "test-createdBefore",
-                sortBy: "test-sortBy", limit: "test-limit" };
+            const options = {
+                transition: "test-transition",
+                createdBefore: "test-createdBefore",
+                createdAfter: "test-createdBefore",
+                sortBy: "test-sortBy",
+                limit: "test-limit",
+            };
             client.listPrepaidCardStatusTransitions("test-user-token", "test-prepaid-card-token", options, callback);
             apiClientSpy.should.have.been.calledOnce();
             apiClientSpy.should.have.been.calledWith("users/test-user-token/prepaid-cards/test-prepaid-card-token/status-transitions", options);
@@ -2937,8 +2985,14 @@ describe("Hyperwallet", () => {
         /** @test {Hyperwallet#listBankAccounts} */
         it("should do get call with options", () => {
             const callback = () => null;
-            const options = { type: "test-type", status: "test-status", createdBefore: "test-createdBefore", createdAfter: "test-createdBefore",
-                sortBy: "test-sortBy", limit: "test-limit" };
+            const options = {
+                type: "test-type",
+                status: "test-status",
+                createdBefore: "test-createdBefore",
+                createdAfter: "test-createdBefore",
+                sortBy: "test-sortBy",
+                limit: "test-limit",
+            };
             client.listBankAccounts("test-user-token", options, callback);
             apiClientSpy.should.have.been.calledOnce();
             apiClientSpy.should.have.been.calledWith("users/test-user-token/bank-accounts", options);
@@ -3135,8 +3189,13 @@ describe("Hyperwallet", () => {
         /** @test {Hyperwallet#listBankAccountStatusTransitions} */
         it("should do get call with options", () => {
             const callback = () => null;
-            const options = { transition: "test-transition", createdBefore: "test-createdBefore", createdAfter: "test-createdBefore",
-                sortBy: "test-sortBy", limit: "test-limit" };
+            const options = {
+                transition: "test-transition",
+                createdBefore: "test-createdBefore",
+                createdAfter: "test-createdBefore",
+                sortBy: "test-sortBy",
+                limit: "test-limit",
+            };
             client.listBankAccountStatusTransitions("test-user-token", "test-bank-account-token", options, callback);
             apiClientSpy.should.have.been.calledOnce();
             apiClientSpy.should.have.been.calledWith("users/test-user-token/bank-accounts/test-bank-account-token/status-transitions", options);
@@ -3508,8 +3567,14 @@ describe("Hyperwallet", () => {
         /** @test {Hyperwallet#listPayments} */
         it("should do get call with options", () => {
             const callback = () => null;
-            const options = { clientPaymentId: "test-client-payment-id", releaseDate: "test-releaseDate",
-                createdBefore: "test-createdBefore", createdAfter: "test-createdBefore", sortBy: "test-sortBy", limit: "test-limit" };
+            const options = {
+                clientPaymentId: "test-client-payment-id",
+                releaseDate: "test-releaseDate",
+                createdBefore: "test-createdBefore",
+                createdAfter: "test-createdBefore",
+                sortBy: "test-sortBy",
+                limit: "test-limit",
+            };
             client.listPayments(options, callback);
             apiClientSpy.should.have.been.calledOnce();
             apiClientSpy.should.have.been.calledWith("payments", options);
@@ -3651,8 +3716,13 @@ describe("Hyperwallet", () => {
         /** @test {Hyperwallet#listPaymentStatusTransitions} */
         it("should do get call with options", () => {
             const callback = () => null;
-            const options = { transition: "test-transition", createdBefore: "test-createdBefore", createdAfter: "test-createdBefore",
-                sortBy: "test-sortBy", limit: "test-limit" };
+            const options = {
+                transition: "test-transition",
+                createdBefore: "test-createdBefore",
+                createdAfter: "test-createdBefore",
+                sortBy: "test-sortBy",
+                limit: "test-limit",
+            };
             client.listPaymentStatusTransitions("test-payment-token", options, callback);
             apiClientSpy.should.have.been.calledOnce();
             apiClientSpy.should.have.been.calledWith("payments/test-payment-token/status-transitions", options);
@@ -4209,8 +4279,14 @@ describe("Hyperwallet", () => {
         /** @test {Hyperwallet#listWebhookNotifications} */
         it("should do get call with options", () => {
             const callback = () => null;
-            const options = { programToken: "test-programToken", type: "test-type", createdBefore: "test-createdBefore",
-                createdAfter: "test-createdAfter", sortBy: "test-sortBy", limit: "test-limit" };
+            const options = {
+                programToken: "test-programToken",
+                type: "test-type",
+                createdBefore: "test-createdBefore",
+                createdAfter: "test-createdAfter",
+                sortBy: "test-sortBy",
+                limit: "test-limit",
+            };
             client.listWebhookNotifications(options, callback);
             apiClientSpy.should.have.been.calledOnce();
             apiClientSpy.should.have.been.calledWith("webhook-notifications", options);
@@ -4528,8 +4604,14 @@ describe("Hyperwallet", () => {
         /** @test {Hyperwallet#listVenmoAccounts} */
         it("should do get call with options", () => {
             const callback = () => null;
-            const options = { type: "test-type", status: "test-status", createdBefore: "test-createdBefore", createdAfter: "test-createdBefore",
-                sortBy: "test-sortBy", limit: "test-limit" };
+            const options = {
+                type: "test-type",
+                status: "test-status",
+                createdBefore: "test-createdBefore",
+                createdAfter: "test-createdBefore",
+                sortBy: "test-sortBy",
+                limit: "test-limit",
+            };
             client.listVenmoAccounts("test-user-token", options, callback);
             apiClientSpy.should.have.been.calledOnce();
             apiClientSpy.should.have.been.calledWith("users/test-user-token/venmo-accounts", options);
@@ -4772,8 +4854,13 @@ describe("Hyperwallet", () => {
         /** @test {Hyperwallet#listVenmoAccountStatusTransitions} */
         it("should do get call with options", () => {
             const callback = () => null;
-            const options = { transition: "test-transition", createdBefore: "test-createdBefore", createdAfter: "test-createdBefore",
-                sortBy: "test-sortBy", limit: "test-limit" };
+            const options = {
+                transition: "test-transition",
+                createdBefore: "test-createdBefore",
+                createdAfter: "test-createdBefore",
+                sortBy: "test-sortBy",
+                limit: "test-limit",
+            };
             client.listVenmoAccountStatusTransitions("test-user-token", "test-venmo-account-token", options, callback);
             apiClientSpy.should.have.been.calledOnce();
             apiClientSpy.should.have.been.calledWith("users/test-user-token/venmo-accounts/test-venmo-account-token/status-transitions", options);
@@ -4889,8 +4976,8 @@ describe("Hyperwallet", () => {
         /** @test {Hyperwallet#listBusinessStakeholders} */
         it("should throw error for invalid filter", () => {
             const callback = () => null;
-            expect(() => client.listBusinessStakeholders("test-user-token", { status: "test-status", test: "value" }, callback)).
-                to.throw("Invalid Filter. Expected - status,createdBefore,createdAfter,sortBy,limit");
+            expect(() => client.listBusinessStakeholders("test-user-token", { status: "test-status", test: "value" }, callback))
+                .to.throw("Invalid Filter. Expected - status,createdBefore,createdAfter,sortBy,limit");
         });
 
         /** @test {Hyperwallet#listBusinessStakeholders} */
