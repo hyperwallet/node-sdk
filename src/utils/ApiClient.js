@@ -1,7 +1,7 @@
 import request from "superagent";
+import { v4 as uuidv4 } from "uuid";
 import packageJson from "../../package.json";
 import Encryption from "./Encryption";
-import { v4 as uuidv4 } from "uuid";
 import HyperwalletVerificationDocument from "../models/HyperwalletVerificationDocument";
 import HyperwalletVerificationDocumentReason from "../models/HyperwalletVerificationDocumentReason";
 
@@ -83,19 +83,19 @@ export default class ApiClient {
      * @param {Object} res - Response object
      *
      */
-    formatResForCallback(res) {
+    static formatResForCallback(res) {
         const retRes = res;
 
         if (res && res.body) {
             const retBody = res.body;
-            const documents = retBody.documents;
+            const { documents } = retBody;
             if (documents && documents.length > 0) {
                 const documentsArr = [];
-                documents.forEach(dVal => {
+                documents.forEach((dVal) => {
                     const doc = dVal;
                     if (dVal.reasons && dVal.reasons.length > 0) {
                         const reasonsArr = [];
-                        dVal.reasons.forEach(rVal => {
+                        dVal.reasons.forEach((rVal) => {
                             reasonsArr.push(new HyperwalletVerificationDocumentReason(rVal));
                         });
                         doc.reasons = reasonsArr;
@@ -120,11 +120,11 @@ export default class ApiClient {
     doPost(partialUrl, data, params, callback) {
         let contentType = "application/json";
         let accept = "application/json";
-        let requestDataPromise = new Promise((resolve) => resolve(data));
+        let requestDataPromise = new Promise(resolve => resolve(data));
         if (this.isEncrypted) {
             contentType = "application/jose+json";
             accept = "application/jose+json";
-            this.createJoseJsonParser();
+            ApiClient.createJoseJsonParser();
             requestDataPromise = this.encryption.encrypt(data);
         }
         requestDataPromise.then((requestData) => {
@@ -157,11 +157,11 @@ export default class ApiClient {
         const keys = Object.keys(data);
         /* eslint-enable no-unused-vars */
 
-        let requestDataPromise = new Promise((resolve) => resolve(data));
+        let requestDataPromise = new Promise(resolve => resolve(data));
         if (this.isEncrypted) {
             contentType = "multipart/form-data";
             accept = "application/jose+json";
-            this.createJoseJsonParser();
+            ApiClient.createJoseJsonParser();
             requestDataPromise = this.encryption.encrypt(data);
         }
         requestDataPromise.then(() => {
@@ -174,7 +174,7 @@ export default class ApiClient {
                 .set("x-sdk-contextId", this.contextId)
                 .type(contentType)
                 .accept(accept);
-            keys.forEach(key => {
+            keys.forEach((key) => {
                 if (key === "data") {
                     req.field(key, JSON.stringify(data[key]));
                 } else {
@@ -182,7 +182,7 @@ export default class ApiClient {
                 }
             });
             req.end(this.wrapCallback("PUT", callback));
-        }).catch((err) => callback(err, undefined, undefined));
+        }).catch(err => callback(err, undefined, undefined));
     }
 
     /**
@@ -196,11 +196,11 @@ export default class ApiClient {
     doPut(partialUrl, data, params, callback) {
         let contentType = "application/json";
         let accept = "application/json";
-        let requestDataPromise = new Promise((resolve) => resolve(data));
+        let requestDataPromise = new Promise(resolve => resolve(data));
         if (this.isEncrypted) {
             contentType = "application/jose+json";
             accept = "application/jose+json";
-            this.createJoseJsonParser();
+            ApiClient.createJoseJsonParser();
             requestDataPromise = this.encryption.encrypt(data);
         }
         requestDataPromise.then((requestData) => {
@@ -232,7 +232,7 @@ export default class ApiClient {
         if (this.isEncrypted) {
             contentType = "application/jose+json";
             accept = "application/jose+json";
-            this.createJoseJsonParser();
+            ApiClient.createJoseJsonParser();
         }
         request
             .get(`${this.server}/rest/v3/${partialUrl}`)
@@ -269,7 +269,7 @@ export default class ApiClient {
                 }
             }
             if (this.isEncrypted && contentTypeHeader && contentTypeHeader.includes("application/jose+json")
-              && res.body && this.isNotEmptyResponseBody(res.body)) {
+              && res.body && !ApiClient.isEmptyResponseBody(res.body)) {
                 this.processEncryptedResponse(httpMethod, err, res.body, callback);
             } else {
                 this.processNonEncryptedResponse(err, res, callback);
@@ -288,7 +288,7 @@ export default class ApiClient {
      */
     processNonEncryptedResponse(err, res, callback) {
         if (!err) {
-            const formattedRes = this.formatResForCallback(res);
+            const formattedRes = ApiClient.formatResForCallback(res);
             callback(undefined, formattedRes.body, formattedRes);
             return;
         }
@@ -300,6 +300,7 @@ export default class ApiClient {
             },
         ];
         if (res && res.body && res.body.errors) {
+            // eslint-disable-next-line prefer-destructuring
             errors = res.body.errors;
         }
         callback(errors, res ? res.body : undefined, res);
@@ -324,7 +325,7 @@ export default class ApiClient {
                     responseWithErrors.body = responseBody;
                     this.processNonEncryptedResponse(responseBody, responseWithErrors, callback);
                 } else {
-                    const formattedRes = this.formatResForCallback({ body: responseBody });
+                    const formattedRes = ApiClient.formatResForCallback({ body: responseBody });
                     callback(undefined, formattedRes.body, decryptedData);
                 }
             })
@@ -336,7 +337,7 @@ export default class ApiClient {
      *
      * @private
      */
-    createJoseJsonParser() {
+    static createJoseJsonParser() {
         request.parse["application/jose+json"] = (res, callback) => {
             let data = "";
             res.on("data", (chunk) => {
@@ -353,16 +354,7 @@ export default class ApiClient {
      *
      * @private
      */
-    isEmptyResponseBody(body) {
+    static isEmptyResponseBody(body) {
         return Object.keys(body).length === 0 && Object.getPrototypeOf(body) === Object.prototype;
-    }
-
-    /**
-     * Helper function to check if the response body is not an empty object
-     *
-     * @private
-     */
-    isNotEmptyResponseBody(body) {
-        return !this.isEmptyResponseBody(body);
     }
 }
