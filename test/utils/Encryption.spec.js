@@ -1,7 +1,12 @@
 import path from "path";
 import nock from "nock";
 import fs from "fs";
+import chai from "chai";
+import dirtyChai from "dirty-chai";
 import Encryption from "../../src/utils/Encryption";
+
+chai.should();
+chai.use(dirtyChai);
 
 /** @test {Encryption} */
 describe("utils/Encryption", () => {
@@ -62,8 +67,8 @@ describe("utils/Encryption", () => {
         /** @test {Encryption#encrypt} */
         it("should successfully decode and encode encrypted text message", (cb) => {
             encryption.encrypt(testMessage).then((encryptedBody) => {
-                const decodedMessage = encryption.base64Decode(encryptedBody);
-                const encodedMessage = encryption.base64Encode(decodedMessage);
+                const decodedMessage = Encryption.base64Decode(encryptedBody);
+                const encodedMessage = Encryption.base64Encode(decodedMessage);
                 encodedMessage.should.be.deep.equal(encryptedBody);
                 cb();
             });
