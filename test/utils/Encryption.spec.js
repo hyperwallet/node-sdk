@@ -2,11 +2,9 @@ import path from "path";
 import nock from "nock";
 import fs from "fs";
 import chai from "chai";
-import dirtyChai from "dirty-chai";
 import Encryption from "../../src/utils/Encryption";
 
 chai.should();
-chai.use(dirtyChai);
 
 /** @test {Encryption} */
 describe("utils/Encryption", () => {
