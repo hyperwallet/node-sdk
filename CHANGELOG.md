@@ -1,5 +1,9 @@
 Changelog
 =========
+1.7.1
+-------------------
+- Fixing package content
+
 1.7.0
 -------------------
 - Updated parameter filters for GET List Endpoints
