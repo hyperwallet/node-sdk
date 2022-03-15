@@ -14,7 +14,7 @@ export default class HyperwalletVerificationDocument {
     CONSTRUCTOR_FIELDS = ["category", "type", "status", "country", "reasons", "createdOn", "uploadFiles"];
 
     constructor(properties) {
-        this.CONSTRUCTOR_FIELDS.forEach(key => {
+        this.CONSTRUCTOR_FIELDS.forEach((key) => {
             this[key] = properties[key];
         });
     }
