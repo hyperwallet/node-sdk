@@ -62,7 +62,7 @@
     "publish-please": "^5.4.3",
     "sinon": "^1.17.4",
     "sinon-chai": "^2.8.0",
-    "babel-cli": "^6.26.0"
+    "babel-cli":  "^6.26.0"
   },
   "engines": {
     "node": ">=0.12",
