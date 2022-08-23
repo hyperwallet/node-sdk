@@ -1,0 +1,78 @@
+name: Update Documentation
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+jobs:
+  documentation:
+    # Generate documentation and push to gh-pages branch using the predefined JDK versions in the strategy section
+    name: Documentation
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        node-version: [ 8.x ]
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+
+      - run: npm install
+      - run: npm run docs
+
+      - name: Copy to documentation Website Location
+        run: |
+          mkdir ../gh-pages
+          cp -r docs/* ../gh-pages/
+          cd ../gh-pages
+
+      - name: Commit documentation changes
+        run: |
+          if [[ `git status --porcelain` ]]; then
+            echo "Commit documentation"
+            # Set identity
+            git config --global user.email "dev-git-action@paypal.com"
+            git config --global user.name "Git Action Doc"
+          
+            # Add branch
+            git checkout -B gh-pages
+          
+            # Push generated files
+            git add -A
+            git commit -m "Documentation updated"
+            git push origin gh-pages -fq > /dev/null
+          fi
+  code-coverage:
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        node-version: [ 8.x ]
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+
+      - run: npm install
+      - run: npm ci
+      - run: npm run build --if-present
+      - run: npm run test-coverage
+
+      - name: Coveralls
+        uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
