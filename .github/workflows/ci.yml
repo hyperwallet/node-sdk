@@ -32,6 +32,31 @@ jobs:
           cache: 'npm'
 
       - run: npm install
-      - run: npm ci
       - run: npm run build --if-present
       - run: npm run test
+
+  code-coverage:
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        node-version: [ 8.x ]
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+
+      - run: npm install
+      - run: npm ci
+      - run: npm run build --if-present
+      - run: npm run test-coverage
+
+      - name: Coveralls
+        uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
