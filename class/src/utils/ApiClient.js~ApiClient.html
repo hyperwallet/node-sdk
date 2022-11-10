@@ -38,13 +38,13 @@
 </nav>
 
 <div class="content" data-ice="content"><div class="header-notice">
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import ApiClient from &apos;<span><a href="file/src/utils/ApiClient.js.html#lineNumber21">hyperwallet-sdk/src/utils/ApiClient.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import ApiClient from &apos;<span><a href="file/src/utils/ApiClient.js.html#lineNumber23">hyperwallet-sdk/src/utils/ApiClient.js</a></span>&apos;</code></pre></div>
   <span data-ice="access">public</span>
   <span data-ice="kind">class</span>
   
   
   
-  <span data-ice="source">| <span><a href="file/src/utils/ApiClient.js.html#lineNumber21">source</a></span></span>
+  <span data-ice="source">| <span><a href="file/src/utils/ApiClient.js.html#lineNumber23">source</a></span></span>
 </div>
 
 <div class="self-detail detail">
@@ -84,7 +84,106 @@
 </div>
 
 
-
+<div data-ice="staticMethodSummary"><h2>Static Method Summary</h2><table class="summary" data-ice="summary">
+  <thead><tr><td data-ice="title" colspan="3">Static Public Methods</td></tr></thead>
+  <tbody>
+  
+  <tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      <span data-ice="static">static</span>
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          
+          <span class="code" data-ice="name"><span><a href="class/src/utils/ApiClient.js~ApiClient.html#static-method-formatResForCallback">formatResForCallback</a></span></span><span class="code" data-ice="signature">(res: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>): <span>*</span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>Format response to documents model before passing to callback</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+</tbody>
+</table>
+<table class="summary" data-ice="summary">
+  <thead><tr><td data-ice="title" colspan="3">Static Private Methods</td></tr></thead>
+  <tbody>
+  
+  <tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">private</span>
+      <span data-ice="static">static</span>
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          
+          <span class="code" data-ice="name"><span><a href="class/src/utils/ApiClient.js~ApiClient.html#static-method-createJoseJsonParser">createJoseJsonParser</a></span></span><span class="code" data-ice="signature">()</span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>Creates response body parser for application/jose+json content-type</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">private</span>
+      <span data-ice="static">static</span>
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          
+          <span class="code" data-ice="name"><span><a href="class/src/utils/ApiClient.js~ApiClient.html#static-method-isEmptyResponseBody">isEmptyResponseBody</a></span></span><span class="code" data-ice="signature">(body: <span>*</span>): <span>*</span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>Helper function to check if the response body is an empty object</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+</tbody>
+</table>
+</div>
 <div data-ice="constructorSummary"><h2>Constructor Summary</h2><table class="summary" data-ice="summary">
   <thead><tr><td data-ice="title" colspan="3">Public Constructor</td></tr></thead>
   <tbody>
@@ -531,35 +630,6 @@
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/src/utils/ApiClient.js~ApiClient.html#instance-method-createJoseJsonParser">createJoseJsonParser</a></span></span><span class="code" data-ice="signature">()</span>
-        </p>
-      </div>
-      <div>
-        
-        
-        <div data-ice="description"><p>Creates response body parser for application/jose+json content-type</p>
-</div>
-      </div>
-    </td>
-    <td>
-      
-      
-    </td>
-  </tr>
-<tr data-ice="target">
-    <td>
-      <span class="access" data-ice="access">private</span>
-      
-      
-      
-      <span class="override" data-ice="override"></span>
-    </td>
-    <td>
-      <div>
-        <p>
-          
-          
-          
           <span class="code" data-ice="name"><span><a href="class/src/utils/ApiClient.js~ApiClient.html#instance-method-processEncryptedResponse">processEncryptedResponse</a></span></span><span class="code" data-ice="signature">(httpMethod: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>, err: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>, res: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>, callback: <span><a href="typedef/index.html#static-typedef-api-callback">api-callback</a></span>)</span>
         </p>
       </div>
@@ -640,7 +710,200 @@
 
 
 
+<div data-ice="staticMethodDetails"><h2 data-ice="title">Static Public Methods</h2>
 
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="static-method-formatResForCallback">
+    <span class="access" data-ice="access">public</span>
+    <span data-ice="static">static</span>
+    
+    
+    
+    
+    <span class="code" data-ice="name">formatResForCallback</span><span class="code" data-ice="signature">(res: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>): <span>*</span></span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/utils/ApiClient.js.html#lineNumber86">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>Format response to documents model before passing to callback</p>
+</div>
+
+  
+
+  <div data-ice="properties"><div data-ice="properties">
+  <h4 data-ice="title">Params:</h4>
+  <table class="params">
+    <thead>
+    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+    
+    <tr data-ice="property" data-depth="0">
+      <td data-ice="name" class="code" data-depth="0">res</td>
+      <td data-ice="type" class="code"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"><p>Response object</p>
+</td>
+    </tr>
+</tbody>
+  </table>
+</div>
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tbody>
+        <tr>
+          <td class="return-type code" data-ice="returnType"><span>*</span></td>
+          
+        </tr>
+      </tbody>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+<h2 data-ice="title">Static Private Methods</h2>
+
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="static-method-createJoseJsonParser">
+    <span class="access" data-ice="access">private</span>
+    <span data-ice="static">static</span>
+    
+    
+    
+    
+    <span class="code" data-ice="name">createJoseJsonParser</span><span class="code" data-ice="signature">()</span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/utils/ApiClient.js.html#lineNumber340">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>Creates response body parser for application/jose+json content-type</p>
+</div>
+
+  
+
+  <div data-ice="properties">
+</div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="static-method-isEmptyResponseBody">
+    <span class="access" data-ice="access">private</span>
+    <span data-ice="static">static</span>
+    
+    
+    
+    
+    <span class="code" data-ice="name">isEmptyResponseBody</span><span class="code" data-ice="signature">(body: <span>*</span>): <span>*</span></span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/utils/ApiClient.js.html#lineNumber357">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>Helper function to check if the response body is an empty object</p>
+</div>
+
+  
+
+  <div data-ice="properties"><div data-ice="properties">
+  <h4 data-ice="title">Params:</h4>
+  <table class="params">
+    <thead>
+    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+    
+    <tr data-ice="property" data-depth="0">
+      <td data-ice="name" class="code" data-depth="0">body</td>
+      <td data-ice="type" class="code"><span>*</span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"></td>
+    </tr>
+</tbody>
+  </table>
+</div>
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tbody>
+        <tr>
+          <td class="return-type code" data-ice="returnType"><span>*</span></td>
+          
+        </tr>
+      </tbody>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+</div>
 <div data-ice="constructorDetails"><h2 data-ice="title">Public Constructors</h2>
 
 <div class="detail" data-ice="detail">
@@ -655,7 +918,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/utils/ApiClient.js.html#lineNumber30">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/utils/ApiClient.js.html#lineNumber32">source</a></span></span>
     </span>
   </h3>
 
@@ -748,7 +1011,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/utils/ApiClient.js.html#lineNumber72">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/utils/ApiClient.js.html#lineNumber74">source</a></span></span>
     </span>
   </h3>
 
@@ -791,7 +1054,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/utils/ApiClient.js.html#lineNumber69">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/utils/ApiClient.js.html#lineNumber71">source</a></span></span>
     </span>
   </h3>
 
@@ -834,7 +1097,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/utils/ApiClient.js.html#lineNumber74">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/utils/ApiClient.js.html#lineNumber76">source</a></span></span>
     </span>
   </h3>
 
@@ -877,7 +1140,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/utils/ApiClient.js.html#lineNumber73">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/utils/ApiClient.js.html#lineNumber75">source</a></span></span>
     </span>
   </h3>
 
@@ -922,7 +1185,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/utils/ApiClient.js.html#lineNumber68">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/utils/ApiClient.js.html#lineNumber70">source</a></span></span>
     </span>
   </h3>
 
@@ -966,7 +1229,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/utils/ApiClient.js.html#lineNumber45">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/utils/ApiClient.js.html#lineNumber47">source</a></span></span>
     </span>
   </h3>
 
@@ -1010,7 +1273,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/utils/ApiClient.js.html#lineNumber52">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/utils/ApiClient.js.html#lineNumber54">source</a></span></span>
     </span>
   </h3>
 
@@ -1054,7 +1317,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/utils/ApiClient.js.html#lineNumber37">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/utils/ApiClient.js.html#lineNumber39">source</a></span></span>
     </span>
   </h3>
 
@@ -1098,7 +1361,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/utils/ApiClient.js.html#lineNumber60">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/utils/ApiClient.js.html#lineNumber62">source</a></span></span>
     </span>
   </h3>
 
@@ -1145,7 +1408,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/utils/ApiClient.js.html#lineNumber195">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/utils/ApiClient.js.html#lineNumber229">source</a></span></span>
     </span>
   </h3>
 
@@ -1207,15 +1470,22 @@
     <h4>Test:</h4>
     <ul>
       
-    <li data-ice="test"><span><a href="test-file/test/utils/ApiClient.spec.js.html#lineNumber862">utils/ApiClient doGet()</a></span></li>
-<li data-ice="test"><span><a href="test-file/test/utils/ApiClient.spec.js.html#lineNumber883">utils/ApiClient doGet() should return response if call was successful (with query parameters)</a></span></li>
-<li data-ice="test"><span><a href="test-file/test/utils/ApiClient.spec.js.html#lineNumber906">utils/ApiClient doGet() should return response if call was successful (with query parameters) when content type contains charset</a></span></li>
-<li data-ice="test"><span><a href="test-file/test/utils/ApiClient.spec.js.html#lineNumber931">utils/ApiClient doGet() should return response if call was successful (with query parameters) when content type contains charset ahead</a></span></li>
-<li data-ice="test"><span><a href="test-file/test/utils/ApiClient.spec.js.html#lineNumber956">utils/ApiClient doGet() should return response if call was successful (without query parameters)</a></span></li>
-<li data-ice="test"><span><a href="test-file/test/utils/ApiClient.spec.js.html#lineNumber978">utils/ApiClient doGet() should return generic network error if no response was send by server</a></span></li>
-<li data-ice="test"><span><a href="test-file/test/utils/ApiClient.spec.js.html#lineNumber993">utils/ApiClient doGet() should return error message if responses contains error</a></span></li>
-<li data-ice="test"><span><a href="test-file/test/utils/ApiClient.spec.js.html#lineNumber1032">utils/ApiClient doGet() should return encrypted response if encrypted GET call was successful (without query parameters)</a></span></li>
-<li data-ice="test"><span><a href="test-file/test/utils/ApiClient.spec.js.html#lineNumber1068">utils/ApiClient doGet() should return encrypted response if encrypted GET call was successful when content type contains charset</a></span></li>
+    <li data-ice="test"><span><a href="test-file/test/utils/ApiClient.spec.js.html#lineNumber1189">utils/ApiClient doGet()</a></span></li>
+<li data-ice="test"><span><a href="test-file/test/utils/ApiClient.spec.js.html#lineNumber1210">utils/ApiClient doGet() should return response if call was successful (with query parameters)</a></span></li>
+<li data-ice="test"><span><a href="test-file/test/utils/ApiClient.spec.js.html#lineNumber1233">utils/ApiClient doGet() should return response if call was successful (with query parameters) and response body is empty</a></span></li>
+<li data-ice="test"><span><a href="test-file/test/utils/ApiClient.spec.js.html#lineNumber1254">utils/ApiClient doGet() should return response if call was successful (with query parameters) and response body is empty no content-type</a></span></li>
+<li data-ice="test"><span><a href="test-file/test/utils/ApiClient.spec.js.html#lineNumber1273">utils/ApiClient doGet() should return response if call was successful (with query parameters) when content type contains charset</a></span></li>
+<li data-ice="test"><span><a href="test-file/test/utils/ApiClient.spec.js.html#lineNumber1298">utils/ApiClient doGet() should return response if call was successful (with query parameters) when content type contains charset ahead</a></span></li>
+<li data-ice="test"><span><a href="test-file/test/utils/ApiClient.spec.js.html#lineNumber1323">utils/ApiClient doGet() should return response if call was successful (without query parameters)</a></span></li>
+<li data-ice="test"><span><a href="test-file/test/utils/ApiClient.spec.js.html#lineNumber1345">utils/ApiClient doGet() should return generic network error if no response was send by server</a></span></li>
+<li data-ice="test"><span><a href="test-file/test/utils/ApiClient.spec.js.html#lineNumber1360">utils/ApiClient doGet() should return error message if responses contains error</a></span></li>
+<li data-ice="test"><span><a href="test-file/test/utils/ApiClient.spec.js.html#lineNumber1399">utils/ApiClient doGet() should return error message from http status if empty error response</a></span></li>
+<li data-ice="test"><span><a href="test-file/test/utils/ApiClient.spec.js.html#lineNumber1420">utils/ApiClient doGet() should return error message if responses in unexpected format</a></span></li>
+<li data-ice="test"><span><a href="test-file/test/utils/ApiClient.spec.js.html#lineNumber1443">utils/ApiClient doGet() should return error message if client using encryption and responses in application/json</a></span></li>
+<li data-ice="test"><span><a href="test-file/test/utils/ApiClient.spec.js.html#lineNumber1489">utils/ApiClient doGet() should return encrypted response if encrypted GET call was successful (without query parameters)</a></span></li>
+<li data-ice="test"><span><a href="test-file/test/utils/ApiClient.spec.js.html#lineNumber1525">utils/ApiClient doGet() should return encrypted response if encrypted GET call was successful when content type contains charset</a></span></li>
+<li data-ice="test"><span><a href="test-file/test/utils/ApiClient.spec.js.html#lineNumber1563">utils/ApiClient doGet() should return response if call was successful (with query parameters and encryption) and response body is empty</a></span></li>
+<li data-ice="test"><span><a href="test-file/test/utils/ApiClient.spec.js.html#lineNumber1591">utils/ApiClient doGet() should return response if call was successful (with query parameters and encryption) and response body is empty no content-type</a></span></li>
 </ul>
   </div>
 
@@ -1234,7 +1504,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/utils/ApiClient.js.html#lineNumber86">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/utils/ApiClient.js.html#lineNumber120">source</a></span></span>
     </span>
   </h3>
 
@@ -1308,12 +1578,17 @@
 <li data-ice="test"><span><a href="test-file/test/utils/ApiClient.spec.js.html#lineNumber82">utils/ApiClient doPost() should return response if call was successful (with query parameters) when content type contains charset</a></span></li>
 <li data-ice="test"><span><a href="test-file/test/utils/ApiClient.spec.js.html#lineNumber110">utils/ApiClient doPost() should return response if call was successful (with query parameters) when content type contains charset ahead</a></span></li>
 <li data-ice="test"><span><a href="test-file/test/utils/ApiClient.spec.js.html#lineNumber138">utils/ApiClient doPost() should return response if call was successful (without query parameters)</a></span></li>
-<li data-ice="test"><span><a href="test-file/test/utils/ApiClient.spec.js.html#lineNumber163">utils/ApiClient doPost() should return generic network error if no response was send by server</a></span></li>
-<li data-ice="test"><span><a href="test-file/test/utils/ApiClient.spec.js.html#lineNumber178">utils/ApiClient doPost() should return error message if responses contains error</a></span></li>
-<li data-ice="test"><span><a href="test-file/test/utils/ApiClient.spec.js.html#lineNumber220">utils/ApiClient doPost() should return encrypted response if encrypted POST call was successful (without query parameters)</a></span></li>
-<li data-ice="test"><span><a href="test-file/test/utils/ApiClient.spec.js.html#lineNumber259">utils/ApiClient doPost() should return encrypted response if encrypted POST call was successful when content type contains charset</a></span></li>
-<li data-ice="test"><span><a href="test-file/test/utils/ApiClient.spec.js.html#lineNumber298">utils/ApiClient doPost() should return error when encrypted response body is empty</a></span></li>
-<li data-ice="test"><span><a href="test-file/test/utils/ApiClient.spec.js.html#lineNumber335">utils/ApiClient doPost() should return error when fail to encrypt POST request body</a></span></li>
+<li data-ice="test"><span><a href="test-file/test/utils/ApiClient.spec.js.html#lineNumber163">utils/ApiClient doPost() should return response if call was successful (without query parameters) and response body is empty</a></span></li>
+<li data-ice="test"><span><a href="test-file/test/utils/ApiClient.spec.js.html#lineNumber184">utils/ApiClient doPost() should return response if call was successful (without query parameters) and response body is empty no content type</a></span></li>
+<li data-ice="test"><span><a href="test-file/test/utils/ApiClient.spec.js.html#lineNumber205">utils/ApiClient doPost() should return generic network error if no response was send by server</a></span></li>
+<li data-ice="test"><span><a href="test-file/test/utils/ApiClient.spec.js.html#lineNumber220">utils/ApiClient doPost() should return error message if responses contains error</a></span></li>
+<li data-ice="test"><span><a href="test-file/test/utils/ApiClient.spec.js.html#lineNumber262">utils/ApiClient doPost() should return error message from http status if empty error response</a></span></li>
+<li data-ice="test"><span><a href="test-file/test/utils/ApiClient.spec.js.html#lineNumber286">utils/ApiClient doPost() should return error message if response in unexpected format</a></span></li>
+<li data-ice="test"><span><a href="test-file/test/utils/ApiClient.spec.js.html#lineNumber312">utils/ApiClient doPost() should return error message if client using encryption and responses in application/json</a></span></li>
+<li data-ice="test"><span><a href="test-file/test/utils/ApiClient.spec.js.html#lineNumber360">utils/ApiClient doPost() should return encrypted response if encrypted POST call was successful (without query parameters)</a></span></li>
+<li data-ice="test"><span><a href="test-file/test/utils/ApiClient.spec.js.html#lineNumber399">utils/ApiClient doPost() should return encrypted response if encrypted POST call was successful when content type contains charset</a></span></li>
+<li data-ice="test"><span><a href="test-file/test/utils/ApiClient.spec.js.html#lineNumber438">utils/ApiClient doPost() should not return error when encrypted response body is empty</a></span></li>
+<li data-ice="test"><span><a href="test-file/test/utils/ApiClient.spec.js.html#lineNumber473">utils/ApiClient doPost() should return error when fail to encrypt POST request body</a></span></li>
 </ul>
   </div>
 
@@ -1332,7 +1607,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/utils/ApiClient.js.html#lineNumber162">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/utils/ApiClient.js.html#lineNumber196">source</a></span></span>
     </span>
   </h3>
 
@@ -1401,18 +1676,24 @@
     <h4>Test:</h4>
     <ul>
       
-    <li data-ice="test"><span><a href="test-file/test/utils/ApiClient.spec.js.html#lineNumber371">utils/ApiClient doPut()</a></span></li>
-<li data-ice="test"><span><a href="test-file/test/utils/ApiClient.spec.js.html#lineNumber392">utils/ApiClient doPut() should return response if call was successful (with query parameters)</a></span></li>
-<li data-ice="test"><span><a href="test-file/test/utils/ApiClient.spec.js.html#lineNumber418">utils/ApiClient doPut() should return response if call was successful (with query parameters) when content type contains charset</a></span></li>
-<li data-ice="test"><span><a href="test-file/test/utils/ApiClient.spec.js.html#lineNumber446">utils/ApiClient doPut() should return response if call was successful (with query parameters) when content type contains charset ahead</a></span></li>
-<li data-ice="test"><span><a href="test-file/test/utils/ApiClient.spec.js.html#lineNumber474">utils/ApiClient doPut() should return response if call was successful (without query parameters)</a></span></li>
-<li data-ice="test"><span><a href="test-file/test/utils/ApiClient.spec.js.html#lineNumber499">utils/ApiClient doPut() should return generic network error if no response was send by server</a></span></li>
-<li data-ice="test"><span><a href="test-file/test/utils/ApiClient.spec.js.html#lineNumber514">utils/ApiClient doPut() should return error message if responses contains error</a></span></li>
-<li data-ice="test"><span><a href="test-file/test/utils/ApiClient.spec.js.html#lineNumber556">utils/ApiClient doPut() should return encrypted response if encrypted PUT call was successful (without query parameters)</a></span></li>
-<li data-ice="test"><span><a href="test-file/test/utils/ApiClient.spec.js.html#lineNumber593">utils/ApiClient doPut() should return encrypted response if encrypted PUT call was successful when content type contains charset</a></span></li>
-<li data-ice="test"><span><a href="test-file/test/utils/ApiClient.spec.js.html#lineNumber632">utils/ApiClient doPut() should return error when fail to encrypt PUT request body</a></span></li>
-<li data-ice="test"><span><a href="test-file/test/utils/ApiClient.spec.js.html#lineNumber667">utils/ApiClient doPut() should return error when fail to decrypt PUT response body</a></span></li>
-<li data-ice="test"><span><a href="test-file/test/utils/ApiClient.spec.js.html#lineNumber702">utils/ApiClient doPut() should return error when server responses with error on encrypted PUT request</a></span></li>
+    <li data-ice="test"><span><a href="test-file/test/utils/ApiClient.spec.js.html#lineNumber511">utils/ApiClient doPut()</a></span></li>
+<li data-ice="test"><span><a href="test-file/test/utils/ApiClient.spec.js.html#lineNumber532">utils/ApiClient doPut() should return response if call was successful (with query parameters)</a></span></li>
+<li data-ice="test"><span><a href="test-file/test/utils/ApiClient.spec.js.html#lineNumber558">utils/ApiClient doPut() should return response if call was successful (with query parameters) when content type contains charset</a></span></li>
+<li data-ice="test"><span><a href="test-file/test/utils/ApiClient.spec.js.html#lineNumber586">utils/ApiClient doPut() should return response if call was successful (with query parameters) when content type contains charset ahead</a></span></li>
+<li data-ice="test"><span><a href="test-file/test/utils/ApiClient.spec.js.html#lineNumber614">utils/ApiClient doPut() should return response if call was successful (without query parameters)</a></span></li>
+<li data-ice="test"><span><a href="test-file/test/utils/ApiClient.spec.js.html#lineNumber639">utils/ApiClient doPut() should return response if call was successful (without query parameters) and response body is empty</a></span></li>
+<li data-ice="test"><span><a href="test-file/test/utils/ApiClient.spec.js.html#lineNumber662">utils/ApiClient doPut() should return response if call was successful (without query parameters) and response body is empty no content-type</a></span></li>
+<li data-ice="test"><span><a href="test-file/test/utils/ApiClient.spec.js.html#lineNumber685">utils/ApiClient doPut() should return generic network error if no response was send by server</a></span></li>
+<li data-ice="test"><span><a href="test-file/test/utils/ApiClient.spec.js.html#lineNumber700">utils/ApiClient doPut() should return error message if responses contains error</a></span></li>
+<li data-ice="test"><span><a href="test-file/test/utils/ApiClient.spec.js.html#lineNumber742">utils/ApiClient doPut() should return error message from http status if empty error response</a></span></li>
+<li data-ice="test"><span><a href="test-file/test/utils/ApiClient.spec.js.html#lineNumber766">utils/ApiClient doPut() should return error message if responses in unexpected format</a></span></li>
+<li data-ice="test"><span><a href="test-file/test/utils/ApiClient.spec.js.html#lineNumber792">utils/ApiClient doPut() should return error message if client using encryption and responses in application/json</a></span></li>
+<li data-ice="test"><span><a href="test-file/test/utils/ApiClient.spec.js.html#lineNumber839">utils/ApiClient doPut() should return encrypted response if encrypted PUT call was successful (without query parameters)</a></span></li>
+<li data-ice="test"><span><a href="test-file/test/utils/ApiClient.spec.js.html#lineNumber876">utils/ApiClient doPut() should return encrypted response if encrypted PUT call was successful when content type contains charset</a></span></li>
+<li data-ice="test"><span><a href="test-file/test/utils/ApiClient.spec.js.html#lineNumber915">utils/ApiClient doPut() should not return error response if encrypted PUT call was successful and response body is empty</a></span></li>
+<li data-ice="test"><span><a href="test-file/test/utils/ApiClient.spec.js.html#lineNumber946">utils/ApiClient doPut() should return error when fail to encrypt PUT request body</a></span></li>
+<li data-ice="test"><span><a href="test-file/test/utils/ApiClient.spec.js.html#lineNumber983">utils/ApiClient doPut() should return error when fail to decrypt PUT response body</a></span></li>
+<li data-ice="test"><span><a href="test-file/test/utils/ApiClient.spec.js.html#lineNumber1020">utils/ApiClient doPut() should return error when server responses with error on encrypted PUT request</a></span></li>
 </ul>
   </div>
 
@@ -1431,7 +1712,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/utils/ApiClient.js.html#lineNumber119">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/utils/ApiClient.js.html#lineNumber153">source</a></span></span>
     </span>
   </h3>
 
@@ -1493,8 +1774,8 @@
     <h4>Test:</h4>
     <ul>
       
-    <li data-ice="test"><span><a href="test-file/test/utils/ApiClient.spec.js.html#lineNumber756">utils/ApiClient doPutMultipart()</a></span></li>
-<li data-ice="test"><span><a href="test-file/test/utils/ApiClient.spec.js.html#lineNumber789">utils/ApiClient doPutMultipart() should return error response for call</a></span></li>
+    <li data-ice="test"><span><a href="test-file/test/utils/ApiClient.spec.js.html#lineNumber1074">utils/ApiClient doPutMultipart()</a></span></li>
+<li data-ice="test"><span><a href="test-file/test/utils/ApiClient.spec.js.html#lineNumber1107">utils/ApiClient doPutMultipart() should return error response for call</a></span></li>
 </ul>
   </div>
 
@@ -1503,50 +1784,6 @@
 </div>
 <h2 data-ice="title">Private Methods</h2>
 
-<div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="instance-method-createJoseJsonParser">
-    <span class="access" data-ice="access">private</span>
-    
-    
-    
-    
-    
-    <span class="code" data-ice="name">createJoseJsonParser</span><span class="code" data-ice="signature">()</span>
-    <span class="right-info">
-      
-      
-      <span data-ice="source"><span><a href="file/src/utils/ApiClient.js.html#lineNumber303">source</a></span></span>
-    </span>
-  </h3>
-
-  
-  
-  
-  <div data-ice="description"><p>Creates response body parser for application/jose+json content-type</p>
-</div>
-
-  
-
-  <div data-ice="properties">
-</div>
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-  
-</div>
 <div class="detail" data-ice="detail">
   <h3 data-ice="anchor" id="instance-method-processEncryptedResponse">
     <span class="access" data-ice="access">private</span>
@@ -1559,7 +1796,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/utils/ApiClient.js.html#lineNumber280">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/utils/ApiClient.js.html#lineNumber319">source</a></span></span>
     </span>
   </h3>
 
@@ -1641,7 +1878,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/utils/ApiClient.js.html#lineNumber252">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/utils/ApiClient.js.html#lineNumber289">source</a></span></span>
     </span>
   </h3>
 
@@ -1716,7 +1953,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/utils/ApiClient.js.html#lineNumber225">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/utils/ApiClient.js.html#lineNumber259">source</a></span></span>
     </span>
   </h3>
 

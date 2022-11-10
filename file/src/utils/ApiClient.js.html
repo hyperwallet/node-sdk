@@ -39,9 +39,11 @@
 
 <div class="content" data-ice="content"><h1 data-ice="title">src/utils/ApiClient.js</h1>
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import request from &quot;superagent&quot;;
+import { v4 as uuidv4 } from &quot;uuid&quot;;
 import packageJson from &quot;../../package.json&quot;;
 import Encryption from &quot;./Encryption&quot;;
-import { v4 as uuidv4 } from &quot;uuid&quot;;
+import HyperwalletVerificationDocument from &quot;../models/HyperwalletVerificationDocument&quot;;
+import HyperwalletVerificationDocumentReason from &quot;../models/HyperwalletVerificationDocumentReason&quot;;
 
 /**
  * The callback interface for api calls
@@ -116,6 +118,38 @@ export default class ApiClient {
     }
 
     /**
+     * Format response to documents model before passing to callback
+     *
+     * @param {Object} res - Response object
+     *
+     */
+    static formatResForCallback(res) {
+        const retRes = res;
+
+        if (res &amp;&amp; res.body) {
+            const retBody = res.body;
+            const { documents } = retBody;
+            if (documents &amp;&amp; documents.length &gt; 0) {
+                const documentsArr = [];
+                documents.forEach((dVal) =&gt; {
+                    const doc = dVal;
+                    if (dVal.reasons &amp;&amp; dVal.reasons.length &gt; 0) {
+                        const reasonsArr = [];
+                        dVal.reasons.forEach((rVal) =&gt; {
+                            reasonsArr.push(new HyperwalletVerificationDocumentReason(rVal));
+                        });
+                        doc.reasons = reasonsArr;
+                    }
+                    documentsArr.push(new HyperwalletVerificationDocument(doc));
+                });
+                retBody.documents = documentsArr;
+                retRes.body = retBody;
+            }
+        }
+        return retRes;
+    }
+
+    /**
      * Do a POST call to the Hyperwallet API server
      *
      * @param {string} partialUrl - The api endpoint to call (gets prefixed by `server` and `/rest/v4/`)
@@ -126,11 +160,11 @@ export default class ApiClient {
     doPost(partialUrl, data, params, callback) {
         let contentType = &quot;application/json&quot;;
         let accept = &quot;application/json&quot;;
-        let requestDataPromise = new Promise((resolve) =&gt; resolve(data));
+        let requestDataPromise = new Promise(resolve =&gt; resolve(data));
         if (this.isEncrypted) {
             contentType = &quot;application/jose+json&quot;;
             accept = &quot;application/jose+json&quot;;
-            this.createJoseJsonParser();
+            ApiClient.createJoseJsonParser();
             requestDataPromise = this.encryption.encrypt(data);
         }
         requestDataPromise.then((requestData) =&gt; {
@@ -146,7 +180,7 @@ export default class ApiClient {
                 .query(params)
                 .send(requestData)
                 .end(this.wrapCallback(&quot;POST&quot;, callback));
-        }).catch(() =&gt; callback(&quot;Failed to encrypt body for POST request&quot;, undefined, undefined));
+        }).catch(() =&gt; callback([{ message: &quot;Failed to encrypt body for POST request&quot; }], undefined, undefined));
     }
 
     /**
@@ -163,11 +197,11 @@ export default class ApiClient {
         const keys = Object.keys(data);
         /* eslint-enable no-unused-vars */
 
-        let requestDataPromise = new Promise((resolve) =&gt; resolve(data));
+        let requestDataPromise = new Promise(resolve =&gt; resolve(data));
         if (this.isEncrypted) {
             contentType = &quot;multipart/form-data&quot;;
             accept = &quot;application/jose+json&quot;;
-            this.createJoseJsonParser();
+            ApiClient.createJoseJsonParser();
             requestDataPromise = this.encryption.encrypt(data);
         }
         requestDataPromise.then(() =&gt; {
@@ -180,7 +214,7 @@ export default class ApiClient {
                 .set(&quot;x-sdk-contextId&quot;, this.contextId)
                 .type(contentType)
                 .accept(accept);
-            keys.forEach(key =&gt; {
+            keys.forEach((key) =&gt; {
                 if (key === &quot;data&quot;) {
                     req.field(key, JSON.stringify(data[key]));
                 } else {
@@ -188,7 +222,7 @@ export default class ApiClient {
                 }
             });
             req.end(this.wrapCallback(&quot;PUT&quot;, callback));
-        }).catch((err) =&gt; callback(err, undefined, undefined)).then((err, body, res) =&gt; callback(err, body, res));
+        }).catch(err =&gt; callback(err, undefined, undefined));
     }
 
     /**
@@ -202,11 +236,11 @@ export default class ApiClient {
     doPut(partialUrl, data, params, callback) {
         let contentType = &quot;application/json&quot;;
         let accept = &quot;application/json&quot;;
-        let requestDataPromise = new Promise((resolve) =&gt; resolve(data));
+        let requestDataPromise = new Promise(resolve =&gt; resolve(data));
         if (this.isEncrypted) {
             contentType = &quot;application/jose+json&quot;;
             accept = &quot;application/jose+json&quot;;
-            this.createJoseJsonParser();
+            ApiClient.createJoseJsonParser();
             requestDataPromise = this.encryption.encrypt(data);
         }
         requestDataPromise.then((requestData) =&gt; {
@@ -222,7 +256,7 @@ export default class ApiClient {
                 .query(params)
                 .send(requestData)
                 .end(this.wrapCallback(&quot;PUT&quot;, callback));
-        }).catch(() =&gt; callback(&quot;Failed to encrypt body for PUT request&quot;, undefined, undefined));
+        }).catch(() =&gt; callback([{ message: &quot;Failed to encrypt body for PUT request&quot; }], undefined, undefined));
     }
 
     /**
@@ -238,7 +272,7 @@ export default class ApiClient {
         if (this.isEncrypted) {
             contentType = &quot;application/jose+json&quot;;
             accept = &quot;application/jose+json&quot;;
-            this.createJoseJsonParser();
+            ApiClient.createJoseJsonParser();
         }
         request
             .get(`${this.server}/rest/v4/${partialUrl}`)
@@ -264,15 +298,18 @@ export default class ApiClient {
      */
     wrapCallback(httpMethod, callback = () =&gt; null) {
         return (err, res) =&gt; {
-            const expectedContentType = (this.isEncrypted) ? &quot;application/jose+json&quot; : &quot;application/json&quot;;
-            const invalidContentType = res &amp;&amp; res.header &amp;&amp; res.status !== 204 &amp;&amp; res.header[&quot;content-type&quot;].indexOf(expectedContentType) === -1;
-            if (invalidContentType) {
-                callback([{
-                    message: &quot;Invalid Content-Type specified in Response Header&quot;,
-                }], res ? res.body : undefined, res);
-                return;
+            const contentTypeHeader = res &amp;&amp; res.header ? res.header[&quot;content-type&quot;] : undefined;
+            if (!err) {
+                const expectedContentType = (this.isEncrypted) ? &quot;application/jose+json&quot; : &quot;application/json&quot;;
+                if (res &amp;&amp; res.status !== 204 &amp;&amp; contentTypeHeader &amp;&amp; !contentTypeHeader.includes(expectedContentType)) {
+                    callback([{
+                        message: &quot;Invalid Content-Type specified in Response Header&quot;,
+                    }], res ? res.body : undefined, res);
+                    return;
+                }
             }
-            if (this.isEncrypted) {
+            if (this.isEncrypted &amp;&amp; contentTypeHeader &amp;&amp; contentTypeHeader.includes(&quot;application/jose+json&quot;)
+              &amp;&amp; res.body &amp;&amp; !ApiClient.isEmptyResponseBody(res.body)) {
                 this.processEncryptedResponse(httpMethod, err, res.body, callback);
             } else {
                 this.processNonEncryptedResponse(err, res, callback);
@@ -291,17 +328,19 @@ export default class ApiClient {
      */
     processNonEncryptedResponse(err, res, callback) {
         if (!err) {
-            callback(undefined, res.body, res);
+            const formattedRes = ApiClient.formatResForCallback(res);
+            callback(undefined, formattedRes.body, formattedRes);
             return;
         }
 
         let errors = [
             {
-                message: `Could not communicate with ${this.server}`,
-                code: &quot;COMMUNICATION_ERROR&quot;,
+                message: err.status ? err.message : `Could not communicate with ${this.server}`,
+                code: err.status ? err.status.toString() : &quot;COMMUNICATION_ERROR&quot;,
             },
         ];
         if (res &amp;&amp; res.body &amp;&amp; res.body.errors) {
+            // eslint-disable-next-line prefer-destructuring
             errors = res.body.errors;
         }
         callback(errors, res ? res.body : undefined, res);
@@ -318,9 +357,6 @@ export default class ApiClient {
      * @private
      */
     processEncryptedResponse(httpMethod, err, res, callback) {
-        if (!res) {
-            callback(&quot;Try to decrypt empty response body&quot;, undefined, undefined);
-        }
         this.encryption.decrypt(res)
             .then((decryptedData) =&gt; {
                 const responseBody = JSON.parse(decryptedData.payload.toString());
@@ -329,10 +365,11 @@ export default class ApiClient {
                     responseWithErrors.body = responseBody;
                     this.processNonEncryptedResponse(responseBody, responseWithErrors, callback);
                 } else {
-                    callback(undefined, responseBody, decryptedData);
+                    const formattedRes = ApiClient.formatResForCallback({ body: responseBody });
+                    callback(undefined, formattedRes.body, decryptedData);
                 }
             })
-            .catch(() =&gt; callback(`Failed to decrypt response for ${httpMethod} request`, res, res));
+            .catch(() =&gt; callback([{ message: `Failed to decrypt response for ${httpMethod} request` }], res, res));
     }
 
     /**
@@ -340,7 +377,7 @@ export default class ApiClient {
      *
      * @private
      */
-    createJoseJsonParser() {
+    static createJoseJsonParser() {
         request.parse[&quot;application/jose+json&quot;] = (res, callback) =&gt; {
             let data = &quot;&quot;;
             res.on(&quot;data&quot;, (chunk) =&gt; {
@@ -350,6 +387,15 @@ export default class ApiClient {
                 callback(null, data);
             });
         };
+    }
+
+    /**
+     * Helper function to check if the response body is an empty object
+     *
+     * @private
+     */
+    static isEmptyResponseBody(body) {
+        return Object.keys(body).length === 0 &amp;&amp; Object.getPrototypeOf(body) === Object.prototype;
     }
 }
 </code></pre>

@@ -133,9 +133,9 @@ export default class Encryption {
             const keyStorePromise = (this.clientKeyStore &amp;&amp; this.hwKeyStore) ? Promise.resolve(this.keyStore) : this.createKeyStore();
             keyStorePromise
                 .then(() =&gt; this.signBody(body))
-                .then((signedBody) =&gt; this.encryptBody(signedBody))
-                .then((result) =&gt; resolve(result))
-                .catch((error) =&gt; reject(error));
+                .then(signedBody =&gt; this.encryptBody(signedBody))
+                .then(result =&gt; resolve(result))
+                .catch(error =&gt; reject(error));
         });
     }
 
@@ -149,9 +149,9 @@ export default class Encryption {
             const keyStorePromise = this.keyStore ? Promise.resolve(this.keyStore) : this.createKeyStore();
             keyStorePromise
                 .then(() =&gt; this.decryptBody(body))
-                .then((decryptedBody) =&gt; this.checkSignature(decryptedBody.plaintext))
-                .then((result) =&gt; resolve(result))
-                .catch((error) =&gt; reject(error));
+                .then(decryptedBody =&gt; this.checkSignature(decryptedBody.plaintext))
+                .then(result =&gt; resolve(result))
+                .catch(error =&gt; reject(error));
         });
     }
 
@@ -165,11 +165,12 @@ export default class Encryption {
             const key = this.hwKeyStore.all({ alg: this.signAlgorithm })[0];
             if (!key) {
                 reject(new Error(`JWK set doesn&apos;t contain key with algorithm = ${this.signAlgorithm}`));
+                return;
             }
             const options = {
                 handlers: {
                     exp: (jws) =&gt; {
-                        if (this.getCurrentTime() &gt; jws.header.exp) {
+                        if (Encryption.getCurrentTime() &gt; jws.header.exp) {
                             reject(new Error(&quot;JWS signature has expired&quot;));
                         }
                     },
@@ -177,7 +178,7 @@ export default class Encryption {
             };
             jose.JWS.createVerify(key, options)
                 .verify(body.toString())
-                .then((result) =&gt; resolve(result))
+                .then(result =&gt; resolve(result))
                 .catch(() =&gt; reject(new Error(`Failed to verify signature with key id = ${key.kid}`)));
         });
     }
@@ -192,10 +193,11 @@ export default class Encryption {
             const key = this.clientKeyStore.all({ alg: this.encryptionAlgorithm })[0];
             if (!key) {
                 reject(new Error(`JWK set doesn&apos;t contain key with algorithm = ${this.encryptionAlgorithm}`));
+                return;
             }
             jose.JWE.createDecrypt(key)
                 .decrypt(body)
-                .then((result) =&gt; resolve(result))
+                .then(result =&gt; resolve(result))
                 .catch(() =&gt; reject(new Error(`Failed to decrypt payload with key id = ${key.kid}`)));
         });
     }
@@ -210,6 +212,7 @@ export default class Encryption {
             const key = this.hwKeyStore.all({ alg: this.encryptionAlgorithm })[0];
             if (!key) {
                 reject(new Error(`JWK set doesn&apos;t contain key with algorithm = ${this.encryptionAlgorithm}`));
+                return;
             }
             const encryptionHeader = {
                 format: &quot;compact&quot;,
@@ -220,7 +223,7 @@ export default class Encryption {
             jose.JWE.createEncrypt(encryptionHeader, key)
                 .update(body)
                 .final()
-                .then((result) =&gt; resolve(result))
+                .then(result =&gt; resolve(result))
                 .catch(() =&gt; reject(new Error(`Failed to encrypt payload with key id = ${key.kid}`)));
         });
     }
@@ -235,6 +238,7 @@ export default class Encryption {
             const key = this.clientKeyStore.all({ alg: this.signAlgorithm })[0];
             if (!key) {
                 reject(new Error(`JWK set doesn&apos;t contain key with algorithm = ${this.signAlgorithm}`));
+                return;
             }
             const signHeader = {
                 format: &quot;compact&quot;,
@@ -248,7 +252,7 @@ export default class Encryption {
             jose.JWS.createSign(signHeader, key)
                 .update(JSON.stringify(body), &quot;utf8&quot;)
                 .final()
-                .then((result) =&gt; resolve(result))
+                .then(result =&gt; resolve(result))
                 .catch(() =&gt; reject(new Error(`Failed to sign with key id = ${key.kid}`)));
         });
     }
@@ -266,7 +270,7 @@ export default class Encryption {
     /**
      * Get current time in seconds
      */
-    getCurrentTime() {
+    static getCurrentTime() {
         const millisecondsInSecond = 1000;
         return Math.round(new Date().getTime() / millisecondsInSecond);
     }
@@ -276,12 +280,12 @@ export default class Encryption {
      */
     createKeyStore() {
         return new Promise((resolve, reject) =&gt; {
-            this.readKeySet(this.hyperwalletKeySetLocation)
-                .then((jwkSet) =&gt; this.createKeyStoreFromJwkSet(this.hyperwalletKeySetLocation, jwkSet))
-                .then(() =&gt; this.readKeySet(this.clientPrivateKeySetLocation))
-                .then((jwkSet) =&gt; this.createKeyStoreFromJwkSet(this.clientPrivateKeySetLocation, jwkSet))
-                .then((result) =&gt; resolve(result))
-                .catch((error) =&gt; reject(error));
+            Encryption.readKeySet(this.hyperwalletKeySetLocation)
+                .then(jwkSet =&gt; this.createKeyStoreFromJwkSet(this.hyperwalletKeySetLocation, jwkSet))
+                .then(() =&gt; Encryption.readKeySet(this.clientPrivateKeySetLocation))
+                .then(jwkSet =&gt; this.createKeyStoreFromJwkSet(this.clientPrivateKeySetLocation, jwkSet))
+                .then(result =&gt; resolve(result))
+                .catch(error =&gt; reject(error));
         });
     }
 
@@ -293,8 +297,8 @@ export default class Encryption {
      */
     createKeyStoreFromJwkSet(jwkSetPath, jwkSet) {
         return new Promise((resolve, reject) =&gt; {
-            jose.JWK.asKeyStore(jwkSet).
-                then((result) =&gt; {
+            jose.JWK.asKeyStore(jwkSet)
+                .then((result) =&gt; {
                     if (jwkSetPath === this.clientPrivateKeySetLocation) {
                         this.clientKeyStore = result;
                     } else {
@@ -311,7 +315,7 @@ export default class Encryption {
      *
      * @param {string} keySetPath - The location of JWK set (can be URL string or path to file)
      */
-    readKeySet(keySetPath) {
+    static readKeySet(keySetPath) {
         return new Promise((resolve, reject) =&gt; {
             if (fs.existsSync(keySetPath)) {
                 fs.readFile(keySetPath, { encoding: &quot;utf-8&quot; }, (err, keySetData) =&gt; {
@@ -322,7 +326,7 @@ export default class Encryption {
                     }
                 });
             } else {
-                this.checkUrlIsValid(keySetPath, (isValid) =&gt; {
+                Encryption.checkUrlIsValid(keySetPath, (isValid) =&gt; {
                     if (isValid) {
                         request(keySetPath, (error, response) =&gt; {
                             if (!error) {
@@ -344,7 +348,7 @@ export default class Encryption {
      * @param {string} url - The URL string to be verified
      * @param {string} callback - The callback method to process the verification result of input url
      */
-    checkUrlIsValid(url, callback) {
+    static checkUrlIsValid(url, callback) {
         request(url, (error, response) =&gt; {
             callback(!error &amp;&amp; response.statusCode === 200);
         });
@@ -355,10 +359,10 @@ export default class Encryption {
      *
      * @param {string} encryptedBody - Encrypted body to be decoded
      */
-    base64Decode(encryptedBody) {
+    static base64Decode(encryptedBody) {
         const parts = encryptedBody.split(&quot;.&quot;);
         const decodedParts = [];
-        parts.forEach(elem =&gt; {
+        parts.forEach((elem) =&gt; {
             decodedParts.push(jose.util.base64url.decode(elem));
         });
         const decodedBody = {};
@@ -371,9 +375,9 @@ export default class Encryption {
      *
      * @param {string} decodedBody - Array of Buffer to be decoded to encrypted string
      */
-    base64Encode(decodedBody) {
+    static base64Encode(decodedBody) {
         const encodedParts = [];
-        decodedBody.parts.forEach(part =&gt; {
+        decodedBody.parts.forEach((part) =&gt; {
             encodedParts.push(jose.util.base64url.encode(Buffer.from(JSON.parse(JSON.stringify(part)).data)));
         });
         return encodedParts.join(&quot;.&quot;);

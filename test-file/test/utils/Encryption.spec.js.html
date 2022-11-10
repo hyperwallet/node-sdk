@@ -41,7 +41,10 @@
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import path from &quot;path&quot;;
 import nock from &quot;nock&quot;;
 import fs from &quot;fs&quot;;
+import chai from &quot;chai&quot;;
 import Encryption from &quot;../../src/utils/Encryption&quot;;
+
+chai.should();
 
 /** @test {Encryption} */
 describe(&quot;utils/Encryption&quot;, () =&gt; {
@@ -102,8 +105,8 @@ describe(&quot;utils/Encryption&quot;, () =&gt; {
         /** @test {Encryption#encrypt} */
         it(&quot;should successfully decode and encode encrypted text message&quot;, (cb) =&gt; {
             encryption.encrypt(testMessage).then((encryptedBody) =&gt; {
-                const decodedMessage = encryption.base64Decode(encryptedBody);
-                const encodedMessage = encryption.base64Encode(decodedMessage);
+                const decodedMessage = Encryption.base64Decode(encryptedBody);
+                const encodedMessage = Encryption.base64Encode(decodedMessage);
                 encodedMessage.should.be.deep.equal(encryptedBody);
                 cb();
             });
