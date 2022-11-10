@@ -26,28 +26,17 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
 
-      - run: npm install
-      - run: npm run docs
+      - name: Install tools
+        run: npm install
 
-      - name: Copy to documentation Website Location
-        run: |
-          mkdir ../gh-pages
-          cp -r docs/* ../gh-pages/
-          cd ../gh-pages
+      - name: Generate Documentation
+        run: npm run docs
 
-      - name: Commit documentation changes
-        run: |
-          if [[ `git status --porcelain` ]]; then
-            echo "Commit documentation"
-            # Set identity
-            git config --global user.email "dev-git-action@paypal.com"
-            git config --global user.name "Git Action Doc"
-          
-            # Add branch
-            git checkout -B gh-pages
-          
-            # Push generated files
-            git add -A
-            git commit -m "Documentation updated"
-            git push origin gh-pages -fq > /dev/null
-          fi
+      - name: Push
+        uses: s0/git-publish-subdir-action@develop
+        env:
+          REPO: self
+          BRANCH: gh-pages
+          FOLDER: docs
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          MESSAGE: "Documentation updated"
