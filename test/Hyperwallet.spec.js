@@ -1996,7 +1996,7 @@ describe("Hyperwallet", () => {
             expect(() => client.createPayPalAccount("test-user-token", {
                 transferMethodCountry: "test-transferMethodCountry",
                 transferMethodCurrency: "test-transferMethodCurrency",
-            }, callback)).to.throw("email is required");
+            }, callback)).to.throw("email/accountId is required");
         });
 
         /** @test {Hyperwallet#createPayPalAccount} */
@@ -2013,6 +2013,22 @@ describe("Hyperwallet", () => {
                 transferMethodCountry: "test-transferMethodCountry",
                 transferMethodCurrency: "test-transferMethodCurrency",
                 email: "email",
+            }, {}, callback);
+        });
+        /** @test {Hyperwallet#createPayPalAccount} */
+        it("should do post call to PayPal account endpoint with accountId", () => {
+            const callback = () => null;
+            client.createPayPalAccount("test-user-token", {
+                transferMethodCountry: "test-transferMethodCountry",
+                transferMethodCurrency: "test-transferMethodCurrency",
+                accountId: "accountId",
+            }, callback);
+
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith("users/test-user-token/paypal-accounts", {
+                transferMethodCountry: "test-transferMethodCountry",
+                transferMethodCurrency: "test-transferMethodCurrency",
+                accountId: "accountId",
             }, {}, callback);
         });
     });
