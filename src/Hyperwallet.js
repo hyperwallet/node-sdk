@@ -1034,7 +1034,7 @@ export default class Hyperwallet {
             throw new Error("transferMethodCurrency is required");
         }
         if (!data.email && !data.accountId) {
-            throw new Error("email/accountId is required");
+            throw new Error("email or accountId is required");
         }
         this.client.doPost(`users/${encodeURIComponent(userToken)}/paypal-accounts`, data, {}, callback);
     }

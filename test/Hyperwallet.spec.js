@@ -1996,7 +1996,7 @@ describe("Hyperwallet", () => {
             expect(() => client.createPayPalAccount("test-user-token", {
                 transferMethodCountry: "test-transferMethodCountry",
                 transferMethodCurrency: "test-transferMethodCurrency",
-            }, callback)).to.throw("email/accountId is required");
+            }, callback)).to.throw("email or accountId is required");
         });
 
         /** @test {Hyperwallet#createPayPalAccount} */
