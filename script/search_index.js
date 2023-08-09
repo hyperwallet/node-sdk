@@ -25,73 +25,73 @@ window.esdocSearchIndex = [
   ],
   [
     "",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber2617",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber2633",
     "Hyperwallet ",
     "test"
   ],
   [
     "hyperwallet#suspendprepaidcard hyperwallet#unsuspendprepaidcard hyperwallet#lostorstolenprepaidcard hyperwallet#deactivateprepaidcard hyperwallet#lockprepaidcard hyperwallet#unlockprepaidcard src/hyperwallet.js~hyperwallet#suspendprepaidcard,hyperwallet#suspendprepaidcard src/hyperwallet.js~hyperwallet#unsuspendprepaidcard,hyperwallet#unsuspendprepaidcard src/hyperwallet.js~hyperwallet#lostorstolenprepaidcard,hyperwallet#lostorstolenprepaidcard src/hyperwallet.js~hyperwallet#deactivateprepaidcard,hyperwallet#deactivateprepaidcard src/hyperwallet.js~hyperwallet#lockprepaidcard,hyperwallet#lockprepaidcard src/hyperwallet.js~hyperwallet#unlockprepaidcard,hyperwallet#unlockprepaidcard",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber2666",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber2682",
     "Hyperwallet  ",
     "test"
   ],
   [
     "hyperwallet#suspendprepaidcard hyperwallet#unsuspendprepaidcard hyperwallet#lostorstolenprepaidcard hyperwallet#deactivateprepaidcard hyperwallet#lockprepaidcard hyperwallet#unlockprepaidcard src/hyperwallet.js~hyperwallet#suspendprepaidcard,hyperwallet#suspendprepaidcard src/hyperwallet.js~hyperwallet#unsuspendprepaidcard,hyperwallet#unsuspendprepaidcard src/hyperwallet.js~hyperwallet#lostorstolenprepaidcard,hyperwallet#lostorstolenprepaidcard src/hyperwallet.js~hyperwallet#deactivateprepaidcard,hyperwallet#deactivateprepaidcard src/hyperwallet.js~hyperwallet#lockprepaidcard,hyperwallet#lockprepaidcard src/hyperwallet.js~hyperwallet#unlockprepaidcard,hyperwallet#unlockprepaidcard",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber2653",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber2669",
     "Hyperwallet  should throw error if prepaidCardToken is missing",
     "test"
   ],
   [
     "hyperwallet#suspendprepaidcard hyperwallet#unsuspendprepaidcard hyperwallet#lostorstolenprepaidcard hyperwallet#deactivateprepaidcard hyperwallet#lockprepaidcard hyperwallet#unlockprepaidcard src/hyperwallet.js~hyperwallet#suspendprepaidcard,hyperwallet#suspendprepaidcard src/hyperwallet.js~hyperwallet#unsuspendprepaidcard,hyperwallet#unsuspendprepaidcard src/hyperwallet.js~hyperwallet#lostorstolenprepaidcard,hyperwallet#lostorstolenprepaidcard src/hyperwallet.js~hyperwallet#deactivateprepaidcard,hyperwallet#deactivateprepaidcard src/hyperwallet.js~hyperwallet#lockprepaidcard,hyperwallet#lockprepaidcard src/hyperwallet.js~hyperwallet#unlockprepaidcard,hyperwallet#unlockprepaidcard",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber2640",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber2656",
     "Hyperwallet  should throw error if userToken is missing",
     "test"
   ],
   [
     "hyperwallet#activatebusinessstakeholder src/hyperwallet.js~hyperwallet#activatebusinessstakeholder,hyperwallet#activatebusinessstakeholder",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber5098",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber5114",
     "Hyperwallet activateBusinessStakeholder()",
     "test"
   ],
   [
     "hyperwallet#activatebusinessstakeholder src/hyperwallet.js~hyperwallet#activatebusinessstakeholder,hyperwallet#activatebusinessstakeholder",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber5126",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber5142",
     "Hyperwallet activateBusinessStakeholder() should send transition to 'ACTIVATED'",
     "test"
   ],
   [
     "hyperwallet#activatebusinessstakeholder src/hyperwallet.js~hyperwallet#activatebusinessstakeholder,hyperwallet#activatebusinessstakeholder",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber5120",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber5136",
     "Hyperwallet activateBusinessStakeholder() should throw error if stakeholderToken is missing",
     "test"
   ],
   [
     "hyperwallet#activatebusinessstakeholder src/hyperwallet.js~hyperwallet#activatebusinessstakeholder,hyperwallet#activatebusinessstakeholder",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber5114",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber5130",
     "Hyperwallet activateBusinessStakeholder() should throw error if userToken is missing",
     "test"
   ],
   [
     "hyperwallet#activatepaypalaccount src/hyperwallet.js~hyperwallet#activatepaypalaccount,hyperwallet#activatepaypalaccount",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber2176",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber2192",
     "Hyperwallet activatePayPalAccount()",
     "test"
   ],
   [
     "hyperwallet#activatepaypalaccount src/hyperwallet.js~hyperwallet#activatepaypalaccount,hyperwallet#activatepaypalaccount",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber2204",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber2220",
     "Hyperwallet activatePayPalAccount() should send transition to 'ACTIVATED'",
     "test"
   ],
   [
     "hyperwallet#activatepaypalaccount src/hyperwallet.js~hyperwallet#activatepaypalaccount,hyperwallet#activatepaypalaccount",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber2198",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber2214",
     "Hyperwallet activatePayPalAccount() should throw error if payPalAccountToken is missing",
     "test"
   ],
   [
     "hyperwallet#activatepaypalaccount src/hyperwallet.js~hyperwallet#activatepaypalaccount,hyperwallet#activatepaypalaccount",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber2192",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber2208",
     "Hyperwallet activatePayPalAccount() should throw error if userToken is missing",
     "test"
   ],
@@ -115,31 +115,31 @@ window.esdocSearchIndex = [
   ],
   [
     "",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber4369",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber4385",
     "Hyperwallet addProgramToken()",
     "test"
   ],
   [
     "",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber4398",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber4414",
     "Hyperwallet addProgramToken() should add programToken if no programToken is set in data",
     "test"
   ],
   [
     "",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber4370",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber4386",
     "Hyperwallet addProgramToken() should do nothing if no data is provided",
     "test"
   ],
   [
     "",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber4379",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber4395",
     "Hyperwallet addProgramToken() should do nothing if no programToken is set",
     "test"
   ],
   [
     "",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber4388",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber4404",
     "Hyperwallet addProgramToken() should do nothing if programToken is set in data",
     "test"
   ],
@@ -193,43 +193,43 @@ window.esdocSearchIndex = [
   ],
   [
     "hyperwallet#createbankaccount src/hyperwallet.js~hyperwallet#createbankaccount,hyperwallet#createbankaccount",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber2849",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber2865",
     "Hyperwallet createBankAccount()",
     "test"
   ],
   [
     "hyperwallet#createbankaccount src/hyperwallet.js~hyperwallet#createbankaccount,hyperwallet#createbankaccount",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber2871",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber2887",
     "Hyperwallet createBankAccount() should do post call to bank accounts endpoint",
     "test"
   ],
   [
     "hyperwallet#createbankaccount src/hyperwallet.js~hyperwallet#createbankaccount,hyperwallet#createbankaccount",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber2865",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber2881",
     "Hyperwallet createBankAccount() should throw error if userToken is missing",
     "test"
   ],
   [
     "hyperwallet#createbankaccountstatustransition src/hyperwallet.js~hyperwallet#createbankaccountstatustransition,hyperwallet#createbankaccountstatustransition",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber3079",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber3095",
     "Hyperwallet createBankAccountStatusTransition()",
     "test"
   ],
   [
     "hyperwallet#createbankaccountstatustransition src/hyperwallet.js~hyperwallet#createbankaccountstatustransition,hyperwallet#createbankaccountstatustransition",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber3107",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber3123",
     "Hyperwallet createBankAccountStatusTransition() should send post call to prepaid card status transition endpoint",
     "test"
   ],
   [
     "hyperwallet#createbankaccountstatustransition src/hyperwallet.js~hyperwallet#createbankaccountstatustransition,hyperwallet#createbankaccountstatustransition",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber3101",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber3117",
     "Hyperwallet createBankAccountStatusTransition() should throw error if bankAccountToken is missing",
     "test"
   ],
   [
     "hyperwallet#createbankaccountstatustransition src/hyperwallet.js~hyperwallet#createbankaccountstatustransition,hyperwallet#createbankaccountstatustransition",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber3095",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber3111",
     "Hyperwallet createBankAccountStatusTransition() should throw error if userToken is missing",
     "test"
   ],
@@ -277,43 +277,43 @@ window.esdocSearchIndex = [
   ],
   [
     "hyperwallet#createbusinessstakeholder src/hyperwallet.js~hyperwallet#createbusinessstakeholder,hyperwallet#createbusinessstakeholder",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber4913",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber4929",
     "Hyperwallet createBusinessStakeholder()",
     "test"
   ],
   [
     "hyperwallet#createstakeholder hyperwallet#createstakeholder,hyperwallet#createstakeholder",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber4935",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber4951",
     "Hyperwallet createBusinessStakeholder() should send post call to Stakeholder status transition endpoint",
     "test"
   ],
   [
     "hyperwallet#createstakeholder hyperwallet#createstakeholder,hyperwallet#createstakeholder",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber4929",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber4945",
     "Hyperwallet createBusinessStakeholder() should throw error if userToken is missing",
     "test"
   ],
   [
     "hyperwallet#createbusinessstakeholderstatustransition src/hyperwallet.js~hyperwallet#createbusinessstakeholderstatustransition,hyperwallet#createbusinessstakeholderstatustransition",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber5138",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber5154",
     "Hyperwallet createBusinessStakeholderStatusTransition()",
     "test"
   ],
   [
     "hyperwallet#createbusinessstakeholderstatustransition src/hyperwallet.js~hyperwallet#createbusinessstakeholderstatustransition,hyperwallet#createbusinessstakeholderstatustransition",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber5166",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber5182",
     "Hyperwallet createBusinessStakeholderStatusTransition() should send post call to StakeHolder status transition endpoint",
     "test"
   ],
   [
     "hyperwallet#createbusinessstakeholderstatustransition src/hyperwallet.js~hyperwallet#createbusinessstakeholderstatustransition,hyperwallet#createbusinessstakeholderstatustransition",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber5160",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber5176",
     "Hyperwallet createBusinessStakeholderStatusTransition() should throw error if stakeholderToken is missing",
     "test"
   ],
   [
     "hyperwallet#createbusinessstakeholderstatustransition src/hyperwallet.js~hyperwallet#createbusinessstakeholderstatustransition,hyperwallet#createbusinessstakeholderstatustransition",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber5154",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber5170",
     "Hyperwallet createBusinessStakeholderStatusTransition() should throw error if userToken is missing",
     "test"
   ],
@@ -373,6 +373,12 @@ window.esdocSearchIndex = [
   ],
   [
     "hyperwallet#createpaypalaccount src/hyperwallet.js~hyperwallet#createpaypalaccount,hyperwallet#createpaypalaccount",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber2019",
+    "Hyperwallet createPayPalAccount() should do post call to PayPal account endpoint with accountId",
+    "test"
+  ],
+  [
+    "hyperwallet#createpaypalaccount src/hyperwallet.js~hyperwallet#createpaypalaccount,hyperwallet#createpaypalaccount",
     "test-file/test/Hyperwallet.spec.js.html#lineNumber1994",
     "Hyperwallet createPayPalAccount() should throw error if email is missing",
     "test"
@@ -397,103 +403,103 @@ window.esdocSearchIndex = [
   ],
   [
     "hyperwallet#createpaypalaccountstatustransition src/hyperwallet.js~hyperwallet#createpaypalaccountstatustransition,hyperwallet#createpaypalaccountstatustransition",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber2256",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber2272",
     "Hyperwallet createPayPalAccountStatusTransition()",
     "test"
   ],
   [
     "hyperwallet#createpaypalaccountstatustransition src/hyperwallet.js~hyperwallet#createpaypalaccountstatustransition,hyperwallet#createpaypalaccountstatustransition",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber2284",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber2300",
     "Hyperwallet createPayPalAccountStatusTransition() should send post call to paypal account status transition endpoint",
     "test"
   ],
   [
     "hyperwallet#createpaypalaccountstatustransition src/hyperwallet.js~hyperwallet#createpaypalaccountstatustransition,hyperwallet#createpaypalaccountstatustransition",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber2278",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber2294",
     "Hyperwallet createPayPalAccountStatusTransition() should throw error if payPalAccountToken is missing",
     "test"
   ],
   [
     "hyperwallet#createpaypalaccountstatustransition src/hyperwallet.js~hyperwallet#createpaypalaccountstatustransition,hyperwallet#createpaypalaccountstatustransition",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber2272",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber2288",
     "Hyperwallet createPayPalAccountStatusTransition() should throw error if userToken is missing",
     "test"
   ],
   [
     "hyperwallet#createpayment src/hyperwallet.js~hyperwallet#createpayment,hyperwallet#createpayment",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber3474",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber3490",
     "Hyperwallet createPayment()",
     "test"
   ],
   [
     "hyperwallet#createpayment src/hyperwallet.js~hyperwallet#createpayment,hyperwallet#createpayment",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber3503",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber3519",
     "Hyperwallet createPayment() should do post call to payments endpoint with programToken added",
     "test"
   ],
   [
     "hyperwallet#createpayment src/hyperwallet.js~hyperwallet#createpayment,hyperwallet#createpayment",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber3490",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber3506",
     "Hyperwallet createPayment() should do post call to payments endpoint without programToken added",
     "test"
   ],
   [
     "hyperwallet#createpaymentstatustransition src/hyperwallet.js~hyperwallet#createpaymentstatustransition,hyperwallet#createpaymentstatustransition",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber3623",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber3639",
     "Hyperwallet createPaymentStatusTransition()",
     "test"
   ],
   [
     "hyperwallet#createpaymentstatustransition src/hyperwallet.js~hyperwallet#createpaymentstatustransition,hyperwallet#createpaymentstatustransition",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber3645",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber3661",
     "Hyperwallet createPaymentStatusTransition() should send post call to payment status transition endpoint",
     "test"
   ],
   [
     "hyperwallet#createpaymentstatustransition src/hyperwallet.js~hyperwallet#createpaymentstatustransition,hyperwallet#createpaymentstatustransition",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber3639",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber3655",
     "Hyperwallet createPaymentStatusTransition() should throw error if paymentToken is missing",
     "test"
   ],
   [
     "hyperwallet#createprepaidcard src/hyperwallet.js~hyperwallet#createprepaidcard,hyperwallet#createprepaidcard",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber2419",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber2435",
     "Hyperwallet createPrepaidCard()",
     "test"
   ],
   [
     "hyperwallet#createprepaidcard src/hyperwallet.js~hyperwallet#createprepaidcard,hyperwallet#createprepaidcard",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber2441",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber2457",
     "Hyperwallet createPrepaidCard() should do post call to prepaid cards endpoint",
     "test"
   ],
   [
     "hyperwallet#createprepaidcard src/hyperwallet.js~hyperwallet#createprepaidcard,hyperwallet#createprepaidcard",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber2435",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber2451",
     "Hyperwallet createPrepaidCard() should throw error if userToken is missing",
     "test"
   ],
   [
     "hyperwallet#createprepaidcardstatustransition src/hyperwallet.js~hyperwallet#createprepaidcardstatustransition,hyperwallet#createprepaidcardstatustransition",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber2679",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber2695",
     "Hyperwallet createPrepaidCardStatusTransition()",
     "test"
   ],
   [
     "hyperwallet#createprepaidcardstatustransition src/hyperwallet.js~hyperwallet#createprepaidcardstatustransition,hyperwallet#createprepaidcardstatustransition",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber2707",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber2723",
     "Hyperwallet createPrepaidCardStatusTransition() should send post call to prepaid card status transition endpoint",
     "test"
   ],
   [
     "hyperwallet#createprepaidcardstatustransition src/hyperwallet.js~hyperwallet#createprepaidcardstatustransition,hyperwallet#createprepaidcardstatustransition",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber2701",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber2717",
     "Hyperwallet createPrepaidCardStatusTransition() should throw error if prepaidCardToken is missing",
     "test"
   ],
   [
     "hyperwallet#createprepaidcardstatustransition src/hyperwallet.js~hyperwallet#createprepaidcardstatustransition,hyperwallet#createprepaidcardstatustransition",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber2695",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber2711",
     "Hyperwallet createPrepaidCardStatusTransition() should throw error if userToken is missing",
     "test"
   ],
@@ -529,25 +535,25 @@ window.esdocSearchIndex = [
   ],
   [
     "",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber3989",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber4005",
     "Hyperwallet createTransferMethod()",
     "test"
   ],
   [
     "hyperwallet#createtransfermethod src/hyperwallet.js~hyperwallet#createtransfermethod,hyperwallet#createtransfermethod",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber4023",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber4039",
     "Hyperwallet createTransferMethod() should do post call with userToken and cacheToken",
     "test"
   ],
   [
     "hyperwallet#createtransfermethod src/hyperwallet.js~hyperwallet#createtransfermethod,hyperwallet#createtransfermethod",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber4014",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber4030",
     "Hyperwallet createTransferMethod() should throw error if cacheToken is missing",
     "test"
   ],
   [
     "hyperwallet#createtransfermethod src/hyperwallet.js~hyperwallet#createtransfermethod,hyperwallet#createtransfermethod",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber4005",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber4021",
     "Hyperwallet createTransferMethod() should throw error if userToken is missing",
     "test"
   ],
@@ -631,68 +637,62 @@ window.esdocSearchIndex = [
   ],
   [
     "hyperwallet#createvenmoaccount src/hyperwallet.js~hyperwallet#createvenmoaccount,hyperwallet#createvenmoaccount",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber4482",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber4498",
     "Hyperwallet createVenmoAccount()",
     "test"
   ],
   [
     "hyperwallet#createvenmoaccount src/hyperwallet.js~hyperwallet#createvenmoaccount,hyperwallet#createvenmoaccount",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber4527",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber4543",
     "Hyperwallet createVenmoAccount() should do post call to venmo account endpoint",
     "test"
   ],
   [
     "hyperwallet#createvenmoaccount src/hyperwallet.js~hyperwallet#createvenmoaccount,hyperwallet#createvenmoaccount",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber4518",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber4534",
     "Hyperwallet createVenmoAccount() should throw error if accountId is missing",
     "test"
   ],
   [
     "hyperwallet#createvenmoaccount src/hyperwallet.js~hyperwallet#createvenmoaccount,hyperwallet#createvenmoaccount",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber4504",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber4520",
     "Hyperwallet createVenmoAccount() should throw error if transferMethodCountry is missing",
     "test"
   ],
   [
     "hyperwallet#createvenmoaccount src/hyperwallet.js~hyperwallet#createvenmoaccount,hyperwallet#createvenmoaccount",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber4510",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber4526",
     "Hyperwallet createVenmoAccount() should throw error if transferMethodCurrency is missing",
     "test"
   ],
   [
     "hyperwallet#createvenmoaccount src/hyperwallet.js~hyperwallet#createvenmoaccount,hyperwallet#createvenmoaccount",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber4498",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber4514",
     "Hyperwallet createVenmoAccount() should throw error if userToken is missing",
     "test"
   ],
   [
     "hyperwallet#createvenmoaccountstatustransition src/hyperwallet.js~hyperwallet#createvenmoaccountstatustransition,hyperwallet#createvenmoaccountstatustransition",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber4742",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber4758",
     "Hyperwallet createVenmoAccountStatusTransition()",
     "test"
   ],
   [
     "hyperwallet#createvenmoaccountstatustransition src/hyperwallet.js~hyperwallet#createvenmoaccountstatustransition,hyperwallet#createvenmoaccountstatustransition",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber4770",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber4786",
     "Hyperwallet createVenmoAccountStatusTransition() should send post call to venmo account status transition endpoint",
     "test"
   ],
   [
     "hyperwallet#createvenmoaccountstatustransition src/hyperwallet.js~hyperwallet#createvenmoaccountstatustransition,hyperwallet#createvenmoaccountstatustransition",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber4758",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber4774",
     "Hyperwallet createVenmoAccountStatusTransition() should throw error if userToken is missing",
     "test"
   ],
   [
     "hyperwallet#createvenmoaccountstatustransition src/hyperwallet.js~hyperwallet#createvenmoaccountstatustransition,hyperwallet#createvenmoaccountstatustransition",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber4764",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber4780",
     "Hyperwallet createVenmoAccountStatusTransition() should throw error if venmoAccountToken is missing",
-    "test"
-  ],
-  [
-    "hyperwallet#deactivatebankcard src/hyperwallet.js~hyperwallet#deactivatebankcard,hyperwallet#deactivatebankcard",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber943",
-    "Hyperwallet deactivate()",
     "test"
   ],
   [
@@ -703,13 +703,19 @@ window.esdocSearchIndex = [
   ],
   [
     "hyperwallet#deactivatebankcard src/hyperwallet.js~hyperwallet#deactivatebankcard,hyperwallet#deactivatebankcard",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber977",
-    "Hyperwallet deactivate() should send transition to 'DE_ACTIVATED'",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber943",
+    "Hyperwallet deactivate()",
     "test"
   ],
   [
     "hyperwallet#deactivatepapercheck src/hyperwallet.js~hyperwallet#deactivatepapercheck,hyperwallet#deactivatepapercheck",
     "test-file/test/Hyperwallet.spec.js.html#lineNumber1421",
+    "Hyperwallet deactivate() should send transition to 'DE_ACTIVATED'",
+    "test"
+  ],
+  [
+    "hyperwallet#deactivatebankcard src/hyperwallet.js~hyperwallet#deactivatebankcard,hyperwallet#deactivatebankcard",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber977",
     "Hyperwallet deactivate() should send transition to 'DE_ACTIVATED'",
     "test"
   ],
@@ -739,73 +745,73 @@ window.esdocSearchIndex = [
   ],
   [
     "hyperwallet#deactivatebankaccount src/hyperwallet.js~hyperwallet#deactivatebankaccount,hyperwallet#deactivatebankaccount",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber3039",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber3055",
     "Hyperwallet deactivateBankAccount()",
     "test"
   ],
   [
     "hyperwallet#deactivatebankaccount src/hyperwallet.js~hyperwallet#deactivatebankaccount,hyperwallet#deactivatebankaccount",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber3067",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber3083",
     "Hyperwallet deactivateBankAccount() should send transition to 'DE_ACTIVATED'",
     "test"
   ],
   [
     "hyperwallet#deactivatebankaccount src/hyperwallet.js~hyperwallet#deactivatebankaccount,hyperwallet#deactivatebankaccount",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber3061",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber3077",
     "Hyperwallet deactivateBankAccount() should throw error if bankAccountToken is missing",
     "test"
   ],
   [
     "hyperwallet#deactivatebankaccount src/hyperwallet.js~hyperwallet#deactivatebankaccount,hyperwallet#deactivatebankaccount",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber3055",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber3071",
     "Hyperwallet deactivateBankAccount() should throw error if userToken is missing",
     "test"
   ],
   [
     "hyperwallet#deactivatebusinessstakeholder src/hyperwallet.js~hyperwallet#deactivatebusinessstakeholder,hyperwallet#deactivatebusinessstakeholder",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber5058",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber5074",
     "Hyperwallet deactivateBusinessStakeholder()",
     "test"
   ],
   [
     "hyperwallet#deactivatebusinessstakeholder src/hyperwallet.js~hyperwallet#deactivatebusinessstakeholder,hyperwallet#deactivatebusinessstakeholder",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber5086",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber5102",
     "Hyperwallet deactivateBusinessStakeholder() should send transition to 'DE_ACTIVATED'",
     "test"
   ],
   [
     "hyperwallet#deactivatebusinessstakeholder src/hyperwallet.js~hyperwallet#deactivatebusinessstakeholder,hyperwallet#deactivatebusinessstakeholder",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber5080",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber5096",
     "Hyperwallet deactivateBusinessStakeholder() should throw error if stakeholderToken is missing",
     "test"
   ],
   [
     "hyperwallet#deactivatebusinessstakeholder src/hyperwallet.js~hyperwallet#deactivatebusinessstakeholder,hyperwallet#deactivatebusinessstakeholder",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber5074",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber5090",
     "Hyperwallet deactivateBusinessStakeholder() should throw error if userToken is missing",
     "test"
   ],
   [
     "hyperwallet#deactivatepaypalaccount src/hyperwallet.js~hyperwallet#deactivatepaypalaccount,hyperwallet#deactivatepaypalaccount",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber2216",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber2232",
     "Hyperwallet deactivatePayPalAccount()",
     "test"
   ],
   [
     "hyperwallet#deactivatepaypalaccount src/hyperwallet.js~hyperwallet#deactivatepaypalaccount,hyperwallet#deactivatepaypalaccount",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber2244",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber2260",
     "Hyperwallet deactivatePayPalAccount() should send transition to 'DE_ACTIVATED'",
     "test"
   ],
   [
     "hyperwallet#deactivatepaypalaccount src/hyperwallet.js~hyperwallet#deactivatepaypalaccount,hyperwallet#deactivatepaypalaccount",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber2238",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber2254",
     "Hyperwallet deactivatePayPalAccount() should throw error if payPalAccountToken is missing",
     "test"
   ],
   [
     "hyperwallet#deactivatepaypalaccount src/hyperwallet.js~hyperwallet#deactivatepaypalaccount,hyperwallet#deactivatepaypalaccount",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber2232",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber2248",
     "Hyperwallet deactivatePayPalAccount() should throw error if userToken is missing",
     "test"
   ],
@@ -829,25 +835,25 @@ window.esdocSearchIndex = [
   ],
   [
     "hyperwallet#deactivatevenmoaccount src/hyperwallet.js~hyperwallet#deactivatevenmoaccount,hyperwallet#deactivatevenmoaccount",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber4702",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber4718",
     "Hyperwallet deactivateVenmoAccount()",
     "test"
   ],
   [
     "hyperwallet#deactivatevenmoaccount src/hyperwallet.js~hyperwallet#deactivatevenmoaccount,hyperwallet#deactivatevenmoaccount",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber4730",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber4746",
     "Hyperwallet deactivateVenmoAccount() should send transition to 'DE_ACTIVATED'",
     "test"
   ],
   [
     "hyperwallet#deactivatevenmoaccount src/hyperwallet.js~hyperwallet#deactivatevenmoaccount,hyperwallet#deactivatevenmoaccount",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber4718",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber4734",
     "Hyperwallet deactivateVenmoAccount() should throw error if userToken is missing",
     "test"
   ],
   [
     "hyperwallet#deactivatevenmoaccount src/hyperwallet.js~hyperwallet#deactivatevenmoaccount,hyperwallet#deactivatevenmoaccount",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber4724",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber4740",
     "Hyperwallet deactivateVenmoAccount() should throw error if venmoAccountToken is missing",
     "test"
   ],
@@ -913,55 +919,55 @@ window.esdocSearchIndex = [
   ],
   [
     "hyperwallet#getbankaccount src/hyperwallet.js~hyperwallet#getbankaccount,hyperwallet#getbankaccount",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber2885",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber2901",
     "Hyperwallet getBankAccount()",
     "test"
   ],
   [
     "hyperwallet#getbankaccount src/hyperwallet.js~hyperwallet#getbankaccount,hyperwallet#getbankaccount",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber2913",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber2929",
     "Hyperwallet getBankAccount() should do get call if userToken and bankAccountToken is provided",
     "test"
   ],
   [
     "hyperwallet#getbankaccount src/hyperwallet.js~hyperwallet#getbankaccount,hyperwallet#getbankaccount",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber2907",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber2923",
     "Hyperwallet getBankAccount() should throw error if bankAccountToken is missing",
     "test"
   ],
   [
     "hyperwallet#getbankaccount src/hyperwallet.js~hyperwallet#getbankaccount,hyperwallet#getbankaccount",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber2901",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber2917",
     "Hyperwallet getBankAccount() should throw error if userToken is missing",
     "test"
   ],
   [
     "hyperwallet#getbankaccountstatustransition src/hyperwallet.js~hyperwallet#getbankaccountstatustransition,hyperwallet#getbankaccountstatustransition",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber3119",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber3135",
     "Hyperwallet getBankAccountStatusTransition()",
     "test"
   ],
   [
     "hyperwallet#getbankaccountstatustransition src/hyperwallet.js~hyperwallet#getbankaccountstatustransition,hyperwallet#getbankaccountstatustransition",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber3153",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber3169",
     "Hyperwallet getBankAccountStatusTransition() should do get call if userToken, bankAccountToken and statusTransitionToken is provided",
     "test"
   ],
   [
     "hyperwallet#getbankaccountstatustransition src/hyperwallet.js~hyperwallet#getbankaccountstatustransition,hyperwallet#getbankaccountstatustransition",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber3141",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber3157",
     "Hyperwallet getBankAccountStatusTransition() should throw error if bankAccountToken is missing",
     "test"
   ],
   [
     "hyperwallet#getbankaccountstatustransition src/hyperwallet.js~hyperwallet#getbankaccountstatustransition,hyperwallet#getbankaccountstatustransition",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber3147",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber3163",
     "Hyperwallet getBankAccountStatusTransition() should throw error if statusTransitionToken is missing",
     "test"
   ],
   [
     "hyperwallet#getbankaccountstatustransition src/hyperwallet.js~hyperwallet#getbankaccountstatustransition,hyperwallet#getbankaccountstatustransition",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber3135",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber3151",
     "Hyperwallet getBankAccountStatusTransition() should throw error if userToken is missing",
     "test"
   ],
@@ -1021,31 +1027,31 @@ window.esdocSearchIndex = [
   ],
   [
     "hyperwallet#getbusinessstakeholderstatustransition src/hyperwallet.js~hyperwallet#getbusinessstakeholderstatustransition,hyperwallet#getbusinessstakeholderstatustransition",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber5178",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber5194",
     "Hyperwallet getBusinessStakeholderStatusTransition()",
     "test"
   ],
   [
     "hyperwallet#getbusinessstakeholderstatustransition src/hyperwallet.js~hyperwallet#getbusinessstakeholderstatustransition,hyperwallet#getbusinessstakeholderstatustransition",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber5212",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber5228",
     "Hyperwallet getBusinessStakeholderStatusTransition() should do get call if userToken, stakeholderToken and statusTransitionToken is provided",
     "test"
   ],
   [
     "hyperwallet#getbusinessstakeholderstatustransition src/hyperwallet.js~hyperwallet#getbusinessstakeholderstatustransition,hyperwallet#getbusinessstakeholderstatustransition",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber5200",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber5216",
     "Hyperwallet getBusinessStakeholderStatusTransition() should throw error if stakeholderToken is missing",
     "test"
   ],
   [
     "hyperwallet#getbusinessstakeholderstatustransition src/hyperwallet.js~hyperwallet#getbusinessstakeholderstatustransition,hyperwallet#getbusinessstakeholderstatustransition",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber5206",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber5222",
     "Hyperwallet getBusinessStakeholderStatusTransition() should throw error if statusTransitionToken is missing",
     "test"
   ],
   [
     "hyperwallet#getbusinessstakeholderstatustransition src/hyperwallet.js~hyperwallet#getbusinessstakeholderstatustransition,hyperwallet#getbusinessstakeholderstatustransition",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber5194",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber5210",
     "Hyperwallet getBusinessStakeholderStatusTransition() should throw error if userToken is missing",
     "test"
   ],
@@ -1105,193 +1111,193 @@ window.esdocSearchIndex = [
   ],
   [
     "hyperwallet#getpaypalaccount src/hyperwallet.js~hyperwallet#getpaypalaccount,hyperwallet#getpaypalaccount",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber2021",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber2037",
     "Hyperwallet getPayPalAccount()",
     "test"
   ],
   [
     "hyperwallet#getpaypalaccount src/hyperwallet.js~hyperwallet#getpaypalaccount,hyperwallet#getpaypalaccount",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber2049",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber2065",
     "Hyperwallet getPayPalAccount() should do get call if userToken and payPalAccountToken is provided",
     "test"
   ],
   [
     "hyperwallet#getpaypalaccount src/hyperwallet.js~hyperwallet#getpaypalaccount,hyperwallet#getpaypalaccount",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber2043",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber2059",
     "Hyperwallet getPayPalAccount() should throw error if payPalAccountToken is missing",
     "test"
   ],
   [
     "hyperwallet#getpaypalaccount src/hyperwallet.js~hyperwallet#getpaypalaccount,hyperwallet#getpaypalaccount",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber2037",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber2053",
     "Hyperwallet getPayPalAccount() should throw error if userToken is missing",
     "test"
   ],
   [
     "hyperwallet#getpaypalaccountstatustransition src/hyperwallet.js~hyperwallet#getpaypalaccountstatustransition,hyperwallet#getpaypalaccountstatustransition",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber2296",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber2312",
     "Hyperwallet getPayPalAccountStatusTransition()",
     "test"
   ],
   [
     "hyperwallet#getpaypalaccountstatustransition src/hyperwallet.js~hyperwallet#getpaypalaccountstatustransition,hyperwallet#getpaypalaccountstatustransition",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber2330",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber2346",
     "Hyperwallet getPayPalAccountStatusTransition() should do get call if userToken, payPalAccountToken and statusTransitionToken is provided",
     "test"
   ],
   [
     "hyperwallet#getpaypalaccountstatustransition src/hyperwallet.js~hyperwallet#getpaypalaccountstatustransition,hyperwallet#getpaypalaccountstatustransition",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber2318",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber2334",
     "Hyperwallet getPayPalAccountStatusTransition() should throw error if payPalAccountToken is missing",
     "test"
   ],
   [
     "hyperwallet#getpaypalaccountstatustransition src/hyperwallet.js~hyperwallet#getpaypalaccountstatustransition,hyperwallet#getpaypalaccountstatustransition",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber2324",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber2340",
     "Hyperwallet getPayPalAccountStatusTransition() should throw error if statusTransitionToken is missing",
     "test"
   ],
   [
     "hyperwallet#getpaypalaccountstatustransition src/hyperwallet.js~hyperwallet#getpaypalaccountstatustransition,hyperwallet#getpaypalaccountstatustransition",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber2312",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber2328",
     "Hyperwallet getPayPalAccountStatusTransition() should throw error if userToken is missing",
     "test"
   ],
   [
     "hyperwallet#getpayment src/hyperwallet.js~hyperwallet#getpayment,hyperwallet#getpayment",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber3520",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber3536",
     "Hyperwallet getPayment()",
     "test"
   ],
   [
     "hyperwallet#getpayment src/hyperwallet.js~hyperwallet#getpayment,hyperwallet#getpayment",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber3542",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber3558",
     "Hyperwallet getPayment() should do get call if paymentToken is provided",
     "test"
   ],
   [
     "hyperwallet#getpayment src/hyperwallet.js~hyperwallet#getpayment,hyperwallet#getpayment",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber3536",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber3552",
     "Hyperwallet getPayment() should throw error if paymentToken is missing",
     "test"
   ],
   [
     "hyperwallet#getpaymentstatustransition src/hyperwallet.js~hyperwallet#getpaymentstatustransition,hyperwallet#getpaymentstatustransition",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber3657",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber3673",
     "Hyperwallet getPaymentStatusTransition()",
     "test"
   ],
   [
     "hyperwallet#getpaymentstatustransition src/hyperwallet.js~hyperwallet#getpaymentstatustransition,hyperwallet#getpaymentstatustransition",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber3685",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber3701",
     "Hyperwallet getPaymentStatusTransition() should do get call if paymentToken and statusTransitionToken is provided",
     "test"
   ],
   [
     "hyperwallet#getpaymentstatustransition src/hyperwallet.js~hyperwallet#getpaymentstatustransition,hyperwallet#getpaymentstatustransition",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber3673",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber3689",
     "Hyperwallet getPaymentStatusTransition() should throw error if paymentToken is missing",
     "test"
   ],
   [
     "hyperwallet#getpaymentstatustransition src/hyperwallet.js~hyperwallet#getpaymentstatustransition,hyperwallet#getpaymentstatustransition",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber3679",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber3695",
     "Hyperwallet getPaymentStatusTransition() should throw error if statusTransitionToken is missing",
     "test"
   ],
   [
     "hyperwallet#getprepaidcard src/hyperwallet.js~hyperwallet#getprepaidcard,hyperwallet#getprepaidcard",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber2455",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber2471",
     "Hyperwallet getPrepaidCard()",
     "test"
   ],
   [
     "hyperwallet#getprepaidcard src/hyperwallet.js~hyperwallet#getprepaidcard,hyperwallet#getprepaidcard",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber2483",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber2499",
     "Hyperwallet getPrepaidCard() should do get call if userToken and prepaidCardToken is provided",
     "test"
   ],
   [
     "hyperwallet#getprepaidcard src/hyperwallet.js~hyperwallet#getprepaidcard,hyperwallet#getprepaidcard",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber2477",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber2493",
     "Hyperwallet getPrepaidCard() should throw error if prepaidCardToken is missing",
     "test"
   ],
   [
     "hyperwallet#getprepaidcard src/hyperwallet.js~hyperwallet#getprepaidcard,hyperwallet#getprepaidcard",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber2471",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber2487",
     "Hyperwallet getPrepaidCard() should throw error if userToken is missing",
     "test"
   ],
   [
     "hyperwallet#getprepaidcardstatustransition src/hyperwallet.js~hyperwallet#getprepaidcardstatustransition,hyperwallet#getprepaidcardstatustransition",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber2719",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber2735",
     "Hyperwallet getPrepaidCardStatusTransition()",
     "test"
   ],
   [
     "hyperwallet#getprepaidcardstatustransition src/hyperwallet.js~hyperwallet#getprepaidcardstatustransition,hyperwallet#getprepaidcardstatustransition",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber2753",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber2769",
     "Hyperwallet getPrepaidCardStatusTransition() should do get call if userToken, prepaidCardToken and statusTransitionToken is provided",
     "test"
   ],
   [
     "hyperwallet#getprepaidcardstatustransition src/hyperwallet.js~hyperwallet#getprepaidcardstatustransition,hyperwallet#getprepaidcardstatustransition",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber2741",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber2757",
     "Hyperwallet getPrepaidCardStatusTransition() should throw error if prepaidCardToken is missing",
     "test"
   ],
   [
     "hyperwallet#getprepaidcardstatustransition src/hyperwallet.js~hyperwallet#getprepaidcardstatustransition,hyperwallet#getprepaidcardstatustransition",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber2747",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber2763",
     "Hyperwallet getPrepaidCardStatusTransition() should throw error if statusTransitionToken is missing",
     "test"
   ],
   [
     "hyperwallet#getprepaidcardstatustransition src/hyperwallet.js~hyperwallet#getprepaidcardstatustransition,hyperwallet#getprepaidcardstatustransition",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber2735",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber2751",
     "Hyperwallet getPrepaidCardStatusTransition() should throw error if userToken is missing",
     "test"
   ],
   [
     "hyperwallet#getprogram src/hyperwallet.js~hyperwallet#getprogram,hyperwallet#getprogram",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber3775",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber3791",
     "Hyperwallet getProgram()",
     "test"
   ],
   [
     "hyperwallet#getprogram src/hyperwallet.js~hyperwallet#getprogram,hyperwallet#getprogram",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber3797",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber3813",
     "Hyperwallet getProgram() should do get call if programToken is provided",
     "test"
   ],
   [
     "hyperwallet#getprogram src/hyperwallet.js~hyperwallet#getprogram,hyperwallet#getprogram",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber3791",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber3807",
     "Hyperwallet getProgram() should throw error if programToken is missing",
     "test"
   ],
   [
     "hyperwallet#getprogramaccount src/hyperwallet.js~hyperwallet#getprogramaccount,hyperwallet#getprogramaccount",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber3811",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber3827",
     "Hyperwallet getProgramAccount()",
     "test"
   ],
   [
     "hyperwallet#getprogramaccount src/hyperwallet.js~hyperwallet#getprogramaccount,hyperwallet#getprogramaccount",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber3839",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber3855",
     "Hyperwallet getProgramAccount() should do get call if programToken is provided",
     "test"
   ],
   [
     "hyperwallet#getprogramaccount src/hyperwallet.js~hyperwallet#getprogramaccount,hyperwallet#getprogramaccount",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber3833",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber3849",
     "Hyperwallet getProgramAccount() should throw error if accountToken is missing",
     "test"
   ],
   [
     "hyperwallet#getprogramaccount src/hyperwallet.js~hyperwallet#getprogramaccount,hyperwallet#getprogramaccount",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber3827",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber3843",
     "Hyperwallet getProgramAccount() should throw error if programToken is missing",
     "test"
   ],
@@ -1315,43 +1321,43 @@ window.esdocSearchIndex = [
   ],
   [
     "hyperwallet#gettransfermethodconfiguration src/hyperwallet.js~hyperwallet#gettransfermethodconfiguration,hyperwallet#gettransfermethodconfiguration",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber3853",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber3869",
     "Hyperwallet getTransferMethodConfiguration()",
     "test"
   ],
   [
     "hyperwallet#gettransfermethodconfiguration src/hyperwallet.js~hyperwallet#gettransfermethodconfiguration,hyperwallet#gettransfermethodconfiguration",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber3899",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber3915",
     "Hyperwallet getTransferMethodConfiguration() should do get call if userToken, country, currency, type and profileType is provided",
     "test"
   ],
   [
     "hyperwallet#gettransfermethodconfiguration src/hyperwallet.js~hyperwallet#gettransfermethodconfiguration,hyperwallet#gettransfermethodconfiguration",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber3875",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber3891",
     "Hyperwallet getTransferMethodConfiguration() should throw error if country is missing",
     "test"
   ],
   [
     "hyperwallet#gettransfermethodconfiguration src/hyperwallet.js~hyperwallet#gettransfermethodconfiguration,hyperwallet#gettransfermethodconfiguration",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber3881",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber3897",
     "Hyperwallet getTransferMethodConfiguration() should throw error if currency is missing",
     "test"
   ],
   [
     "hyperwallet#gettransfermethodconfiguration src/hyperwallet.js~hyperwallet#gettransfermethodconfiguration,hyperwallet#gettransfermethodconfiguration",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber3893",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber3909",
     "Hyperwallet getTransferMethodConfiguration() should throw error if profileType is missing",
     "test"
   ],
   [
     "hyperwallet#gettransfermethodconfiguration src/hyperwallet.js~hyperwallet#gettransfermethodconfiguration,hyperwallet#gettransfermethodconfiguration",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber3887",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber3903",
     "Hyperwallet getTransferMethodConfiguration() should throw error if type is missing",
     "test"
   ],
   [
     "hyperwallet#gettransfermethodconfiguration src/hyperwallet.js~hyperwallet#gettransfermethodconfiguration,hyperwallet#gettransfermethodconfiguration",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber3869",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber3885",
     "Hyperwallet getTransferMethodConfiguration() should throw error if userToken is missing",
     "test"
   ],
@@ -1381,25 +1387,25 @@ window.esdocSearchIndex = [
   ],
   [
     "hyperwallet#gettransferstatustransition src/hyperwallet.js~hyperwallet#gettransferstatustransition,hyperwallet#gettransferstatustransition",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber5413",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber5429",
     "Hyperwallet getTransferStatusTransition()",
     "test"
   ],
   [
     "hyperwallet#gettransferstatustransition src/hyperwallet.js~hyperwallet#gettransferstatustransition,hyperwallet#gettransferstatustransition",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber5440",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber5456",
     "Hyperwallet getTransferStatusTransition() should do get call if transferToken and statusTransitionToken is provided",
     "test"
   ],
   [
     "hyperwallet#gettransferstatustransition src/hyperwallet.js~hyperwallet#gettransferstatustransition,hyperwallet#gettransferstatustransition",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber5434",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber5450",
     "Hyperwallet getTransferStatusTransition() should throw error if statusTransitionToken is missing",
     "test"
   ],
   [
     "hyperwallet#gettransferstatustransition src/hyperwallet.js~hyperwallet#gettransferstatustransition,hyperwallet#gettransferstatustransition",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber5428",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber5444",
     "Hyperwallet getTransferStatusTransition() should throw error if transferToken is missing",
     "test"
   ],
@@ -1447,301 +1453,301 @@ window.esdocSearchIndex = [
   ],
   [
     "hyperwallet#getvenmoaccount src/hyperwallet.js~hyperwallet#getvenmoaccount,hyperwallet#getvenmoaccount",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber4545",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber4561",
     "Hyperwallet getVenmoAccount()",
     "test"
   ],
   [
     "hyperwallet#getvenmoaccount src/hyperwallet.js~hyperwallet#getvenmoaccount,hyperwallet#getvenmoaccount",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber4573",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber4589",
     "Hyperwallet getVenmoAccount() should do get call if userToken and venmoAccountToken is provided",
     "test"
   ],
   [
     "hyperwallet#getvenmoaccount src/hyperwallet.js~hyperwallet#getvenmoaccount,hyperwallet#getvenmoaccount",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber4561",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber4577",
     "Hyperwallet getVenmoAccount() should throw error if userToken is missing",
     "test"
   ],
   [
     "hyperwallet#getvenmoaccount src/hyperwallet.js~hyperwallet#getvenmoaccount,hyperwallet#getvenmoaccount",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber4567",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber4583",
     "Hyperwallet getVenmoAccount() should throw error if venmoAccountToken is missing",
     "test"
   ],
   [
     "hyperwallet#getvenmoaccountstatustransition src/hyperwallet.js~hyperwallet#getvenmoaccountstatustransition,hyperwallet#getvenmoaccountstatustransition",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber4783",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber4799",
     "Hyperwallet getVenmoAccountStatusTransition()",
     "test"
   ],
   [
     "hyperwallet#getvenmoaccountstatustransition src/hyperwallet.js~hyperwallet#getvenmoaccountstatustransition,hyperwallet#getvenmoaccountstatustransition",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber4817",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber4833",
     "Hyperwallet getVenmoAccountStatusTransition() should do get call if userToken, venmoAccountToken and statusTransitionToken is provided",
     "test"
   ],
   [
     "hyperwallet#getvenmoaccountstatustransition src/hyperwallet.js~hyperwallet#getvenmoaccountstatustransition,hyperwallet#getvenmoaccountstatustransition",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber4811",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber4827",
     "Hyperwallet getVenmoAccountStatusTransition() should throw error if statusTransitionToken is missing",
     "test"
   ],
   [
     "hyperwallet#getvenmoaccountstatustransition src/hyperwallet.js~hyperwallet#getvenmoaccountstatustransition,hyperwallet#getvenmoaccountstatustransition",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber4799",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber4815",
     "Hyperwallet getVenmoAccountStatusTransition() should throw error if userToken is missing",
     "test"
   ],
   [
     "hyperwallet#getvenmoaccountstatustransition src/hyperwallet.js~hyperwallet#getvenmoaccountstatustransition,hyperwallet#getvenmoaccountstatustransition",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber4805",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber4821",
     "Hyperwallet getVenmoAccountStatusTransition() should throw error if venmoAccountToken is missing",
     "test"
   ],
   [
     "",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber4334",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber4350",
     "Hyperwallet getWebhookNotification",
     "test"
   ],
   [
     "hyperwallet#getwebhooknotification src/hyperwallet.js~hyperwallet#getwebhooknotification,hyperwallet#getwebhooknotification",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber4356",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber4372",
     "Hyperwallet getWebhookNotification should do get call if webhookToken is provided",
     "test"
   ],
   [
     "hyperwallet#getwebhooknotification src/hyperwallet.js~hyperwallet#getwebhooknotification,hyperwallet#getwebhooknotification",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber4350",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber4366",
     "Hyperwallet getWebhookNotification should throw error if webhookToken is missing",
     "test"
   ],
   [
     "",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber4409",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber4425",
     "Hyperwallet handle204Response()",
     "test"
   ],
   [
     "",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber4414",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber4430",
     "Hyperwallet handle204Response() should do nothing for errors",
     "test"
   ],
   [
     "",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber4433",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber4449",
     "Hyperwallet handle204Response() should do nothing for non 204 responses",
     "test"
   ],
   [
     "",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber4410",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber4426",
     "Hyperwallet handle204Response() should return a 'function' with a argument",
     "test"
   ],
   [
     "",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber4452",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber4468",
     "Hyperwallet handle204Response() should return empty list for 204 responses",
     "test"
   ],
   [
     "hyperwallet#listbalancesforaccount src/hyperwallet.js~hyperwallet#listbalancesforaccount,hyperwallet#listbalancesforaccount",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber3394",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber3410",
     "Hyperwallet listBalancesForAccount()",
     "test"
   ],
   [
     "hyperwallet#listbalancesforaccount src/hyperwallet.js~hyperwallet#listbalancesforaccount,hyperwallet#listbalancesforaccount",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber3422",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber3438",
     "Hyperwallet listBalancesForAccount() should do get call with options",
     "test"
   ],
   [
     "hyperwallet#listbalancesforaccount src/hyperwallet.js~hyperwallet#listbalancesforaccount,hyperwallet#listbalancesforaccount",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber3438",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber3454",
     "Hyperwallet listBalancesForAccount() should do get call without options",
     "test"
   ],
   [
     "hyperwallet#listbalancesforaccount src/hyperwallet.js~hyperwallet#listbalancesforaccount,hyperwallet#listbalancesforaccount",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber3447",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber3463",
     "Hyperwallet listBalancesForAccount() should handle 204 return",
     "test"
   ],
   [
     "hyperwallet#listbalancesforaccount src/hyperwallet.js~hyperwallet#listbalancesforaccount,hyperwallet#listbalancesforaccount",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber3431",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber3447",
     "Hyperwallet listBalancesForAccount() should throw error for invalid filter",
     "test"
   ],
   [
     "hyperwallet#listbalancesforaccount src/hyperwallet.js~hyperwallet#listbalancesforaccount,hyperwallet#listbalancesforaccount",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber3416",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber3432",
     "Hyperwallet listBalancesForAccount() should throw error if accountToken is missing",
     "test"
   ],
   [
     "hyperwallet#listbalancesforaccount src/hyperwallet.js~hyperwallet#listbalancesforaccount,hyperwallet#listbalancesforaccount",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber3410",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber3426",
     "Hyperwallet listBalancesForAccount() should throw error if programToken is missing",
     "test"
   ],
   [
     "hyperwallet#listbalancesforprepaidcard src/hyperwallet.js~hyperwallet#listbalancesforprepaidcard,hyperwallet#listbalancesforprepaidcard",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber3318",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber3334",
     "Hyperwallet listBalancesForPrepaidCard()",
     "test"
   ],
   [
     "hyperwallet#listbalancesforprepaidcard src/hyperwallet.js~hyperwallet#listbalancesforprepaidcard,hyperwallet#listbalancesforprepaidcard",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber3346",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber3362",
     "Hyperwallet listBalancesForPrepaidCard() should do get call with options",
     "test"
   ],
   [
     "hyperwallet#listbalancesforprepaidcard src/hyperwallet.js~hyperwallet#listbalancesforprepaidcard,hyperwallet#listbalancesforprepaidcard",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber3362",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber3378",
     "Hyperwallet listBalancesForPrepaidCard() should do get call without options",
     "test"
   ],
   [
     "hyperwallet#listbalancesforprepaidcard src/hyperwallet.js~hyperwallet#listbalancesforprepaidcard,hyperwallet#listbalancesforprepaidcard",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber3371",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber3387",
     "Hyperwallet listBalancesForPrepaidCard() should handle 204 return",
     "test"
   ],
   [
     "hyperwallet#listbalancesforprepaidcard src/hyperwallet.js~hyperwallet#listbalancesforprepaidcard,hyperwallet#listbalancesforprepaidcard",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber3355",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber3371",
     "Hyperwallet listBalancesForPrepaidCard() should throw error for invalid filter",
     "test"
   ],
   [
     "hyperwallet#listbalancesforprepaidcard src/hyperwallet.js~hyperwallet#listbalancesforprepaidcard,hyperwallet#listbalancesforprepaidcard",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber3340",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber3356",
     "Hyperwallet listBalancesForPrepaidCard() should throw error if prepaidCardToken is missing",
     "test"
   ],
   [
     "hyperwallet#listbalancesforprepaidcard src/hyperwallet.js~hyperwallet#listbalancesforprepaidcard,hyperwallet#listbalancesforprepaidcard",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber3334",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber3350",
     "Hyperwallet listBalancesForPrepaidCard() should throw error if userToken is missing",
     "test"
   ],
   [
     "hyperwallet#listbalancesforuser src/hyperwallet.js~hyperwallet#listbalancesforuser,hyperwallet#listbalancesforuser",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber3248",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber3264",
     "Hyperwallet listBalancesForUser()",
     "test"
   ],
   [
     "hyperwallet#listbalancesforuser src/hyperwallet.js~hyperwallet#listbalancesforuser,hyperwallet#listbalancesforuser",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber3270",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber3286",
     "Hyperwallet listBalancesForUser() should do get call with options",
     "test"
   ],
   [
     "hyperwallet#listbalancesforuser src/hyperwallet.js~hyperwallet#listbalancesforuser,hyperwallet#listbalancesforuser",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber3286",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber3302",
     "Hyperwallet listBalancesForUser() should do get call without options",
     "test"
   ],
   [
     "hyperwallet#listbalancesforuser src/hyperwallet.js~hyperwallet#listbalancesforuser,hyperwallet#listbalancesforuser",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber3295",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber3311",
     "Hyperwallet listBalancesForUser() should handle 204 return",
     "test"
   ],
   [
     "hyperwallet#listbalancesforuser src/hyperwallet.js~hyperwallet#listbalancesforuser,hyperwallet#listbalancesforuser",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber3279",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber3295",
     "Hyperwallet listBalancesForUser() should throw error for invalid filter",
     "test"
   ],
   [
     "hyperwallet#listbalancesforuser src/hyperwallet.js~hyperwallet#listbalancesforuser,hyperwallet#listbalancesforuser",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber3264",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber3280",
     "Hyperwallet listBalancesForUser() should throw error if userToken is missing",
     "test"
   ],
   [
     "hyperwallet#listbankaccountstatustransitions src/hyperwallet.js~hyperwallet#listbankaccountstatustransitions,hyperwallet#listbankaccountstatustransitions",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber3163",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber3179",
     "Hyperwallet listBankAccountStatusTransitions()",
     "test"
   ],
   [
     "hyperwallet#listbankaccountstatustransitions src/hyperwallet.js~hyperwallet#listbankaccountstatustransitions,hyperwallet#listbankaccountstatustransitions",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber3190",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber3206",
     "Hyperwallet listBankAccountStatusTransitions() should do get call with options",
     "test"
   ],
   [
     "hyperwallet#listbankaccountstatustransitions src/hyperwallet.js~hyperwallet#listbankaccountstatustransitions,hyperwallet#listbankaccountstatustransitions",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber3212",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber3228",
     "Hyperwallet listBankAccountStatusTransitions() should do get call without options",
     "test"
   ],
   [
     "hyperwallet#listbankaccountstatustransitions src/hyperwallet.js~hyperwallet#listbankaccountstatustransitions,hyperwallet#listbankaccountstatustransitions",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber3221",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber3237",
     "Hyperwallet listBankAccountStatusTransitions() should handle 204 return",
     "test"
   ],
   [
     "hyperwallet#listbankaccountstatustransitions src/hyperwallet.js~hyperwallet#listbankaccountstatustransitions,hyperwallet#listbankaccountstatustransitions",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber3205",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber3221",
     "Hyperwallet listBankAccountStatusTransitions() should throw error for invalid filter",
     "test"
   ],
   [
     "hyperwallet#listbankaccountstatustransitions src/hyperwallet.js~hyperwallet#listbankaccountstatustransitions,hyperwallet#listbankaccountstatustransitions",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber3184",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber3200",
     "Hyperwallet listBankAccountStatusTransitions() should throw error if bankAccountToken is missing",
     "test"
   ],
   [
     "hyperwallet#listbankaccountstatustransitions src/hyperwallet.js~hyperwallet#listbankaccountstatustransitions,hyperwallet#listbankaccountstatustransitions",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber3179",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber3195",
     "Hyperwallet listBankAccountStatusTransitions() should throw error if userToken is missing",
     "test"
   ],
   [
     "hyperwallet#listbankaccounts src/hyperwallet.js~hyperwallet#listbankaccounts,hyperwallet#listbankaccounts",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber2965",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber2981",
     "Hyperwallet listBankAccounts()",
     "test"
   ],
   [
     "hyperwallet#listbankaccounts src/hyperwallet.js~hyperwallet#listbankaccounts,hyperwallet#listbankaccounts",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber2986",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber3002",
     "Hyperwallet listBankAccounts() should do get call with options",
     "test"
   ],
   [
     "hyperwallet#listbankaccounts src/hyperwallet.js~hyperwallet#listbankaccounts,hyperwallet#listbankaccounts",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber3009",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber3025",
     "Hyperwallet listBankAccounts() should do get call without options",
     "test"
   ],
   [
     "hyperwallet#listbankaccounts src/hyperwallet.js~hyperwallet#listbankaccounts,hyperwallet#listbankaccounts",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber3016",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber3032",
     "Hyperwallet listBankAccounts() should handle 204 return",
     "test"
   ],
   [
     "hyperwallet#listbankaccounts src/hyperwallet.js~hyperwallet#listbankaccounts,hyperwallet#listbankaccounts",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber3002",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber3018",
     "Hyperwallet listBankAccounts() should throw error for invalid filter",
     "test"
   ],
   [
     "hyperwallet#listbankaccounts src/hyperwallet.js~hyperwallet#listbankaccounts,hyperwallet#listbankaccounts",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber2981",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber2997",
     "Hyperwallet listBankAccounts() should throw error if userToken is missing",
     "test"
   ],
@@ -1825,79 +1831,79 @@ window.esdocSearchIndex = [
   ],
   [
     "hyperwallet#listbusinessstakeholderstatustransitions src/hyperwallet.js~hyperwallet#listbusinessstakeholderstatustransitions,hyperwallet#listbusinessstakeholderstatustransitions",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber5222",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber5238",
     "Hyperwallet listBusinessStakeholderStatusTransitions()",
     "test"
   ],
   [
     "hyperwallet#listbusinessstakeholderstatustransitions src/hyperwallet.js~hyperwallet#listbusinessstakeholderstatustransitions,hyperwallet#listbusinessstakeholderstatustransitions",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber5250",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber5266",
     "Hyperwallet listBusinessStakeholderStatusTransitions() should do get call with options",
     "test"
   ],
   [
     "hyperwallet#listbusinessstakeholderstatustransitions src/hyperwallet.js~hyperwallet#listbusinessstakeholderstatustransitions,hyperwallet#listbusinessstakeholderstatustransitions",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber5266",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber5282",
     "Hyperwallet listBusinessStakeholderStatusTransitions() should do get call without options",
     "test"
   ],
   [
     "hyperwallet#listbusinessstakeholderstatustransitions src/hyperwallet.js~hyperwallet#listbusinessstakeholderstatustransitions,hyperwallet#listbusinessstakeholderstatustransitions",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber5275",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber5291",
     "Hyperwallet listBusinessStakeholderStatusTransitions() should handle 204 return",
     "test"
   ],
   [
     "hyperwallet#listbusinessstakeholderstatustransitions src/hyperwallet.js~hyperwallet#listbusinessstakeholderstatustransitions,hyperwallet#listbusinessstakeholderstatustransitions",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber5259",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber5275",
     "Hyperwallet listBusinessStakeholderStatusTransitions() should throw error for invalid filter",
     "test"
   ],
   [
     "hyperwallet#listbusinessstakeholderstatustransitions src/hyperwallet.js~hyperwallet#listbusinessstakeholderstatustransitions,hyperwallet#listbusinessstakeholderstatustransitions",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber5244",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber5260",
     "Hyperwallet listBusinessStakeholderStatusTransitions() should throw error if stakeholderToken is missing",
     "test"
   ],
   [
     "hyperwallet#listbusinessstakeholderstatustransitions src/hyperwallet.js~hyperwallet#listbusinessstakeholderstatustransitions,hyperwallet#listbusinessstakeholderstatustransitions",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber5238",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber5254",
     "Hyperwallet listBusinessStakeholderStatusTransitions() should throw error if userToken is missing",
     "test"
   ],
   [
     "hyperwallet#listbusinessstakeholders src/hyperwallet.js~hyperwallet#listbusinessstakeholders,hyperwallet#listbusinessstakeholders",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber4947",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber4963",
     "Hyperwallet listBusinessStakeholders()",
     "test"
   ],
   [
     "hyperwallet#listbusinessstakeholders src/hyperwallet.js~hyperwallet#listbusinessstakeholders,hyperwallet#listbusinessstakeholders",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber4969",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber4985",
     "Hyperwallet listBusinessStakeholders() should do get call with options",
     "test"
   ],
   [
     "hyperwallet#listbusinessstakeholders src/hyperwallet.js~hyperwallet#listbusinessstakeholders,hyperwallet#listbusinessstakeholders",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber4984",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber5000",
     "Hyperwallet listBusinessStakeholders() should do get call without options",
     "test"
   ],
   [
     "hyperwallet#listbusinessstakeholders src/hyperwallet.js~hyperwallet#listbusinessstakeholders,hyperwallet#listbusinessstakeholders",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber4993",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber5009",
     "Hyperwallet listBusinessStakeholders() should handle 204 return",
     "test"
   ],
   [
     "hyperwallet#listbusinessstakeholders src/hyperwallet.js~hyperwallet#listbusinessstakeholders,hyperwallet#listbusinessstakeholders",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber4977",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber4993",
     "Hyperwallet listBusinessStakeholders() should throw error for invalid filter",
     "test"
   ],
   [
     "hyperwallet#listbusinessstakeholders src/hyperwallet.js~hyperwallet#listbusinessstakeholders,hyperwallet#listbusinessstakeholders",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber4963",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber4979",
     "Hyperwallet listBusinessStakeholders() should throw error if userToken is missing",
     "test"
   ],
@@ -1981,415 +1987,415 @@ window.esdocSearchIndex = [
   ],
   [
     "hyperwallet#listpaypalaccountstatustransitions src/hyperwallet.js~hyperwallet#listpaypalaccountstatustransitions,hyperwallet#listpaypalaccountstatustransitions",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber2340",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber2356",
     "Hyperwallet listPayPalAccountStatusTransitions()",
     "test"
   ],
   [
     "hyperwallet#listpaypalaccountstatustransitions src/hyperwallet.js~hyperwallet#listpaypalaccountstatustransitions,hyperwallet#listpaypalaccountstatustransitions",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber2368",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber2384",
     "Hyperwallet listPayPalAccountStatusTransitions() should do get call with options",
     "test"
   ],
   [
     "hyperwallet#listpaypalaccountstatustransitions src/hyperwallet.js~hyperwallet#listpaypalaccountstatustransitions,hyperwallet#listpaypalaccountstatustransitions",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber2384",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber2400",
     "Hyperwallet listPayPalAccountStatusTransitions() should do get call without options",
     "test"
   ],
   [
     "hyperwallet#listpaypalaccountstatustransitions src/hyperwallet.js~hyperwallet#listpaypalaccountstatustransitions,hyperwallet#listpaypalaccountstatustransitions",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber2393",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber2409",
     "Hyperwallet listPayPalAccountStatusTransitions() should handle 204 return",
     "test"
   ],
   [
     "hyperwallet#listpaypalaccountstatustransitions src/hyperwallet.js~hyperwallet#listpaypalaccountstatustransitions,hyperwallet#listpaypalaccountstatustransitions",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber2377",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber2393",
     "Hyperwallet listPayPalAccountStatusTransitions() should throw error for invalid filter",
     "test"
   ],
   [
     "hyperwallet#listpaypalaccountstatustransitions src/hyperwallet.js~hyperwallet#listpaypalaccountstatustransitions,hyperwallet#listpaypalaccountstatustransitions",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber2362",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber2378",
     "Hyperwallet listPayPalAccountStatusTransitions() should throw error if payPalAccountToken is missing",
     "test"
   ],
   [
     "hyperwallet#listpaypalaccountstatustransitions src/hyperwallet.js~hyperwallet#listpaypalaccountstatustransitions,hyperwallet#listpaypalaccountstatustransitions",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber2356",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber2372",
     "Hyperwallet listPayPalAccountStatusTransitions() should throw error if userToken is missing",
     "test"
   ],
   [
     "hyperwallet#listpaypalaccounts src/hyperwallet.js~hyperwallet#listpaypalaccounts,hyperwallet#listpaypalaccounts",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber2059",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber2075",
     "Hyperwallet listPayPalAccounts()",
     "test"
   ],
   [
     "hyperwallet#listpaypalaccounts src/hyperwallet.js~hyperwallet#listpaypalaccounts,hyperwallet#listpaypalaccounts",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber2081",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber2097",
     "Hyperwallet listPayPalAccounts() should do get call with options",
     "test"
   ],
   [
     "hyperwallet#listpaypalaccounts src/hyperwallet.js~hyperwallet#listpaypalaccounts,hyperwallet#listpaypalaccounts",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber2103",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber2119",
     "Hyperwallet listPayPalAccounts() should do get call without options",
     "test"
   ],
   [
     "hyperwallet#listpaypalaccounts src/hyperwallet.js~hyperwallet#listpaypalaccounts,hyperwallet#listpaypalaccounts",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber2111",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber2127",
     "Hyperwallet listPayPalAccounts() should handle 204 return",
     "test"
   ],
   [
     "hyperwallet#listpaypalaccounts src/hyperwallet.js~hyperwallet#listpaypalaccounts,hyperwallet#listpaypalaccounts",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber2096",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber2112",
     "Hyperwallet listPayPalAccounts() should throw error for invalid filter",
     "test"
   ],
   [
     "hyperwallet#listpaypalaccounts src/hyperwallet.js~hyperwallet#listpaypalaccounts,hyperwallet#listpaypalaccounts",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber2075",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber2091",
     "Hyperwallet listPayPalAccounts() should throw error if userToken is missing",
     "test"
   ],
   [
     "hyperwallet#listpaymentstatustransitions src/hyperwallet.js~hyperwallet#listpaymentstatustransitions,hyperwallet#listpaymentstatustransitions",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber3695",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber3711",
     "Hyperwallet listPaymentStatusTransitions()",
     "test"
   ],
   [
     "hyperwallet#listpaymentstatustransitions src/hyperwallet.js~hyperwallet#listpaymentstatustransitions,hyperwallet#listpaymentstatustransitions",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber3717",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber3733",
     "Hyperwallet listPaymentStatusTransitions() should do get call with options",
     "test"
   ],
   [
     "hyperwallet#listpaymentstatustransitions src/hyperwallet.js~hyperwallet#listpaymentstatustransitions,hyperwallet#listpaymentstatustransitions",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber3739",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber3755",
     "Hyperwallet listPaymentStatusTransitions() should do get call without options",
     "test"
   ],
   [
     "hyperwallet#listpaymentstatustransitions src/hyperwallet.js~hyperwallet#listpaymentstatustransitions,hyperwallet#listpaymentstatustransitions",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber3748",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber3764",
     "Hyperwallet listPaymentStatusTransitions() should handle 204 return",
     "test"
   ],
   [
     "hyperwallet#listpaymentstatustransitions src/hyperwallet.js~hyperwallet#listpaymentstatustransitions,hyperwallet#listpaymentstatustransitions",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber3732",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber3748",
     "Hyperwallet listPaymentStatusTransitions() should throw error for invalid filter",
     "test"
   ],
   [
     "hyperwallet#listpaymentstatustransitions src/hyperwallet.js~hyperwallet#listpaymentstatustransitions,hyperwallet#listpaymentstatustransitions",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber3711",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber3727",
     "Hyperwallet listPaymentStatusTransitions() should throw error if paymentToken is missing",
     "test"
   ],
   [
     "hyperwallet#listpayments src/hyperwallet.js~hyperwallet#listpayments,hyperwallet#listpayments",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber3552",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber3568",
     "Hyperwallet listPayments()",
     "test"
   ],
   [
     "hyperwallet#listpayments src/hyperwallet.js~hyperwallet#listpayments,hyperwallet#listpayments",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber3568",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber3584",
     "Hyperwallet listPayments() should do get call with options",
     "test"
   ],
   [
     "hyperwallet#listpayments src/hyperwallet.js~hyperwallet#listpayments,hyperwallet#listpayments",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber3591",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber3607",
     "Hyperwallet listPayments() should do get call without options",
     "test"
   ],
   [
     "hyperwallet#listpayments src/hyperwallet.js~hyperwallet#listpayments,hyperwallet#listpayments",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber3600",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber3616",
     "Hyperwallet listPayments() should handle 204 return",
     "test"
   ],
   [
     "hyperwallet#listpayments src/hyperwallet.js~hyperwallet#listpayments,hyperwallet#listpayments",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber3584",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber3600",
     "Hyperwallet listPayments() should throw error for invalid filter",
     "test"
   ],
   [
     "hyperwallet#listprepaidcardstatustransitions src/hyperwallet.js~hyperwallet#listprepaidcardstatustransitions,hyperwallet#listprepaidcardstatustransitions",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber2763",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber2779",
     "Hyperwallet listPrepaidCardStatusTransitions()",
     "test"
   ],
   [
     "hyperwallet#listprepaidcardstatustransitions src/hyperwallet.js~hyperwallet#listprepaidcardstatustransitions,hyperwallet#listprepaidcardstatustransitions",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber2791",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber2807",
     "Hyperwallet listPrepaidCardStatusTransitions() should do get call with options",
     "test"
   ],
   [
     "hyperwallet#listprepaidcardstatustransitions src/hyperwallet.js~hyperwallet#listprepaidcardstatustransitions,hyperwallet#listprepaidcardstatustransitions",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber2813",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber2829",
     "Hyperwallet listPrepaidCardStatusTransitions() should do get call without options",
     "test"
   ],
   [
     "hyperwallet#listprepaidcardstatustransitions src/hyperwallet.js~hyperwallet#listprepaidcardstatustransitions,hyperwallet#listprepaidcardstatustransitions",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber2822",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber2838",
     "Hyperwallet listPrepaidCardStatusTransitions() should handle 204 return",
     "test"
   ],
   [
     "hyperwallet#listprepaidcardstatustransitions src/hyperwallet.js~hyperwallet#listprepaidcardstatustransitions,hyperwallet#listprepaidcardstatustransitions",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber2806",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber2822",
     "Hyperwallet listPrepaidCardStatusTransitions() should throw error for invalid filter",
     "test"
   ],
   [
     "hyperwallet#listprepaidcardstatustransitions src/hyperwallet.js~hyperwallet#listprepaidcardstatustransitions,hyperwallet#listprepaidcardstatustransitions",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber2785",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber2801",
     "Hyperwallet listPrepaidCardStatusTransitions() should throw error if prepaidCardToken is missing",
     "test"
   ],
   [
     "hyperwallet#listprepaidcardstatustransitions src/hyperwallet.js~hyperwallet#listprepaidcardstatustransitions,hyperwallet#listprepaidcardstatustransitions",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber2779",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber2795",
     "Hyperwallet listPrepaidCardStatusTransitions() should throw error if userToken is missing",
     "test"
   ],
   [
     "hyperwallet#listprepaidcards src/hyperwallet.js~hyperwallet#listprepaidcards,hyperwallet#listprepaidcards",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber2535",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber2551",
     "Hyperwallet listPrepaidCards()",
     "test"
   ],
   [
     "hyperwallet#listprepaidcards src/hyperwallet.js~hyperwallet#listprepaidcards,hyperwallet#listprepaidcards",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber2557",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber2573",
     "Hyperwallet listPrepaidCards() should do get call with options",
     "test"
   ],
   [
     "hyperwallet#listprepaidcards src/hyperwallet.js~hyperwallet#listprepaidcards,hyperwallet#listprepaidcards",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber2575",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber2591",
     "Hyperwallet listPrepaidCards() should do get call without options",
     "test"
   ],
   [
     "hyperwallet#listprepaidcards src/hyperwallet.js~hyperwallet#listprepaidcards,hyperwallet#listprepaidcards",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber2584",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber2600",
     "Hyperwallet listPrepaidCards() should handle 204 return",
     "test"
   ],
   [
     "hyperwallet#listprepaidcards src/hyperwallet.js~hyperwallet#listprepaidcards,hyperwallet#listprepaidcards",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber2568",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber2584",
     "Hyperwallet listPrepaidCards() should throw error for invalid filter",
     "test"
   ],
   [
     "hyperwallet#listprepaidcards src/hyperwallet.js~hyperwallet#listprepaidcards,hyperwallet#listprepaidcards",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber2551",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber2567",
     "Hyperwallet listPrepaidCards() should throw error if userToken is missing",
     "test"
   ],
   [
     "hyperwallet#listreceiptsforprepaidcard src/hyperwallet.js~hyperwallet#listreceiptsforprepaidcard,hyperwallet#listreceiptsforprepaidcard",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber4185",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber4201",
     "Hyperwallet listReceiptsForPrepaidCard()",
     "test"
   ],
   [
     "hyperwallet#listreceiptsforprepaidcard src/hyperwallet.js~hyperwallet#listreceiptsforprepaidcard,hyperwallet#listreceiptsforprepaidcard",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber4213",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber4229",
     "Hyperwallet listReceiptsForPrepaidCard() should do get call with options",
     "test"
   ],
   [
     "hyperwallet#listreceiptsforprepaidcard src/hyperwallet.js~hyperwallet#listreceiptsforprepaidcard,hyperwallet#listreceiptsforprepaidcard",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber4229",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber4245",
     "Hyperwallet listReceiptsForPrepaidCard() should do get call without options",
     "test"
   ],
   [
     "hyperwallet#listreceiptsforprepaidcard src/hyperwallet.js~hyperwallet#listreceiptsforprepaidcard,hyperwallet#listreceiptsforprepaidcard",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber4238",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber4254",
     "Hyperwallet listReceiptsForPrepaidCard() should handle 204 return",
     "test"
   ],
   [
     "hyperwallet#listreceiptsforprepaidcard src/hyperwallet.js~hyperwallet#listreceiptsforprepaidcard,hyperwallet#listreceiptsforprepaidcard",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber4222",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber4238",
     "Hyperwallet listReceiptsForPrepaidCard() should throw error for invalid filter",
     "test"
   ],
   [
     "hyperwallet#listreceiptsforprepaidcard src/hyperwallet.js~hyperwallet#listreceiptsforprepaidcard,hyperwallet#listreceiptsforprepaidcard",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber4207",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber4223",
     "Hyperwallet listReceiptsForPrepaidCard() should throw error if prepaidCardToken is missing",
     "test"
   ],
   [
     "hyperwallet#listreceiptsforprepaidcard src/hyperwallet.js~hyperwallet#listreceiptsforprepaidcard,hyperwallet#listreceiptsforprepaidcard",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber4201",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber4217",
     "Hyperwallet listReceiptsForPrepaidCard() should throw error if userToken is missing",
     "test"
   ],
   [
     "hyperwallet#listreceiptsforprogramaccount src/hyperwallet.js~hyperwallet#listreceiptsforprogramaccount,hyperwallet#listreceiptsforprogramaccount",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber4039",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber4055",
     "Hyperwallet listReceiptsForProgramAccount()",
     "test"
   ],
   [
     "hyperwallet#listreceiptsforprogramaccount src/hyperwallet.js~hyperwallet#listreceiptsforprogramaccount,hyperwallet#listreceiptsforprogramaccount",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber4067",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber4083",
     "Hyperwallet listReceiptsForProgramAccount() should do get call with options",
     "test"
   ],
   [
     "hyperwallet#listreceiptsforprogramaccount src/hyperwallet.js~hyperwallet#listreceiptsforprogramaccount,hyperwallet#listreceiptsforprogramaccount",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber4083",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber4099",
     "Hyperwallet listReceiptsForProgramAccount() should do get call without options",
     "test"
   ],
   [
     "hyperwallet#listreceiptsforprogramaccount src/hyperwallet.js~hyperwallet#listreceiptsforprogramaccount,hyperwallet#listreceiptsforprogramaccount",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber4092",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber4108",
     "Hyperwallet listReceiptsForProgramAccount() should handle 204 return",
     "test"
   ],
   [
     "hyperwallet#listreceiptsforprogramaccount src/hyperwallet.js~hyperwallet#listreceiptsforprogramaccount,hyperwallet#listreceiptsforprogramaccount",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber4076",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber4092",
     "Hyperwallet listReceiptsForProgramAccount() should throw error for invalid filter",
     "test"
   ],
   [
     "hyperwallet#listreceiptsforprogramaccount src/hyperwallet.js~hyperwallet#listreceiptsforprogramaccount,hyperwallet#listreceiptsforprogramaccount",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber4061",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber4077",
     "Hyperwallet listReceiptsForProgramAccount() should throw error if accountToken is missing",
     "test"
   ],
   [
     "hyperwallet#listreceiptsforprogramaccount src/hyperwallet.js~hyperwallet#listreceiptsforprogramaccount,hyperwallet#listreceiptsforprogramaccount",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber4055",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber4071",
     "Hyperwallet listReceiptsForProgramAccount() should throw error if programToken is missing",
     "test"
   ],
   [
     "hyperwallet#listreceiptsforuser src/hyperwallet.js~hyperwallet#listreceiptsforuser,hyperwallet#listreceiptsforuser",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber4115",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber4131",
     "Hyperwallet listReceiptsForUser()",
     "test"
   ],
   [
     "hyperwallet#listreceiptsforuser src/hyperwallet.js~hyperwallet#listreceiptsforuser,hyperwallet#listreceiptsforuser",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber4137",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber4153",
     "Hyperwallet listReceiptsForUser() should do get call with options",
     "test"
   ],
   [
     "hyperwallet#listreceiptsforuser src/hyperwallet.js~hyperwallet#listreceiptsforuser,hyperwallet#listreceiptsforuser",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber4153",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber4169",
     "Hyperwallet listReceiptsForUser() should do get call without options",
     "test"
   ],
   [
     "hyperwallet#listreceiptsforuser src/hyperwallet.js~hyperwallet#listreceiptsforuser,hyperwallet#listreceiptsforuser",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber4162",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber4178",
     "Hyperwallet listReceiptsForUser() should handle 204 return",
     "test"
   ],
   [
     "hyperwallet#listreceiptsforuser src/hyperwallet.js~hyperwallet#listreceiptsforuser,hyperwallet#listreceiptsforuser",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber4146",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber4162",
     "Hyperwallet listReceiptsForUser() should throw error for invalid filter",
     "test"
   ],
   [
     "hyperwallet#listreceiptsforuser src/hyperwallet.js~hyperwallet#listreceiptsforuser,hyperwallet#listreceiptsforuser",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber4131",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber4147",
     "Hyperwallet listReceiptsForUser() should throw error if userToken is missing",
     "test"
   ],
   [
     "hyperwallet#listtransfermethodconfigurations src/hyperwallet.js~hyperwallet#listtransfermethodconfigurations,hyperwallet#listtransfermethodconfigurations",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber3915",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber3931",
     "Hyperwallet listTransferMethodConfigurations()",
     "test"
   ],
   [
     "hyperwallet#listtransfermethodconfigurations src/hyperwallet.js~hyperwallet#listtransfermethodconfigurations,hyperwallet#listtransfermethodconfigurations",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber3937",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber3953",
     "Hyperwallet listTransferMethodConfigurations() should do get call with options",
     "test"
   ],
   [
     "hyperwallet#listtransfermethodconfigurations src/hyperwallet.js~hyperwallet#listtransfermethodconfigurations,hyperwallet#listtransfermethodconfigurations",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber3954",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber3970",
     "Hyperwallet listTransferMethodConfigurations() should do get call without options",
     "test"
   ],
   [
     "hyperwallet#listtransfermethodconfigurations src/hyperwallet.js~hyperwallet#listtransfermethodconfigurations,hyperwallet#listtransfermethodconfigurations",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber3965",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber3981",
     "Hyperwallet listTransferMethodConfigurations() should handle 204 return",
     "test"
   ],
   [
     "hyperwallet#listtransfermethodconfigurations src/hyperwallet.js~hyperwallet#listtransfermethodconfigurations,hyperwallet#listtransfermethodconfigurations",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber3947",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber3963",
     "Hyperwallet listTransferMethodConfigurations() should throw error for invalid filter",
     "test"
   ],
   [
     "hyperwallet#listtransfermethodconfigurations src/hyperwallet.js~hyperwallet#listtransfermethodconfigurations,hyperwallet#listtransfermethodconfigurations",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber3931",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber3947",
     "Hyperwallet listTransferMethodConfigurations() should throw error if userToken is missing",
     "test"
   ],
   [
     "hyperwallet#listtransfermethods src/hyperwallet.js~hyperwallet#listtransfermethods,hyperwallet#listtransfermethods",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber5343",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber5359",
     "Hyperwallet listTransferMethods()",
     "test"
   ],
   [
     "hyperwallet#listtransfermethods src/hyperwallet.js~hyperwallet#listtransfermethods,hyperwallet#listtransfermethods",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber5365",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber5381",
     "Hyperwallet listTransferMethods() should do get call with options",
     "test"
   ],
   [
     "hyperwallet#listtransfermethods src/hyperwallet.js~hyperwallet#listtransfermethods,hyperwallet#listtransfermethods",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber5381",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber5397",
     "Hyperwallet listTransferMethods() should do get call without options",
     "test"
   ],
   [
     "hyperwallet#listtransfermethods src/hyperwallet.js~hyperwallet#listtransfermethods,hyperwallet#listtransfermethods",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber5390",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber5406",
     "Hyperwallet listTransferMethods() should handle 204 return",
     "test"
   ],
   [
     "hyperwallet#listtransfermethods src/hyperwallet.js~hyperwallet#listtransfermethods,hyperwallet#listtransfermethods",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber5374",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber5390",
     "Hyperwallet listTransferMethods() should throw error for invalid filter",
     "test"
   ],
   [
     "hyperwallet#listtransfermethods src/hyperwallet.js~hyperwallet#listtransfermethods,hyperwallet#listtransfermethods",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber5359",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber5375",
     "Hyperwallet listTransferMethods() should throw error if userToken is missing",
     "test"
   ],
@@ -2425,31 +2431,31 @@ window.esdocSearchIndex = [
   ],
   [
     "hyperwallet#listtransferstatustransition src/hyperwallet.js~hyperwallet#listtransferstatustransition,hyperwallet#listtransferstatustransition",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber5449",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber5465",
     "Hyperwallet listTransferStatusTransition()",
     "test"
   ],
   [
     "hyperwallet#listtransferstatustransition src/hyperwallet.js~hyperwallet#listtransferstatustransition,hyperwallet#listtransferstatustransition",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber5470",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber5486",
     "Hyperwallet listTransferStatusTransition() should do get call with options",
     "test"
   ],
   [
     "hyperwallet#listtransferstatustransition src/hyperwallet.js~hyperwallet#listtransferstatustransition,hyperwallet#listtransferstatustransition",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber5478",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber5494",
     "Hyperwallet listTransferStatusTransition() should do get call without options",
     "test"
   ],
   [
     "hyperwallet#listtransferstatustransition src/hyperwallet.js~hyperwallet#listtransferstatustransition,hyperwallet#listtransferstatustransition",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber5486",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber5502",
     "Hyperwallet listTransferStatusTransition() should handle 204 return",
     "test"
   ],
   [
     "hyperwallet#listtransferstatustransition src/hyperwallet.js~hyperwallet#listtransferstatustransition,hyperwallet#listtransferstatustransition",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber5464",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber5480",
     "Hyperwallet listTransferStatusTransition() should throw error if transferToken is missing",
     "test"
   ],
@@ -2520,14 +2526,14 @@ window.esdocSearchIndex = [
     "test"
   ],
   [
-    "hyperwallet#listusers src/hyperwallet.js~hyperwallet#listusers,hyperwallet#listusers",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber295",
+    "",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber85",
     "Hyperwallet listUsers()",
     "test"
   ],
   [
-    "",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber85",
+    "hyperwallet#listusers src/hyperwallet.js~hyperwallet#listusers,hyperwallet#listusers",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber295",
     "Hyperwallet listUsers()",
     "test"
   ],
@@ -2563,109 +2569,109 @@ window.esdocSearchIndex = [
   ],
   [
     "hyperwallet#listvenmoaccountstatustransitions src/hyperwallet.js~hyperwallet#listvenmoaccountstatustransitions,hyperwallet#listvenmoaccountstatustransitions",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber4827",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber4843",
     "Hyperwallet listVenmoAccountStatusTransitions()",
     "test"
   ],
   [
     "hyperwallet#listvenmoaccountstatustransitions src/hyperwallet.js~hyperwallet#listvenmoaccountstatustransitions,hyperwallet#listvenmoaccountstatustransitions",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber4855",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber4871",
     "Hyperwallet listVenmoAccountStatusTransitions() should do get call with options",
     "test"
   ],
   [
     "hyperwallet#listvenmoaccountstatustransitions src/hyperwallet.js~hyperwallet#listvenmoaccountstatustransitions,hyperwallet#listvenmoaccountstatustransitions",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber4877",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber4893",
     "Hyperwallet listVenmoAccountStatusTransitions() should do get call without options",
     "test"
   ],
   [
     "hyperwallet#listvenmoaccountstatustransitions src/hyperwallet.js~hyperwallet#listvenmoaccountstatustransitions,hyperwallet#listvenmoaccountstatustransitions",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber4886",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber4902",
     "Hyperwallet listVenmoAccountStatusTransitions() should handle 204 return",
     "test"
   ],
   [
     "hyperwallet#listvenmoaccountstatustransitions src/hyperwallet.js~hyperwallet#listvenmoaccountstatustransitions,hyperwallet#listvenmoaccountstatustransitions",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber4870",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber4886",
     "Hyperwallet listVenmoAccountStatusTransitions() should throw error for invalid filter",
     "test"
   ],
   [
     "hyperwallet#listvenmoaccountstatustransitions src/hyperwallet.js~hyperwallet#listvenmoaccountstatustransitions,hyperwallet#listvenmoaccountstatustransitions",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber4843",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber4859",
     "Hyperwallet listVenmoAccountStatusTransitions() should throw error if userToken is missing",
     "test"
   ],
   [
     "hyperwallet#listvenmoaccountstatustransitions src/hyperwallet.js~hyperwallet#listvenmoaccountstatustransitions,hyperwallet#listvenmoaccountstatustransitions",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber4849",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber4865",
     "Hyperwallet listVenmoAccountStatusTransitions() should throw error if venmoAccountToken is missing",
     "test"
   ],
   [
     "hyperwallet#listvenmoaccounts src/hyperwallet.js~hyperwallet#listvenmoaccounts,hyperwallet#listvenmoaccounts",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber4583",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber4599",
     "Hyperwallet listVenmoAccounts()",
     "test"
   ],
   [
     "hyperwallet#listvenmoaccounts src/hyperwallet.js~hyperwallet#listvenmoaccounts,hyperwallet#listvenmoaccounts",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber4605",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber4621",
     "Hyperwallet listVenmoAccounts() should do get call with options",
     "test"
   ],
   [
     "hyperwallet#listvenmoaccounts src/hyperwallet.js~hyperwallet#listvenmoaccounts,hyperwallet#listvenmoaccounts",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber4628",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber4644",
     "Hyperwallet listVenmoAccounts() should do get call without options",
     "test"
   ],
   [
     "hyperwallet#listvenmoaccounts src/hyperwallet.js~hyperwallet#listvenmoaccounts,hyperwallet#listvenmoaccounts",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber4637",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber4653",
     "Hyperwallet listVenmoAccounts() should handle 204 return",
     "test"
   ],
   [
     "hyperwallet#listvenmoaccounts src/hyperwallet.js~hyperwallet#listvenmoaccounts,hyperwallet#listvenmoaccounts",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber4621",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber4637",
     "Hyperwallet listVenmoAccounts() should throw error for invalid filter",
     "test"
   ],
   [
     "hyperwallet#listvenmoaccounts src/hyperwallet.js~hyperwallet#listvenmoaccounts,hyperwallet#listvenmoaccounts",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber4599",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber4615",
     "Hyperwallet listVenmoAccounts() should throw error if userToken is missing",
     "test"
   ],
   [
     "",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber4264",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber4280",
     "Hyperwallet listWebhookNotifications()",
     "test"
   ],
   [
     "hyperwallet#listwebhooknotifications src/hyperwallet.js~hyperwallet#listwebhooknotifications,hyperwallet#listwebhooknotifications",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber4280",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber4296",
     "Hyperwallet listWebhookNotifications() should do get call with options",
     "test"
   ],
   [
     "hyperwallet#listwebhooknotifications src/hyperwallet.js~hyperwallet#listwebhooknotifications,hyperwallet#listwebhooknotifications",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber4303",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber4319",
     "Hyperwallet listWebhookNotifications() should do get call without options",
     "test"
   ],
   [
     "hyperwallet#listwebhooknotifications src/hyperwallet.js~hyperwallet#listwebhooknotifications,hyperwallet#listwebhooknotifications",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber4312",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber4328",
     "Hyperwallet listWebhookNotifications() should handle 204 return",
     "test"
   ],
   [
     "hyperwallet#listwebhooknotifications src/hyperwallet.js~hyperwallet#listwebhooknotifications,hyperwallet#listwebhooknotifications",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber4296",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber4312",
     "Hyperwallet listWebhookNotifications() should throw error for invalid filter",
     "test"
   ],
@@ -2707,25 +2713,25 @@ window.esdocSearchIndex = [
   ],
   [
     "hyperwallet#updatebankaccount src/hyperwallet.js~hyperwallet#updatebankaccount,hyperwallet#updatebankaccount",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber2923",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber2939",
     "Hyperwallet updateBankAccount()",
     "test"
   ],
   [
     "hyperwallet#updatebankaccount src/hyperwallet.js~hyperwallet#updatebankaccount,hyperwallet#updatebankaccount",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber2951",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber2967",
     "Hyperwallet updateBankAccount() should do put call to bank accounts endpoint",
     "test"
   ],
   [
     "hyperwallet#updatebankaccount src/hyperwallet.js~hyperwallet#updatebankaccount,hyperwallet#updatebankaccount",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber2945",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber2961",
     "Hyperwallet updateBankAccount() should throw error if bankAccountToken is missing",
     "test"
   ],
   [
     "hyperwallet#updatebankaccount src/hyperwallet.js~hyperwallet#updatebankaccount,hyperwallet#updatebankaccount",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber2939",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber2955",
     "Hyperwallet updateBankAccount() should throw error if userToken is missing",
     "test"
   ],
@@ -2755,25 +2761,25 @@ window.esdocSearchIndex = [
   ],
   [
     "hyperwallet#updatebusinessstakeholder src/hyperwallet.js~hyperwallet#updatebusinessstakeholder,hyperwallet#updatebusinessstakeholder",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber5016",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber5032",
     "Hyperwallet updateBusinessStakeholder()",
     "test"
   ],
   [
     "hyperwallet#updatebusinessstakeholder src/hyperwallet.js~hyperwallet#updatebusinessstakeholder,hyperwallet#updatebusinessstakeholder",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber5044",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber5060",
     "Hyperwallet updateBusinessStakeholder() should do put call to Stakeholder endpoint",
     "test"
   ],
   [
     "hyperwallet#updatebusinessstakeholder src/hyperwallet.js~hyperwallet#updatebusinessstakeholder,hyperwallet#updatebusinessstakeholder",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber5038",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber5054",
     "Hyperwallet updateBusinessStakeholder() should throw error if stakeholderToken is missing",
     "test"
   ],
   [
     "hyperwallet#updatebusinessstakeholder src/hyperwallet.js~hyperwallet#updatebusinessstakeholder,hyperwallet#updatebusinessstakeholder",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber5032",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber5048",
     "Hyperwallet updateBusinessStakeholder() should throw error if userToken is missing",
     "test"
   ],
@@ -2803,49 +2809,49 @@ window.esdocSearchIndex = [
   ],
   [
     "hyperwallet#updatepaypalaccount src/hyperwallet.js~hyperwallet#updatepaypalaccount,hyperwallet#updatepaypalaccount",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber2134",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber2150",
     "Hyperwallet updatePayPalAccount()",
     "test"
   ],
   [
     "hyperwallet#updatepaypalaccount src/hyperwallet.js~hyperwallet#updatepaypalaccount,hyperwallet#updatepaypalaccount",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber2162",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber2178",
     "Hyperwallet updatePayPalAccount() should do put call to paypal account endpoint",
     "test"
   ],
   [
     "hyperwallet#updatepaypalaccount src/hyperwallet.js~hyperwallet#updatepaypalaccount,hyperwallet#updatepaypalaccount",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber2156",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber2172",
     "Hyperwallet updatePayPalAccount() should throw error if payPalAccountToken is missing",
     "test"
   ],
   [
     "hyperwallet#updatepaypalaccount src/hyperwallet.js~hyperwallet#updatepaypalaccount,hyperwallet#updatepaypalaccount",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber2150",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber2166",
     "Hyperwallet updatePayPalAccount() should throw error if userToken is missing",
     "test"
   ],
   [
     "hyperwallet#updateprepaidcard src/hyperwallet.js~hyperwallet#updateprepaidcard,hyperwallet#updateprepaidcard",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber2493",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber2509",
     "Hyperwallet updatePrepaidCard()",
     "test"
   ],
   [
     "hyperwallet#updateprepaidcard src/hyperwallet.js~hyperwallet#updateprepaidcard,hyperwallet#updateprepaidcard",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber2521",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber2537",
     "Hyperwallet updatePrepaidCard() should do put call to prepaid cards endpoint",
     "test"
   ],
   [
     "hyperwallet#updateprepaidcard src/hyperwallet.js~hyperwallet#updateprepaidcard,hyperwallet#updateprepaidcard",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber2515",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber2531",
     "Hyperwallet updatePrepaidCard() should throw error if prepaidCardToken is missing",
     "test"
   ],
   [
     "hyperwallet#updateprepaidcard src/hyperwallet.js~hyperwallet#updateprepaidcard,hyperwallet#updateprepaidcard",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber2509",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber2525",
     "Hyperwallet updatePrepaidCard() should throw error if userToken is missing",
     "test"
   ],
@@ -2875,55 +2881,55 @@ window.esdocSearchIndex = [
   ],
   [
     "hyperwallet#updatevenmoaccount src/hyperwallet.js~hyperwallet#updatevenmoaccount,hyperwallet#updatevenmoaccount",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber4660",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber4676",
     "Hyperwallet updateVenmoAccount()",
     "test"
   ],
   [
     "hyperwallet#updatevenmoaccount src/hyperwallet.js~hyperwallet#updatevenmoaccount,hyperwallet#updatevenmoaccount",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber4688",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber4704",
     "Hyperwallet updateVenmoAccount() should do put call to venmo accounts endpoint",
     "test"
   ],
   [
     "hyperwallet#updatevenmoaccount src/hyperwallet.js~hyperwallet#updatevenmoaccount,hyperwallet#updatevenmoaccount",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber4676",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber4692",
     "Hyperwallet updateVenmoAccount() should throw error if userToken is missing",
     "test"
   ],
   [
     "hyperwallet#updatevenmoaccount src/hyperwallet.js~hyperwallet#updatevenmoaccount,hyperwallet#updatevenmoaccount",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber4682",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber4698",
     "Hyperwallet updateVenmoAccount() should throw error if venmoAccountToken is missing",
     "test"
   ],
   [
     "",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber5297",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber5313",
     "Hyperwallet uploadBusinessStakeholderDocuments()",
     "test"
   ],
   [
     "hyperwallet#uploadbusinessstakeholderdocuments src/hyperwallet.js~hyperwallet#uploadbusinessstakeholderdocuments,hyperwallet#uploadbusinessstakeholderdocuments",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber5331",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber5347",
     "Hyperwallet uploadBusinessStakeholderDocuments() should do put call to upload multipart",
     "test"
   ],
   [
     "hyperwallet#uploadbusinessstakeholderdocuments src/hyperwallet.js~hyperwallet#uploadbusinessstakeholderdocuments,hyperwallet#uploadbusinessstakeholderdocuments",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber5325",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber5341",
     "Hyperwallet uploadBusinessStakeholderDocuments() should throw error if data is missing",
     "test"
   ],
   [
     "hyperwallet#uploadbusinessstakeholderdocuments src/hyperwallet.js~hyperwallet#uploadbusinessstakeholderdocuments,hyperwallet#uploadbusinessstakeholderdocuments",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber5319",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber5335",
     "Hyperwallet uploadBusinessStakeholderDocuments() should throw error if stakeholderToken is missing",
     "test"
   ],
   [
     "hyperwallet#uploadbusinessstakeholderdocuments src/hyperwallet.js~hyperwallet#uploadbusinessstakeholderdocuments,hyperwallet#uploadbusinessstakeholderdocuments",
-    "test-file/test/Hyperwallet.spec.js.html#lineNumber5313",
+    "test-file/test/Hyperwallet.spec.js.html#lineNumber5329",
     "Hyperwallet uploadBusinessStakeholderDocuments() should throw error if userToken is missing",
     "test"
   ],

@@ -2036,7 +2036,7 @@ describe(&quot;Hyperwallet&quot;, () =&gt; {
             expect(() =&gt; client.createPayPalAccount(&quot;test-user-token&quot;, {
                 transferMethodCountry: &quot;test-transferMethodCountry&quot;,
                 transferMethodCurrency: &quot;test-transferMethodCurrency&quot;,
-            }, callback)).to.throw(&quot;email is required&quot;);
+            }, callback)).to.throw(&quot;email or accountId is required&quot;);
         });
 
         /** @test {Hyperwallet#createPayPalAccount} */
@@ -2053,6 +2053,22 @@ describe(&quot;Hyperwallet&quot;, () =&gt; {
                 transferMethodCountry: &quot;test-transferMethodCountry&quot;,
                 transferMethodCurrency: &quot;test-transferMethodCurrency&quot;,
                 email: &quot;email&quot;,
+            }, {}, callback);
+        });
+        /** @test {Hyperwallet#createPayPalAccount} */
+        it(&quot;should do post call to PayPal account endpoint with accountId&quot;, () =&gt; {
+            const callback = () =&gt; null;
+            client.createPayPalAccount(&quot;test-user-token&quot;, {
+                transferMethodCountry: &quot;test-transferMethodCountry&quot;,
+                transferMethodCurrency: &quot;test-transferMethodCurrency&quot;,
+                accountId: &quot;accountId&quot;,
+            }, callback);
+
+            apiClientSpy.should.have.been.calledOnce();
+            apiClientSpy.should.have.been.calledWith(&quot;users/test-user-token/paypal-accounts&quot;, {
+                transferMethodCountry: &quot;test-transferMethodCountry&quot;,
+                transferMethodCurrency: &quot;test-transferMethodCurrency&quot;,
+                accountId: &quot;accountId&quot;,
             }, {}, callback);
         });
     });
