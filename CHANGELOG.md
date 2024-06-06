@@ -1,5 +1,10 @@
 Changelog
 =========
+2.1.2
+-------------------
+- Bump up node-jose from 2.1.0 to 2.2.0
+- Bump up gh-pages from 3.1.0 to 6.1.1
+
 2.1.1
 -------------------
 - Added field 'accountId' to PayPal.

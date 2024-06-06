@@ -1,6 +1,6 @@
 {
   "name": "hyperwallet-sdk",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "description": "A library to manage users, transfer methods and payments through the Hyperwallet API",
   "main": "lib/index.js",
   "dependencies": {
