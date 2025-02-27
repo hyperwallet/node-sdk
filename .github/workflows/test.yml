@@ -1,4 +1,4 @@
-name: CodeQL (Javascript)
+name: CodeQL (Javascript) Test
 
 on:
   push:
@@ -7,7 +7,7 @@ jobs:
   analyze:
     name: Code Scanning - CodeQL
     runs-on: ubuntu-latest.
-    timeout-minutes: ${{ inputs.timeout-minutes }}
+    timeout-minutes: 25
     permissions:
       security-events: write
       # required to fetch internal or private CodeQL packs
@@ -23,4 +23,4 @@ jobs:
         with:
           language: javascript-typescript
           build-mode: 'none' 
-          timeout-minutes: "25"
+          timeout-minutes: 25
