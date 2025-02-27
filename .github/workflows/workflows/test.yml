@@ -1,0 +1,9 @@
+name: Dependency Review
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  dependency-review:
+    uses: hyperwallet/security-workflows/.github/workflows/dependency-review.yml@main
