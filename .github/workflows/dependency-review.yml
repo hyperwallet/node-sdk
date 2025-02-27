@@ -21,4 +21,4 @@ on:
 
 jobs:
   dependency-review:
-    uses: hyperwallet/security-workflows/.github/workflows/dependency-review.yml@main
+    uses: hyperwallet/public-security-workflows/.github/workflows/dependency-review.yml@main
