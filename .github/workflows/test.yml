@@ -1,0 +1,26 @@
+name: CodeQL (Javascript)
+
+on:
+  push:
+
+jobs:
+  analyze:
+    name: Code Scanning - CodeQL
+    runs-on: ubuntu-latest.
+    timeout-minutes: ${{ inputs.timeout-minutes }}
+    permissions:
+      security-events: write
+      # required to fetch internal or private CodeQL packs
+      packages: read
+      # only required for workflows in private repositories
+      actions: read
+      contents: read
+    strategy:
+      fail-fast: false
+
+    steps:
+      - uses: hyperwallet/public-security-workflows/codeql@main
+        with:
+          language: javascript-typescript
+          build-mode: 'none' 
+          timeout-minutes: 25
