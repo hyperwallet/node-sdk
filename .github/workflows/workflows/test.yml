@@ -6,4 +6,9 @@ on:
 
 jobs:
   dependency-review:
-    uses: hyperwallet/security-workflows/.github/workflows/dependency-review.yml@main
+    runs-on: ubuntu-latest
+
+    steps:
+      - run: echo test
+        shell: bash
+        
