@@ -2,6 +2,7 @@ name: CodeQL (Javascript) Test
 
 on:
   push:
+  pull_request:
 
 jobs:
   analyze:
