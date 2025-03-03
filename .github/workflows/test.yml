@@ -2,7 +2,7 @@ name: CodeQL (Javascript) Test
 
 on:
   push:
-    
+
 jobs:
   analyze:
     name: Code Scanning - CodeQL
@@ -24,6 +24,4 @@ jobs:
 
   dependency-review:
     uses: hyperwallet/public-security-workflows/.github/workflows/dependency-review.yml@main
-    with:
-      # Include any required inputs for the dependency-review workflow here
-    secrets: inherit
+   
