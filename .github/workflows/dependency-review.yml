@@ -2,36 +2,8 @@ name: Dependency Review
 
 on:
   pull_request:
-    branches:
-      - master
-      - support/SDK-V3
-      - feature/**
-      - bugfix/**
-      - dependabot/**
-      - feature/security-workflows
-    # will skip CodeQL for changes in the following paths (docs, tests, etc)
   push:
-    branches: 
-      - master
-      - support/SDK-V3
-      - feature/**
-      - bugfix/**
-      - dependabot/**
-      - feature/security-workflows
-  workflow_dispatch:
 
 jobs:
-  analyze:
-    name: DepReview - CodeQL
-    runs-on: ubuntu-latest
-    timeout-minutes: 25
-    permissions:
-      security-events: write
-      packages: read
-      actions: read
-      contents: read
-    strategy:
-      fail-fast: false
-    steps:
-      - uses: hyperwallet/public-security-workflows/.github/workflows/dependency-review.yml@main
-          
+  dependency-review:
+    uses: hyperwallet/public-security-workflows/.github/workflows/dependency-review.yml@main
