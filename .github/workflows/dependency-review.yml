@@ -9,8 +9,9 @@ on:
       - bugfix/**
       - dependabot/**
       - feature/security-workflows
+    # will skip CodeQL for changes in the following paths (docs, tests, etc)
   push:
-    branches:
+    branches: 
       - master
       - support/SDK-V3
       - feature/**
@@ -20,12 +21,17 @@ on:
   workflow_dispatch:
 
 jobs:
-  dependency-review:
-    runs-on: ubuntu-latest  # Specify the type of runner that the job will run on
+  analyze:
+    name: DepReview - CodeQL
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    permissions:
+      security-events: write
+      packages: read
+      actions: read
+      contents: read
+    strategy:
+      fail-fast: false
     steps:
-      - name: Checkout code  # This step checks out the repository code
-        uses: actions/checkout@v4
-      - name: Checkout cache  # This step checks out the repository code
-        uses: actions/cache@v4
-      - name: Use Dependency Review Action from another repository
-        uses: hyperwallet/public-security-workflows/.github/workflows/dependency-review.yml@main
+      - uses: hyperwallet/public-security-workflows/.github/workflows/dependency-review.yml@main
+          
