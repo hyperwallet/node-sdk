@@ -25,5 +25,7 @@ jobs:
     steps:
       - name: Checkout code  # This step checks out the repository code
         uses: actions/checkout@v4
+      - name: Checkout cache  # This step checks out the repository code
+        uses: actions/cache@v4
       - name: Use Dependency Review Action from another repository
         uses: hyperwallet/public-security-workflows/.github/workflows/dependency-review.yml@main
