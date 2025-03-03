@@ -1,23 +1,8 @@
-name: CodeQL (Javascript)
+name: CodeQL (Javascript) - SAST
 
 on:
   pull_request:
-    branches:
-      - master
-      - support/SDK-V3
-      - feature/**
-      - bugfix/**
-      - dependabot/**
-      - feature/security-workflows
-    # will skip CodeQL for changes in the following paths (docs, tests, etc)
   push:
-    branches: 
-      - master
-      - support/SDK-V3
-      - feature/**
-      - bugfix/**
-      - dependabot/**
-      - feature/security-workflows
   workflow_dispatch:
 
 jobs:

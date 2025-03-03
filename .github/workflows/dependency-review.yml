@@ -1,4 +1,4 @@
-name: Dependency Review
+name: CodeQL Dependency Review - SCA
 
 on:
   pull_request:
