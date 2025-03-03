@@ -2,6 +2,7 @@ name: CodeQL (Javascript) Test
 
 on:
   push:
+
 jobs:
   analyze:
     name: Code Scanning - CodeQL
@@ -9,17 +10,20 @@ jobs:
     timeout-minutes: 25
     permissions:
       security-events: write
-      # required to fetch internal or private CodeQL packs
       packages: read
-      # only required for workflows in private repositories
       actions: read
       contents: read
     strategy:
       fail-fast: false
-
     steps:
       - uses: hyperwallet/public-security-workflows/codeql@main
         with:
           language: javascript-typescript
-          build-mode: 'none' 
+          build-mode: 'none'
           timeout-minutes: 25
+
+  dependency-review:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Use Dependency Review Action from another repository
+        uses: hyperwallet/public-security-workflows/.github/workflows/dependency-review.yml@main
