@@ -24,6 +24,6 @@ jobs:
     runs-on: ubuntu-latest  # Specify the type of runner that the job will run on
     steps:
       - name: Checkout code  # This step checks out the repository code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
       - name: Use Dependency Review Action from another repository
         uses: hyperwallet/public-security-workflows/.github/workflows/dependency-review.yml@main
