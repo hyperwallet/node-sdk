@@ -2,6 +2,7 @@ name: CodeQL (Javascript) Test
 
 on:
   push:
+    
 jobs:
   analyze:
     name: Code Scanning - CodeQL
