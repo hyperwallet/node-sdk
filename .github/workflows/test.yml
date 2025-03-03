@@ -23,7 +23,7 @@ jobs:
           timeout-minutes: 25
 
   dependency-review:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Use Dependency Review Action from another repository
-        uses: hyperwallet/public-security-workflows/.github/workflows/dependency-review.yml@main
+    uses: hyperwallet/public-security-workflows/.github/workflows/dependency-review.yml@main
+    with:
+      # Include any required inputs for the dependency-review workflow here
+    secrets: inherit
