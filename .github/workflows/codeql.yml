@@ -1,4 +1,4 @@
-name: CodeQL
+name: CodeQL (Javascript) Test
 
 on:
   pull_request:
@@ -21,9 +21,21 @@ on:
   workflow_dispatch:
 
 jobs:
-  codeql-javascript:
-    uses: hyperwallet/public-security-workflows/.github/workflows/codeql-javascript.yml@main
-    with:
-      # optional input for longer-running builds
-      timeout-minutes: 25
- 
+  analyze:
+    name: Code Scanning - CodeQL
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    permissions:
+      security-events: write
+      packages: read
+      actions: read
+      contents: read
+    strategy:
+      fail-fast: false
+    steps:
+      - uses: hyperwallet/public-security-workflows/codeql@main
+        with:
+          language: javascript-typescript
+          build-mode: 'none'
+          timeout-minutes: 25
+
