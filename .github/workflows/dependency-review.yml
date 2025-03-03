@@ -1,0 +1,9 @@
+name: CodeQL Dependency Review - SCA
+
+on:
+  pull_request:
+  push:
+
+jobs:
+  dependency-review:
+    uses: hyperwallet/public-security-workflows/.github/workflows/dependency-review.yml@main

@@ -1,0 +1,26 @@
+name: CodeQL (Javascript) - SAST
+
+on:
+  pull_request:
+  push:
+  workflow_dispatch:
+
+jobs:
+  analyze:
+    name: Code Scanning - CodeQL
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    permissions:
+      security-events: write
+      packages: read
+      actions: read
+      contents: read
+    strategy:
+      fail-fast: false
+    steps:
+      - uses: hyperwallet/public-security-workflows/codeql@main
+        with:
+          language: javascript-typescript
+          build-mode: 'none'
+          timeout-minutes: 25
+
