@@ -1,4 +1,4 @@
-name: CodeQL (Javascript) Test
+name: CodeQL (Javascript)
 
 on:
   pull_request:
