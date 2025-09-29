@@ -7,5 +7,3 @@ on:
 jobs:
   dependency-review:
     uses: hyperwallet/public-security-workflows/.github/workflows/dependency-review.yml@main
-    secrets:
-      DATADOG_API_KEY: ${{ secrets.DATADOG_PAYPAL_QA_TOKEN }}   
