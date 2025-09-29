@@ -23,4 +23,3 @@ jobs:
           language: javascript-typescript
           build-mode: 'none'
           timeout-minutes: 25
-

@@ -1,9 +1,8 @@
-name: CodeQL Dependency Review - SCA
+name: Dependency Review
 
 on:
   pull_request:
-  push:
-  workflow_dispatch:
+    branches: [ master ]
 
 jobs:
   dependency-review:
