@@ -23,5 +23,4 @@ jobs:
           language: javascript-typescript
           build-mode: 'none'
           timeout-minutes: 25
-        secrets:
           DATADOG_API_KEY: ${{ secrets.DATADOG_PAYPAL_QA_TOKEN }}  
