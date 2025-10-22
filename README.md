@@ -3,7 +3,7 @@
 [![Document](http://hyperwallet.github.io/node-sdk/badge.svg?t=0)](http://hyperwallet.github.io/node-sdk)
 [![NPM version](https://badge.fury.io/js/hyperwallet-sdk.png)](http://badge.fury.io/js/hyperwallet-sdk)
 
-Hyperwallet REST SDK
+Hyperwallet REST SDK TEST
 ====================
 
 A library to manage users, transfer methods and payments through the Hyperwallet Rest V4 API
