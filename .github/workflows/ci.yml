@@ -13,7 +13,7 @@ jobs:
   test:
     runs-on: ubuntu-latest
     env:
-      NODE_OPTIONS: --max-old-space-size=8192
+      NODE_OPTIONS: --max-old-space-size=8192 --no-experimental-fetch
     strategy:
       fail-fast: false
       matrix:
@@ -33,7 +33,7 @@ jobs:
           npm run build --if-present
           npm run ci
         env:
-          NODE_OPTIONS: --max-old-space-size=8192
+          NODE_OPTIONS: --max-old-space-size=8192 --no-experimental-fetch
 
   code-coverage:
     runs-on: ubuntu-latest
