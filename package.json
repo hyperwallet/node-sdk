@@ -62,8 +62,8 @@
     "nock": "^14.0.10",
     "nyc": "^15.0.0",
     "publish-please": "^5.4.3",
-    "sinon": "^17.0.1",
-    "sinon-chai": "^3.7.0"
+    "sinon": "^1.17.4",
+    "sinon-chai": "^2.8.0"
   },
   "engines": {
     "node": ">=0.12",
