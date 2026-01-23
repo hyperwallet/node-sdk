@@ -30,8 +30,8 @@ jobs:
           npm install
           npm run build --if-present
           npm run test
-            env:
-        NODE_OPTIONS: "--max-old-space-size=4096"
+        env:
+          NODE_OPTIONS: "--max-old-space-size=4096"
 
   code-coverage:
     runs-on: ubuntu-latest
@@ -53,7 +53,8 @@ jobs:
           npm install
           npm run build --if-present
           npm run test-coverage
-        NODE_OPTIONS: "--max-old-space-size=4096"
+        env:
+          NODE_OPTIONS: "--max-old-space-size=4096"
 
       - name: Coveralls
         uses: coverallsapp/github-action@master
