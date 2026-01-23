@@ -12,6 +12,8 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    env:
+      NODE_OPTIONS: "--max_old_space_size=4096"
 
     strategy:
       fail-fast: false
@@ -25,8 +27,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
-        env:
-          NODE_OPTIONS: "--max_old_space_size=4096"
+
 
       - run: |
           npm install
@@ -35,6 +36,8 @@ jobs:
 
   code-coverage:
     runs-on: ubuntu-latest
+    env:
+      NODE_OPTIONS: "--max_old_space_size=4096"
 
     strategy:
       fail-fast: false
