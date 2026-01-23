@@ -33,7 +33,7 @@ jobs:
           npm run build --if-present
           npm run ci
         env:
-          NODE_OPTIONS: --max-old-space-size=8192 --no-experimental-fetch
+          NODE_OPTIONS: --max-old-space-size=8192
 
   code-coverage:
     runs-on: ubuntu-latest
