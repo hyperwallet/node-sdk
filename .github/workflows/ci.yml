@@ -12,6 +12,8 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    env:
+      NODE_OPTIONS: --max-old-space-size=8192
 
     strategy:
       fail-fast: false
@@ -32,6 +34,8 @@ jobs:
 
   code-coverage:
     runs-on: ubuntu-latest
+    env:
+      NODE_OPTIONS: --max-old-space-size=8192
 
     strategy:
       fail-fast: false
