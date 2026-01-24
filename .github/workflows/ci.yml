@@ -14,7 +14,6 @@ jobs:
     runs-on: ubuntu-latest
     env:
       NODE_OPTIONS: --max-old-space-size=8192
-
     strategy:
       fail-fast: false
       matrix:
@@ -28,12 +27,13 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
 
+
       - run: |
           npm install
           npm run build --if-present
-          npm run test
+          npm run ci
         env:
-           NODE_OPTIONS: --max-old-space-size=8192
+          NODE_OPTIONS: --max-old-space-size=8192
 
   code-coverage:
     runs-on: ubuntu-latest
@@ -53,9 +53,12 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
 
-      - run: npm install
-      - run: npm run build --if-present
-      - run: npm run test-coverage
+      - run: |
+          npm install
+          npm run build --if-present
+          npm run test-coverage
+        env:
+          NODE_OPTIONS: --max-old-space-size=8192
 
       - name: Coveralls
         uses: coverallsapp/github-action@master
