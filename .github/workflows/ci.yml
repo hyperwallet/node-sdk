@@ -12,43 +12,53 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-
+    env:
+      NODE_OPTIONS: --max-old-space-size=8192
     strategy:
       fail-fast: false
       matrix:
-        node-version: [8.x ,14.x ,16.x]
+        node-version: [14.x ,16.x]
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
 
-      - run: npm install
-      - run: npm run build --if-present
-      - run: npm run test
+
+      - run: |
+          npm install
+          npm run build --if-present
+          npm run ci
+        env:
+          NODE_OPTIONS: --max-old-space-size=8192
 
   code-coverage:
     runs-on: ubuntu-latest
+    env:
+      NODE_OPTIONS: --max-old-space-size=8192
 
     strategy:
       fail-fast: false
       matrix:
-        node-version: [ 8.x ]
+        node-version: [ 14.x ]
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
 
-      - run: npm install
-      - run: npm run build --if-present
-      - run: npm run test-coverage
+      - run: |
+          npm install
+          npm run build --if-present
+          npm run test-coverage
+        env:
+          NODE_OPTIONS: --max-old-space-size=8192
 
       - name: Coveralls
         uses: coverallsapp/github-action@master
