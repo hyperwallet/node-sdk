@@ -4,6 +4,10 @@ on:
   pull_request:
     branches: [ master ]
 
+permissions:
+  contents: read
+  pull-requests: write
+
 jobs:
   dependency-review:
-    uses: hyperwallet/public-security-workflows/.github/workflows/dependency-review.yml@main
+    uses: hyperwallet/public-security-workflows/.github/workflows/dependency-review.yml@9c7e8d43f5171799410aff0726f79bc2550639dd
