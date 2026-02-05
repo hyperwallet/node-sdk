@@ -18,7 +18,7 @@ jobs:
     strategy:
       fail-fast: false
     steps:
-      - uses: hyperwallet/public-security-workflows/codeql@main
+      - uses: hyperwallet/public-security-workflows/codeql@9c7e8d43f5171799410aff0726f79bc2550639dd
         with:
           language: javascript-typescript
           build-mode: 'none'
